@@ -1,0 +1,113 @@
+COMMAND: ['cargo', 'test', '--locked', '--', '--nocapture']
+   Compiling rust-skia v0.1.0 (/Volumes/Data/Users/paul/development/src/github/rust-skia)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.20s
+     Running unittests src/lib.rs (target/debug/deps/rust_skia-3723df0034bff674)
+
+running 16 tests
+test float_bits::tests::dev_sign_bit_conversions_match_reference_cases ... ok
+test float_bits::tests::dev_sign_bit_conversions_round_trip ... ok
+test floating_point::tests::dev_floating_point_classification_and_ulps ... ok
+test ipoint::tests::dev_ipoint_layout_and_accessors ... ok
+test floating_point::tests::dev_floating_point_rounding_and_saturation ... ok
+test ipoint::tests::dev_ipoint_arithmetic_is_saturating ... ok
+test math::tests::dev_sk_math_limits_and_left_shift ... ok
+test point::tests::dev_point_accessors_and_conversions ... ok
+test point::tests::dev_point_arithmetic_and_products ... ok
+test point::tests::dev_point_scale_offset_and_normalize ... ok
+test point_priv::tests::dev_point_priv_finite_and_distances ... ok
+test point_priv::tests::dev_point_priv_rotation_and_rect_helpers ... ok
+test safe32::tests::dev_safe32_saturates_at_sk_limits ... ok
+test scalar::tests::dev_float_interp_func_matches_table_walk ... ok
+test scalar::tests::dev_scalar_rounding_and_sign_helpers ... ok
+test scalar::tests::dev_scalars_equal_and_interp ... ok
+
+test result: ok. 16 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/main.rs (target/debug/deps/rust_skia-f13a06571b548b97)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/harness_test.rs (target/debug/deps/harness_test-45f91aa5bd08eb17)
+
+running 5 tests
+reporter assertions=12 failures=0
+reporter assertions=3 failures=2
+reporter assertions=1 failures=0
+reporter assertions=1 failures=1
+
+thread 'supplemental_registry_excludes_false_condition_and_preserves_head_order' (15687454) panicked at tests/support/mod.rs:25:9:
+1 assertion(s) failed:
+tests/harness_test.rs:19: DEF_CONDITIONAL_TEST executed a test with a false condition
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+reporter assertions=1 failures=0
+
+thread 'support::tests::reporter_collects_failures_and_evaluates_once' (15687455) panicked at tests/support/mod.rs:25:9:
+2 assertion(s) failed:
+tests/support/mod.rs:49: { evaluations += 1; false }
+tests/support/mod.rs:53: false
+reporter assertions=0 failures=0
+test TestCtsEnforcement ... ok
+test TestTrueCondition ... ok
+test TestNormal ... ok
+test support::tests::reporter_collects_failures_and_evaluates_once ... ok
+test supplemental_registry_excludes_false_condition_and_preserves_head_order ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/point_test.rs (target/debug/deps/point_test-dda1b9457dee9017)
+
+running 3 tests
+reporter assertions=8 failures=0
+reporter assertions=132 failures=0
+reporter assertions=3 failures=2
+
+thread 'support::tests::reporter_collects_failures_and_evaluates_once' (15687460) panicked at tests/support/mod.rs:25:9:
+2 assertion(s) failed:
+tests/support/mod.rs:49: { evaluations += 1; false }
+tests/support/mod.rs:53: false
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+test Point_setLengthFast ... ok
+test Point ... ok
+reporter assertions=0 failures=0
+test support::tests::reporter_collects_failures_and_evaluates_once ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/scalar_test.rs (target/debug/deps/scalar_test-5ed77e9088315850)
+
+running 2 tests
+reporter assertions=3 failures=2
+reporter assertions=661 failures=0
+
+thread 'support::tests::reporter_collects_failures_and_evaluates_once' (15687464) panicked at tests/support/mod.rs:25:9:
+2 assertion(s) failed:
+tests/support/mod.rs:49: { evaluations += 1; false }
+tests/support/mod.rs:53: false
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+test Scalar ... ok
+reporter assertions=0 failures=0
+test support::tests::reporter_collects_failures_and_evaluates_once ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/supplemental_m01.rs (target/debug/deps/supplemental_m01-6d44ce76e9ece83f)
+
+running 5 tests
+test supplemental_float_bit_encodings ... ok
+test supplemental_point_distances_and_saturation ... ok
+test supplemental_interpolation_and_equality ... ok
+test supplemental_ulp_boundaries ... ok
+test supplemental_saturation_rounding_and_midpoint ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests rust_skia
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+EXIT: 0

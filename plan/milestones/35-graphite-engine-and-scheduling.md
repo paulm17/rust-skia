@@ -1,0 +1,815 @@
+# Milestone 35: Graphite engine and scheduling
+
+## Outcome and entry gate
+
+Implement Graphite recorder/context, resources, render steps, draw ordering, tasks, geometry, text, precompile data and cache architecture. Preserve upload/lifetime and deferred-recording semantics independently of the backend.
+
+Begin implementation only after milestone 34 is marked ACCEPTED by Codex and the user has handed over this milestone. All earlier accepted tests remain required.
+
+Read `../WORKFLOW.md`, `../MACOS-SCOPE.md` and the inventories before starting. All source paths below are relative to the pinned C++ Skia checkout; all Rust work belongs in the separate rust-skia repository. Never edit the reference checkout to make a test pass.
+
+## Deepseek: implementation contract
+
+Implement Graphite recorder/context, resources, render steps, draw ordering, tasks, geometry, text, precompile data and cache architecture. Preserve upload/lifetime and deferred-recording semantics independently of the backend.
+
+- Port the observable behavior of every owned source/header below, including applicable error paths and public declarations. A header is part of the contract, not documentation to skip. Existing Rust files are integration work, not automatic completion.
+- Map original symbols to Rust modules in the handoff. Keep production logic under `src/` (or workspace library crates); use explicit Cargo features for optional macOS backends. Preserve widths, ownership, layout when observable, and binary formats where required by original tests.
+- Keep Skia-owned algorithmic/runtime code in Rust. External codec/shaping/GPU libraries and Apple framework FFI are allowed only as named, versioned dependencies. Never delegate the implementation to a pre-existing Skia Rust port or C++ Skia.
+- Inspect reached dependencies before coding. `forward-includes.csv` contains syntactic warnings, not proof of runtime dependency. Implement a required earlier prerequisite fully and record it in the handoff; if it materially changes this milestone, request a plan amendment before continuing. Never use fake return values, ignored tests or unimplemented runtime branches to clear a gate.
+- Do not author or change Codex-owned acceptance tests, expected values, tolerances, fixtures or pass records. Development checks may be separate and must be labeled as such. Fix production code when acceptance tests fail.
+- Supply reproducible build commands, feature flags, source/symbol mapping, external dependencies, and known unfinished work using `../HANDOFF-TEMPLATE.md`. Stop after the handoff; do not begin the next milestone.
+
+### Port these production files (Deepseek)
+
+- `include/gpu/graphite/BackendSemaphore.h` — port to Rust.
+- `include/gpu/graphite/BackendTexture.h` — port to Rust.
+- `include/gpu/graphite/Context.h` — port to Rust.
+- `include/gpu/graphite/ContextOptions.h` — port to Rust.
+- `include/gpu/graphite/GraphiteTypes.h` — port to Rust.
+- `include/gpu/graphite/Image.h` — port to Rust.
+- `include/gpu/graphite/ImageProvider.h` — port to Rust.
+- `include/gpu/graphite/PersistentPipelineStorage.h` — port to Rust.
+- `include/gpu/graphite/PrecompileContext.h` — port to Rust.
+- `include/gpu/graphite/Recorder.h` — port to Rust.
+- `include/gpu/graphite/Recording.h` — port to Rust.
+- `include/gpu/graphite/Surface.h` — port to Rust.
+- `include/gpu/graphite/TextureInfo.h` — port to Rust.
+- `include/gpu/graphite/YUVABackendTextures.h` — port to Rust.
+- `include/gpu/graphite/precompile/PaintOptions.h` — port to Rust.
+- `include/gpu/graphite/precompile/Precompile.h` — port to Rust.
+- `include/gpu/graphite/precompile/PrecompileBase.h` — port to Rust.
+- `include/gpu/graphite/precompile/PrecompileBlender.h` — port to Rust.
+- `include/gpu/graphite/precompile/PrecompileColorFilter.h` — port to Rust.
+- `include/gpu/graphite/precompile/PrecompileImageFilter.h` — port to Rust.
+- `include/gpu/graphite/precompile/PrecompileMaskFilter.h` — port to Rust.
+- `include/gpu/graphite/precompile/PrecompileRuntimeEffect.h` — port to Rust.
+- `include/gpu/graphite/precompile/PrecompileShader.h` — port to Rust.
+- `src/gpu/graphite/AtlasProvider.cpp` — port to Rust.
+- `src/gpu/graphite/AtlasProvider.h` — port to Rust.
+- `src/gpu/graphite/Attribute.h` — port to Rust.
+- `src/gpu/graphite/BackendSemaphore.cpp` — port to Rust.
+- `src/gpu/graphite/BackendSemaphorePriv.h` — port to Rust.
+- `src/gpu/graphite/BackendTexture.cpp` — port to Rust.
+- `src/gpu/graphite/BackendTexturePriv.h` — port to Rust.
+- `src/gpu/graphite/Buffer.cpp` — port to Rust.
+- `src/gpu/graphite/Buffer.h` — port to Rust.
+- `src/gpu/graphite/BufferManager.cpp` — port to Rust.
+- `src/gpu/graphite/BufferManager.h` — port to Rust.
+- `src/gpu/graphite/BuiltInCodeSnippetID.h` — port to Rust.
+- `src/gpu/graphite/Caps.cpp` — port to Rust.
+- `src/gpu/graphite/Caps.h` — port to Rust.
+- `src/gpu/graphite/ClientMappedBufferManager.cpp` — port to Rust.
+- `src/gpu/graphite/ClientMappedBufferManager.h` — port to Rust.
+- `src/gpu/graphite/ClipAtlasManager.cpp` — port to Rust.
+- `src/gpu/graphite/ClipAtlasManager.h` — port to Rust.
+- `src/gpu/graphite/ClipStack.cpp` — port to Rust.
+- `src/gpu/graphite/ClipStack.h` — port to Rust.
+- `src/gpu/graphite/CommandBuffer.cpp` — port to Rust.
+- `src/gpu/graphite/CommandBuffer.h` — port to Rust.
+- `src/gpu/graphite/CommandTypes.h` — port to Rust.
+- `src/gpu/graphite/ComputePathAtlas.cpp` — port to Rust.
+- `src/gpu/graphite/ComputePathAtlas.h` — port to Rust.
+- `src/gpu/graphite/ComputePipeline.cpp` — port to Rust.
+- `src/gpu/graphite/ComputePipeline.h` — port to Rust.
+- `src/gpu/graphite/ComputePipelineDesc.h` — port to Rust.
+- `src/gpu/graphite/ComputeTypes.h` — port to Rust.
+- `src/gpu/graphite/Context.cpp` — port to Rust.
+- `src/gpu/graphite/ContextOptionsPriv.h` — port to Rust.
+- `src/gpu/graphite/ContextPriv.h` — port to Rust.
+- `src/gpu/graphite/ContextUtils.cpp` — port to Rust.
+- `src/gpu/graphite/ContextUtils.h` — port to Rust.
+- `src/gpu/graphite/DebugUtils.h` — port to Rust.
+- `src/gpu/graphite/DescriptorData.h` — port to Rust.
+- `src/gpu/graphite/Device.cpp` — port to Rust.
+- `src/gpu/graphite/Device.h` — port to Rust.
+- `src/gpu/graphite/DrawAtlas.cpp` — port to Rust.
+- `src/gpu/graphite/DrawAtlas.h` — port to Rust.
+- `src/gpu/graphite/DrawCommands.h` — port to Rust.
+- `src/gpu/graphite/DrawContext.cpp` — port to Rust.
+- `src/gpu/graphite/DrawContext.h` — port to Rust.
+- `src/gpu/graphite/DrawList.cpp` — port to Rust.
+- `src/gpu/graphite/DrawList.h` — port to Rust.
+- `src/gpu/graphite/DrawListBase.h` — port to Rust.
+- `src/gpu/graphite/DrawListLayer.cpp` — port to Rust.
+- `src/gpu/graphite/DrawListLayer.h` — port to Rust.
+- `src/gpu/graphite/DrawListTypes.h` — port to Rust.
+- `src/gpu/graphite/DrawOrder.h` — port to Rust.
+- `src/gpu/graphite/DrawParams.h` — port to Rust.
+- `src/gpu/graphite/DrawPass.cpp` — port to Rust.
+- `src/gpu/graphite/DrawPass.h` — port to Rust.
+- `src/gpu/graphite/DrawTypes.h` — port to Rust.
+- `src/gpu/graphite/DrawWriter.cpp` — port to Rust.
+- `src/gpu/graphite/DrawWriter.h` — port to Rust.
+- `src/gpu/graphite/GlobalCache.cpp` — port to Rust.
+- `src/gpu/graphite/GlobalCache.h` — port to Rust.
+- `src/gpu/graphite/GpuWorkSubmission.cpp` — port to Rust.
+- `src/gpu/graphite/GpuWorkSubmission.h` — port to Rust.
+- `src/gpu/graphite/GraphicsPipeline.cpp` — port to Rust.
+- `src/gpu/graphite/GraphicsPipeline.h` — port to Rust.
+- `src/gpu/graphite/GraphicsPipelineDesc.h` — port to Rust.
+- `src/gpu/graphite/GraphicsPipelineHandle.h` — port to Rust.
+- `src/gpu/graphite/GraphiteResourceKey.cpp` — port to Rust.
+- `src/gpu/graphite/GraphiteResourceKey.h` — port to Rust.
+- `src/gpu/graphite/ImageFactories.cpp` — port to Rust.
+- `src/gpu/graphite/Image_Base_Graphite.cpp` — port to Rust.
+- `src/gpu/graphite/Image_Base_Graphite.h` — port to Rust.
+- `src/gpu/graphite/Image_Graphite.cpp` — port to Rust.
+- `src/gpu/graphite/Image_Graphite.h` — port to Rust.
+- `src/gpu/graphite/Image_YUVA_Graphite.cpp` — port to Rust.
+- `src/gpu/graphite/Image_YUVA_Graphite.h` — port to Rust.
+- `src/gpu/graphite/InternalDrawTypeFlags.h` — port to Rust.
+- `src/gpu/graphite/KeyContext.cpp` — port to Rust.
+- `src/gpu/graphite/KeyContext.h` — port to Rust.
+- `src/gpu/graphite/KeyHelpers.cpp` — port to Rust.
+- `src/gpu/graphite/KeyHelpers.h` — port to Rust.
+- `src/gpu/graphite/PaintParams.cpp` — port to Rust.
+- `src/gpu/graphite/PaintParams.h` — port to Rust.
+- `src/gpu/graphite/PaintParamsKey.cpp` — port to Rust.
+- `src/gpu/graphite/PaintParamsKey.h` — port to Rust.
+- `src/gpu/graphite/PathAtlas.cpp` — port to Rust.
+- `src/gpu/graphite/PathAtlas.h` — port to Rust.
+- `src/gpu/graphite/PipelineCreationTask.h` — port to Rust.
+- `src/gpu/graphite/PipelineData.h` — port to Rust.
+- `src/gpu/graphite/PipelineManager.cpp` — port to Rust.
+- `src/gpu/graphite/PipelineManager.h` — port to Rust.
+- `src/gpu/graphite/PrecompileContext.cpp` — port to Rust.
+- `src/gpu/graphite/PrecompileContextPriv.h` — port to Rust.
+- `src/gpu/graphite/PrecompileInternal.h` — port to Rust.
+- `src/gpu/graphite/ProxyCache.cpp` — port to Rust.
+- `src/gpu/graphite/ProxyCache.h` — port to Rust.
+- `src/gpu/graphite/PublicPrecompile.cpp` — port to Rust.
+- `src/gpu/graphite/QueueManager.cpp` — port to Rust.
+- `src/gpu/graphite/QueueManager.h` — port to Rust.
+- `src/gpu/graphite/RasterPathAtlas.cpp` — port to Rust.
+- `src/gpu/graphite/RasterPathAtlas.h` — port to Rust.
+- `src/gpu/graphite/RasterPathUtils.cpp` — port to Rust.
+- `src/gpu/graphite/RasterPathUtils.h` — port to Rust.
+- `src/gpu/graphite/Recorder.cpp` — port to Rust.
+- `src/gpu/graphite/RecorderOptionsPriv.h` — port to Rust.
+- `src/gpu/graphite/RecorderPriv.h` — port to Rust.
+- `src/gpu/graphite/Recording.cpp` — port to Rust.
+- `src/gpu/graphite/RecordingPriv.h` — port to Rust.
+- `src/gpu/graphite/RenderPassDesc.cpp` — port to Rust.
+- `src/gpu/graphite/RenderPassDesc.h` — port to Rust.
+- `src/gpu/graphite/Renderer.cpp` — port to Rust.
+- `src/gpu/graphite/Renderer.h` — port to Rust.
+- `src/gpu/graphite/RendererProvider.cpp` — port to Rust.
+- `src/gpu/graphite/RendererProvider.h` — port to Rust.
+- `src/gpu/graphite/Resource.cpp` — port to Rust.
+- `src/gpu/graphite/Resource.h` — port to Rust.
+- `src/gpu/graphite/ResourceCache.cpp` — port to Rust.
+- `src/gpu/graphite/ResourceCache.h` — port to Rust.
+- `src/gpu/graphite/ResourceProvider.cpp` — port to Rust.
+- `src/gpu/graphite/ResourceProvider.h` — port to Rust.
+- `src/gpu/graphite/ResourceTypes.h` — port to Rust.
+- `src/gpu/graphite/RuntimeEffectDictionary.cpp` — port to Rust.
+- `src/gpu/graphite/RuntimeEffectDictionary.h` — port to Rust.
+- `src/gpu/graphite/Sampler.cpp` — port to Rust.
+- `src/gpu/graphite/Sampler.h` — port to Rust.
+- `src/gpu/graphite/ScratchResourceManager.cpp` — port to Rust.
+- `src/gpu/graphite/ScratchResourceManager.h` — port to Rust.
+- `src/gpu/graphite/SerializationUtils.cpp` — port to Rust.
+- `src/gpu/graphite/SerializationUtils.h` — port to Rust.
+- `src/gpu/graphite/ShaderCodeDictionary.cpp` — port to Rust.
+- `src/gpu/graphite/ShaderCodeDictionary.h` — port to Rust.
+- `src/gpu/graphite/ShaderInfo.cpp` — port to Rust.
+- `src/gpu/graphite/ShaderInfo.h` — port to Rust.
+- `src/gpu/graphite/SharedContext.cpp` — port to Rust.
+- `src/gpu/graphite/SharedContext.h` — port to Rust.
+- `src/gpu/graphite/SpecialImage_Graphite.cpp` — port to Rust.
+- `src/gpu/graphite/SpecialImage_Graphite.h` — port to Rust.
+- `src/gpu/graphite/StorageContext.cpp` — port to Rust.
+- `src/gpu/graphite/StorageContext.h` — port to Rust.
+- `src/gpu/graphite/Surface_Graphite.cpp` — port to Rust.
+- `src/gpu/graphite/Surface_Graphite.h` — port to Rust.
+- `src/gpu/graphite/Texture.cpp` — port to Rust.
+- `src/gpu/graphite/Texture.h` — port to Rust.
+- `src/gpu/graphite/TextureFormat.cpp` — port to Rust.
+- `src/gpu/graphite/TextureFormat.h` — port to Rust.
+- `src/gpu/graphite/TextureFormatXferFn.cpp` — port to Rust.
+- `src/gpu/graphite/TextureFormatXferFn.h` — port to Rust.
+- `src/gpu/graphite/TextureInfo.cpp` — port to Rust.
+- `src/gpu/graphite/TextureInfoPriv.h` — port to Rust.
+- `src/gpu/graphite/TextureProxy.cpp` — port to Rust.
+- `src/gpu/graphite/TextureProxy.h` — port to Rust.
+- `src/gpu/graphite/TextureProxyView.h` — port to Rust.
+- `src/gpu/graphite/TextureUtils.cpp` — port to Rust.
+- `src/gpu/graphite/TextureUtils.h` — port to Rust.
+- `src/gpu/graphite/ThreadSafeResourceProvider.cpp` — port to Rust.
+- `src/gpu/graphite/ThreadSafeResourceProvider.h` — port to Rust.
+- `src/gpu/graphite/Uniform.h` — port to Rust.
+- `src/gpu/graphite/UniformManager.cpp` — port to Rust.
+- `src/gpu/graphite/UniformManager.h` — port to Rust.
+- `src/gpu/graphite/UniquePaintParamsID.h` — port to Rust.
+- `src/gpu/graphite/UploadBufferManager.cpp` — port to Rust.
+- `src/gpu/graphite/UploadBufferManager.h` — port to Rust.
+- `src/gpu/graphite/YUVABackendTextures.cpp` — port to Rust.
+- `src/gpu/graphite/compute/ComputeStep.cpp` — port to Rust.
+- `src/gpu/graphite/compute/ComputeStep.h` — port to Rust.
+- `src/gpu/graphite/compute/DispatchGroup.cpp` — port to Rust.
+- `src/gpu/graphite/compute/DispatchGroup.h` — port to Rust.
+- `src/gpu/graphite/compute/VelloComputeSteps.cpp` — port to Rust.
+- `src/gpu/graphite/compute/VelloComputeSteps.h` — port to Rust.
+- `src/gpu/graphite/compute/VelloRenderer.cpp` — port to Rust.
+- `src/gpu/graphite/compute/VelloRenderer.h` — port to Rust.
+- `src/gpu/graphite/geom/AnalyticBlurMask.cpp` — port to Rust.
+- `src/gpu/graphite/geom/AnalyticBlurMask.h` — port to Rust.
+- `src/gpu/graphite/geom/AnalyticRRectBlurMask.cpp` — port to Rust.
+- `src/gpu/graphite/geom/AnalyticRRectBlurMask.h` — port to Rust.
+- `src/gpu/graphite/geom/BoundsManager.h` — port to Rust.
+- `src/gpu/graphite/geom/CoverageMaskShape.h` — port to Rust.
+- `src/gpu/graphite/geom/EdgeAAQuad.h` — port to Rust.
+- `src/gpu/graphite/geom/EndCaps.h` — port to Rust.
+- `src/gpu/graphite/geom/Geometry.h` — port to Rust.
+- `src/gpu/graphite/geom/IntersectionTree.cpp` — port to Rust.
+- `src/gpu/graphite/geom/IntersectionTree.h` — port to Rust.
+- `src/gpu/graphite/geom/NonMSAAClip.h` — port to Rust.
+- `src/gpu/graphite/geom/Rect.h` — port to Rust.
+- `src/gpu/graphite/geom/Shape.cpp` — port to Rust.
+- `src/gpu/graphite/geom/Shape.h` — port to Rust.
+- `src/gpu/graphite/geom/SubRunData.h` — port to Rust.
+- `src/gpu/graphite/geom/Transform.cpp` — port to Rust.
+- `src/gpu/graphite/geom/Transform.h` — port to Rust.
+- `src/gpu/graphite/geom/WideTiles.h` — port to Rust.
+- `src/gpu/graphite/precompile/PaintOption.cpp` — port to Rust.
+- `src/gpu/graphite/precompile/PaintOption.h` — port to Rust.
+- `src/gpu/graphite/precompile/PaintOptions.cpp` — port to Rust.
+- `src/gpu/graphite/precompile/PaintOptionsPriv.h` — port to Rust.
+- `src/gpu/graphite/precompile/PrecompileBaseComplete.h` — port to Rust.
+- `src/gpu/graphite/precompile/PrecompileBasePriv.h` — port to Rust.
+- `src/gpu/graphite/precompile/PrecompileBlender.cpp` — port to Rust.
+- `src/gpu/graphite/precompile/PrecompileBlenderPriv.h` — port to Rust.
+- `src/gpu/graphite/precompile/PrecompileColorFilter.cpp` — port to Rust.
+- `src/gpu/graphite/precompile/PrecompileColorFiltersPriv.h` — port to Rust.
+- `src/gpu/graphite/precompile/PrecompileImageFilter.cpp` — port to Rust.
+- `src/gpu/graphite/precompile/PrecompileImageFilterPriv.h` — port to Rust.
+- `src/gpu/graphite/precompile/PrecompileImageFiltersPriv.h` — port to Rust.
+- `src/gpu/graphite/precompile/PrecompileImageShader.h` — port to Rust.
+- `src/gpu/graphite/precompile/PrecompileMaskFilter.cpp` — port to Rust.
+- `src/gpu/graphite/precompile/PrecompileRuntimeEffect.cpp` — port to Rust.
+- `src/gpu/graphite/precompile/PrecompileShader.cpp` — port to Rust.
+- `src/gpu/graphite/precompile/PrecompileShaderPriv.h` — port to Rust.
+- `src/gpu/graphite/precompile/PrecompileShadersPriv.h` — port to Rust.
+- `src/gpu/graphite/render/AnalyticBlurRenderStep.cpp` — port to Rust.
+- `src/gpu/graphite/render/AnalyticBlurRenderStep.h` — port to Rust.
+- `src/gpu/graphite/render/AnalyticRRectBlurRenderStep.cpp` — port to Rust.
+- `src/gpu/graphite/render/AnalyticRRectBlurRenderStep.h` — port to Rust.
+- `src/gpu/graphite/render/AnalyticRRectRenderStep.cpp` — port to Rust.
+- `src/gpu/graphite/render/AnalyticRRectRenderStep.h` — port to Rust.
+- `src/gpu/graphite/render/BitmapTextRenderStep.cpp` — port to Rust.
+- `src/gpu/graphite/render/BitmapTextRenderStep.h` — port to Rust.
+- `src/gpu/graphite/render/CircularArcRenderStep.cpp` — port to Rust.
+- `src/gpu/graphite/render/CircularArcRenderStep.h` — port to Rust.
+- `src/gpu/graphite/render/CommonDepthStencilSettings.h` — port to Rust.
+- `src/gpu/graphite/render/CoverBoundsRenderStep.cpp` — port to Rust.
+- `src/gpu/graphite/render/CoverBoundsRenderStep.h` — port to Rust.
+- `src/gpu/graphite/render/CoverageMaskRenderStep.cpp` — port to Rust.
+- `src/gpu/graphite/render/CoverageMaskRenderStep.h` — port to Rust.
+- `src/gpu/graphite/render/DynamicInstancesPatchAllocator.h` — port to Rust.
+- `src/gpu/graphite/render/EndCapRenderStep.cpp` — port to Rust.
+- `src/gpu/graphite/render/EndCapRenderStep.h` — port to Rust.
+- `src/gpu/graphite/render/MeshRenderStep.cpp` — port to Rust.
+- `src/gpu/graphite/render/MeshRenderStep.h` — port to Rust.
+- `src/gpu/graphite/render/MiddleOutFanRenderStep.cpp` — port to Rust.
+- `src/gpu/graphite/render/MiddleOutFanRenderStep.h` — port to Rust.
+- `src/gpu/graphite/render/PerEdgeAAQuadRenderStep.cpp` — port to Rust.
+- `src/gpu/graphite/render/PerEdgeAAQuadRenderStep.h` — port to Rust.
+- `src/gpu/graphite/render/SDFTextLCDRenderStep.cpp` — port to Rust.
+- `src/gpu/graphite/render/SDFTextLCDRenderStep.h` — port to Rust.
+- `src/gpu/graphite/render/SDFTextRenderStep.cpp` — port to Rust.
+- `src/gpu/graphite/render/SDFTextRenderStep.h` — port to Rust.
+- `src/gpu/graphite/render/TessellateCurvesRenderStep.cpp` — port to Rust.
+- `src/gpu/graphite/render/TessellateCurvesRenderStep.h` — port to Rust.
+- `src/gpu/graphite/render/TessellateStrokesRenderStep.cpp` — port to Rust.
+- `src/gpu/graphite/render/TessellateStrokesRenderStep.h` — port to Rust.
+- `src/gpu/graphite/render/TessellateWedgesRenderStep.cpp` — port to Rust.
+- `src/gpu/graphite/render/TessellateWedgesRenderStep.h` — port to Rust.
+- `src/gpu/graphite/render/VerticesRenderStep.cpp` — port to Rust.
+- `src/gpu/graphite/render/VerticesRenderStep.h` — port to Rust.
+- `src/gpu/graphite/render/WideTileRenderStep.cpp` — port to Rust.
+- `src/gpu/graphite/render/WideTileRenderStep.h` — port to Rust.
+- `src/gpu/graphite/sparse_strips/AlphaAtlasManager.cpp` — port to Rust.
+- `src/gpu/graphite/sparse_strips/AlphaAtlasManager.h` — port to Rust.
+- `src/gpu/graphite/sparse_strips/Flatten.cpp` — port to Rust.
+- `src/gpu/graphite/sparse_strips/Flatten.h` — port to Rust.
+- `src/gpu/graphite/sparse_strips/MSAA_LUT.h` — port to Rust.
+- `src/gpu/graphite/sparse_strips/MakeStrips.h` — port to Rust.
+- `src/gpu/graphite/sparse_strips/Polyline.h` — port to Rust.
+- `src/gpu/graphite/sparse_strips/SparseStripsConfig.h` — port to Rust.
+- `src/gpu/graphite/sparse_strips/SparseStripsTypes.h` — port to Rust.
+- `src/gpu/graphite/sparse_strips/StripGenerator.cpp` — port to Rust.
+- `src/gpu/graphite/sparse_strips/StripGenerator.h` — port to Rust.
+- `src/gpu/graphite/sparse_strips/StripProcessorScalar.h` — port to Rust.
+- `src/gpu/graphite/sparse_strips/StripProcessorSimd.h` — port to Rust.
+- `src/gpu/graphite/sparse_strips/Tiler.h` — port to Rust.
+- `src/gpu/graphite/sparse_strips/WindingHistogram.h` — port to Rust.
+- `src/gpu/graphite/task/ClearBuffersTask.cpp` — port to Rust.
+- `src/gpu/graphite/task/ClearBuffersTask.h` — port to Rust.
+- `src/gpu/graphite/task/ComputeTask.cpp` — port to Rust.
+- `src/gpu/graphite/task/ComputeTask.h` — port to Rust.
+- `src/gpu/graphite/task/CopyTask.cpp` — port to Rust.
+- `src/gpu/graphite/task/CopyTask.h` — port to Rust.
+- `src/gpu/graphite/task/DrawTask.cpp` — port to Rust.
+- `src/gpu/graphite/task/DrawTask.h` — port to Rust.
+- `src/gpu/graphite/task/RenderPassTask.cpp` — port to Rust.
+- `src/gpu/graphite/task/RenderPassTask.h` — port to Rust.
+- `src/gpu/graphite/task/SynchronizeToCpuTask.cpp` — port to Rust.
+- `src/gpu/graphite/task/SynchronizeToCpuTask.h` — port to Rust.
+- `src/gpu/graphite/task/Task.h` — port to Rust.
+- `src/gpu/graphite/task/TaskList.cpp` — port to Rust.
+- `src/gpu/graphite/task/TaskList.h` — port to Rust.
+- `src/gpu/graphite/task/UploadTask.cpp` — port to Rust.
+- `src/gpu/graphite/task/UploadTask.h` — port to Rust.
+- `src/gpu/graphite/text/GlyphData.cpp` — port to Rust.
+- `src/gpu/graphite/text/GlyphData.h` — port to Rust.
+- `src/gpu/graphite/text/TextAtlasManager.cpp` — port to Rust.
+- `src/gpu/graphite/text/TextAtlasManager.h` — port to Rust.
+- `src/gpu/graphite/text/TextStrike.cpp` — port to Rust.
+- `src/gpu/graphite/text/TextStrike.h` — port to Rust.
+- `tools/graphite/ContextFactory.cpp` — port to Rust.
+- `tools/graphite/ContextFactory.h` — port to Rust.
+- `tools/graphite/GraphiteMemoryPipelineStorage.cpp` — port to Rust.
+- `tools/graphite/GraphiteMemoryPipelineStorage.h` — port to Rust.
+- `tools/graphite/GraphiteToolUtils.cpp` — port to Rust.
+- `tools/graphite/GraphiteToolUtils.h` — port to Rust.
+- `tools/graphite/PipelineCallbackHandler.cpp` — port to Rust.
+- `tools/graphite/PipelineCallbackHandler.h` — port to Rust.
+- `tools/graphite/ProtectedUtils_Graphite.cpp` — port to Rust.
+- `tools/graphite/UniqueKeyUtils.cpp` — port to Rust.
+- `tools/graphite/UniqueKeyUtils.h` — port to Rust.
+- `tools/graphite/precompile/PrecompileEffectFactories.cpp` — port to Rust.
+- `tools/graphite/precompile/PrecompileEffectFactories.h` — port to Rust.
+
+### Adapt these build/tooling files (Deepseek)
+
+- `include/gpu/graphite/BUILD.bazel`.
+- `include/gpu/graphite/precompile/BUILD.bazel`.
+- `src/gpu/graphite/BUILD.bazel`.
+- `src/gpu/graphite/compute/BUILD.bazel`.
+- `src/gpu/graphite/geom/BUILD.bazel`.
+- `src/gpu/graphite/precompile/BUILD.bazel`.
+- `src/gpu/graphite/render/BUILD.bazel`.
+- `src/gpu/graphite/sparse_strips/BUILD.bazel`.
+- `src/gpu/graphite/surface/BUILD.bazel`.
+- `src/gpu/graphite/task/BUILD.bazel`.
+- `src/gpu/graphite/text/BUILD.bazel`.
+- `tools/graphite/BUILD.bazel`.
+
+## Codex: acceptance-test contract
+
+Translate CPU-executable Graphite and precompile planning tests. Native rendering, compute and backend-dependent precompile cases are gated in M36/M37/M38. Preserve original recorder/order/resource invariants and unsupported-capability outcomes.
+
+- Translate the original reachable test bodies and helpers, preserving inputs, order, seeds, assertions, tolerances, expected failures and conditional skips. Retain original names and source locations in the correspondence record.
+- Discover compiled C++ test registrations under the matching macOS feature configuration. The registration CSV is an initial source scan, not a substitute for expanded macro/test discovery. Resolve conditional/custom suites before accepting this milestone.
+- For files split across milestones, translate only the assigned registrations now, including their helper closure; record the rest under their later gate. Do not mark a whole file complete merely because its first tests pass.
+- Port original test utilities needed by these cases, even if their general tool packaging has a later owner. Keep fixture-only implementations in test support and never substitute them for production APIs being checked.
+- Where upstream provides no direct unit test, add clearly labeled supplemental contract/differential tests, separate from faithful translations. Run C++ as an external reference where needed; do not link it as the Rust implementation.
+- Preserve resources and shader/golden inputs by hash. Resource metadata and required downloads must be recorded before running; absent inputs or backend hardware are BLOCKED, not a skip that counts as PASS.
+
+### Port these test/runner/support files (Codex)
+
+- `tests/BigImageTest.cpp`.
+- `tests/BlurTest.cpp`.
+- `tests/CanvasTest.cpp`.
+- `tests/DirectMaskLimitTest.cpp`.
+- `tests/F16DrawTest.cpp`.
+- `tests/FilterResultTest.cpp`.
+- `tests/ImageFilterTest.cpp`.
+- `tests/RuntimeBlendTest.cpp`.
+- `tests/ShaderTest.cpp`.
+- `tests/SimplifyPaintTest.cpp`.
+- `tests/SkColorSpaceXformStepsTest.cpp`.
+- `tests/SkRuntimeEffectTest.cpp`.
+- `tests/TextureSizeTest.cpp`.
+- `tests/WritePixelsTest.cpp`.
+- `tests/graphite/BackendTextureTest.cpp`.
+- `tests/graphite/BoundsManagerTest.cpp`.
+- `tests/graphite/BufferManagerTest.cpp`.
+- `tests/graphite/CacheBudgetTest.cpp`.
+- `tests/graphite/CacheKeyTest.cpp`.
+- `tests/graphite/ComputeTest.cpp`.
+- `tests/graphite/DeviceTest.cpp`.
+- `tests/graphite/DrawAtlasTest.cpp`.
+- `tests/graphite/GraphiteContextRecorderTest.cpp`.
+- `tests/graphite/GraphitePromiseImageTest.cpp`.
+- `tests/graphite/GraphiteResourceCacheTest.cpp`.
+- `tests/graphite/GraphiteYUVAPromiseImageTest.cpp`.
+- `tests/graphite/ImageOriginTest.cpp`.
+- `tests/graphite/ImageProviderTest.cpp`.
+- `tests/graphite/ImageShaderTest.cpp`.
+- `tests/graphite/ImageWrapTextureMipmapsTest.cpp`.
+- `tests/graphite/InnerFillTest.cpp`.
+- `tests/graphite/IntersectionTreeTest.cpp`.
+- `tests/graphite/KeyTest.cpp`.
+- `tests/graphite/MultisampleTest.cpp`.
+- `tests/graphite/MutableImagesTest.cpp`.
+- `tests/graphite/NotifyInUseTest.cpp`.
+- `tests/graphite/PersistentPipelineStorageTest.cpp`.
+- `tests/graphite/PipelineCallbackTest.cpp`.
+- `tests/graphite/PipelineDataCacheTest.cpp`.
+- `tests/graphite/ProxyCacheTest.cpp`.
+- `tests/graphite/RTEffectTest.cpp`.
+- `tests/graphite/ReadWritePixelsGraphiteTest.cpp`.
+- `tests/graphite/RecorderTest.cpp`.
+- `tests/graphite/RecordingOrderTest.cpp`.
+- `tests/graphite/RecordingSurfacesTest.cpp`.
+- `tests/graphite/RectTest.cpp`.
+- `tests/graphite/ShapeTest.cpp`.
+- `tests/graphite/StorageContextTest.cpp`.
+- `tests/graphite/SubmitWithFinishProcTest.cpp`.
+- `tests/graphite/SwizzleTest.cpp`.
+- `tests/graphite/TextureFallbackTest.cpp`.
+- `tests/graphite/TextureFormatTest.cpp`.
+- `tests/graphite/TextureProxyTest.cpp`.
+- `tests/graphite/TransformTest.cpp`.
+- `tests/graphite/UniformManagerTest.cpp`.
+- `tests/graphite/UniformOffsetCalculatorTest.cpp`.
+- `tests/graphite/UpdateBackendTextureTest.cpp`.
+- `tests/graphite/UploadBufferManagerTest.cpp`.
+- `tests/graphite/VerticesPaddingTest.cpp`.
+- `tests/graphite/crbug_513836996.cpp`.
+- `tests/graphite/precompile/ChromePrecompileTest.cpp`.
+- `tests/graphite/precompile/CombinationBuilderTest.cpp`.
+- `tests/graphite/precompile/PaintOptionsBuilder.cpp`.
+- `tests/graphite/precompile/PaintOptionsBuilder.h`.
+- `tests/graphite/precompile/PaintParamsKeyTest.cpp`.
+- `tests/graphite/precompile/PaintParamsTestUtils.cpp`.
+- `tests/graphite/precompile/PaintParamsTestUtils.h`.
+- `tests/graphite/precompile/PipelineManagerEarlyExit.cpp`.
+- `tests/graphite/precompile/PipelineManagerThreaded.cpp`.
+- `tests/graphite/precompile/PrecompileStatsTest.cpp`.
+- `tests/graphite/precompile/PrecompileTestUtils.cpp`.
+- `tests/graphite/precompile/PrecompileTestUtils.h`.
+- `tests/graphite/precompile/ThreadedPrecompileTest.cpp`.
+- `tests/graphite/precompile/UserdefinedStableKeyTest.cpp`.
+- `tests/graphite/sparse_strips/AtlasTests.cpp`.
+- `tests/graphite/sparse_strips/ClipTest.cpp`.
+- `tests/graphite/sparse_strips/CoverageTest.cpp`.
+- `tests/graphite/sparse_strips/CoverageTestUtils.h`.
+- `tests/graphite/sparse_strips/CullingRepros.h`.
+- `tests/graphite/sparse_strips/FastValidator.cpp`.
+- `tests/graphite/sparse_strips/FastValidator.h`.
+- `tests/graphite/sparse_strips/FlattenTest.cpp`.
+- `tests/graphite/sparse_strips/LUTTest.cpp`.
+- `tests/graphite/sparse_strips/Oracle.cpp`.
+- `tests/graphite/sparse_strips/Oracle.h`.
+- `tests/graphite/sparse_strips/OracleTest.cpp`.
+- `tests/graphite/sparse_strips/OracleValidator.cpp`.
+- `tests/graphite/sparse_strips/OracleValidator.h`.
+- `tests/graphite/sparse_strips/PolylineTest.cpp`.
+- `tests/graphite/sparse_strips/SkpValidator.cpp`.
+- `tests/graphite/sparse_strips/SkpValidator.h`.
+- `tests/graphite/sparse_strips/TileTestCases.cpp`.
+- `tests/graphite/sparse_strips/TileTestCases.h`.
+- `tests/graphite/sparse_strips/TilerTest.cpp`.
+- `tools/graphite/GraphiteTestContext.cpp`.
+- `tools/graphite/GraphiteTestContext.h`.
+- `tools/graphite/TestOptions.h`.
+
+### Original test registrations assigned to this gate
+
+- `BlurDrawing` — `tests/BlurTest.cpp:136`; CPU; `DEF_TEST`.
+- `BlurSigmaRange` — `tests/BlurTest.cpp:321`; CPU; `DEF_TEST`.
+- `BlurAsABlur` — `tests/BlurTest.cpp:368`; CPU; `DEF_TEST`.
+- `BlurredRRectNinePatchComputation` — `tests/BlurTest.cpp:451`; CPU; `DEF_TEST`.
+- `EmbossPerlinCrash` — `tests/BlurTest.cpp:514`; CPU; `DEF_TEST`.
+- `BlurZeroSigma` — `tests/BlurTest.cpp:529`; CPU; `DEF_TEST`.
+- `zero_blur` — `tests/BlurTest.cpp:594`; CPU; `DEF_TEST`.
+- `blur_b508075339` — `tests/BlurTest.cpp:674`; CPU; `DEF_TEST`.
+- `canvas_unsorted_clip` — `tests/CanvasTest.cpp:89`; CPU; `DEF_TEST`.
+- `canvas_clipbounds` — `tests/CanvasTest.cpp:110`; CPU; `DEF_TEST`.
+- `canvas_clip_restriction` — `tests/CanvasTest.cpp:183`; CPU; `DEF_TEST`.
+- `canvas_empty_clip` — `tests/CanvasTest.cpp:188`; CPU; `DEF_TEST`.
+- `CanvasNewRasterTest` — `tests/CanvasTest.cpp:200`; CPU; `DEF_TEST`.
+- `Canvas_bitmap` — `tests/CanvasTest.cpp:408`; CPU; `DEF_TEST`.
+- `Canvas_pdf` — `tests/CanvasTest.cpp:417`; CPU; `DEF_TEST`.
+- `Canvas_SaveState` — `tests/CanvasTest.cpp:430`; CPU; `DEF_TEST`.
+- `Canvas_ClipEmptyPath` — `tests/CanvasTest.cpp:448`; CPU; `DEF_TEST`.
+- `PaintFilterCanvas_ConsistentState` — `tests/CanvasTest.cpp:483`; CPU; `DEF_TEST`.
+- `NWayCanvas` — `tests/CanvasTest.cpp:518`; CPU; `DEF_TEST`.
+- `CanvasStack` — `tests/CanvasTest.cpp:547`; CPU; `DEF_TEST`.
+- `CanvasClipType` — `tests/CanvasTest.cpp:594`; CPU; `DEF_TEST`.
+- `Canvas_LegacyColorBehavior` — `tests/CanvasTest.cpp:608`; CPU; `DEF_TEST`.
+- `Canvas_SaveLayerWithNullBoundsAndZeroBoundsImageFilter` — `tests/CanvasTest.cpp:627`; CPU; `DEF_TEST`.
+- `Canvas_degenerate_dimension` — `tests/CanvasTest.cpp:639`; CPU; `DEF_TEST`.
+- `Canvas_ClippedOutImageFilter` — `tests/CanvasTest.cpp:656`; CPU; `DEF_TEST`.
+- `canvas_savelayer_destructor` — `tests/CanvasTest.cpp:680`; CPU; `DEF_TEST`.
+- `Canvas_saveLayer_colorSpace` — `tests/CanvasTest.cpp:738`; CPU; `DEF_TEST`.
+- `FilterResult_raster_` — `tests/FilterResultTest.cpp:1392`; CPU; `DEF_TEST`.
+- `EmptySource` — `tests/FilterResultTest.cpp:1410`; CPU; `DEF_TEST_SUITE`.
+- `EmptyDesiredOutput` — `tests/FilterResultTest.cpp:1439`; CPU; `DEF_TEST_SUITE`.
+- `Crop` — `tests/FilterResultTest.cpp:1472`; CPU; `DEF_TEST_SUITE`.
+- `CropDisjointFromSourceAndOutput` — `tests/FilterResultTest.cpp:1520`; CPU; `DEF_TEST_SUITE`.
+- `EmptyCrop` — `tests/FilterResultTest.cpp:1569`; CPU; `DEF_TEST_SUITE`.
+- `DisjointCrops` — `tests/FilterResultTest.cpp:1585`; CPU; `DEF_TEST_SUITE`.
+- `IntersectingCrops` — `tests/FilterResultTest.cpp:1611`; CPU; `DEF_TEST_SUITE`.
+- `PeriodicTileCrops` — `tests/FilterResultTest.cpp:1641`; CPU; `DEF_TEST_SUITE`.
+- `DecalThenClamp` — `tests/FilterResultTest.cpp:1698`; CPU; `DEF_TEST_SUITE`.
+- `Transform` — `tests/FilterResultTest.cpp:1717`; CPU; `DEF_TEST_SUITE`.
+- `CompatibleSamplingConcatsTransforms` — `tests/FilterResultTest.cpp:1740`; CPU; `DEF_TEST_SUITE`.
+- `IncompatibleSamplingResolvesImages` — `tests/FilterResultTest.cpp:1815`; CPU; `DEF_TEST_SUITE`.
+- `IntegerOffsetIgnoresNearestSampling` — `tests/FilterResultTest.cpp:1868`; CPU; `DEF_TEST_SUITE`.
+- `TransformBecomesEmpty` — `tests/FilterResultTest.cpp:1896`; CPU; `DEF_TEST_SUITE`.
+- `TransformAndCrop` — `tests/FilterResultTest.cpp:1918`; CPU; `DEF_TEST_SUITE`.
+- `TransformAndTile` — `tests/FilterResultTest.cpp:1963`; CPU; `DEF_TEST_SUITE`.
+- `ColorFilter` — `tests/FilterResultTest.cpp:2000`; CPU; `DEF_TEST_SUITE`.
+- `TransformedColorFilter` — `tests/FilterResultTest.cpp:2046`; CPU; `DEF_TEST_SUITE`.
+- `TransformBetweenColorFilters` — `tests/FilterResultTest.cpp:2079`; CPU; `DEF_TEST_SUITE`.
+- `ColorFilterBetweenTransforms` — `tests/FilterResultTest.cpp:2113`; CPU; `DEF_TEST_SUITE`.
+- `CroppedColorFilter` — `tests/FilterResultTest.cpp:2132`; CPU; `DEF_TEST_SUITE`.
+- `CropBetweenColorFilters` — `tests/FilterResultTest.cpp:2178`; CPU; `DEF_TEST_SUITE`.
+- `ColorFilterBetweenCrops` — `tests/FilterResultTest.cpp:2230`; CPU; `DEF_TEST_SUITE`.
+- `CroppedTransformedColorFilter` — `tests/FilterResultTest.cpp:2260`; CPU; `DEF_TEST_SUITE`.
+- `CroppedTransformedTransparencyAffectingColorFilter` — `tests/FilterResultTest.cpp:2307`; CPU; `DEF_TEST_SUITE`.
+- `BackdropFilterRotated` — `tests/FilterResultTest.cpp:2376`; CPU; `DEF_TEST_SUITE`.
+- `RescaleWithTileMode` — `tests/FilterResultTest.cpp:2406`; CPU; `DEF_TEST_SUITE`.
+- `RescaleWithTransform` — `tests/FilterResultTest.cpp:2575`; CPU; `DEF_TEST_SUITE`.
+- `RescaleWithColorFilter` — `tests/FilterResultTest.cpp:2676`; CPU; `DEF_TEST_SUITE`.
+- `MakeFromImage` — `tests/FilterResultTest.cpp:2722`; CPU; `DEF_TEST_SUITE`.
+- `ImageFilter` — `tests/ImageFilterTest.cpp:440`; CPU; `DEF_TEST`.
+- `ImageFilterNegativeBlurSigma` — `tests/ImageFilterTest.cpp:640`; CPU; `DEF_TEST`.
+- `MorphologyFilterRadiusWithMirrorCTM` — `tests/ImageFilterTest.cpp:724`; CPU; `DEF_TEST`.
+- `ImageFilterZeroBlurSigma` — `tests/ImageFilterTest.cpp:769`; CPU; `DEF_TEST`.
+- `ImageFilterFailAffectsTransparentBlack` — `tests/ImageFilterTest.cpp:805`; CPU; `DEF_TEST`.
+- `ImageFilterDrawTiled` — `tests/ImageFilterTest.cpp:818`; CPU; `DEF_TEST`.
+- `ImageFilterDrawMatrixBBH` — `tests/ImageFilterTest.cpp:926`; CPU; `DEF_TEST`.
+- `ImageFilterBlurThenShadowBounds` — `tests/ImageFilterTest.cpp:956`; CPU; `DEF_TEST`.
+- `ImageFilterShadowThenBlurBounds` — `tests/ImageFilterTest.cpp:980`; CPU; `DEF_TEST`.
+- `ImageFilterDilateThenBlurBounds` — `tests/ImageFilterTest.cpp:1002`; CPU; `DEF_TEST`.
+- `ImageFilterScaledBlurRadius` — `tests/ImageFilterTest.cpp:1024`; CPU; `DEF_TEST`.
+- `ImageFilterComposedBlurFastBounds` — `tests/ImageFilterTest.cpp:1077`; CPU; `DEF_TEST`.
+- `ImageFilterUnionBounds` — `tests/ImageFilterTest.cpp:1090`; CPU; `DEF_TEST`.
+- `ImageFilterMergeResultSize` — `tests/ImageFilterTest.cpp:1131`; CPU; `DEF_TEST`.
+- `ImageFilterDrawTiledBlurRTree` — `tests/ImageFilterTest.cpp:1162`; CPU; `DEF_TEST`.
+- `ImageFilterMatrixConvolution` — `tests/ImageFilterTest.cpp:1208`; CPU; `DEF_TEST`.
+- `ImageFilterMatrixConvolutionBorder` — `tests/ImageFilterTest.cpp:1232`; CPU; `DEF_TEST`.
+- `ImageFilterMatrixConvolutionBigKernel` — `tests/ImageFilterTest.cpp:1293`; CPU; `DEF_TEST`.
+- `ImageFilterCropRect` — `tests/ImageFilterTest.cpp:1306`; CPU; `DEF_TEST`.
+- `ImageFilterMatrix` — `tests/ImageFilterTest.cpp:1319`; CPU; `DEF_TEST`.
+- `ImageFilterClippedPictureImageFilter` — `tests/ImageFilterTest.cpp:1373`; CPU; `DEF_TEST`.
+- `ImageFilterEmptySaveLayer` — `tests/ImageFilterTest.cpp:1386`; CPU; `DEF_TEST`.
+- `HugeBlurImageFilter` — `tests/ImageFilterTest.cpp:1448`; CPU; `DEF_TEST`.
+- `ImageFilterMatrixConvolutionTest` — `tests/ImageFilterTest.cpp:1455`; CPU; `DEF_TEST`.
+- `ImageFilterNestedSaveLayer` — `tests/ImageFilterTest.cpp:1540`; CPU; `DEF_TEST`.
+- `XfermodeImageFilterCroppedInput` — `tests/ImageFilterTest.cpp:1590`; CPU; `DEF_TEST`.
+- `ComposedImageFilterOffset` — `tests/ImageFilterTest.cpp:1614`; CPU; `DEF_TEST`.
+- `ComposedImageFilterBounds` — `tests/ImageFilterTest.cpp:1661`; CPU; `DEF_TEST`.
+- `ImageFilterCanComputeFastBounds` — `tests/ImageFilterTest.cpp:1674`; CPU; `DEF_TEST`.
+- `ImageFilterImageSourceSerialization` — `tests/ImageFilterTest.cpp:1736`; CPU; `DEF_TEST`.
+- `ImageFilterImageSourceUninitialized` — `tests/ImageFilterTest.cpp:1780`; CPU; `DEF_TEST`.
+- `ImageFilterBlurLargeImage` — `tests/ImageFilterTest.cpp:1834`; CPU; `DEF_TEST`.
+- `ImageFilterMakeWithFilter` — `tests/ImageFilterTest.cpp:1915`; CPU; `DEF_TEST`.
+- `ImageFilterComplexCTM` — `tests/ImageFilterTest.cpp:2192`; CPU; `DEF_TEST`.
+- `XfermodeImageFilterBounds` — `tests/ImageFilterTest.cpp:2222`; CPU; `DEF_TEST`.
+- `OffsetImageFilterBounds` — `tests/ImageFilterTest.cpp:2271`; CPU; `DEF_TEST`.
+- `OffsetImageFilterBoundsNoOverflow` — `tests/ImageFilterTest.cpp:2296`; CPU; `DEF_TEST`.
+- `ArithmeticImageFilterBounds` — `tests/ImageFilterTest.cpp:2394`; CPU; `DEF_TEST`.
+- `DisplacementMapBounds` — `tests/ImageFilterTest.cpp:2400`; CPU; `DEF_TEST`.
+- `ImageSourceBounds` — `tests/ImageFilterTest.cpp:2436`; CPU; `DEF_TEST`.
+- `PictureImageSourceBounds` — `tests/ImageFilterTest.cpp:2489`; CPU; `DEF_TEST`.
+- `DropShadowImageFilter_Huge` — `tests/ImageFilterTest.cpp:2539`; CPU; `DEF_TEST`.
+- `DisplacementImageFilter_InvalidInputs_ReturnsNullptr` — `tests/ImageFilterTest.cpp:2551`; CPU; `DEF_TEST`.
+- `ImageFilter_DrawExtremeMatrixTransform_DoesNotAssert` — `tests/ImageFilterTest.cpp:2571`; CPU; `DEF_TEST`.
+- `ImageFilter_UnboundedInputMagnifier_EdgeLeak` — `tests/ImageFilterTest.cpp:2603`; CPU; `DEF_TEST`.
+- `SkRuntimeBlender_CPU` — `tests/RuntimeBlendTest.cpp:108`; CPU; `DEF_TEST`.
+- `Shader_isAImage` — `tests/ShaderTest.cpp:75`; CPU; `DEF_TEST`.
+- `ComposeShaderSingle` — `tests/ShaderTest.cpp:93`; CPU; `DEF_TEST`.
+- `ShaderTestNestedBlendsCpu` — `tests/ShaderTest.cpp:178`; CPU; `DEF_TEST`.
+- `SimplifyPaintTest_Raster` — `tests/SimplifyPaintTest.cpp:230`; CPU; `DEF_TEST`.
+- `SkColorSpaceXformSteps` — `tests/SkColorSpaceXformStepsTest.cpp:84`; CPU; `DEF_TEST`.
+- `SkColorSpaceXform_Apply` — `tests/SkColorSpaceXformStepsTest.cpp:416`; CPU; `DEF_TEST`.
+- `SkColorSpaceXform_Raster` — `tests/SkColorSpaceXformStepsTest.cpp:421`; CPU; `DEF_TEST`.
+- `SkRuntimeEffectInvalid_NoInVariables` — `tests/SkRuntimeEffectTest.cpp:105`; CPU; `DEF_TEST`.
+- `SkRuntimeEffectInvalid_UndefinedFunction` — `tests/SkRuntimeEffectTest.cpp:113`; CPU; `DEF_TEST`.
+- `SkRuntimeEffectInvalid_UndefinedMain` — `tests/SkRuntimeEffectTest.cpp:118`; CPU; `DEF_TEST`.
+- `SkRuntimeEffectInvalid_SkCapsDisallowed` — `tests/SkRuntimeEffectTest.cpp:123`; CPU; `DEF_TEST`.
+- `SkRuntimeEffect_DeadCodeEliminationStackOverflow` — `tests/SkRuntimeEffectTest.cpp:131`; CPU; `DEF_TEST`.
+- `SkRuntimeEffectCanDisableES2Restrictions` — `tests/SkRuntimeEffectTest.cpp:155`; CPU; `DEF_TEST`.
+- `SkRuntimeEffectCanEnableVersion300` — `tests/SkRuntimeEffectTest.cpp:166`; CPU; `DEF_TEST`.
+- `SkRuntimeEffectUniformFlags` — `tests/SkRuntimeEffectTest.cpp:177`; CPU; `DEF_TEST`.
+- `SkRuntimeEffectValidation` — `tests/SkRuntimeEffectTest.cpp:201`; CPU; `DEF_TEST`.
+- `SkRuntimeEffectForColorFilter` — `tests/SkRuntimeEffectTest.cpp:213`; CPU; `DEF_TEST`.
+- `SkRuntimeEffectForBlender` — `tests/SkRuntimeEffectTest.cpp:264`; CPU; `DEF_TEST`.
+- `SkRuntimeEffectForShader` — `tests/SkRuntimeEffectTest.cpp:320`; CPU; `DEF_TEST`.
+- `SkRuntimeEffectSimple` — `tests/SkRuntimeEffectTest.cpp:737`; CPU; `DEF_TEST`.
+- `SkRuntimeEffectObeysCapabilities_CPU` — `tests/SkRuntimeEffectTest.cpp:858`; CPU; `DEF_TEST`.
+- `SkRuntimeColorFilterLimitedToES2` — `tests/SkRuntimeEffectTest.cpp:897`; CPU; `DEF_TEST`.
+- `SkRuntimeEffectTraceShader` — `tests/SkRuntimeEffectTest.cpp:925`; CPU; `DEF_TEST`.
+- `SkRuntimeEffectTracesAreUnoptimized` — `tests/SkRuntimeEffectTest.cpp:972`; CPU; `DEF_TEST`.
+- `SkRuntimeEffectTraceCodeThatCannotBeUnoptimized` — `tests/SkRuntimeEffectTest.cpp:1032`; CPU; `DEF_TEST`.
+- `SkRuntimeEffect_Blender_CPU` — `tests/SkRuntimeEffectTest.cpp:1216`; CPU; `DEF_TEST`.
+- `SkRuntimeShaderBuilderReuse` — `tests/SkRuntimeEffectTest.cpp:1229`; CPU; `DEF_TEST`.
+- `SkRuntimeBlendBuilderReuse` — `tests/SkRuntimeEffectTest.cpp:1247`; CPU; `DEF_TEST`.
+- `SkRuntimeShaderBuilderSetUniforms` — `tests/SkRuntimeEffectTest.cpp:1264`; CPU; `DEF_TEST`.
+- `SkRuntimeEffectThreaded` — `tests/SkRuntimeEffectTest.cpp:1292`; CPU; `DEF_TEST`.
+- `SkRuntimeEffectAllowsPrivateAccess` — `tests/SkRuntimeEffectTest.cpp:1313`; CPU; `DEF_TEST`.
+- `SkRuntimeColorFilterSingleColor` — `tests/SkRuntimeEffectTest.cpp:1355`; CPU; `DEF_TEST`.
+- `SkRuntimeStructNameReuse` — `tests/SkRuntimeEffectTest.cpp:1399`; CPU; `DEF_TEST`.
+- `SkRuntimeColorFilterFlags` — `tests/SkRuntimeEffectTest.cpp:1412`; CPU; `DEF_TEST`.
+- `SkRuntimeShaderSampleCoords` — `tests/SkRuntimeEffectTest.cpp:1478`; CPU; `DEF_TEST`.
+- `SkRuntimeShaderIsOpaque` — `tests/SkRuntimeEffectTest.cpp:1533`; CPU; `DEF_TEST`.
+- `SkRuntimeShader_b500080194` — `tests/SkRuntimeEffectTest.cpp:1804`; CPU; `DEF_TEST`.
+- `SkRuntimeShader_b507643404` — `tests/SkRuntimeEffectTest.cpp:1846`; CPU; `DEF_TEST`.
+- `SkRuntimeShader_b416061512` — `tests/SkRuntimeEffectTest.cpp:1879`; CPU; `DEF_TEST`.
+- `SkRuntimeBlender_b466686344` — `tests/SkRuntimeEffectTest.cpp:1907`; CPU; `DEF_TEST`.
+- `SkRuntimeColorFilter_b466744542` — `tests/SkRuntimeEffectTest.cpp:1929`; CPU; `DEF_TEST`.
+- `SkRuntimeColorFilter_b520831887` — `tests/SkRuntimeEffectTest.cpp:1976`; CPU; `DEF_TEST`.
+- `WritePixelsSurfaceGenID` — `tests/WritePixelsTest.cpp:344`; CPU; `DEF_TEST`.
+- `WritePixels` — `tests/WritePixelsTest.cpp:450`; CPU; `DEF_TEST`.
+- `WritePixels_InvalidRowBytes` — `tests/WritePixelsTest.cpp:648`; CPU; `DEF_TEST`.
+- `BoundsManager` — `tests/graphite/BoundsManagerTest.cpp:14`; CPU; `DEF_TEST`.
+- `DrawAtlasConfig_Basic` — `tests/graphite/DrawAtlasTest.cpp:344`; Graphite; `DEF_GRAPHITE_TEST`.
+- `skgpu_IntersectionTree` — `tests/graphite/IntersectionTreeTest.cpp:34`; Graphite; `DEF_GRAPHITE_TEST`.
+- `skgpu_Rect` — `tests/graphite/RectTest.cpp:15`; Graphite; `DEF_GRAPHITE_TEST`.
+- `ShapeTest` — `tests/graphite/ShapeTest.cpp:12`; Graphite; `DEF_GRAPHITE_TEST`.
+- `SwizzleInvertTest` — `tests/graphite/SwizzleTest.cpp:14`; CPU; `DEF_TEST`.
+- `TransformTest` — `tests/graphite/TransformTest.cpp:12`; Graphite; `DEF_GRAPHITE_TEST`.
+- `UniformManagerCheckSingleUniform` — `tests/graphite/UniformManagerTest.cpp:59`; Graphite; `DEF_GRAPHITE_TEST`.
+- `UniformManagerCheckFloatEncoding` — `tests/graphite/UniformManagerTest.cpp:76`; Graphite; `DEF_GRAPHITE_TEST`.
+- `UniformManagerCheckIntEncoding` — `tests/graphite/UniformManagerTest.cpp:107`; Graphite; `DEF_GRAPHITE_TEST`.
+- `UniformManagerCheckScalarVectorPacking` — `tests/graphite/UniformManagerTest.cpp:136`; Graphite; `DEF_GRAPHITE_TEST`.
+- `UniformManagerCheckMatrixPacking` — `tests/graphite/UniformManagerTest.cpp:168`; Graphite; `DEF_GRAPHITE_TEST`.
+- `UniformManagerCheckPaddingScalarVector` — `tests/graphite/UniformManagerTest.cpp:211`; Graphite; `DEF_GRAPHITE_TEST`.
+- `UniformManagerCheckPaddingVectorMatrix` — `tests/graphite/UniformManagerTest.cpp:330`; Graphite; `DEF_GRAPHITE_TEST`.
+- `UniformManagerCheckPaddingMatrixVector` — `tests/graphite/UniformManagerTest.cpp:473`; Graphite; `DEF_GRAPHITE_TEST`.
+- `UniformManagerMetalArrayLayout` — `tests/graphite/UniformManagerTest.cpp:614`; Graphite; `DEF_GRAPHITE_TEST`.
+- `UniformManagerStd430ArrayLayout` — `tests/graphite/UniformManagerTest.cpp:682`; Graphite; `DEF_GRAPHITE_TEST`.
+- `UniformManagerStd430F16ArrayLayout` — `tests/graphite/UniformManagerTest.cpp:750`; Graphite; `DEF_GRAPHITE_TEST`.
+- `UniformManagerStd140ArrayLayout` — `tests/graphite/UniformManagerTest.cpp:818`; Graphite; `DEF_GRAPHITE_TEST`.
+- `UniformManagerStd140F16ArrayLayout` — `tests/graphite/UniformManagerTest.cpp:893`; Graphite; `DEF_GRAPHITE_TEST`.
+- `UniformManagerStd140MatrixLayoutContents` — `tests/graphite/UniformManagerTest.cpp:1011`; Graphite; `DEF_GRAPHITE_TEST`.
+- `UniformManagerStd140F16MatrixLayoutContents` — `tests/graphite/UniformManagerTest.cpp:1027`; Graphite; `DEF_GRAPHITE_TEST`.
+- `UniformManagerStd430MatrixLayoutContents` — `tests/graphite/UniformManagerTest.cpp:1065`; Graphite; `DEF_GRAPHITE_TEST`.
+- `UniformManagerStd430F16MatrixLayoutContents` — `tests/graphite/UniformManagerTest.cpp:1090`; Graphite; `DEF_GRAPHITE_TEST`.
+- `UniformManagerMetalMatrixLayoutContents` — `tests/graphite/UniformManagerTest.cpp:1128`; Graphite; `DEF_GRAPHITE_TEST`.
+- `UniformManagerStructLayout` — `tests/graphite/UniformManagerTest.cpp:1167`; Graphite; `DEF_GRAPHITE_TEST`.
+- `UniformOffsetCalculatorMetalBasicTypesTest` — `tests/graphite/UniformOffsetCalculatorTest.cpp:136`; Graphite; `DEF_GRAPHITE_TEST`.
+- `UniformOffsetCalculatorMetalArrayTest` — `tests/graphite/UniformOffsetCalculatorTest.cpp:172`; Graphite; `DEF_GRAPHITE_TEST`.
+- `UniformOffsetCalculatorMetalStructTest` — `tests/graphite/UniformOffsetCalculatorTest.cpp:209`; Graphite; `DEF_GRAPHITE_TEST`.
+- `UniformOffsetCalculatorStd430BasicTypesTest` — `tests/graphite/UniformOffsetCalculatorTest.cpp:238`; Graphite; `DEF_GRAPHITE_TEST`.
+- `UniformOffsetCalculatorStd430ArrayTest` — `tests/graphite/UniformOffsetCalculatorTest.cpp:274`; Graphite; `DEF_GRAPHITE_TEST`.
+- `UniformOffsetCalculatorStd430StructTest` — `tests/graphite/UniformOffsetCalculatorTest.cpp:311`; Graphite; `DEF_GRAPHITE_TEST`.
+- `UniformOffsetCalculatorStd430_F16BasicTypesTest` — `tests/graphite/UniformOffsetCalculatorTest.cpp:340`; Graphite; `DEF_GRAPHITE_TEST`.
+- `UniformOffsetCalculatorStd430_F16ArrayTest` — `tests/graphite/UniformOffsetCalculatorTest.cpp:376`; Graphite; `DEF_GRAPHITE_TEST`.
+- `UniformOffsetCalculatorStd430_F16StructTest` — `tests/graphite/UniformOffsetCalculatorTest.cpp:413`; Graphite; `DEF_GRAPHITE_TEST`.
+- `UniformOffsetCalculatorStd140BasicTypesTest` — `tests/graphite/UniformOffsetCalculatorTest.cpp:442`; Graphite; `DEF_GRAPHITE_TEST`.
+- `UniformOffsetCalculatorStd140ArrayTest` — `tests/graphite/UniformOffsetCalculatorTest.cpp:478`; Graphite; `DEF_GRAPHITE_TEST`.
+- `UniformOffsetCalculatorStd140StructTest` — `tests/graphite/UniformOffsetCalculatorTest.cpp:515`; Graphite; `DEF_GRAPHITE_TEST`.
+- `UniformOffsetCalculatorStd140_F16BasicTypesTest` — `tests/graphite/UniformOffsetCalculatorTest.cpp:544`; Graphite; `DEF_GRAPHITE_TEST`.
+- `UniformOffsetCalculatorStd140_F16ArrayTest` — `tests/graphite/UniformOffsetCalculatorTest.cpp:583`; Graphite; `DEF_GRAPHITE_TEST`.
+- `UniformOffsetCalculatorStd140_F16StructTest` — `tests/graphite/UniformOffsetCalculatorTest.cpp:620`; Graphite; `DEF_GRAPHITE_TEST`.
+- `SparseStrips_Clip_4x4` — `tests/graphite/sparse_strips/ClipTest.cpp:192`; CPU; `DEF_TEST`.
+- `SparseStrips_Clip_8x8` — `tests/graphite/sparse_strips/ClipTest.cpp:194`; CPU; `DEF_TEST`.
+- `SparseStrips_Flatten_Scalar` — `tests/graphite/sparse_strips/FlattenTest.cpp:731`; CPU; `DEF_TEST`.
+- `SparseStrips_Flatten_SIMD` — `tests/graphite/sparse_strips/FlattenTest.cpp:735`; CPU; `DEF_TEST`.
+- `SparseStrips_LUTTest` — `tests/graphite/sparse_strips/LUTTest.cpp:160`; CPU; `DEF_TEST`.
+- `SparseStrips_Oracle_Simple` — `tests/graphite/sparse_strips/OracleTest.cpp:139`; CPU; `DEF_TEST`.
+- `SparseStrips_Oracle_ManyPathsRow` — `tests/graphite/sparse_strips/OracleTest.cpp:238`; CPU; `DEF_TEST`.
+- `SparseStrips_Polyline` — `tests/graphite/sparse_strips/PolylineTest.cpp:19`; CPU; `DEF_TEST`.
+- `SparseStrips_Polyline_Integrated` — `tests/graphite/sparse_strips/PolylineTest.cpp:156`; CPU; `DEF_TEST`.
+- `SparseStrips_Tiler_4x4` — `tests/graphite/sparse_strips/TilerTest.cpp:492`; CPU; `DEF_TEST`.
+- `SparseStrips_Tiler_8x8` — `tests/graphite/sparse_strips/TilerTest.cpp:496`; CPU; `DEF_TEST`.
+
+### Backend variants required at this gate
+
+These variants must be translated/run here even if their cross-backend consolidation is assigned to M38. Apply the original context filter; never execute an ineligible backend just to inflate the count.
+
+- `DrawAtlasConfig_Basic` — `tests/graphite/DrawAtlasTest.cpp`; Graphite CPU; inspect body for concrete contexts.
+- `skgpu_IntersectionTree` — `tests/graphite/IntersectionTreeTest.cpp`; Graphite CPU; inspect body for concrete contexts.
+- `skgpu_Rect` — `tests/graphite/RectTest.cpp`; Graphite CPU; inspect body for concrete contexts.
+- `ShapeTest` — `tests/graphite/ShapeTest.cpp`; Graphite CPU; inspect body for concrete contexts.
+- `TransformTest` — `tests/graphite/TransformTest.cpp`; Graphite CPU; inspect body for concrete contexts.
+- `UniformManagerCheckSingleUniform` — `tests/graphite/UniformManagerTest.cpp`; Graphite CPU; inspect body for concrete contexts.
+- `UniformManagerCheckFloatEncoding` — `tests/graphite/UniformManagerTest.cpp`; Graphite CPU; inspect body for concrete contexts.
+- `UniformManagerCheckIntEncoding` — `tests/graphite/UniformManagerTest.cpp`; Graphite CPU; inspect body for concrete contexts.
+- `UniformManagerCheckScalarVectorPacking` — `tests/graphite/UniformManagerTest.cpp`; Graphite CPU; inspect body for concrete contexts.
+- `UniformManagerCheckMatrixPacking` — `tests/graphite/UniformManagerTest.cpp`; Graphite CPU; inspect body for concrete contexts.
+- `UniformManagerCheckPaddingScalarVector` — `tests/graphite/UniformManagerTest.cpp`; Graphite CPU; inspect body for concrete contexts.
+- `UniformManagerCheckPaddingVectorMatrix` — `tests/graphite/UniformManagerTest.cpp`; Graphite CPU; inspect body for concrete contexts.
+- `UniformManagerCheckPaddingMatrixVector` — `tests/graphite/UniformManagerTest.cpp`; Graphite CPU; inspect body for concrete contexts.
+- `UniformManagerMetalArrayLayout` — `tests/graphite/UniformManagerTest.cpp`; Graphite CPU; inspect body for concrete contexts.
+- `UniformManagerStd430ArrayLayout` — `tests/graphite/UniformManagerTest.cpp`; Graphite CPU; inspect body for concrete contexts.
+- `UniformManagerStd430F16ArrayLayout` — `tests/graphite/UniformManagerTest.cpp`; Graphite CPU; inspect body for concrete contexts.
+- `UniformManagerStd140ArrayLayout` — `tests/graphite/UniformManagerTest.cpp`; Graphite CPU; inspect body for concrete contexts.
+- `UniformManagerStd140F16ArrayLayout` — `tests/graphite/UniformManagerTest.cpp`; Graphite CPU; inspect body for concrete contexts.
+- `UniformManagerStd140MatrixLayoutContents` — `tests/graphite/UniformManagerTest.cpp`; Graphite CPU; inspect body for concrete contexts.
+- `UniformManagerStd140F16MatrixLayoutContents` — `tests/graphite/UniformManagerTest.cpp`; Graphite CPU; inspect body for concrete contexts.
+- `UniformManagerStd430MatrixLayoutContents` — `tests/graphite/UniformManagerTest.cpp`; Graphite CPU; inspect body for concrete contexts.
+- `UniformManagerStd430F16MatrixLayoutContents` — `tests/graphite/UniformManagerTest.cpp`; Graphite CPU; inspect body for concrete contexts.
+- `UniformManagerMetalMatrixLayoutContents` — `tests/graphite/UniformManagerTest.cpp`; Graphite CPU; inspect body for concrete contexts.
+- `UniformManagerStructLayout` — `tests/graphite/UniformManagerTest.cpp`; Graphite CPU; inspect body for concrete contexts.
+- `UniformOffsetCalculatorMetalBasicTypesTest` — `tests/graphite/UniformOffsetCalculatorTest.cpp`; Graphite CPU; inspect body for concrete contexts.
+- `UniformOffsetCalculatorMetalArrayTest` — `tests/graphite/UniformOffsetCalculatorTest.cpp`; Graphite CPU; inspect body for concrete contexts.
+- `UniformOffsetCalculatorMetalStructTest` — `tests/graphite/UniformOffsetCalculatorTest.cpp`; Graphite CPU; inspect body for concrete contexts.
+- `UniformOffsetCalculatorStd430BasicTypesTest` — `tests/graphite/UniformOffsetCalculatorTest.cpp`; Graphite CPU; inspect body for concrete contexts.
+- `UniformOffsetCalculatorStd430ArrayTest` — `tests/graphite/UniformOffsetCalculatorTest.cpp`; Graphite CPU; inspect body for concrete contexts.
+- `UniformOffsetCalculatorStd430StructTest` — `tests/graphite/UniformOffsetCalculatorTest.cpp`; Graphite CPU; inspect body for concrete contexts.
+- `UniformOffsetCalculatorStd430_F16BasicTypesTest` — `tests/graphite/UniformOffsetCalculatorTest.cpp`; Graphite CPU; inspect body for concrete contexts.
+- `UniformOffsetCalculatorStd430_F16ArrayTest` — `tests/graphite/UniformOffsetCalculatorTest.cpp`; Graphite CPU; inspect body for concrete contexts.
+- `UniformOffsetCalculatorStd430_F16StructTest` — `tests/graphite/UniformOffsetCalculatorTest.cpp`; Graphite CPU; inspect body for concrete contexts.
+- `UniformOffsetCalculatorStd140BasicTypesTest` — `tests/graphite/UniformOffsetCalculatorTest.cpp`; Graphite CPU; inspect body for concrete contexts.
+- `UniformOffsetCalculatorStd140ArrayTest` — `tests/graphite/UniformOffsetCalculatorTest.cpp`; Graphite CPU; inspect body for concrete contexts.
+- `UniformOffsetCalculatorStd140StructTest` — `tests/graphite/UniformOffsetCalculatorTest.cpp`; Graphite CPU; inspect body for concrete contexts.
+- `UniformOffsetCalculatorStd140_F16BasicTypesTest` — `tests/graphite/UniformOffsetCalculatorTest.cpp`; Graphite CPU; inspect body for concrete contexts.
+- `UniformOffsetCalculatorStd140_F16ArrayTest` — `tests/graphite/UniformOffsetCalculatorTest.cpp`; Graphite CPU; inspect body for concrete contexts.
+- `UniformOffsetCalculatorStd140_F16StructTest` — `tests/graphite/UniformOffsetCalculatorTest.cpp`; Graphite CPU; inspect body for concrete contexts.
+
+### Later integration obligations for these APIs
+
+The following original test files directly reference production headers owned here but contain cases scheduled later. They remain mandatory at the listed gates; they are not excluded or already passed. Keep earlier milestone acceptance limited to the tests/feature contract above.
+
+- `tests/AtlasOobTest.cpp` — M38.
+- `tests/BigImageTest.cpp` — M38.
+- `tests/BlurTest.cpp` — M38.
+- `tests/CanvasTest.cpp` — M38.
+- `tests/DirectMaskLimitTest.cpp` — M38.
+- `tests/F16DrawTest.cpp` — M38.
+- `tests/FilterResultTest.cpp` — M38.
+- `tests/ImageFilterTest.cpp` — M38.
+- `tests/RuntimeBlendTest.cpp` — M38.
+- `tests/ShaderTest.cpp` — M38.
+- `tests/SimplifyPaintTest.cpp` — M38.
+- `tests/SkColorSpaceXformStepsTest.cpp` — M38.
+- `tests/SkRuntimeEffectTest.cpp` — M38.
+- `tests/SkSLTest.cpp` — M37, M38.
+- `tests/TextureSizeTest.cpp` — M38.
+- `tests/WritePixelsTest.cpp` — M38.
+- `tests/graphite/BackendTextureTest.cpp` — M38.
+- `tests/graphite/BufferManagerTest.cpp` — M38.
+- `tests/graphite/CacheBudgetTest.cpp` — M38.
+- `tests/graphite/CacheKeyTest.cpp` — M38.
+- `tests/graphite/ComputeTest.cpp` — M36, M37, M38.
+- `tests/graphite/DawnBackendTextureTest.cpp` — M37.
+- `tests/graphite/DeviceTest.cpp` — M38.
+- `tests/graphite/DrawAtlasTest.cpp` — M38.
+- `tests/graphite/GraphiteContextRecorderTest.cpp` — M38.
+- `tests/graphite/GraphitePromiseImageTest.cpp` — M38.
+- `tests/graphite/GraphiteResourceCacheTest.cpp` — M38.
+- `tests/graphite/GraphiteYUVAPromiseImageTest.cpp` — M38.
+- `tests/graphite/ImageOriginTest.cpp` — M38.
+- `tests/graphite/ImageProviderTest.cpp` — M38.
+- `tests/graphite/ImageShaderTest.cpp` — M38.
+- `tests/graphite/ImageWrapTextureMipmapsTest.cpp` — M38.
+- `tests/graphite/InnerFillTest.cpp` — M38.
+- `tests/graphite/KeyTest.cpp` — M38.
+- `tests/graphite/MtlBackendTextureTest.cc` — M36.
+- `tests/graphite/MultisampleTest.cpp` — M38.
+- `tests/graphite/MutableImagesTest.cpp` — M38.
+- `tests/graphite/NotifyInUseTest.cpp` — M38.
+- `tests/graphite/PersistentPipelineStorageTest.cpp` — M38.
+- `tests/graphite/PipelineCallbackTest.cpp` — M38.
+- `tests/graphite/PipelineDataCacheTest.cpp` — M38.
+- `tests/graphite/ProxyCacheTest.cpp` — M38.
+- `tests/graphite/RTEffectTest.cpp` — M38.
+- `tests/graphite/ReadWritePixelsGraphiteTest.cpp` — M38.
+- `tests/graphite/RecorderTest.cpp` — M38.
+- `tests/graphite/RecordingOrderTest.cpp` — M38.
+- `tests/graphite/RecordingSurfacesTest.cpp` — M38.
+- `tests/graphite/StorageContextTest.cpp` — M38.
+- `tests/graphite/SubmitWithFinishProcTest.cpp` — M38.
+- `tests/graphite/TextureFallbackTest.cpp` — M38.
+- `tests/graphite/TextureFormatTest.cpp` — M38.
+- `tests/graphite/TextureProxyTest.cpp` — M38.
+- `tests/graphite/UpdateBackendTextureTest.cpp` — M38.
+- `tests/graphite/UploadBufferManagerTest.cpp` — M38.
+- `tests/graphite/VerticesPaddingTest.cpp` — M37.
+- `tests/graphite/crbug_513836996.cpp` — M38.
+- `tests/graphite/precompile/ChromePrecompileTest.cpp` — M38.
+- `tests/graphite/precompile/CombinationBuilderTest.cpp` — M38.
+- `tests/graphite/precompile/PaintParamsKeyTest.cpp` — M38.
+- `tests/graphite/precompile/PipelineManagerEarlyExit.cpp` — M38.
+- `tests/graphite/precompile/PipelineManagerThreaded.cpp` — M38.
+- `tests/graphite/precompile/PrecompileStatsTest.cpp` — M38.
+- `tests/graphite/precompile/ThreadedPrecompileTest.cpp` — M38.
+- `tests/graphite/precompile/UserdefinedStableKeyTest.cpp` — M38.
+- `tests/graphite/sparse_strips/AtlasTests.cpp` — M38.
+- `tests/graphite/sparse_strips/CoverageTest.cpp` — M38.
+
+### Preserve these fixtures, metadata and references
+
+Use the immutable fixtures reached by the assigned tests. Shared `resources/` files are indexed under M43 for final audit but are available from the first consuming milestone.
+
+## Dependency and integration notes
+
+The initial scan found 5 quoted includes from this milestone into later-owned production files. See `../inventory/forward-includes.csv`, filtered by `source_milestone=35`. Header inclusion alone does not force implementation of the entire later subsystem; inspect the original registered test bodies and called production paths.
+
+Interfaces with later consumers may be declared now, but the accepted feature set must execute real implementations for every reached call. Where a source spans several features (CPU/GPU, serialization, runtime shaders), record completed and pending symbols separately. Deferred portions have explicit integration gates M14, M22, M26, M38 and M47; no pending portion may disappear from the ledger.
+
+## Commands, required evidence and stop condition
+
+Codex runs the milestone tests and all previously accepted tests in debug and release with the exact feature list from the handoff. The standard baseline commands are:
+
+```sh
+cargo test --locked
+cargo test --release --locked
+cargo fmt --all -- --check
+cargo clippy --all-targets --locked -- -D warnings
+```
+
+For feature-specific crates/backends, record the additional exact package/target/features commands; do not use an unexamined `--all-features` combination. Native backend, GM, browser, fuzz and benchmark commands are added when their harnesses exist and must be copied into the acceptance report.
+
+Acceptance requires: all assigned macOS cases enumerated; every applicable assertion passing; all earlier accepted tests passing; every source row mapped to implemented Rust or a documented non-code disposition; no unexplained missing resources, untested required backends or unsupported required API; and a Codex-authored evidence report. Formatting/build success alone never constitutes acceptance.
+
+Record PASS, FAIL, BLOCKED or NOT_APPLICABLE per test/configuration. NOT_APPLICABLE requires an original platform/capability condition and a reason. M01–M45 require native Apple Silicon macOS evidence; Intel-specific files may remain explicitly pending until M46, whose gate requires native Intel Mac results. This is a scheduled architecture gate, not an assertion that Intel already passed.
+
+Only after Codex marks M35 ACCEPTED may the user hand Deepseek M36.

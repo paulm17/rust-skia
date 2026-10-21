@@ -1,0 +1,2267 @@
+# Milestone 46: Repository build, examples, documentation and packaging
+
+## Outcome and entry gate
+
+Finish Cargo feature/build integration, macOS packaging, C ABI where required, examples, snippets, resource deployment and repository automation. Adapt GN/Bazel/build scripts as needed to drive or verify the Rust implementation. Preserve documentation/licenses/assets and retire obsolete build rules only with a recorded replacement.
+
+Begin implementation only after milestone 45 is marked ACCEPTED by Codex and the user has handed over this milestone. All earlier accepted tests remain required.
+
+Read `../WORKFLOW.md`, `../MACOS-SCOPE.md` and the inventories before starting. All source paths below are relative to the pinned C++ Skia checkout; all Rust work belongs in the separate rust-skia repository. Never edit the reference checkout to make a test pass.
+
+## Deepseek: implementation contract
+
+Finish Cargo feature/build integration, macOS packaging, C ABI where required, examples, snippets, resource deployment and repository automation. Adapt GN/Bazel/build scripts as needed to drive or verify the Rust implementation. Preserve documentation/licenses/assets and retire obsolete build rules only with a recorded replacement.
+
+- Port the observable behavior of every owned source/header below, including applicable error paths and public declarations. A header is part of the contract, not documentation to skip. Existing Rust files are integration work, not automatic completion.
+- Map original symbols to Rust modules in the handoff. Keep production logic under `src/` (or workspace library crates); use explicit Cargo features for optional macOS backends. Preserve widths, ownership, layout when observable, and binary formats where required by original tests.
+- Keep Skia-owned algorithmic/runtime code in Rust. External codec/shaping/GPU libraries and Apple framework FFI are allowed only as named, versioned dependencies. Never delegate the implementation to a pre-existing Skia Rust port or C++ Skia.
+- Inspect reached dependencies before coding. `forward-includes.csv` contains syntactic warnings, not proof of runtime dependency. Implement a required earlier prerequisite fully and record it in the handoff; if it materially changes this milestone, request a plan amendment before continuing. Never use fake return values, ignored tests or unimplemented runtime branches to clear a gate.
+- Do not author or change Codex-owned acceptance tests, expected values, tolerances, fixtures or pass records. Development checks may be separate and must be labeled as such. Fix production code when acceptance tests fail.
+- Supply reproducible build commands, feature flags, source/symbol mapping, external dependencies, and known unfinished work using `../HANDOFF-TEMPLATE.md`. Stop after the handoff; do not begin the next milestone.
+
+### Port these production files (Deepseek)
+
+- `docs/examples/50_percent_gray.cpp` — port to Rust.
+- `docs/examples/50_percent_srgb.cpp` — port to Rust.
+- `docs/examples/Alpha_Constants_a.cpp` — port to Rust.
+- `docs/examples/Alpha_Constants_b.cpp` — port to Rust.
+- `docs/examples/Anti_Alias.cpp` — port to Rust.
+- `docs/examples/AutoCanvasRestore_SkCanvas_star.cpp` — port to Rust.
+- `docs/examples/AutoCanvasRestore_restore.cpp` — port to Rust.
+- `docs/examples/Bitmap_012.cpp` — port to Rust.
+- `docs/examples/Bitmap_ComputeIsOpaque.cpp` — port to Rust.
+- `docs/examples/Bitmap_HeapAllocator_allocPixelRef.cpp` — port to Rust.
+- `docs/examples/Bitmap_allocN32Pixels.cpp` — port to Rust.
+- `docs/examples/Bitmap_allocPixels.cpp` — port to Rust.
+- `docs/examples/Bitmap_allocPixelsFlags.cpp` — port to Rust.
+- `docs/examples/Bitmap_bounds.cpp` — port to Rust.
+- `docs/examples/Bitmap_bytesPerPixel.cpp` — port to Rust.
+- `docs/examples/Bitmap_colorSpace.cpp` — port to Rust.
+- `docs/examples/Bitmap_colorType.cpp` — port to Rust.
+- `docs/examples/Bitmap_computeByteSize.cpp` — port to Rust.
+- `docs/examples/Bitmap_copy_const_SkBitmap.cpp` — port to Rust.
+- `docs/examples/Bitmap_dimensions.cpp` — port to Rust.
+- `docs/examples/Bitmap_drawsNothing.cpp` — port to Rust.
+- `docs/examples/Bitmap_empty.cpp` — port to Rust.
+- `docs/examples/Bitmap_empty_constructor.cpp` — port to Rust.
+- `docs/examples/Bitmap_erase.cpp` — port to Rust.
+- `docs/examples/Bitmap_eraseARGB.cpp` — port to Rust.
+- `docs/examples/Bitmap_eraseColor.cpp` — port to Rust.
+- `docs/examples/Bitmap_extractAlpha.cpp` — port to Rust.
+- `docs/examples/Bitmap_extractAlpha_2.cpp` — port to Rust.
+- `docs/examples/Bitmap_extractAlpha_3.cpp` — port to Rust.
+- `docs/examples/Bitmap_extractSubset.cpp` — port to Rust.
+- `docs/examples/Bitmap_getAddr.cpp` — port to Rust.
+- `docs/examples/Bitmap_getAddr16.cpp` — port to Rust.
+- `docs/examples/Bitmap_getAddr32.cpp` — port to Rust.
+- `docs/examples/Bitmap_getAddr8.cpp` — port to Rust.
+- `docs/examples/Bitmap_getBounds.cpp` — port to Rust.
+- `docs/examples/Bitmap_getBounds_2.cpp` — port to Rust.
+- `docs/examples/Bitmap_getColor.cpp` — port to Rust.
+- `docs/examples/Bitmap_getGenerationID.cpp` — port to Rust.
+- `docs/examples/Bitmap_getPixels.cpp` — port to Rust.
+- `docs/examples/Bitmap_getSubset.cpp` — port to Rust.
+- `docs/examples/Bitmap_height.cpp` — port to Rust.
+- `docs/examples/Bitmap_info.cpp` — port to Rust.
+- `docs/examples/Bitmap_installPixels.cpp` — port to Rust.
+- `docs/examples/Bitmap_installPixels_2.cpp` — port to Rust.
+- `docs/examples/Bitmap_installPixels_3.cpp` — port to Rust.
+- `docs/examples/Bitmap_isImmutable.cpp` — port to Rust.
+- `docs/examples/Bitmap_isNull.cpp` — port to Rust.
+- `docs/examples/Bitmap_isOpaque.cpp` — port to Rust.
+- `docs/examples/Bitmap_move_SkBitmap.cpp` — port to Rust.
+- `docs/examples/Bitmap_move_operator.cpp` — port to Rust.
+- `docs/examples/Bitmap_notifyPixelsChanged.cpp` — port to Rust.
+- `docs/examples/Bitmap_peekPixels.cpp` — port to Rust.
+- `docs/examples/Bitmap_pixelRef.cpp` — port to Rust.
+- `docs/examples/Bitmap_pixelRefOrigin.cpp` — port to Rust.
+- `docs/examples/Bitmap_pixmap.cpp` — port to Rust.
+- `docs/examples/Bitmap_readPixels.cpp` — port to Rust.
+- `docs/examples/Bitmap_readPixels_2.cpp` — port to Rust.
+- `docs/examples/Bitmap_readPixels_3.cpp` — port to Rust.
+- `docs/examples/Bitmap_readyToDraw.cpp` — port to Rust.
+- `docs/examples/Bitmap_refColorSpace.cpp` — port to Rust.
+- `docs/examples/Bitmap_reset.cpp` — port to Rust.
+- `docs/examples/Bitmap_rowBytes.cpp` — port to Rust.
+- `docs/examples/Bitmap_rowBytesAsPixels.cpp` — port to Rust.
+- `docs/examples/Bitmap_setAlphaType.cpp` — port to Rust.
+- `docs/examples/Bitmap_setImmutable.cpp` — port to Rust.
+- `docs/examples/Bitmap_setInfo.cpp` — port to Rust.
+- `docs/examples/Bitmap_setPixelRef.cpp` — port to Rust.
+- `docs/examples/Bitmap_setPixels.cpp` — port to Rust.
+- `docs/examples/Bitmap_shiftPerPixel.cpp` — port to Rust.
+- `docs/examples/Bitmap_swap.cpp` — port to Rust.
+- `docs/examples/Bitmap_tryAllocN32Pixels.cpp` — port to Rust.
+- `docs/examples/Bitmap_tryAllocPixels.cpp` — port to Rust.
+- `docs/examples/Bitmap_tryAllocPixelsFlags.cpp` — port to Rust.
+- `docs/examples/Bitmap_tryAllocPixels_2.cpp` — port to Rust.
+- `docs/examples/Bitmap_tryAllocPixels_3.cpp` — port to Rust.
+- `docs/examples/Bitmap_tryAllocPixels_4.cpp` — port to Rust.
+- `docs/examples/Bitmap_width.cpp` — port to Rust.
+- `docs/examples/Bitmap_writePixels.cpp` — port to Rust.
+- `docs/examples/Bitmap_writePixels_2.cpp` — port to Rust.
+- `docs/examples/BlendModes.cpp` — port to Rust.
+- `docs/examples/Blend_Mode_Methods.cpp` — port to Rust.
+- `docs/examples/Canvas_MakeRasterDirect.cpp` — port to Rust.
+- `docs/examples/Canvas_MakeRasterDirectN32.cpp` — port to Rust.
+- `docs/examples/Canvas_PointMode.cpp` — port to Rust.
+- `docs/examples/Canvas_SaveLayerRec.cpp` — port to Rust.
+- `docs/examples/Canvas_SaveLayerRec_const_SkRect_star_const_SkPaint_star.cpp` — port to Rust.
+- `docs/examples/Canvas_SaveLayerRec_const_SkRect_star_const_SkPaint_star_const_SkImageFilter_star.cpp` — port to Rust.
+- `docs/examples/Canvas_SrcRectConstraint.cpp` — port to Rust.
+- `docs/examples/Canvas_accessTopLayerPixels_a.cpp` — port to Rust.
+- `docs/examples/Canvas_accessTopLayerPixels_b.cpp` — port to Rust.
+- `docs/examples/Canvas_accessTopRasterHandle.cpp` — port to Rust.
+- `docs/examples/Canvas_clear.cpp` — port to Rust.
+- `docs/examples/Canvas_clipPath.cpp` — port to Rust.
+- `docs/examples/Canvas_clipPath_2.cpp` — port to Rust.
+- `docs/examples/Canvas_clipPath_3.cpp` — port to Rust.
+- `docs/examples/Canvas_clipRRect.cpp` — port to Rust.
+- `docs/examples/Canvas_clipRRect_2.cpp` — port to Rust.
+- `docs/examples/Canvas_clipRRect_3.cpp` — port to Rust.
+- `docs/examples/Canvas_clipRect.cpp` — port to Rust.
+- `docs/examples/Canvas_clipRect_2.cpp` — port to Rust.
+- `docs/examples/Canvas_clipRect_3.cpp` — port to Rust.
+- `docs/examples/Canvas_clipRegion.cpp` — port to Rust.
+- `docs/examples/Canvas_concat.cpp` — port to Rust.
+- `docs/examples/Canvas_const_SkBitmap_const_SkSurfaceProps.cpp` — port to Rust.
+- `docs/examples/Canvas_copy_const_SkBitmap.cpp` — port to Rust.
+- `docs/examples/Canvas_destructor.cpp` — port to Rust.
+- `docs/examples/Canvas_drawArc_a.cpp` — port to Rust.
+- `docs/examples/Canvas_drawArc_b.cpp` — port to Rust.
+- `docs/examples/Canvas_drawAtlas.cpp` — port to Rust.
+- `docs/examples/Canvas_drawAtlas_2.cpp` — port to Rust.
+- `docs/examples/Canvas_drawBitmap.cpp` — port to Rust.
+- `docs/examples/Canvas_drawBitmapRect.cpp` — port to Rust.
+- `docs/examples/Canvas_drawBitmapRect_2.cpp` — port to Rust.
+- `docs/examples/Canvas_drawBitmapRect_3.cpp` — port to Rust.
+- `docs/examples/Canvas_drawCircle.cpp` — port to Rust.
+- `docs/examples/Canvas_drawCircle_2.cpp` — port to Rust.
+- `docs/examples/Canvas_drawColor.cpp` — port to Rust.
+- `docs/examples/Canvas_drawDRRect_a.cpp` — port to Rust.
+- `docs/examples/Canvas_drawDRRect_b.cpp` — port to Rust.
+- `docs/examples/Canvas_drawDrawable.cpp` — port to Rust.
+- `docs/examples/Canvas_drawDrawable_2.cpp` — port to Rust.
+- `docs/examples/Canvas_drawIRect.cpp` — port to Rust.
+- `docs/examples/Canvas_drawImage.cpp` — port to Rust.
+- `docs/examples/Canvas_drawImageNine.cpp` — port to Rust.
+- `docs/examples/Canvas_drawImageNine_2.cpp` — port to Rust.
+- `docs/examples/Canvas_drawImageRect.cpp` — port to Rust.
+- `docs/examples/Canvas_drawImageRect_2.cpp` — port to Rust.
+- `docs/examples/Canvas_drawImageRect_3.cpp` — port to Rust.
+- `docs/examples/Canvas_drawImageRect_4.cpp` — port to Rust.
+- `docs/examples/Canvas_drawImageRect_5.cpp` — port to Rust.
+- `docs/examples/Canvas_drawImageRect_6.cpp` — port to Rust.
+- `docs/examples/Canvas_drawImage_2.cpp` — port to Rust.
+- `docs/examples/Canvas_drawLine.cpp` — port to Rust.
+- `docs/examples/Canvas_drawLine_2.cpp` — port to Rust.
+- `docs/examples/Canvas_drawOval.cpp` — port to Rust.
+- `docs/examples/Canvas_drawPaint.cpp` — port to Rust.
+- `docs/examples/Canvas_drawPatch.cpp` — port to Rust.
+- `docs/examples/Canvas_drawPatch_2_b.cpp` — port to Rust.
+- `docs/examples/Canvas_drawPath.cpp` — port to Rust.
+- `docs/examples/Canvas_drawPicture_2.cpp` — port to Rust.
+- `docs/examples/Canvas_drawPicture_3.cpp` — port to Rust.
+- `docs/examples/Canvas_drawPicture_4.cpp` — port to Rust.
+- `docs/examples/Canvas_drawPoint.cpp` — port to Rust.
+- `docs/examples/Canvas_drawPoint_2.cpp` — port to Rust.
+- `docs/examples/Canvas_drawPoints.cpp` — port to Rust.
+- `docs/examples/Canvas_drawRRect.cpp` — port to Rust.
+- `docs/examples/Canvas_drawRect.cpp` — port to Rust.
+- `docs/examples/Canvas_drawRegion.cpp` — port to Rust.
+- `docs/examples/Canvas_drawRoundRect.cpp` — port to Rust.
+- `docs/examples/Canvas_drawString.cpp` — port to Rust.
+- `docs/examples/Canvas_drawString_2.cpp` — port to Rust.
+- `docs/examples/Canvas_drawText.cpp` — port to Rust.
+- `docs/examples/Canvas_drawTextBlob_2.cpp` — port to Rust.
+- `docs/examples/Canvas_drawTextRSXform.cpp` — port to Rust.
+- `docs/examples/Canvas_drawVertices.cpp` — port to Rust.
+- `docs/examples/Canvas_drawVertices_2.cpp` — port to Rust.
+- `docs/examples/Canvas_empty_constructor.cpp` — port to Rust.
+- `docs/examples/Canvas_getBaseLayerSize.cpp` — port to Rust.
+- `docs/examples/Canvas_getContext.cpp` — port to Rust.
+- `docs/examples/Canvas_getDeviceClipBounds.cpp` — port to Rust.
+- `docs/examples/Canvas_getDeviceClipBounds_2.cpp` — port to Rust.
+- `docs/examples/Canvas_getLocalClipBounds.cpp` — port to Rust.
+- `docs/examples/Canvas_getLocalClipBounds_2.cpp` — port to Rust.
+- `docs/examples/Canvas_getProps.cpp` — port to Rust.
+- `docs/examples/Canvas_getSaveCount.cpp` — port to Rust.
+- `docs/examples/Canvas_getTotalMatrix.cpp` — port to Rust.
+- `docs/examples/Canvas_imageInfo.cpp` — port to Rust.
+- `docs/examples/Canvas_int_int_const_SkSurfaceProps_star.cpp` — port to Rust.
+- `docs/examples/Canvas_isClipEmpty.cpp` — port to Rust.
+- `docs/examples/Canvas_isClipRect.cpp` — port to Rust.
+- `docs/examples/Canvas_kInitWithPrevious_SaveLayerFlag.cpp` — port to Rust.
+- `docs/examples/Canvas_makeSurface.cpp` — port to Rust.
+- `docs/examples/Canvas_peekPixels.cpp` — port to Rust.
+- `docs/examples/Canvas_quickReject.cpp` — port to Rust.
+- `docs/examples/Canvas_quickReject_2.cpp` — port to Rust.
+- `docs/examples/Canvas_readPixels_2.cpp` — port to Rust.
+- `docs/examples/Canvas_readPixels_3.cpp` — port to Rust.
+- `docs/examples/Canvas_readPixels_a.cpp` — port to Rust.
+- `docs/examples/Canvas_readPixels_b.cpp` — port to Rust.
+- `docs/examples/Canvas_resetMatrix.cpp` — port to Rust.
+- `docs/examples/Canvas_restore.cpp` — port to Rust.
+- `docs/examples/Canvas_restoreToCount.cpp` — port to Rust.
+- `docs/examples/Canvas_rotate.cpp` — port to Rust.
+- `docs/examples/Canvas_rotate_2.cpp` — port to Rust.
+- `docs/examples/Canvas_save.cpp` — port to Rust.
+- `docs/examples/Canvas_saveLayer.cpp` — port to Rust.
+- `docs/examples/Canvas_saveLayerAlpha.cpp` — port to Rust.
+- `docs/examples/Canvas_saveLayer_2.cpp` — port to Rust.
+- `docs/examples/Canvas_saveLayer_3.cpp` — port to Rust.
+- `docs/examples/Canvas_saveLayer_4.cpp` — port to Rust.
+- `docs/examples/Canvas_scale.cpp` — port to Rust.
+- `docs/examples/Canvas_setMatrix.cpp` — port to Rust.
+- `docs/examples/Canvas_skew.cpp` — port to Rust.
+- `docs/examples/Canvas_translate.cpp` — port to Rust.
+- `docs/examples/Canvas_writePixels.cpp` — port to Rust.
+- `docs/examples/Canvas_writePixels_2.cpp` — port to Rust.
+- `docs/examples/ChromeMDRefreshTab.cpp` — port to Rust.
+- `docs/examples/ChromeMDRefreshTabs.cpp` — port to Rust.
+- `docs/examples/Clear.cpp` — port to Rust.
+- `docs/examples/Clip.cpp` — port to Rust.
+- `docs/examples/Color.cpp` — port to Rust.
+- `docs/examples/ColorGetA.cpp` — port to Rust.
+- `docs/examples/ColorSetA.cpp` — port to Rust.
+- `docs/examples/ColorSetARGB.cpp` — port to Rust.
+- `docs/examples/ColorSetRGB.cpp` — port to Rust.
+- `docs/examples/ColorToHSV.cpp` — port to Rust.
+- `docs/examples/ColorTypeBytesPerPixel.cpp` — port to Rust.
+- `docs/examples/ColorTypeIsAlwaysOpaque.cpp` — port to Rust.
+- `docs/examples/ColorTypeValidateAlphaType.cpp` — port to Rust.
+- `docs/examples/Color_Burn.cpp` — port to Rust.
+- `docs/examples/Color_Constants_b.cpp` — port to Rust.
+- `docs/examples/Color_Constants_c.cpp` — port to Rust.
+- `docs/examples/Color_Constants_d.cpp` — port to Rust.
+- `docs/examples/Color_Dodge.cpp` — port to Rust.
+- `docs/examples/Color_Filter_Methods.cpp` — port to Rust.
+- `docs/examples/Color_Methods.cpp` — port to Rust.
+- `docs/examples/Color_Type_ARGB_4444.cpp` — port to Rust.
+- `docs/examples/Color_Type_Alpha_8.cpp` — port to Rust.
+- `docs/examples/Color_Type_BGRA_8888.cpp` — port to Rust.
+- `docs/examples/Color_Type_Gray_8.cpp` — port to Rust.
+- `docs/examples/Color_Type_RGBA_1010102.cpp` — port to Rust.
+- `docs/examples/Color_Type_RGBA_8888.cpp` — port to Rust.
+- `docs/examples/Color_Type_RGBA_F16.cpp` — port to Rust.
+- `docs/examples/Color_Type_RGB_101010.cpp` — port to Rust.
+- `docs/examples/Color_Type_RGB_565.cpp` — port to Rust.
+- `docs/examples/Color_Type_RGB_888.cpp` — port to Rust.
+- `docs/examples/Color_Wheel.cpp` — port to Rust.
+- `docs/examples/Colors.cpp` — port to Rust.
+- `docs/examples/Conic_Weight_a.cpp` — port to Rust.
+- `docs/examples/Conic_Weight_b.cpp` — port to Rust.
+- `docs/examples/Conic_Weight_c.cpp` — port to Rust.
+- `docs/examples/Cubic.cpp` — port to Rust.
+- `docs/examples/DCIToXYZD50.cpp` — port to Rust.
+- `docs/examples/Darken.cpp` — port to Rust.
+- `docs/examples/Difference.cpp` — port to Rust.
+- `docs/examples/Dither_a.cpp` — port to Rust.
+- `docs/examples/Dither_b.cpp` — port to Rust.
+- `docs/examples/Dst.cpp` — port to Rust.
+- `docs/examples/Dst_Atop.cpp` — port to Rust.
+- `docs/examples/Dst_In.cpp` — port to Rust.
+- `docs/examples/Dst_Out.cpp` — port to Rust.
+- `docs/examples/Dst_Over.cpp` — port to Rust.
+- `docs/examples/Exclusion.cpp` — port to Rust.
+- `docs/examples/FillPathWithPaint.cpp` — port to Rust.
+- `docs/examples/FillPathWithPaint_2.cpp` — port to Rust.
+- `docs/examples/GradientShader_MakeLinear.cpp` — port to Rust.
+- `docs/examples/HSVToColor.cpp` — port to Rust.
+- `docs/examples/HSVToColor_2.cpp` — port to Rust.
+- `docs/examples/Hard_Light.cpp` — port to Rust.
+- `docs/examples/Hue.cpp` — port to Rust.
+- `docs/examples/IPoint_Make.cpp` — port to Rust.
+- `docs/examples/IPoint_add_operator.cpp` — port to Rust.
+- `docs/examples/IPoint_addto_operator.cpp` — port to Rust.
+- `docs/examples/IPoint_equal_operator.cpp` — port to Rust.
+- `docs/examples/IPoint_equals.cpp` — port to Rust.
+- `docs/examples/IPoint_isZero.cpp` — port to Rust.
+- `docs/examples/IPoint_minus_operator.cpp` — port to Rust.
+- `docs/examples/IPoint_notequal_operator.cpp` — port to Rust.
+- `docs/examples/IPoint_set.cpp` — port to Rust.
+- `docs/examples/IPoint_subtract_operator.cpp` — port to Rust.
+- `docs/examples/IPoint_subtractfrom_operator.cpp` — port to Rust.
+- `docs/examples/IPoint_x.cpp` — port to Rust.
+- `docs/examples/IPoint_y.cpp` — port to Rust.
+- `docs/examples/IRect_Intersects.cpp` — port to Rust.
+- `docs/examples/IRect_MakeEmpty.cpp` — port to Rust.
+- `docs/examples/IRect_MakeLTRB.cpp` — port to Rust.
+- `docs/examples/IRect_MakeSize.cpp` — port to Rust.
+- `docs/examples/IRect_MakeWH.cpp` — port to Rust.
+- `docs/examples/IRect_MakeXYWH.cpp` — port to Rust.
+- `docs/examples/IRect_adjust.cpp` — port to Rust.
+- `docs/examples/IRect_bottom.cpp` — port to Rust.
+- `docs/examples/IRect_contains.cpp` — port to Rust.
+- `docs/examples/IRect_containsNoEmptyCheck.cpp` — port to Rust.
+- `docs/examples/IRect_containsNoEmptyCheck_2.cpp` — port to Rust.
+- `docs/examples/IRect_contains_3.cpp` — port to Rust.
+- `docs/examples/IRect_contains_4.cpp` — port to Rust.
+- `docs/examples/IRect_equal_operator.cpp` — port to Rust.
+- `docs/examples/IRect_height.cpp` — port to Rust.
+- `docs/examples/IRect_height64.cpp` — port to Rust.
+- `docs/examples/IRect_inset.cpp` — port to Rust.
+- `docs/examples/IRect_intersect.cpp` — port to Rust.
+- `docs/examples/IRect_intersect_2.cpp` — port to Rust.
+- `docs/examples/IRect_isEmpty.cpp` — port to Rust.
+- `docs/examples/IRect_isEmpty64.cpp` — port to Rust.
+- `docs/examples/IRect_join_2.cpp` — port to Rust.
+- `docs/examples/IRect_left.cpp` — port to Rust.
+- `docs/examples/IRect_makeInset.cpp` — port to Rust.
+- `docs/examples/IRect_makeOffset.cpp` — port to Rust.
+- `docs/examples/IRect_makeOutset.cpp` — port to Rust.
+- `docs/examples/IRect_makeSorted.cpp` — port to Rust.
+- `docs/examples/IRect_notequal_operator.cpp` — port to Rust.
+- `docs/examples/IRect_offset.cpp` — port to Rust.
+- `docs/examples/IRect_offsetTo.cpp` — port to Rust.
+- `docs/examples/IRect_offset_2.cpp` — port to Rust.
+- `docs/examples/IRect_outset.cpp` — port to Rust.
+- `docs/examples/IRect_right.cpp` — port to Rust.
+- `docs/examples/IRect_setEmpty.cpp` — port to Rust.
+- `docs/examples/IRect_setLTRB.cpp` — port to Rust.
+- `docs/examples/IRect_setXYWH.cpp` — port to Rust.
+- `docs/examples/IRect_size.cpp` — port to Rust.
+- `docs/examples/IRect_sort.cpp` — port to Rust.
+- `docs/examples/IRect_top.cpp` — port to Rust.
+- `docs/examples/IRect_width.cpp` — port to Rust.
+- `docs/examples/IRect_width64.cpp` — port to Rust.
+- `docs/examples/IRect_x.cpp` — port to Rust.
+- `docs/examples/IRect_y.cpp` — port to Rust.
+- `docs/examples/ImageInfo_Make.cpp` — port to Rust.
+- `docs/examples/ImageInfo_MakeA8.cpp` — port to Rust.
+- `docs/examples/ImageInfo_MakeS32.cpp` — port to Rust.
+- `docs/examples/ImageInfo_alphaType.cpp` — port to Rust.
+- `docs/examples/ImageInfo_bounds.cpp` — port to Rust.
+- `docs/examples/ImageInfo_bytesPerPixel.cpp` — port to Rust.
+- `docs/examples/ImageInfo_colorSpace.cpp` — port to Rust.
+- `docs/examples/ImageInfo_colorType.cpp` — port to Rust.
+- `docs/examples/ImageInfo_computeOffset.cpp` — port to Rust.
+- `docs/examples/ImageInfo_dimensions.cpp` — port to Rust.
+- `docs/examples/ImageInfo_equal1_operator.cpp` — port to Rust.
+- `docs/examples/ImageInfo_isEmpty.cpp` — port to Rust.
+- `docs/examples/ImageInfo_isOpaque.cpp` — port to Rust.
+- `docs/examples/ImageInfo_makeWH.cpp` — port to Rust.
+- `docs/examples/ImageInfo_minRowBytes.cpp` — port to Rust.
+- `docs/examples/ImageInfo_minRowBytes64.cpp` — port to Rust.
+- `docs/examples/ImageInfo_notequal1_operator.cpp` — port to Rust.
+- `docs/examples/ImageInfo_refColorSpace.cpp` — port to Rust.
+- `docs/examples/ImageInfo_reset.cpp` — port to Rust.
+- `docs/examples/ImageInfo_shiftPerPixel.cpp` — port to Rust.
+- `docs/examples/ImageInfo_validRowBytes.cpp` — port to Rust.
+- `docs/examples/Image_AdoptTextureFrom.cpp` — port to Rust.
+- `docs/examples/Image_BorrowTextureFrom.cpp` — port to Rust.
+- `docs/examples/Image_BorrowTextureFrom_2.cpp` — port to Rust.
+- `docs/examples/Image_CrossContextTextureFromPixmap.cpp` — port to Rust.
+- `docs/examples/Image_DeferredFromEncodedData.cpp` — port to Rust.
+- `docs/examples/Image_DeferredFromPicture.cpp` — port to Rust.
+- `docs/examples/Image_Filter_Methods.cpp` — port to Rust.
+- `docs/examples/Image_FromBitmap.cpp` — port to Rust.
+- `docs/examples/Image_GetBackendTextureFromImage.cpp` — port to Rust.
+- `docs/examples/Image_MakeBackendTextureFromImage.cpp` — port to Rust.
+- `docs/examples/Image_RasterFromData.cpp` — port to Rust.
+- `docs/examples/Image_RasterFromPixmap.cpp` — port to Rust.
+- `docs/examples/Image_RasterFromPixmapCopy.cpp` — port to Rust.
+- `docs/examples/Image_TextureFromImage.cpp` — port to Rust.
+- `docs/examples/Image_bounds.cpp` — port to Rust.
+- `docs/examples/Image_colorType.cpp` — port to Rust.
+- `docs/examples/Image_dimensions.cpp` — port to Rust.
+- `docs/examples/Image_encodeToData.cpp` — port to Rust.
+- `docs/examples/Image_encodeToData_2.cpp` — port to Rust.
+- `docs/examples/Image_isAlphaOnly.cpp` — port to Rust.
+- `docs/examples/Image_isLazyGenerated_a.cpp` — port to Rust.
+- `docs/examples/Image_isLazyGenerated_b.cpp` — port to Rust.
+- `docs/examples/Image_isOpaque.cpp` — port to Rust.
+- `docs/examples/Image_isTextureBacked.cpp` — port to Rust.
+- `docs/examples/Image_isValid.cpp` — port to Rust.
+- `docs/examples/Image_makeNonTextureImage.cpp` — port to Rust.
+- `docs/examples/Image_makeRasterImage.cpp` — port to Rust.
+- `docs/examples/Image_makeShader.cpp` — port to Rust.
+- `docs/examples/Image_makeShader_2.cpp` — port to Rust.
+- `docs/examples/Image_makeSubset.cpp` — port to Rust.
+- `docs/examples/Image_makeWithFilter.cpp` — port to Rust.
+- `docs/examples/Image_readPixels.cpp` — port to Rust.
+- `docs/examples/Image_readPixels_2.cpp` — port to Rust.
+- `docs/examples/Image_refEncodedData.cpp` — port to Rust.
+- `docs/examples/Image_scalePixels.cpp` — port to Rust.
+- `docs/examples/Lighten.cpp` — port to Rust.
+- `docs/examples/Luminosity.cpp` — port to Rust.
+- `docs/examples/Mask_Filter_Methods.cpp` — port to Rust.
+- `docs/examples/Matrix_063.cpp` — port to Rust.
+- `docs/examples/Matrix_Concat.cpp` — port to Rust.
+- `docs/examples/Matrix_I.cpp` — port to Rust.
+- `docs/examples/Matrix_InvalidMatrix.cpp` — port to Rust.
+- `docs/examples/Matrix_MakeRectToRect.cpp` — port to Rust.
+- `docs/examples/Matrix_MakeScale.cpp` — port to Rust.
+- `docs/examples/Matrix_MakeTrans.cpp` — port to Rust.
+- `docs/examples/Matrix_SetAffineIdentity.cpp` — port to Rust.
+- `docs/examples/Matrix_TypeMask.cpp` — port to Rust.
+- `docs/examples/Matrix_array_operator.cpp` — port to Rust.
+- `docs/examples/Matrix_asAffine.cpp` — port to Rust.
+- `docs/examples/Matrix_decomposeScale.cpp` — port to Rust.
+- `docs/examples/Matrix_dirtyMatrixTypeCache.cpp` — port to Rust.
+- `docs/examples/Matrix_dump.cpp` — port to Rust.
+- `docs/examples/Matrix_get.cpp` — port to Rust.
+- `docs/examples/Matrix_get9.cpp` — port to Rust.
+- `docs/examples/Matrix_getMaxScale.cpp` — port to Rust.
+- `docs/examples/Matrix_getMinMaxScales.cpp` — port to Rust.
+- `docs/examples/Matrix_getMinScale.cpp` — port to Rust.
+- `docs/examples/Matrix_getScaleX.cpp` — port to Rust.
+- `docs/examples/Matrix_getScaleY.cpp` — port to Rust.
+- `docs/examples/Matrix_getSkewX.cpp` — port to Rust.
+- `docs/examples/Matrix_getSkewY.cpp` — port to Rust.
+- `docs/examples/Matrix_getTranslateX.cpp` — port to Rust.
+- `docs/examples/Matrix_getTranslateY.cpp` — port to Rust.
+- `docs/examples/Matrix_getType.cpp` — port to Rust.
+- `docs/examples/Matrix_invert.cpp` — port to Rust.
+- `docs/examples/Matrix_isFinite.cpp` — port to Rust.
+- `docs/examples/Matrix_isIdentity.cpp` — port to Rust.
+- `docs/examples/Matrix_isScaleTranslate.cpp` — port to Rust.
+- `docs/examples/Matrix_isTranslate.cpp` — port to Rust.
+- `docs/examples/Matrix_mapHomogeneousPoints.cpp` — port to Rust.
+- `docs/examples/Matrix_mapPoints.cpp` — port to Rust.
+- `docs/examples/Matrix_mapPoints_2.cpp` — port to Rust.
+- `docs/examples/Matrix_mapRect.cpp` — port to Rust.
+- `docs/examples/Matrix_mapRectScaleTranslate.cpp` — port to Rust.
+- `docs/examples/Matrix_mapRectToQuad.cpp` — port to Rust.
+- `docs/examples/Matrix_mapRect_2.cpp` — port to Rust.
+- `docs/examples/Matrix_mapRect_3.cpp` — port to Rust.
+- `docs/examples/Matrix_mapVectors.cpp` — port to Rust.
+- `docs/examples/Matrix_mapVectors_2.cpp` — port to Rust.
+- `docs/examples/Matrix_postConcat.cpp` — port to Rust.
+- `docs/examples/Matrix_postRotate.cpp` — port to Rust.
+- `docs/examples/Matrix_postRotate_2.cpp` — port to Rust.
+- `docs/examples/Matrix_postScale.cpp` — port to Rust.
+- `docs/examples/Matrix_postScale_2.cpp` — port to Rust.
+- `docs/examples/Matrix_postSkew.cpp` — port to Rust.
+- `docs/examples/Matrix_postSkew_2.cpp` — port to Rust.
+- `docs/examples/Matrix_postTranslate.cpp` — port to Rust.
+- `docs/examples/Matrix_preConcat.cpp` — port to Rust.
+- `docs/examples/Matrix_preRotate.cpp` — port to Rust.
+- `docs/examples/Matrix_preRotate_2.cpp` — port to Rust.
+- `docs/examples/Matrix_preScale.cpp` — port to Rust.
+- `docs/examples/Matrix_preScale_2.cpp` — port to Rust.
+- `docs/examples/Matrix_preSkew.cpp` — port to Rust.
+- `docs/examples/Matrix_preSkew_2.cpp` — port to Rust.
+- `docs/examples/Matrix_preTranslate.cpp` — port to Rust.
+- `docs/examples/Matrix_preservesAxisAlignment.cpp` — port to Rust.
+- `docs/examples/Matrix_rectStaysRect.cpp` — port to Rust.
+- `docs/examples/Matrix_reset.cpp` — port to Rust.
+- `docs/examples/Matrix_set.cpp` — port to Rust.
+- `docs/examples/Matrix_set9.cpp` — port to Rust.
+- `docs/examples/Matrix_setAffine.cpp` — port to Rust.
+- `docs/examples/Matrix_setConcat.cpp` — port to Rust.
+- `docs/examples/Matrix_setIdentity.cpp` — port to Rust.
+- `docs/examples/Matrix_setPerspX.cpp` — port to Rust.
+- `docs/examples/Matrix_setPerspY.cpp` — port to Rust.
+- `docs/examples/Matrix_setRSXform.cpp` — port to Rust.
+- `docs/examples/Matrix_setRotate.cpp` — port to Rust.
+- `docs/examples/Matrix_setRotate_2.cpp` — port to Rust.
+- `docs/examples/Matrix_setScaleTranslate.cpp` — port to Rust.
+- `docs/examples/Matrix_setSinCos.cpp` — port to Rust.
+- `docs/examples/Matrix_setSinCos_2.cpp` — port to Rust.
+- `docs/examples/Miter_Limit.cpp` — port to Rust.
+- `docs/examples/Modulate.cpp` — port to Rust.
+- `docs/examples/Multiply.cpp` — port to Rust.
+- `docs/examples/Octopus_Generator.cpp` — port to Rust.
+- `docs/examples/Octopus_Generator_Animated.cpp` — port to Rust.
+- `docs/examples/OverdrawColorFilter_grid.cpp` — port to Rust.
+- `docs/examples/Overlay.cpp` — port to Rust.
+- `docs/examples/PDF.cpp` — port to Rust.
+- `docs/examples/PaintDump.cpp` — port to Rust.
+- `docs/examples/Paint_053.cpp` — port to Rust.
+- `docs/examples/Paint_057.cpp` — port to Rust.
+- `docs/examples/Paint_copy_const_SkPaint.cpp` — port to Rust.
+- `docs/examples/Paint_copy_operator.cpp` — port to Rust.
+- `docs/examples/Paint_empty_constructor.cpp` — port to Rust.
+- `docs/examples/Paint_equal_operator.cpp` — port to Rust.
+- `docs/examples/Paint_getAlpha.cpp` — port to Rust.
+- `docs/examples/Paint_getColor.cpp` — port to Rust.
+- `docs/examples/Paint_getColor4f.cpp` — port to Rust.
+- `docs/examples/Paint_getColorFilter.cpp` — port to Rust.
+- `docs/examples/Paint_getImageFilter.cpp` — port to Rust.
+- `docs/examples/Paint_getMaskFilter.cpp` — port to Rust.
+- `docs/examples/Paint_getPathEffect.cpp` — port to Rust.
+- `docs/examples/Paint_getShader.cpp` — port to Rust.
+- `docs/examples/Paint_getStrokeCap.cpp` — port to Rust.
+- `docs/examples/Paint_getStrokeJoin.cpp` — port to Rust.
+- `docs/examples/Paint_getStrokeMiter.cpp` — port to Rust.
+- `docs/examples/Paint_getStrokeWidth.cpp` — port to Rust.
+- `docs/examples/Paint_getStyle.cpp` — port to Rust.
+- `docs/examples/Paint_move_SkPaint.cpp` — port to Rust.
+- `docs/examples/Paint_move_operator.cpp` — port to Rust.
+- `docs/examples/Paint_notequal_operator.cpp` — port to Rust.
+- `docs/examples/Paint_nothingToDraw.cpp` — port to Rust.
+- `docs/examples/Paint_refColorFilter.cpp` — port to Rust.
+- `docs/examples/Paint_refImageFilter.cpp` — port to Rust.
+- `docs/examples/Paint_refMaskFilter.cpp` — port to Rust.
+- `docs/examples/Paint_refPathEffect.cpp` — port to Rust.
+- `docs/examples/Paint_refShader.cpp` — port to Rust.
+- `docs/examples/Paint_reset.cpp` — port to Rust.
+- `docs/examples/Paint_setARGB.cpp` — port to Rust.
+- `docs/examples/Paint_setAlpha.cpp` — port to Rust.
+- `docs/examples/Paint_setBlendMode.cpp` — port to Rust.
+- `docs/examples/Paint_setColor.cpp` — port to Rust.
+- `docs/examples/Paint_setColor4f.cpp` — port to Rust.
+- `docs/examples/Paint_setColorFilter.cpp` — port to Rust.
+- `docs/examples/Paint_setMaskFilter.cpp` — port to Rust.
+- `docs/examples/Paint_setPathEffect.cpp` — port to Rust.
+- `docs/examples/Paint_setShader.cpp` — port to Rust.
+- `docs/examples/Paint_setStrokeCap_a.cpp` — port to Rust.
+- `docs/examples/Paint_setStrokeCap_b.cpp` — port to Rust.
+- `docs/examples/Paint_setStrokeJoin.cpp` — port to Rust.
+- `docs/examples/Paint_setStrokeMiter.cpp` — port to Rust.
+- `docs/examples/Paint_setStrokeWidth.cpp` — port to Rust.
+- `docs/examples/Paint_setStyle.cpp` — port to Rust.
+- `docs/examples/Path_AddPathMode.cpp` — port to Rust.
+- `docs/examples/Path_ArcSize.cpp` — port to Rust.
+- `docs/examples/Path_ConvertConicToQuads.cpp` — port to Rust.
+- `docs/examples/Path_Effect_Methods.cpp` — port to Rust.
+- `docs/examples/Path_FillType_a.cpp` — port to Rust.
+- `docs/examples/Path_IsCubicDegenerate.cpp` — port to Rust.
+- `docs/examples/Path_IsInverseFillType.cpp` — port to Rust.
+- `docs/examples/Path_IsLineDegenerate.cpp` — port to Rust.
+- `docs/examples/Path_IsQuadDegenerate.cpp` — port to Rust.
+- `docs/examples/Path_Iter_Iter.cpp` — port to Rust.
+- `docs/examples/Path_Iter_conicWeight.cpp` — port to Rust.
+- `docs/examples/Path_Iter_const_SkPath.cpp` — port to Rust.
+- `docs/examples/Path_Iter_isCloseLine.cpp` — port to Rust.
+- `docs/examples/Path_Iter_isClosedContour.cpp` — port to Rust.
+- `docs/examples/Path_Iter_next.cpp` — port to Rust.
+- `docs/examples/Path_Iter_setPath.cpp` — port to Rust.
+- `docs/examples/Path_SegmentMask.cpp` — port to Rust.
+- `docs/examples/Path_Verb.cpp` — port to Rust.
+- `docs/examples/Path_addArc.cpp` — port to Rust.
+- `docs/examples/Path_addCircle.cpp` — port to Rust.
+- `docs/examples/Path_addOval.cpp` — port to Rust.
+- `docs/examples/Path_addPath_2.cpp` — port to Rust.
+- `docs/examples/Path_addPath_3.cpp` — port to Rust.
+- `docs/examples/Path_addPoly.cpp` — port to Rust.
+- `docs/examples/Path_addPoly_2.cpp` — port to Rust.
+- `docs/examples/Path_addRRect.cpp` — port to Rust.
+- `docs/examples/Path_addRRect_2.cpp` — port to Rust.
+- `docs/examples/Path_addRect.cpp` — port to Rust.
+- `docs/examples/Path_addRect_2.cpp` — port to Rust.
+- `docs/examples/Path_addRect_3.cpp` — port to Rust.
+- `docs/examples/Path_addRoundRect.cpp` — port to Rust.
+- `docs/examples/Path_addRoundRect_2.cpp` — port to Rust.
+- `docs/examples/Path_arcTo.cpp` — port to Rust.
+- `docs/examples/Path_arcTo_2_c.cpp` — port to Rust.
+- `docs/examples/Path_arcTo_3.cpp` — port to Rust.
+- `docs/examples/Path_arcTo_4.cpp` — port to Rust.
+- `docs/examples/Path_close.cpp` — port to Rust.
+- `docs/examples/Path_computeTightBounds.cpp` — port to Rust.
+- `docs/examples/Path_conicTo.cpp` — port to Rust.
+- `docs/examples/Path_conicTo_2.cpp` — port to Rust.
+- `docs/examples/Path_conservativelyContainsRect.cpp` — port to Rust.
+- `docs/examples/Path_copy_const_SkPath.cpp` — port to Rust.
+- `docs/examples/Path_countPoints.cpp` — port to Rust.
+- `docs/examples/Path_countVerbs.cpp` — port to Rust.
+- `docs/examples/Path_cubicTo.cpp` — port to Rust.
+- `docs/examples/Path_cubicTo_2.cpp` — port to Rust.
+- `docs/examples/Path_destructor.cpp` — port to Rust.
+- `docs/examples/Path_dump.cpp` — port to Rust.
+- `docs/examples/Path_dump_2.cpp` — port to Rust.
+- `docs/examples/Path_empty_constructor.cpp` — port to Rust.
+- `docs/examples/Path_equal_operator.cpp` — port to Rust.
+- `docs/examples/Path_getBounds.cpp` — port to Rust.
+- `docs/examples/Path_getFillType.cpp` — port to Rust.
+- `docs/examples/Path_getGenerationID.cpp` — port to Rust.
+- `docs/examples/Path_getLastPt.cpp` — port to Rust.
+- `docs/examples/Path_getPoint.cpp` — port to Rust.
+- `docs/examples/Path_getPoints.cpp` — port to Rust.
+- `docs/examples/Path_getSegmentMasks.cpp` — port to Rust.
+- `docs/examples/Path_getVerbs.cpp` — port to Rust.
+- `docs/examples/Path_incReserve.cpp` — port to Rust.
+- `docs/examples/Path_interpolate.cpp` — port to Rust.
+- `docs/examples/Path_isEmpty.cpp` — port to Rust.
+- `docs/examples/Path_isFinite.cpp` — port to Rust.
+- `docs/examples/Path_isInterpolatable.cpp` — port to Rust.
+- `docs/examples/Path_isInverseFillType_2.cpp` — port to Rust.
+- `docs/examples/Path_isLastContourClosed.cpp` — port to Rust.
+- `docs/examples/Path_isLine.cpp` — port to Rust.
+- `docs/examples/Path_isOval.cpp` — port to Rust.
+- `docs/examples/Path_isRRect.cpp` — port to Rust.
+- `docs/examples/Path_isRect.cpp` — port to Rust.
+- `docs/examples/Path_isVolatile.cpp` — port to Rust.
+- `docs/examples/Path_lineTo_2.cpp` — port to Rust.
+- `docs/examples/Path_moveTo.cpp` — port to Rust.
+- `docs/examples/Path_moveTo_2.cpp` — port to Rust.
+- `docs/examples/Path_offset.cpp` — port to Rust.
+- `docs/examples/Path_offset_2.cpp` — port to Rust.
+- `docs/examples/Path_quadTo.cpp` — port to Rust.
+- `docs/examples/Path_quadTo_2.cpp` — port to Rust.
+- `docs/examples/Path_rArcTo.cpp` — port to Rust.
+- `docs/examples/Path_rConicTo.cpp` — port to Rust.
+- `docs/examples/Path_rCubicTo.cpp` — port to Rust.
+- `docs/examples/Path_rLineTo.cpp` — port to Rust.
+- `docs/examples/Path_rQuadTo.cpp` — port to Rust.
+- `docs/examples/Path_readFromMemory.cpp` — port to Rust.
+- `docs/examples/Path_reset.cpp` — port to Rust.
+- `docs/examples/Path_serialize.cpp` — port to Rust.
+- `docs/examples/Path_setFillType.cpp` — port to Rust.
+- `docs/examples/Path_setIsVolatile.cpp` — port to Rust.
+- `docs/examples/Path_swap.cpp` — port to Rust.
+- `docs/examples/Path_transform.cpp` — port to Rust.
+- `docs/examples/Path_transform_2.cpp` — port to Rust.
+- `docs/examples/Path_writeToMemory.cpp` — port to Rust.
+- `docs/examples/Picture_AbortCallback_abort.cpp` — port to Rust.
+- `docs/examples/Picture_MakeFromData.cpp` — port to Rust.
+- `docs/examples/Picture_MakeFromStream.cpp` — port to Rust.
+- `docs/examples/Picture_MakePlaceholder.cpp` — port to Rust.
+- `docs/examples/Picture_cullRect.cpp` — port to Rust.
+- `docs/examples/Picture_playback.cpp` — port to Rust.
+- `docs/examples/Picture_serialize.cpp` — port to Rust.
+- `docs/examples/Picture_serialize_2.cpp` — port to Rust.
+- `docs/examples/Picture_uniqueID.cpp` — port to Rust.
+- `docs/examples/Pixmap_addr.cpp` — port to Rust.
+- `docs/examples/Pixmap_addr16.cpp` — port to Rust.
+- `docs/examples/Pixmap_addr16_2.cpp` — port to Rust.
+- `docs/examples/Pixmap_addr32.cpp` — port to Rust.
+- `docs/examples/Pixmap_addr32_2.cpp` — port to Rust.
+- `docs/examples/Pixmap_addr64.cpp` — port to Rust.
+- `docs/examples/Pixmap_addr64_2.cpp` — port to Rust.
+- `docs/examples/Pixmap_addr8.cpp` — port to Rust.
+- `docs/examples/Pixmap_addr8_2.cpp` — port to Rust.
+- `docs/examples/Pixmap_addrF16.cpp` — port to Rust.
+- `docs/examples/Pixmap_addrF16_2.cpp` — port to Rust.
+- `docs/examples/Pixmap_addr_2.cpp` — port to Rust.
+- `docs/examples/Pixmap_alphaType.cpp` — port to Rust.
+- `docs/examples/Pixmap_bounds.cpp` — port to Rust.
+- `docs/examples/Pixmap_colorSpace.cpp` — port to Rust.
+- `docs/examples/Pixmap_colorType.cpp` — port to Rust.
+- `docs/examples/Pixmap_computeByteSize.cpp` — port to Rust.
+- `docs/examples/Pixmap_computeIsOpaque.cpp` — port to Rust.
+- `docs/examples/Pixmap_const_SkImageInfo_const_star.cpp` — port to Rust.
+- `docs/examples/Pixmap_empty_constructor.cpp` — port to Rust.
+- `docs/examples/Pixmap_erase.cpp` — port to Rust.
+- `docs/examples/Pixmap_erase_2.cpp` — port to Rust.
+- `docs/examples/Pixmap_erase_3.cpp` — port to Rust.
+- `docs/examples/Pixmap_extractSubset.cpp` — port to Rust.
+- `docs/examples/Pixmap_getColor.cpp` — port to Rust.
+- `docs/examples/Pixmap_height.cpp` — port to Rust.
+- `docs/examples/Pixmap_info.cpp` — port to Rust.
+- `docs/examples/Pixmap_isOpaque.cpp` — port to Rust.
+- `docs/examples/Pixmap_readPixels.cpp` — port to Rust.
+- `docs/examples/Pixmap_readPixels_2.cpp` — port to Rust.
+- `docs/examples/Pixmap_readPixels_3.cpp` — port to Rust.
+- `docs/examples/Pixmap_readPixels_4.cpp` — port to Rust.
+- `docs/examples/Pixmap_reset.cpp` — port to Rust.
+- `docs/examples/Pixmap_reset_2.cpp` — port to Rust.
+- `docs/examples/Pixmap_rowBytes.cpp` — port to Rust.
+- `docs/examples/Pixmap_rowBytesAsPixels.cpp` — port to Rust.
+- `docs/examples/Pixmap_scalePixels.cpp` — port to Rust.
+- `docs/examples/Pixmap_shiftPerPixel.cpp` — port to Rust.
+- `docs/examples/Pixmap_width.cpp` — port to Rust.
+- `docs/examples/Pixmap_writable_addr.cpp` — port to Rust.
+- `docs/examples/Pixmap_writable_addr16.cpp` — port to Rust.
+- `docs/examples/Pixmap_writable_addr32.cpp` — port to Rust.
+- `docs/examples/Pixmap_writable_addr64.cpp` — port to Rust.
+- `docs/examples/Pixmap_writable_addr8.cpp` — port to Rust.
+- `docs/examples/Pixmap_writable_addrF16.cpp` — port to Rust.
+- `docs/examples/Pixmap_writable_addr_2.cpp` — port to Rust.
+- `docs/examples/Plus.cpp` — port to Rust.
+- `docs/examples/Point_Make.cpp` — port to Rust.
+- `docs/examples/Point_Offset.cpp` — port to Rust.
+- `docs/examples/Point_Offset_2.cpp` — port to Rust.
+- `docs/examples/Point_add_operator.cpp` — port to Rust.
+- `docs/examples/Point_addto_operator.cpp` — port to Rust.
+- `docs/examples/Point_equal_operator.cpp` — port to Rust.
+- `docs/examples/Point_equals.cpp` — port to Rust.
+- `docs/examples/Point_isFinite.cpp` — port to Rust.
+- `docs/examples/Point_isZero.cpp` — port to Rust.
+- `docs/examples/Point_iset.cpp` — port to Rust.
+- `docs/examples/Point_iset_2.cpp` — port to Rust.
+- `docs/examples/Point_minus_operator.cpp` — port to Rust.
+- `docs/examples/Point_multiply_operator.cpp` — port to Rust.
+- `docs/examples/Point_multiplyby_operator.cpp` — port to Rust.
+- `docs/examples/Point_negate.cpp` — port to Rust.
+- `docs/examples/Point_normalize_2.cpp` — port to Rust.
+- `docs/examples/Point_notequal_operator.cpp` — port to Rust.
+- `docs/examples/Point_offset_3.cpp` — port to Rust.
+- `docs/examples/Point_scale.cpp` — port to Rust.
+- `docs/examples/Point_scale_2.cpp` — port to Rust.
+- `docs/examples/Point_set.cpp` — port to Rust.
+- `docs/examples/Point_setAbs.cpp` — port to Rust.
+- `docs/examples/Point_setLength.cpp` — port to Rust.
+- `docs/examples/Point_setLength_2.cpp` — port to Rust.
+- `docs/examples/Point_setNormalize.cpp` — port to Rust.
+- `docs/examples/Point_subtract_operator.cpp` — port to Rust.
+- `docs/examples/Point_subtractfrom_operator.cpp` — port to Rust.
+- `docs/examples/Point_x.cpp` — port to Rust.
+- `docs/examples/Point_y.cpp` — port to Rust.
+- `docs/examples/Quad_a.cpp` — port to Rust.
+- `docs/examples/Quad_b.cpp` — port to Rust.
+- `docs/examples/RGBA4f_FromColor.cpp` — port to Rust.
+- `docs/examples/RGBA4f_equal1_operator.cpp` — port to Rust.
+- `docs/examples/RGBA4f_notequal1_operator.cpp` — port to Rust.
+- `docs/examples/RGBA4f_toSkColor.cpp` — port to Rust.
+- `docs/examples/RGBA4f_vec.cpp` — port to Rust.
+- `docs/examples/RGBA4f_vec_2.cpp` — port to Rust.
+- `docs/examples/RRect_Corner.cpp` — port to Rust.
+- `docs/examples/RRect_MakeOval.cpp` — port to Rust.
+- `docs/examples/RRect_MakeRect.cpp` — port to Rust.
+- `docs/examples/RRect_MakeRectXY.cpp` — port to Rust.
+- `docs/examples/RRect_copy_const_SkRRect.cpp` — port to Rust.
+- `docs/examples/RRect_copy_operator.cpp` — port to Rust.
+- `docs/examples/RRect_dump.cpp` — port to Rust.
+- `docs/examples/RRect_dump_2.cpp` — port to Rust.
+- `docs/examples/RRect_empty_constructor.cpp` — port to Rust.
+- `docs/examples/RRect_getBounds.cpp` — port to Rust.
+- `docs/examples/RRect_height.cpp` — port to Rust.
+- `docs/examples/RRect_inset.cpp` — port to Rust.
+- `docs/examples/RRect_inset_2.cpp` — port to Rust.
+- `docs/examples/RRect_makeOffset.cpp` — port to Rust.
+- `docs/examples/RRect_offset.cpp` — port to Rust.
+- `docs/examples/RRect_outset.cpp` — port to Rust.
+- `docs/examples/RRect_outset_2.cpp` — port to Rust.
+- `docs/examples/RRect_radii.cpp` — port to Rust.
+- `docs/examples/RRect_rect.cpp` — port to Rust.
+- `docs/examples/RRect_setEmpty.cpp` — port to Rust.
+- `docs/examples/RRect_setNinePatch.cpp` — port to Rust.
+- `docs/examples/RRect_setOval.cpp` — port to Rust.
+- `docs/examples/RRect_setRect.cpp` — port to Rust.
+- `docs/examples/RRect_setRectRadii.cpp` — port to Rust.
+- `docs/examples/RRect_setRectXY.cpp` — port to Rust.
+- `docs/examples/RRect_width.cpp` — port to Rust.
+- `docs/examples/Rect_Intersects.cpp` — port to Rust.
+- `docs/examples/Rect_Make.cpp` — port to Rust.
+- `docs/examples/Rect_MakeEmpty.cpp` — port to Rust.
+- `docs/examples/Rect_MakeIWH.cpp` — port to Rust.
+- `docs/examples/Rect_MakeLTRB.cpp` — port to Rust.
+- `docs/examples/Rect_MakeSize.cpp` — port to Rust.
+- `docs/examples/Rect_MakeWH.cpp` — port to Rust.
+- `docs/examples/Rect_MakeXYWH.cpp` — port to Rust.
+- `docs/examples/Rect_Make_2.cpp` — port to Rust.
+- `docs/examples/Rect_asScalars.cpp` — port to Rust.
+- `docs/examples/Rect_bottom.cpp` — port to Rust.
+- `docs/examples/Rect_centerX.cpp` — port to Rust.
+- `docs/examples/Rect_centerY.cpp` — port to Rust.
+- `docs/examples/Rect_contains.cpp` — port to Rust.
+- `docs/examples/Rect_contains_2.cpp` — port to Rust.
+- `docs/examples/Rect_contains_3.cpp` — port to Rust.
+- `docs/examples/Rect_dump.cpp` — port to Rust.
+- `docs/examples/Rect_dump_2.cpp` — port to Rust.
+- `docs/examples/Rect_equal_operator.cpp` — port to Rust.
+- `docs/examples/Rect_height.cpp` — port to Rust.
+- `docs/examples/Rect_inset.cpp` — port to Rust.
+- `docs/examples/Rect_intersect.cpp` — port to Rust.
+- `docs/examples/Rect_intersect_2.cpp` — port to Rust.
+- `docs/examples/Rect_intersect_3.cpp` — port to Rust.
+- `docs/examples/Rect_intersects_2.cpp` — port to Rust.
+- `docs/examples/Rect_intersects_3.cpp` — port to Rust.
+- `docs/examples/Rect_isEmpty.cpp` — port to Rust.
+- `docs/examples/Rect_isFinite.cpp` — port to Rust.
+- `docs/examples/Rect_isSorted.cpp` — port to Rust.
+- `docs/examples/Rect_join.cpp` — port to Rust.
+- `docs/examples/Rect_joinNonEmptyArg.cpp` — port to Rust.
+- `docs/examples/Rect_joinPossiblyEmptyRect.cpp` — port to Rust.
+- `docs/examples/Rect_join_2.cpp` — port to Rust.
+- `docs/examples/Rect_left.cpp` — port to Rust.
+- `docs/examples/Rect_makeInset.cpp` — port to Rust.
+- `docs/examples/Rect_makeOffset.cpp` — port to Rust.
+- `docs/examples/Rect_makeOutset.cpp` — port to Rust.
+- `docs/examples/Rect_makeSorted.cpp` — port to Rust.
+- `docs/examples/Rect_notequal_operator.cpp` — port to Rust.
+- `docs/examples/Rect_offset.cpp` — port to Rust.
+- `docs/examples/Rect_offsetTo.cpp` — port to Rust.
+- `docs/examples/Rect_offset_2.cpp` — port to Rust.
+- `docs/examples/Rect_outset.cpp` — port to Rust.
+- `docs/examples/Rect_right.cpp` — port to Rust.
+- `docs/examples/Rect_round.cpp` — port to Rust.
+- `docs/examples/Rect_roundIn.cpp` — port to Rust.
+- `docs/examples/Rect_roundOut.cpp` — port to Rust.
+- `docs/examples/Rect_roundOut_2.cpp` — port to Rust.
+- `docs/examples/Rect_roundOut_3.cpp` — port to Rust.
+- `docs/examples/Rect_round_2.cpp` — port to Rust.
+- `docs/examples/Rect_set.cpp` — port to Rust.
+- `docs/examples/Rect_setBounds.cpp` — port to Rust.
+- `docs/examples/Rect_setBoundsCheck.cpp` — port to Rust.
+- `docs/examples/Rect_setBoundsNoCheck.cpp` — port to Rust.
+- `docs/examples/Rect_setEmpty.cpp` — port to Rust.
+- `docs/examples/Rect_setLTRB.cpp` — port to Rust.
+- `docs/examples/Rect_setWH.cpp` — port to Rust.
+- `docs/examples/Rect_setXYWH.cpp` — port to Rust.
+- `docs/examples/Rect_set_4.cpp` — port to Rust.
+- `docs/examples/Rect_sort.cpp` — port to Rust.
+- `docs/examples/Rect_toQuad.cpp` — port to Rust.
+- `docs/examples/Rect_top.cpp` — port to Rust.
+- `docs/examples/Rect_width.cpp` — port to Rust.
+- `docs/examples/Rect_x.cpp` — port to Rust.
+- `docs/examples/Rect_y.cpp` — port to Rust.
+- `docs/examples/Region_Cliperator_const_SkRegion_const_SkIRect.cpp` — port to Rust.
+- `docs/examples/Region_Cliperator_done.cpp` — port to Rust.
+- `docs/examples/Region_Cliperator_next.cpp` — port to Rust.
+- `docs/examples/Region_Cliperator_rect.cpp` — port to Rust.
+- `docs/examples/Region_Iterator_Iterator.cpp` — port to Rust.
+- `docs/examples/Region_Iterator_copy_const_SkRegion.cpp` — port to Rust.
+- `docs/examples/Region_Iterator_done.cpp` — port to Rust.
+- `docs/examples/Region_Iterator_next.cpp` — port to Rust.
+- `docs/examples/Region_Iterator_rect.cpp` — port to Rust.
+- `docs/examples/Region_Iterator_reset.cpp` — port to Rust.
+- `docs/examples/Region_Iterator_rewind.cpp` — port to Rust.
+- `docs/examples/Region_Iterator_rgn.cpp` — port to Rust.
+- `docs/examples/Region_Spanerator_const_SkRegion_int_int_int.cpp` — port to Rust.
+- `docs/examples/Region_Spanerator_next.cpp` — port to Rust.
+- `docs/examples/Region_computeRegionComplexity.cpp` — port to Rust.
+- `docs/examples/Region_copy_const_SkIRect.cpp` — port to Rust.
+- `docs/examples/Region_copy_const_SkRegion.cpp` — port to Rust.
+- `docs/examples/Region_copy_operator.cpp` — port to Rust.
+- `docs/examples/Region_destructor.cpp` — port to Rust.
+- `docs/examples/Region_empty_constructor.cpp` — port to Rust.
+- `docs/examples/Region_equal1_operator.cpp` — port to Rust.
+- `docs/examples/Region_getBoundaryPath.cpp` — port to Rust.
+- `docs/examples/Region_getBounds.cpp` — port to Rust.
+- `docs/examples/Region_isComplex.cpp` — port to Rust.
+- `docs/examples/Region_isEmpty.cpp` — port to Rust.
+- `docs/examples/Region_isRect.cpp` — port to Rust.
+- `docs/examples/Region_notequal1_operator.cpp` — port to Rust.
+- `docs/examples/Region_quickContains.cpp` — port to Rust.
+- `docs/examples/Region_quickReject.cpp` — port to Rust.
+- `docs/examples/Region_quickReject_2.cpp` — port to Rust.
+- `docs/examples/Region_readFromMemory.cpp` — port to Rust.
+- `docs/examples/Region_set.cpp` — port to Rust.
+- `docs/examples/Region_setEmpty.cpp` — port to Rust.
+- `docs/examples/Region_setRect.cpp` — port to Rust.
+- `docs/examples/Region_setRects.cpp` — port to Rust.
+- `docs/examples/Region_setRegion.cpp` — port to Rust.
+- `docs/examples/Region_swap.cpp` — port to Rust.
+- `docs/examples/Region_translate.cpp` — port to Rust.
+- `docs/examples/Region_translate_2.cpp` — port to Rust.
+- `docs/examples/RuntimeEffect_ColorFilter_grid.cpp` — port to Rust.
+- `docs/examples/SKIA_LOGO.cpp` — port to Rust.
+- `docs/examples/SKIA_LOGO_ANIMATE.cpp` — port to Rust.
+- `docs/examples/SKIA_LOGO_pride.cpp` — port to Rust.
+- `docs/examples/SKIA_LOGO_svg.cpp` — port to Rust.
+- `docs/examples/Saturation.cpp` — port to Rust.
+- `docs/examples/Screen.cpp` — port to Rust.
+- `docs/examples/Shader_Methods_a.cpp` — port to Rust.
+- `docs/examples/Shader_Methods_b.cpp` — port to Rust.
+- `docs/examples/SkFontMgr_example.cpp` — port to Rust.
+- `docs/examples/SkFontMgr_example2.cpp` — port to Rust.
+- `docs/examples/SkImage_to_PPM_ascii.cpp` — port to Rust.
+- `docs/examples/SkImage_to_PPM_binary.cpp` — port to Rust.
+- `docs/examples/SkParsePath_FromSVGString.cpp` — port to Rust.
+- `docs/examples/SkParsePath_ToSVGString.cpp` — port to Rust.
+- `docs/examples/SkPath_arcTo_example.cpp` — port to Rust.
+- `docs/examples/SkPath_arcto_conic_parametric.cpp` — port to Rust.
+- `docs/examples/SkPath_arcto_conic_parametric2.cpp` — port to Rust.
+- `docs/examples/SkPath_cubicTo_example.cpp` — port to Rust.
+- `docs/examples/SkPath_cubicTo_example_parametric.cpp` — port to Rust.
+- `docs/examples/SkPath_cubicTo_example_parametric_animated.cpp` — port to Rust.
+- `docs/examples/SkPath_quadTo_example.cpp` — port to Rust.
+- `docs/examples/SkPath_quadTo_example_parametric.cpp` — port to Rust.
+- `docs/examples/SkPath_quadTo_example_parametric_animated.cpp` — port to Rust.
+- `docs/examples/SkSL_ColorSpaces.cpp` — port to Rust.
+- `docs/examples/SkSL_CoordinateSpaces.cpp` — port to Rust.
+- `docs/examples/SkSL_EvaluatingImageShader.cpp` — port to Rust.
+- `docs/examples/SkSL_EvaluatingNestedShaders.cpp` — port to Rust.
+- `docs/examples/SkSL_EvaluatingTwoShaders.cpp` — port to Rust.
+- `docs/examples/SkSL_LinearSRGB.cpp` — port to Rust.
+- `docs/examples/SkSL_MinifiedSkSL.cpp` — port to Rust.
+- `docs/examples/SkSL_PremultipliedAlpha.cpp` — port to Rust.
+- `docs/examples/SkSL_RawImageShaders.cpp` — port to Rust.
+- `docs/examples/SkSL_Uniforms.cpp` — port to Rust.
+- `docs/examples/SmoothBezierSplineInterpolation.cpp` — port to Rust.
+- `docs/examples/Soft_Light.cpp` — port to Rust.
+- `docs/examples/Src.cpp` — port to Rust.
+- `docs/examples/Src_Atop.cpp` — port to Rust.
+- `docs/examples/Src_In.cpp` — port to Rust.
+- `docs/examples/Src_Out.cpp` — port to Rust.
+- `docs/examples/Src_Over.cpp` — port to Rust.
+- `docs/examples/State_Stack_a.cpp` — port to Rust.
+- `docs/examples/State_Stack_b.cpp` — port to Rust.
+- `docs/examples/Stroke_Width.cpp` — port to Rust.
+- `docs/examples/Surface_MakeFromBackendTexture.cpp` — port to Rust.
+- `docs/examples/Surface_MakeNull.cpp` — port to Rust.
+- `docs/examples/Surface_MakeRaster.cpp` — port to Rust.
+- `docs/examples/Surface_MakeRasterDirect.cpp` — port to Rust.
+- `docs/examples/Surface_MakeRasterDirectReleaseProc.cpp` — port to Rust.
+- `docs/examples/Surface_MakeRasterN32Premul.cpp` — port to Rust.
+- `docs/examples/Surface_MakeRaster_2.cpp` — port to Rust.
+- `docs/examples/Surface_MakeRenderTarget.cpp` — port to Rust.
+- `docs/examples/Surface_MakeRenderTarget_2.cpp` — port to Rust.
+- `docs/examples/Surface_MakeRenderTarget_3.cpp` — port to Rust.
+- `docs/examples/Surface_draw.cpp` — port to Rust.
+- `docs/examples/Surface_height.cpp` — port to Rust.
+- `docs/examples/Surface_makeImageSnapshot.cpp` — port to Rust.
+- `docs/examples/Surface_makeImageSnapshot_2.cpp` — port to Rust.
+- `docs/examples/Surface_makeSurface.cpp` — port to Rust.
+- `docs/examples/Surface_notifyContentWillChange.cpp` — port to Rust.
+- `docs/examples/Surface_props.cpp` — port to Rust.
+- `docs/examples/Surface_readPixels_2.cpp` — port to Rust.
+- `docs/examples/Surface_readPixels_3.cpp` — port to Rust.
+- `docs/examples/Surface_width.cpp` — port to Rust.
+- `docs/examples/Surface_writePixels_2.cpp` — port to Rust.
+- `docs/examples/TextBlobBuilder_empty_constructor.cpp` — port to Rust.
+- `docs/examples/TextBlob_serialize_2.cpp` — port to Rust.
+- `docs/examples/Turtle.cpp` — port to Rust.
+- `docs/examples/UnicornPoop.cpp` — port to Rust.
+- `docs/examples/UnpremulBugs.cpp` — port to Rust.
+- `docs/examples/UnpremulGPU.cpp` — port to Rust.
+- `docs/examples/Xor.cpp` — port to Rust.
+- `docs/examples/alpha_bitmap_color_filter_mask_filter.cpp` — port to Rust.
+- `docs/examples/alphaimage_shader_colorfilter.cpp` — port to Rust.
+- `docs/examples/backdrop_blur_with_rrect_clip.cpp` — port to Rust.
+- `docs/examples/bezier_curves.cpp` — port to Rust.
+- `docs/examples/blur4444.cpp` — port to Rust.
+- `docs/examples/blur_alpha_img.cpp` — port to Rust.
+- `docs/examples/blurbug.cpp` — port to Rust.
+- `docs/examples/bug5252.cpp` — port to Rust.
+- `docs/examples/bug583299.cpp` — port to Rust.
+- `docs/examples/bug6495.cpp` — port to Rust.
+- `docs/examples/bug7573_1.cpp` — port to Rust.
+- `docs/examples/bug767834.cpp` — port to Rust.
+- `docs/examples/bugoftheday.cpp` — port to Rust.
+- `docs/examples/checker_board.cpp` — port to Rust.
+- `docs/examples/color_filter_vs_colorFilterImageFilter_saveLayer.cpp` — port to Rust.
+- `docs/examples/compose_path.cpp` — port to Rust.
+- `docs/examples/convex_overstroke_linear_approx_curve.cpp` — port to Rust.
+- `docs/examples/convex_overstroke_quad.cpp` — port to Rust.
+- `docs/examples/count_verbs.cpp` — port to Rust.
+- `docs/examples/crbug_663246.cpp` — port to Rust.
+- `docs/examples/crbug_918512.cpp` — port to Rust.
+- `docs/examples/cubics_are_horrible.cpp` — port to Rust.
+- `docs/examples/default.cpp` — port to Rust.
+- `docs/examples/default2.cpp` — port to Rust.
+- `docs/examples/default3.cpp` — port to Rust.
+- `docs/examples/discrete_path.cpp` — port to Rust.
+- `docs/examples/dither1.cpp` — port to Rust.
+- `docs/examples/draw_a8_bitmap.cpp` — port to Rust.
+- `docs/examples/draw_image_nine_blur_mask.cpp` — port to Rust.
+- `docs/examples/draw_patch.cpp` — port to Rust.
+- `docs/examples/draw_pixel_array.cpp` — port to Rust.
+- `docs/examples/draw_pixel_array_nocopy.cpp` — port to Rust.
+- `docs/examples/draw_pixel_array_with_copy.cpp` — port to Rust.
+- `docs/examples/draw_text_fails.cpp` — port to Rust.
+- `docs/examples/draw_vertices.cpp` — port to Rust.
+- `docs/examples/drawarcs.cpp` — port to Rust.
+- `docs/examples/example3ps.cpp` — port to Rust.
+- `docs/examples/f16.cpp` — port to Rust.
+- `docs/examples/f16to8888busted.cpp` — port to Rust.
+- `docs/examples/f16to8888drawImageBug.cpp` — port to Rust.
+- `docs/examples/failing_example.cpp` — port to Rust.
+- `docs/examples/fivearcs.cpp` — port to Rust.
+- `docs/examples/flag_us_1792.cpp` — port to Rust.
+- `docs/examples/flag_us_1960.cpp` — port to Rust.
+- `docs/examples/fluttershadow.cpp` — port to Rust.
+- `docs/examples/gamma_mask_filter.cpp` — port to Rust.
+- `docs/examples/getLocalBounds_broken.cpp` — port to Rust.
+- `docs/examples/getLocalBounds_working.cpp` — port to Rust.
+- `docs/examples/gpu4444diff.cpp` — port to Rust.
+- `docs/examples/gpu8888diff.cpp` — port to Rust.
+- `docs/examples/homogeneous.cpp` — port to Rust.
+- `docs/examples/image_subsets_get_different_uids.cpp` — port to Rust.
+- `docs/examples/image_to_bitmap_does_not_preserve_genid.cpp` — port to Rust.
+- `docs/examples/incomplete.cpp` — port to Rust.
+- `docs/examples/inlinepixmapconstructor.cpp` — port to Rust.
+- `docs/examples/issue640176.cpp` — port to Rust.
+- `docs/examples/l_system_plant.cpp` — port to Rust.
+- `docs/examples/maddash.cpp` — port to Rust.
+- `docs/examples/makeRasterImage_fail.cpp` — port to Rust.
+- `docs/examples/mapradius.cpp` — port to Rust.
+- `docs/examples/massive_coordinates_svg.cpp` — port to Rust.
+- `docs/examples/measure_text_bounds.cpp` — port to Rust.
+- `docs/examples/no_gpu_blur.cpp` — port to Rust.
+- `docs/examples/not_path_gradient.cpp` — port to Rust.
+- `docs/examples/pathmeasure.cpp` — port to Rust.
+- `docs/examples/pathops.cpp` — port to Rust.
+- `docs/examples/persp_text_2.cpp` — port to Rust.
+- `docs/examples/picture_shader.cpp` — port to Rust.
+- `docs/examples/pong.cpp` — port to Rust.
+- `docs/examples/pong2.cpp` — port to Rust.
+- `docs/examples/purplestamp.cpp` — port to Rust.
+- `docs/examples/radial_gradient_shader_with_animated_color.cpp` — port to Rust.
+- `docs/examples/radial_gradient_test.cpp` — port to Rust.
+- `docs/examples/redwhiteonblue.cpp` — port to Rust.
+- `docs/examples/rotations.cpp` — port to Rust.
+- `docs/examples/setimagefilter.cpp` — port to Rust.
+- `docs/examples/shader.cpp` — port to Rust.
+- `docs/examples/shader_alphaimage.cpp` — port to Rust.
+- `docs/examples/shapes.cpp` — port to Rust.
+- `docs/examples/shapes_with_motion.cpp` — port to Rust.
+- `docs/examples/skbug6031.cpp` — port to Rust.
+- `docs/examples/skbug_237_drawImageRect.cpp` — port to Rust.
+- `docs/examples/skbug_237_drawImage_with_blur.cpp` — port to Rust.
+- `docs/examples/skbug_5648.cpp` — port to Rust.
+- `docs/examples/skbug_633528.cpp` — port to Rust.
+- `docs/examples/skcanvas_paint.cpp` — port to Rust.
+- `docs/examples/skcanvas_square.cpp` — port to Rust.
+- `docs/examples/skcanvas_star.cpp` — port to Rust.
+- `docs/examples/skew_x_animated.cpp` — port to Rust.
+- `docs/examples/skpaint_2pt.cpp` — port to Rust.
+- `docs/examples/skpaint_bitmap_shader.cpp` — port to Rust.
+- `docs/examples/skpaint_blur_mask_filter.cpp` — port to Rust.
+- `docs/examples/skpaint_blur_mask_filter_2.cpp` — port to Rust.
+- `docs/examples/skpaint_color_table_filter.cpp` — port to Rust.
+- `docs/examples/skpaint_compose.cpp` — port to Rust.
+- `docs/examples/skpaint_compose_path_effect.cpp` — port to Rust.
+- `docs/examples/skpaint_compose_shader.cpp` — port to Rust.
+- `docs/examples/skpaint_corner_path_effects.cpp` — port to Rust.
+- `docs/examples/skpaint_dash_path_effect.cpp` — port to Rust.
+- `docs/examples/skpaint_discrete_path_effect.cpp` — port to Rust.
+- `docs/examples/skpaint_line_2d_path_effect.cpp` — port to Rust.
+- `docs/examples/skpaint_matrix_color_filter.cpp` — port to Rust.
+- `docs/examples/skpaint_mix.cpp` — port to Rust.
+- `docs/examples/skpaint_path_1d_path_effect.cpp` — port to Rust.
+- `docs/examples/skpaint_path_2d_path_effect.cpp` — port to Rust.
+- `docs/examples/skpaint_perlin.cpp` — port to Rust.
+- `docs/examples/skpaint_radial.cpp` — port to Rust.
+- `docs/examples/skpaint_shader.cpp` — port to Rust.
+- `docs/examples/skpaint_skia.cpp` — port to Rust.
+- `docs/examples/skpaint_sum_path_effect.cpp` — port to Rust.
+- `docs/examples/skpaint_sweep.cpp` — port to Rust.
+- `docs/examples/skpaint_turb.cpp` — port to Rust.
+- `docs/examples/skpaint_xfer.cpp` — port to Rust.
+- `docs/examples/software_bitmap_w_perspective.cpp` — port to Rust.
+- `docs/examples/star.cpp` — port to Rust.
+- `docs/examples/star2.cpp` — port to Rust.
+- `docs/examples/stroke_closed_degenerate_path.cpp` — port to Rust.
+- `docs/examples/strokerect_gm.cpp` — port to Rust.
+- `docs/examples/subset_example.cpp` — port to Rust.
+- `docs/examples/sum_path_effect.cpp` — port to Rust.
+- `docs/examples/sweep_gradient_talk_1.cpp` — port to Rust.
+- `docs/examples/sweep_gradient_talk_2.cpp` — port to Rust.
+- `docs/examples/sweep_gradient_talk_4.cpp` — port to Rust.
+- `docs/examples/sweep_gradient_talk_lots.cpp` — port to Rust.
+- `docs/examples/text_only.cpp` — port to Rust.
+- `docs/examples/text_rendering.cpp` — port to Rust.
+- `docs/examples/text_shadow.cpp` — port to Rust.
+- `docs/examples/unexpected_setAlphaType.cpp` — port to Rust.
+- `docs/examples/upscale_checkerboard.cpp` — port to Rust.
+- `docs/examples/weird_RRect_bug.cpp` — port to Rust.
+- `docs/examples/zero_off_dashing.cpp` — port to Rust.
+- `example/external_client/custom_skia_config/SkUserConfig.h` — port to Rust.
+- `example/external_client/src/decode_everything.cpp` — port to Rust.
+- `example/external_client/src/decode_png_main.cpp` — port to Rust.
+- `example/external_client/src/ganesh_gl.cpp` — port to Rust.
+- `example/external_client/src/ganesh_metal.cpp` — port to Rust.
+- `example/external_client/src/ganesh_metal_context_helper.h` — port to Rust.
+- `example/external_client/src/ganesh_metal_context_helper.mm` — port to Rust.
+- `example/external_client/src/ganesh_vulkan.cpp` — port to Rust.
+- `example/external_client/src/gl_context_helper.h` — port to Rust.
+- `example/external_client/src/gl_context_helper.mm` — port to Rust.
+- `example/external_client/src/graphite_metal_capture.cpp` — port to Rust.
+- `example/external_client/src/graphite_metal_context_helper.h` — port to Rust.
+- `example/external_client/src/graphite_metal_context_helper.mm` — port to Rust.
+- `example/external_client/src/graphite_native_metal.cpp` — port to Rust.
+- `example/external_client/src/graphite_native_vulkan.cpp` — port to Rust.
+- `example/external_client/src/log_tester.cpp` — port to Rust.
+- `example/external_client/src/path_main.cpp` — port to Rust.
+- `example/external_client/src/play_skottie.cpp` — port to Rust.
+- `example/external_client/src/shape_text.cpp` — port to Rust.
+- `example/external_client/src/svg_renderer.cpp` — port to Rust.
+- `example/external_client/src/use_skresources.cpp` — port to Rust.
+- `example/external_client/src/write_text_to_png.cpp` — port to Rust.
+- `example/external_client/src/write_to_pdf.cpp` — port to Rust.
+- `platform_tools/libraries/include/arcore_c_api.h` — port to Rust.
+
+### Adapt these build/tooling files (Deepseek)
+
+- `BUILD.bazel`.
+- `BUILD.gn`.
+- `DEPS`.
+- `MODULE.bazel`.
+- `MODULE.bazel.lock`.
+- `PRESUBMIT.py`.
+- `PRESUBMIT_test_mocks.py`.
+- `WORKSPACE.bazel`.
+- `agents/skills/skia-add-test/assets/test_template.cpp`.
+- `bazel/BUILD.bazel`.
+- `bazel/Makefile`.
+- `bazel/buildrc`.
+- `bazel/cipd_deps.bzl`.
+- `bazel/cipd_install.bzl`.
+- `bazel/common_config_settings/BUILD.bazel`.
+- `bazel/cpp_modules.bzl`.
+- `bazel/deps.json`.
+- `bazel/deps_parser/BUILD.bazel`.
+- `bazel/deps_parser/deps_parser.go`.
+- `bazel/device_specific_configs/BUILD.bazel`.
+- `bazel/device_specific_configs/device_specific_configs.go`.
+- `bazel/device_specific_configs/generate/BUILD.bazel`.
+- `bazel/device_specific_configs/generate/generate.go`.
+- `bazel/devicesrc`.
+- `bazel/download_config_files.bzl`.
+- `bazel/exporter/BUILD.bazel`.
+- `bazel/exporter/bazel_query_command.go`.
+- `bazel/exporter/bazel_util.go`.
+- `bazel/exporter/build_proto/README.md`.
+- `bazel/exporter/build_proto/analysis_v2/BUILD.bazel`.
+- `bazel/exporter/build_proto/analysis_v2/analysis_v2.pb.go`.
+- `bazel/exporter/build_proto/build/BUILD.bazel`.
+- `bazel/exporter/build_proto/build/build.pb.go`.
+- `bazel/exporter/cmake_exporter.go`.
+- `bazel/exporter/cmake_rule.go`.
+- `bazel/exporter/cmake_workspace.go`.
+- `bazel/exporter/gni_exporter.go`.
+- `bazel/exporter/interfaces/BUILD.bazel`.
+- `bazel/exporter/interfaces/exporter.go`.
+- `bazel/exporter/interfaces/file_system.go`.
+- `bazel/exporter/interfaces/mocks/BUILD.bazel`.
+- `bazel/exporter/interfaces/mocks/FileSystem.go`.
+- `bazel/exporter/interfaces/mocks/QueryCommand.go`.
+- `bazel/exporter/interfaces/mocks/generate.go`.
+- `bazel/exporter/interfaces/query_command.go`.
+- `bazel/exporter_tool/BUILD.bazel`.
+- `bazel/exporter_tool/README.md`.
+- `bazel/exporter_tool/main.go`.
+- `bazel/external/README.md`.
+- `bazel/external/cxx/BUILD.bazel`.
+- `bazel/external/cxx/BUILD.bazel.skia`.
+- `bazel/external/cxx/Cargo.lock`.
+- `bazel/external/cxxbridge_cmd/BUILD.bazel`.
+- `bazel/external/cxxbridge_cmd/BUILD.bazel.skia`.
+- `bazel/external/cxxbridge_cmd/Cargo.lock`.
+- `bazel/external/d3d12allocator/BUILD.bazel`.
+- `bazel/external/dawn/BUILD.bazel`.
+- `bazel/external/dawn/dawn_repo.bzl`.
+- `bazel/external/dawn/generate_dawn_files.py`.
+- `bazel/external/delaunator/BUILD.bazel`.
+- `bazel/external/dng_sdk/BUILD.bazel`.
+- `bazel/external/egl_registry/BUILD.bazel`.
+- `bazel/external/expat/BUILD.bazel`.
+- `bazel/external/expat/config_files.patch`.
+- `bazel/external/fontations/BUILD.bazel`.
+- `bazel/external/fontations/Cargo.lock`.
+- `bazel/external/fontations/Cargo.toml`.
+- `bazel/external/fontconfig/BUILD.bazel`.
+- `bazel/external/freetype/BUILD.bazel`.
+- `bazel/external/freetype/config_files.patch`.
+- `bazel/external/glesv2/BUILD.bazel`.
+- `bazel/external/gn/BUILD.bazel`.
+- `bazel/external/harfbuzz/BUILD.bazel`.
+- `bazel/external/harfbuzz/config_files.patch`.
+- `bazel/external/icu/BUILD.bazel`.
+- `bazel/external/icu/icu_utils.patch`.
+- `bazel/external/icu4x/BUILD.bazel`.
+- `bazel/external/icu4x/Cargo.lock`.
+- `bazel/external/icu4x/Cargo.toml`.
+- `bazel/external/image-png/BUILD.bazel`.
+- `bazel/external/image-png/captured-chunks.patch`.
+- `bazel/external/imgui/BUILD.bazel`.
+- `bazel/external/jinja2/BUILD.bazel`.
+- `bazel/external/libavif/BUILD.bazel`.
+- `bazel/external/libgav1/BUILD.bazel`.
+- `bazel/external/libjpeg_turbo/BUILD.bazel`.
+- `bazel/external/libjxl/BUILD.bazel`.
+- `bazel/external/libpng/BUILD.bazel`.
+- `bazel/external/libwebp/BUILD.bazel`.
+- `bazel/external/libyuv/BUILD.bazel`.
+- `bazel/external/markupsafe/BUILD.bazel`.
+- `bazel/external/opengl_registry/BUILD.bazel`.
+- `bazel/external/perfetto/BUILD.bazel`.
+- `bazel/external/piex/BUILD.bazel`.
+- `bazel/external/skimage/BUILD.bazel`.
+- `bazel/external/spirv_cross/BUILD.bazel`.
+- `bazel/external/vello/BUILD.bazel`.
+- `bazel/external/vello/Cargo.lock`.
+- `bazel/external/vello/Cargo.toml`.
+- `bazel/external/vulkan_headers/BUILD.bazel`.
+- `bazel/external/vulkan_tools/BUILD.bazel`.
+- `bazel/external/vulkan_utility_libraries/BUILD.bazel`.
+- `bazel/external/vulkanmemoryallocator/BUILD.bazel`.
+- `bazel/external/wuffs/BUILD.bazel`.
+- `bazel/external/zlib/BUILD.bazel`.
+- `bazel/flags.bzl`.
+- `bazel/gcs_mirror.bzl`.
+- `bazel/gcs_mirror/gcs_mirror.go`.
+- `bazel/generate_cpp_files_for_headers.bzl`.
+- `bazel/go_googleapis_compatibility_hack.bzl`.
+- `bazel/karma/BUILD.bazel.old`.
+- `bazel/karma/karma_test.bzl`.
+- `bazel/macros.bzl`.
+- `bazel/platform/BUILD.bazel`.
+- `bazel/rbe/Makefile`.
+- `bazel/rbe/README.md`.
+- `bazel/rbe/gce_linux_container/Dockerfile`.
+- `bazel/remove_indentation.bzl`.
+- `bazel/run_cxxbridge_cmd.bzl`.
+- `bazel/rust_cxx_bridge.bzl`.
+- `bazel/skia_rules.bzl`.
+- `bazel/user/README.md`.
+- `bin/activate-emsdk`.
+- `bin/compare`.
+- `bin/coverage`.
+- `bin/droid`.
+- `bin/fetch-clang-format`.
+- `bin/fetch-fonts-testdata`.
+- `bin/fetch-gn`.
+- `bin/fetch-ninja`.
+- `bin/fetch-sk`.
+- `bin/fetch-skps`.
+- `bin/fetch-svgs`.
+- `bin/gerrit-number`.
+- `bin/list-skia-bots`.
+- `bin/sync`.
+- `bin/sysopen`.
+- `bin/try-clients`.
+- `build_overrides/angle.gni`.
+- `build_overrides/build.gni`.
+- `build_overrides/partition_alloc.gni`.
+- `build_overrides/spirv_tools.gni`.
+- `build_overrides/vulkan_headers.gni`.
+- `build_overrides/vulkan_tools.gni`.
+- `demos.skia.org/demos/canvas_edit/editor.js`.
+- `demos.skia.org/demos/canvas_edit/index.html`.
+- `demos.skia.org/demos/canvas_edit/main.js`.
+- `demos.skia.org/demos/canvas_edit/path.js`.
+- `demos.skia.org/demos/hello_world/index.html`.
+- `demos.skia.org/demos/image_decode_web_worker/index.html`.
+- `demos.skia.org/demos/image_decode_web_worker/main.js`.
+- `demos.skia.org/demos/image_decode_web_worker/worker.js`.
+- `demos.skia.org/demos/image_sampling/index.html`.
+- `demos.skia.org/demos/mesh2d/index.html`.
+- `demos.skia.org/demos/path_performance/index.html`.
+- `demos.skia.org/demos/path_performance/main.js`.
+- `demos.skia.org/demos/path_performance/shared.js`.
+- `demos.skia.org/demos/path_performance/worker.js`.
+- `demos.skia.org/demos/sampling_types/index.html`.
+- `demos.skia.org/demos/spreadsheet/index.html`.
+- `demos.skia.org/demos/textedit/index.html`.
+- `demos.skia.org/demos/textedit/spiralshader.js`.
+- `demos.skia.org/demos/textedit/textapi_utils.js`.
+- `demos.skia.org/demos/textures/index.html`.
+- `demos.skia.org/demos/up_scaling/index.html`.
+- `demos.skia.org/demos/web_worker/index.html`.
+- `demos.skia.org/demos/web_worker/main.js`.
+- `demos.skia.org/demos/web_worker/shared.js`.
+- `demos.skia.org/demos/web_worker/worker.js`.
+- `demos.skia.org/demos/webgpu/index.html`.
+- `example/BUILD.bazel`.
+- `example/external_client/BUILD.bazel`.
+- `example/external_client/MODULE.bazel`.
+- `example/external_client/MODULE.bazel.lock`.
+- `example/external_client/custom_skia_config/BUILD.bazel`.
+- `example/external_client/custom_skia_config/MODULE.bazel`.
+- `example/external_client/custom_skia_config/WORKSPACE.bazel`.
+- `example/external_client/custom_skia_config/copts.bzl`.
+- `example/external_client/custom_skia_config/linkopts.bzl`.
+- `gn/BUILD.bazel`.
+- `gn/BUILDCONFIG.gn`.
+- `gn/__init__.py`.
+- `gn/bazel_build.py`.
+- `gn/bench.gni`.
+- `gn/call.py`.
+- `gn/check_compiler_flag.py`.
+- `gn/checkdir.py`.
+- `gn/codec.gni`.
+- `gn/compile_ib_files.py`.
+- `gn/copy_git_directory.py`.
+- `gn/core.gni`.
+- `gn/cp.py`.
+- `gn/effects.gni`.
+- `gn/effects_imagefilters.gni`.
+- `gn/find_headers.py`.
+- `gn/find_msvc.py`.
+- `gn/find_xcode_sysroot.py`.
+- `gn/fuzz.gni`.
+- `gn/gm.gni`.
+- `gn/gn_meta_sln.py`.
+- `gn/gn_to_bp.py`.
+- `gn/gn_to_bp_utils.py`.
+- `gn/gn_to_cmake.py`.
+- `gn/gpu.gni`.
+- `gn/graphite.gni`.
+- `gn/highest_version_dir.py`.
+- `gn/ios.gni`.
+- `gn/is_clang.py`.
+- `gn/is_xcode.py`.
+- `gn/make_gm_gni.py`.
+- `gn/minify_sksl.py`.
+- `gn/opts.gni`.
+- `gn/pathops.gni`.
+- `gn/pdf.gni`.
+- `gn/portable/BUILD.gn`.
+- `gn/ports.gni`.
+- `gn/rm.py`.
+- `gn/run_sksllex.py`.
+- `gn/rust.gni`.
+- `gn/shared_sources.gni`.
+- `gn/skia.gni`.
+- `gn/skia/BUILD.gn`.
+- `gn/skqp_gn_args.py`.
+- `gn/sksl.gni`.
+- `gn/sksl_tests.gni`.
+- `gn/svg.gni`.
+- `gn/tests.gni`.
+- `gn/toolchain/BUILD.gn`.
+- `gn/toolchain/emsdk/BUILD.gn`.
+- `gn/toolchain/num_cpus.py`.
+- `gn/toolchain/wasm.gni`.
+- `gn/utils.gni`.
+- `gn/xml.gni`.
+- `gn/xps.gni`.
+- `go.mod`.
+- `go.sum`.
+- `infra/BUILD.bazel`.
+- `infra/README.md`.
+- `infra/bots/BUILD.bazel`.
+- `infra/bots/Makefile`.
+- `infra/bots/README.md`.
+- `infra/bots/README.recipes.md`.
+- `infra/bots/analysis/Makefile`.
+- `infra/bots/analysis/README.md`.
+- `infra/bots/analysis/axis.sh`.
+- `infra/bots/analysis/create-alljobs.sh`.
+- `infra/bots/analysis/missing.sh`.
+- `infra/bots/assets/README.md`.
+- `infra/bots/assets/android_ndk_darwin/VERSION`.
+- `infra/bots/assets/android_ndk_darwin/create.py`.
+- `infra/bots/assets/android_ndk_linux/VERSION`.
+- `infra/bots/assets/android_ndk_linux/create.py`.
+- `infra/bots/assets/android_ndk_windows/VERSION`.
+- `infra/bots/assets/android_ndk_windows/create.py`.
+- `infra/bots/assets/android_sdk_linux/VERSION`.
+- `infra/bots/assets/android_sdk_linux/__init__.py`.
+- `infra/bots/assets/android_sdk_linux/create.py`.
+- `infra/bots/assets/android_sdk_linux/create_and_upload.py`.
+- `infra/bots/assets/arm64_sysroot/Dockerfile`.
+- `infra/bots/assets/arm64_sysroot/README.md`.
+- `infra/bots/assets/arm64_sysroot/VERSION`.
+- `infra/bots/assets/arm64_sysroot/create.py`.
+- `infra/bots/assets/armhf_sysroot/README.md`.
+- `infra/bots/assets/armhf_sysroot/VERSION`.
+- `infra/bots/assets/armhf_sysroot/create.py`.
+- `infra/bots/assets/bazel/README.md`.
+- `infra/bots/assets/bazel/VERSION`.
+- `infra/bots/assets/bazel_build_task_driver/VERSION`.
+- `infra/bots/assets/bazel_build_task_driver/create.py`.
+- `infra/bots/assets/bazelisk/README.md`.
+- `infra/bots/assets/bazelisk/VERSION`.
+- `infra/bots/assets/bazelisk_linux_amd64/VERSION`.
+- `infra/bots/assets/bazelisk_linux_amd64/create.py`.
+- `infra/bots/assets/bazelisk_linux_arm64/VERSION`.
+- `infra/bots/assets/bazelisk_linux_arm64/create.py`.
+- `infra/bots/assets/bazelisk_mac_amd64/VERSION`.
+- `infra/bots/assets/bazelisk_mac_amd64/create.py`.
+- `infra/bots/assets/bazelisk_mac_arm64/VERSION`.
+- `infra/bots/assets/bazelisk_mac_arm64/create.py`.
+- `infra/bots/assets/bazelisk_win_amd64/VERSION`.
+- `infra/bots/assets/bazelisk_win_amd64/create.py`.
+- `infra/bots/assets/binutils_linux_x64/VERSION`.
+- `infra/bots/assets/binutils_linux_x64/create.py`.
+- `infra/bots/assets/bloaty/VERSION`.
+- `infra/bots/assets/bloaty/create.py`.
+- `infra/bots/assets/cabe/README.md`.
+- `infra/bots/assets/cabe/VERSION`.
+- `infra/bots/assets/cast_toolchain/README.md`.
+- `infra/bots/assets/cast_toolchain/VERSION`.
+- `infra/bots/assets/ccache_linux/VERSION`.
+- `infra/bots/assets/ccache_linux/create.py`.
+- `infra/bots/assets/ccache_mac/VERSION`.
+- `infra/bots/assets/ccache_mac/create.py`.
+- `infra/bots/assets/chromebook_arm64_gles/README.md`.
+- `infra/bots/assets/chromebook_arm64_gles/VERSION`.
+- `infra/bots/assets/chromebook_arm64_gles/__init__.py`.
+- `infra/bots/assets/chromebook_arm64_gles/create.py`.
+- `infra/bots/assets/chromebook_arm64_gles/create_and_upload.py`.
+- `infra/bots/assets/chromebook_arm_gles/README.md`.
+- `infra/bots/assets/chromebook_arm_gles/VERSION`.
+- `infra/bots/assets/chromebook_arm_gles/__init__.py`.
+- `infra/bots/assets/chromebook_arm_gles/create.py`.
+- `infra/bots/assets/chromebook_arm_gles/create_and_upload.py`.
+- `infra/bots/assets/chromebook_x86_64_gles/README.md`.
+- `infra/bots/assets/chromebook_x86_64_gles/VERSION`.
+- `infra/bots/assets/chromebook_x86_64_gles/__init__.py`.
+- `infra/bots/assets/chromebook_x86_64_gles/create.py`.
+- `infra/bots/assets/chromebook_x86_64_gles/create_and_upload.py`.
+- `infra/bots/assets/clang_linux/Dockerfile`.
+- `infra/bots/assets/clang_linux/README.md`.
+- `infra/bots/assets/clang_linux/VERSION`.
+- `infra/bots/assets/clang_linux/create.py`.
+- `infra/bots/assets/clang_mac_arm/VERSION`.
+- `infra/bots/assets/clang_mac_arm/create.py`.
+- `infra/bots/assets/clang_mac_intel/VERSION`.
+- `infra/bots/assets/clang_mac_intel/create.py`.
+- `infra/bots/assets/clang_ubuntu_noble/Dockerfile`.
+- `infra/bots/assets/clang_ubuntu_noble/README.md`.
+- `infra/bots/assets/clang_ubuntu_noble/VERSION`.
+- `infra/bots/assets/clang_ubuntu_noble/create.py`.
+- `infra/bots/assets/clang_win/VERSION`.
+- `infra/bots/assets/clang_win/create.py`.
+- `infra/bots/assets/cmake_linux/VERSION`.
+- `infra/bots/assets/cmake_linux/create.py`.
+- `infra/bots/assets/cmake_mac/VERSION`.
+- `infra/bots/assets/cmake_mac/create.py`.
+- `infra/bots/assets/cmake_win/VERSION`.
+- `infra/bots/assets/cmake_win/create.py`.
+- `infra/bots/assets/cockroachdb/VERSION`.
+- `infra/bots/assets/cockroachdb/create.py`.
+- `infra/bots/assets/dwritecore/VERSION`.
+- `infra/bots/assets/dwritecore/create.py`.
+- `infra/bots/assets/gcloud_linux/VERSION`.
+- `infra/bots/assets/gcloud_linux/create.py`.
+- `infra/bots/assets/go/VERSION`.
+- `infra/bots/assets/go/asset.json`.
+- `infra/bots/assets/go/create.py`.
+- `infra/bots/assets/go_win/VERSION`.
+- `infra/bots/assets/go_win/create.py`.
+- `infra/bots/assets/ios-dev-image-11.4/README.md`.
+- `infra/bots/assets/ios-dev-image-11.4/VERSION`.
+- `infra/bots/assets/ios-dev-image-13.3/README.md`.
+- `infra/bots/assets/ios-dev-image-13.3/VERSION`.
+- `infra/bots/assets/ios-dev-image-13.4/README.md`.
+- `infra/bots/assets/ios-dev-image-13.4/VERSION`.
+- `infra/bots/assets/ios-dev-image-13.5/README.md`.
+- `infra/bots/assets/ios-dev-image-13.5/VERSION`.
+- `infra/bots/assets/ios-dev-image-13.6/README.md`.
+- `infra/bots/assets/ios-dev-image-13.6/VERSION`.
+- `infra/bots/assets/ios-dev-image-14.4/README.md`.
+- `infra/bots/assets/ios-dev-image-14.4/VERSION`.
+- `infra/bots/assets/ios-dev-image-15.8/VERSION`.
+- `infra/bots/assets/ios-dev-image-16.7/README.md`.
+- `infra/bots/assets/ios-dev-image-16.7/VERSION`.
+- `infra/bots/assets/jq/VERSION`.
+- `infra/bots/assets/jq/create.py`.
+- `infra/bots/assets/jq_mac_arm64/VERSION`.
+- `infra/bots/assets/jq_mac_arm64/create.py`.
+- `infra/bots/assets/kubectl/VERSION`.
+- `infra/bots/assets/kubectl/create.py`.
+- `infra/bots/assets/kubeval/VERSION`.
+- `infra/bots/assets/kubeval/create.py`.
+- `infra/bots/assets/kubeval_mac_amd64/VERSION`.
+- `infra/bots/assets/kubeval_mac_amd64/create.py`.
+- `infra/bots/assets/linux_vulkan_sdk/README.md`.
+- `infra/bots/assets/linux_vulkan_sdk/VERSION`.
+- `infra/bots/assets/linux_vulkan_sdk/create.py`.
+- `infra/bots/assets/lottie-samples/VERSION`.
+- `infra/bots/assets/lottie-samples/create.py`.
+- `infra/bots/assets/mesa_intel_driver_linux/README.md`.
+- `infra/bots/assets/mesa_intel_driver_linux/VERSION`.
+- `infra/bots/assets/mesa_intel_driver_linux/create.py`.
+- `infra/bots/assets/mesa_intel_driver_linux/mesa-driver-builder/Dockerfile`.
+- `infra/bots/assets/mesa_intel_driver_linux/mesa-driver-builder/build_mesa.sh`.
+- `infra/bots/assets/mesa_intel_driver_linux_22/README.md`.
+- `infra/bots/assets/mesa_intel_driver_linux_22/VERSION`.
+- `infra/bots/assets/mesa_intel_driver_linux_22/create.py`.
+- `infra/bots/assets/mesa_intel_driver_linux_22/mesa-driver-builder/Dockerfile`.
+- `infra/bots/assets/mesa_intel_driver_linux_22/mesa-driver-builder/build_mesa.sh`.
+- `infra/bots/assets/mockery/VERSION`.
+- `infra/bots/assets/mockery/create.py`.
+- `infra/bots/assets/mskp/VERSION`.
+- `infra/bots/assets/node/VERSION`.
+- `infra/bots/assets/node/create.py`.
+- `infra/bots/assets/patch_linux_amd64/VERSION`.
+- `infra/bots/assets/patch_linux_amd64/create.py`.
+- `infra/bots/assets/protoc/VERSION`.
+- `infra/bots/assets/protoc/create.py`.
+- `infra/bots/assets/skimage/VERSION`.
+- `infra/bots/assets/skimage/create_and_upload.py`.
+- `infra/bots/assets/skp/README.md`.
+- `infra/bots/assets/skp/VERSION`.
+- `infra/bots/assets/skp/__init__.py`.
+- `infra/bots/assets/skp/create.py`.
+- `infra/bots/assets/skp/create_and_upload.py`.
+- `infra/bots/assets/skparagraph/README.md`.
+- `infra/bots/assets/skparagraph/VERSION`.
+- `infra/bots/assets/skparagraph/create.py`.
+- `infra/bots/assets/svg/VERSION`.
+- `infra/bots/assets/svg/create.py`.
+- `infra/bots/assets/text_blob_traces/README.md`.
+- `infra/bots/assets/text_blob_traces/VERSION`.
+- `infra/bots/assets/win_ninja/VERSION`.
+- `infra/bots/assets/win_ninja/create.py`.
+- `infra/bots/assets/win_toolchain/VERSION`.
+- `infra/bots/assets/win_toolchain/__init__.py`.
+- `infra/bots/assets/win_toolchain/create.py`.
+- `infra/bots/assets/win_toolchain/create_and_upload.py`.
+- `infra/bots/assets/xcode-11.4.1/VERSION`.
+- `infra/bots/assets/yq/VERSION`.
+- `infra/bots/assets/yq/create.py`.
+- `infra/bots/assets/yq_mac_arm64/VERSION`.
+- `infra/bots/assets/yq_mac_arm64/create.py`.
+- `infra/bots/build_task_drivers.sh`.
+- `infra/bots/buildstats/buildstats_cpp.py`.
+- `infra/bots/buildstats/buildstats_flutter.py`.
+- `infra/bots/buildstats/buildstats_wasm.py`.
+- `infra/bots/buildstats/buildstats_web.py`.
+- `infra/bots/buildstats/make_treemap.py`.
+- `infra/bots/bundle_recipes.sh`.
+- `infra/bots/cfg.json`.
+- `infra/bots/check_deps.py`.
+- `infra/bots/deps/deps.go`.
+- `infra/bots/deps/deps_gen.go`.
+- `infra/bots/deps/generate.go`.
+- `infra/bots/find_tasks.py`.
+- `infra/bots/format_jobs_json/format_jobs_json.go`.
+- `infra/bots/gen_tasks.go`.
+- `infra/bots/gen_tasks_logic/compile_cas.go`.
+- `infra/bots/gen_tasks_logic/dm_flags.go`.
+- `infra/bots/gen_tasks_logic/gen_tasks_logic.go`.
+- `infra/bots/gen_tasks_logic/job_builder.go`.
+- `infra/bots/gen_tasks_logic/nano_flags.go`.
+- `infra/bots/gen_tasks_logic/schema.go`.
+- `infra/bots/gen_tasks_logic/task_builder.go`.
+- `infra/bots/git_utils.py`.
+- `infra/bots/jobs.json`.
+- `infra/bots/recipe_modules/README.md`.
+- `infra/bots/recipe_modules/build/__init__.py`.
+- `infra/bots/recipe_modules/build/api.py`.
+- `infra/bots/recipe_modules/build/canvaskit.py`.
+- `infra/bots/recipe_modules/build/chromebook.py`.
+- `infra/bots/recipe_modules/build/cmake.py`.
+- `infra/bots/recipe_modules/build/default.py`.
+- `infra/bots/recipe_modules/build/docker.py`.
+- `infra/bots/recipe_modules/build/examples/full.expected/Build-Debian10-Clang-arm-Release-Chromebook_GLES.json`.
+- `infra/bots/recipe_modules/build/examples/full.expected/Build-Debian10-Clang-arm64-Debug-Chromebook_GLES.json`.
+- `infra/bots/recipe_modules/build/examples/full.expected/Build-Debian10-Clang-x86_64-Debug-ASAN_Graphite_Native_Vulkan.json`.
+- `infra/bots/recipe_modules/build/examples/full.expected/Build-Debian10-Clang-x86_64-Debug-AVIF.json`.
+- `infra/bots/recipe_modules/build/examples/full.expected/Build-Debian10-Clang-x86_64-Debug-Chromebook_GLES.json`.
+- `infra/bots/recipe_modules/build/examples/full.expected/Build-Debian10-Clang-x86_64-Debug-Coverage.json`.
+- `infra/bots/recipe_modules/build/examples/full.expected/Build-Debian10-Clang-x86_64-Debug-Fontations.json`.
+- `infra/bots/recipe_modules/build/examples/full.expected/Build-Debian10-Clang-x86_64-Debug-FreeType.json`.
+- `infra/bots/recipe_modules/build/examples/full.expected/Build-Debian10-Clang-x86_64-Debug-ICU4X.json`.
+- `infra/bots/recipe_modules/build/examples/full.expected/Build-Debian10-Clang-x86_64-Debug-MSAN.json`.
+- `infra/bots/recipe_modules/build/examples/full.expected/Build-Debian10-Clang-x86_64-Debug-SK_CPU_LIMIT_SSE41.json`.
+- `infra/bots/recipe_modules/build/examples/full.expected/Build-Debian10-Clang-x86_64-Debug-SwiftShader_Graphite.json`.
+- `infra/bots/recipe_modules/build/examples/full.expected/Build-Debian10-Clang-x86_64-Debug-SwiftShader_MSAN.json`.
+- `infra/bots/recipe_modules/build/examples/full.expected/Build-Debian10-Clang-x86_64-Debug-TSAN.json`.
+- `infra/bots/recipe_modules/build/examples/full.expected/Build-Debian10-Clang-x86_64-Debug-Tidy.json`.
+- `infra/bots/recipe_modules/build/examples/full.expected/Build-Debian10-Clang-x86_64-Debug-Vulkan_TSAN.json`.
+- `infra/bots/recipe_modules/build/examples/full.expected/Build-Debian10-Clang-x86_64-Debug-Wuffs.json`.
+- `infra/bots/recipe_modules/build/examples/full.expected/Build-Debian10-Clang-x86_64-OptimizeForSize.json`.
+- `infra/bots/recipe_modules/build/examples/full.expected/Build-Debian10-Clang-x86_64-Release-ANGLE.json`.
+- `infra/bots/recipe_modules/build/examples/full.expected/Build-Debian10-Clang-x86_64-Release-ASAN.json`.
+- `infra/bots/recipe_modules/build/examples/full.expected/Build-Debian10-Clang-x86_64-Release-AVIF.json`.
+- `infra/bots/recipe_modules/build/examples/full.expected/Build-Debian10-Clang-x86_64-Release-CMake.json`.
+- `infra/bots/recipe_modules/build/examples/full.expected/Build-Debian10-Clang-x86_64-Release-Fast.json`.
+- `infra/bots/recipe_modules/build/examples/full.expected/Build-Debian10-Clang-x86_64-Release-NoDEPS.json`.
+- `infra/bots/recipe_modules/build/examples/full.expected/Build-Debian10-Clang-x86_64-Release-RustALL.json`.
+- `infra/bots/recipe_modules/build/examples/full.expected/Build-Debian10-Clang-x86_64-Release-RustBMP.json`.
+- `infra/bots/recipe_modules/build/examples/full.expected/Build-Debian10-Clang-x86_64-Release-RustPNG.json`.
+- `infra/bots/recipe_modules/build/examples/full.expected/Build-Debian10-Clang-x86_64-Release-SK_USE_PADDED_BLUR_UPSCALE.json`.
+- `infra/bots/recipe_modules/build/examples/full.expected/Build-Debian10-Clang-x86_64-Release-Static.json`.
+- `infra/bots/recipe_modules/build/examples/full.expected/Build-Debian10-Clang-x86_64-Release-SwiftShader.json`.
+- `infra/bots/recipe_modules/build/examples/full.expected/Build-Debian10-Clang-x86_64-Release-Vulkan.json`.
+- `infra/bots/recipe_modules/build/examples/full.expected/Build-Debian10-EMCC-wasm-Debug-CanvasKit.json`.
+- `infra/bots/recipe_modules/build/examples/full.expected/Build-Debian10-EMCC-wasm-Debug-StandaloneWasm.json`.
+- `infra/bots/recipe_modules/build/examples/full.expected/Build-Debian10-EMCC-wasm-Release-CanvasKit_CPU.json`.
+- `infra/bots/recipe_modules/build/examples/full.expected/Build-Debian10-EMCC-wasm-Release-CanvasKit_WebGPU.json`.
+- `infra/bots/recipe_modules/build/examples/full.expected/Build-Debian10-EMCC-wasm-Release-StandaloneWasm.json`.
+- `infra/bots/recipe_modules/build/examples/full.expected/Build-Debian11-GCC-x86-Debug-Docker.json`.
+- `infra/bots/recipe_modules/build/examples/full.expected/Build-Debian11-GCC-x86_64-Debug-Docker.json`.
+- `infra/bots/recipe_modules/build/examples/full.expected/Build-Debian11-GCC-x86_64-Release-NoGPU_Docker.json`.
+- `infra/bots/recipe_modules/build/examples/full.expected/Build-Debian11-GCC-x86_64-Release-Shared_Docker.json`.
+- `infra/bots/recipe_modules/build/examples/full.expected/Build-Mac-Clang-arm64-Debug-Graphite_Dawn_Metal.json`.
+- `infra/bots/recipe_modules/build/examples/full.expected/Build-Mac-Clang-arm64-Debug-Graphite_Dawn_Metal_NoGPU.json`.
+- `infra/bots/recipe_modules/build/examples/full.expected/Build-Mac-Clang-arm64-Debug-Graphite_Dawn_Metal_NoPrecompile.json`.
+- `infra/bots/recipe_modules/build/examples/full.expected/Build-Mac-Clang-arm64-Debug-Graphite_Native_Metal.json`.
+- `infra/bots/recipe_modules/build/examples/full.expected/Build-Mac-Clang-arm64-Debug-Graphite_Native_Metal_NoGPU.json`.
+- `infra/bots/recipe_modules/build/examples/full.expected/Build-Mac-Clang-arm64-Debug-Graphite_Native_Metal_NoPrecompile.json`.
+- `infra/bots/recipe_modules/build/examples/full.expected/Build-Mac-Clang-arm64-Debug-iOS.json`.
+- `infra/bots/recipe_modules/build/examples/full.expected/Build-Mac-Clang-arm64-Debug-iOS_Graphite_Native_Metal.json`.
+- `infra/bots/recipe_modules/build/examples/full.expected/Build-Mac-Clang-arm64-Release-Graphite_Native_Dawn_Metal.json`.
+- `infra/bots/recipe_modules/build/examples/full.expected/Build-Mac-Clang-arm64-Release-Graphite_Native_Metal.json`.
+- `infra/bots/recipe_modules/build/examples/full.expected/Build-Mac-Clang-arm64-Release-iOS18_Metal.json`.
+- `infra/bots/recipe_modules/build/examples/full.expected/Build-Mac-Clang-x86_64-Debug-ASAN.json`.
+- `infra/bots/recipe_modules/build/examples/full.expected/Build-Mac-Clang-x86_64-Debug-Metal.json`.
+- `infra/bots/recipe_modules/build/examples/full.expected/Build-Ubuntu24.04-Clang-x86_64-Release-Fuzz.json`.
+- `infra/bots/recipe_modules/build/examples/full.expected/Build-Ubuntu24.04-Clang-x86_64-Release-SKVX_DISABLE_SIMD.json`.
+- `infra/bots/recipe_modules/build/examples/full.expected/Build-Win-Clang-x86-Debug-Exceptions.json`.
+- `infra/bots/recipe_modules/build/examples/full.expected/Build-Win-Clang-x86_64-Debug-ANGLE.json`.
+- `infra/bots/recipe_modules/build/examples/full.expected/Build-Win-Clang-x86_64-Release-Direct3D.json`.
+- `infra/bots/recipe_modules/build/examples/full.expected/Build-Win-Clang-x86_64-Release-Graphite_Native_Vulkan.json`.
+- `infra/bots/recipe_modules/build/examples/full.expected/Build-Win-Clang-x86_64-Release-Shared.json`.
+- `infra/bots/recipe_modules/build/examples/full.expected/Build-Win-Clang-x86_64-Release-Vulkan.json`.
+- `infra/bots/recipe_modules/build/examples/full.expected/Build-Win-MSVC-x86_64-Release-Graphite_Dawn_D3D11.json`.
+- `infra/bots/recipe_modules/build/examples/full.expected/Build-Win-MSVC-x86_64-Release-Graphite_Dawn_D3D12.json`.
+- `infra/bots/recipe_modules/build/examples/full.expected/unknown-docker-image.json`.
+- `infra/bots/recipe_modules/build/examples/full.py`.
+- `infra/bots/recipe_modules/build/resources/copy_build_products.py`.
+- `infra/bots/recipe_modules/build/resources/copy_build_products_no_delete.py`.
+- `infra/bots/recipe_modules/build/resources/docker-chromeos-compile.sh`.
+- `infra/bots/recipe_modules/build/resources/docker-compile.sh`.
+- `infra/bots/recipe_modules/build/resources/docker-flutter-compile.sh`.
+- `infra/bots/recipe_modules/build/resources/ios.ensure`.
+- `infra/bots/recipe_modules/build/util.py`.
+- `infra/bots/recipe_modules/builder_name_schema/__init__.py`.
+- `infra/bots/recipe_modules/builder_name_schema/api.py`.
+- `infra/bots/recipe_modules/builder_name_schema/builder_name_schema.json`.
+- `infra/bots/recipe_modules/builder_name_schema/builder_name_schema.py`.
+- `infra/bots/recipe_modules/builder_name_schema/examples/full.expected/test.json`.
+- `infra/bots/recipe_modules/builder_name_schema/examples/full.py`.
+- `infra/bots/recipe_modules/checkout/__init__.py`.
+- `infra/bots/recipe_modules/checkout/api.py`.
+- `infra/bots/recipe_modules/checkout/examples/full.expected/Build-Debian10-Clang-x86_64-Release-NoDEPS.json`.
+- `infra/bots/recipe_modules/checkout/examples/full.expected/cross_repo_trybot.json`.
+- `infra/bots/recipe_modules/checkout/examples/full.expected/trybot.json`.
+- `infra/bots/recipe_modules/checkout/examples/full.py`.
+- `infra/bots/recipe_modules/checkout/resources/assert_git_cipd.py`.
+- `infra/bots/recipe_modules/docker/__init__.py`.
+- `infra/bots/recipe_modules/docker/api.py`.
+- `infra/bots/recipe_modules/docker/examples/full.expected/test.json`.
+- `infra/bots/recipe_modules/docker/examples/full.py`.
+- `infra/bots/recipe_modules/docker/resources/get_uid_gid.py`.
+- `infra/bots/recipe_modules/doxygen/__init__.py`.
+- `infra/bots/recipe_modules/doxygen/api.py`.
+- `infra/bots/recipe_modules/doxygen/examples/full.expected/doxygen.json`.
+- `infra/bots/recipe_modules/doxygen/examples/full.py`.
+- `infra/bots/recipe_modules/doxygen/resources/generate_and_upload_doxygen.py`.
+- `infra/bots/recipe_modules/env/__init__.py`.
+- `infra/bots/recipe_modules/env/api.py`.
+- `infra/bots/recipe_modules/env/examples/full.expected/test.json`.
+- `infra/bots/recipe_modules/env/examples/full.py`.
+- `infra/bots/recipe_modules/flavor/__init__.py`.
+- `infra/bots/recipe_modules/flavor/api.py`.
+- `infra/bots/recipe_modules/flavor/chromebook.py`.
+- `infra/bots/recipe_modules/flavor/default.py`.
+- `infra/bots/recipe_modules/flavor/examples/full.expected/Perf-Debian10-Clang-GCE-CPU-AVX2-x86_64-Debug-All-MSAN.json`.
+- `infra/bots/recipe_modules/flavor/examples/full.expected/Perf-Debian10-Clang-GCE-CPU-AVX2-x86_64-Release-All-ASAN.json`.
+- `infra/bots/recipe_modules/flavor/examples/full.expected/Perf-Win2019-Clang-GCE-CPU-AVX2-x86_64-Debug-All-ASAN.json`.
+- `infra/bots/recipe_modules/flavor/examples/full.expected/Test-ChromeOS-Clang-Cherry-GPU-MaliG57-arm-Debug-All.json`.
+- `infra/bots/recipe_modules/flavor/examples/full.expected/Test-Debian10-Clang-GCE-CPU-AVX2-x86_64-Debug-All-Coverage.json`.
+- `infra/bots/recipe_modules/flavor/examples/full.expected/Test-Debian10-Clang-GCE-CPU-AVX2-x86_64-Release-All-Lottie.json`.
+- `infra/bots/recipe_modules/flavor/examples/full.expected/Test-Debian10-Clang-GCE-CPU-AVX2-x86_64-Release-All-TSAN.json`.
+- `infra/bots/recipe_modules/flavor/examples/full.expected/Test-Debian10-Clang-GCE-GPU-SwiftShader-x86_64-Debug-All-SwiftShader.json`.
+- `infra/bots/recipe_modules/flavor/examples/full.expected/Test-Debian10-Clang-NUC7i5BNK-GPU-IntelIris640-x86_64-Debug-All-ASAN_Vulkan.json`.
+- `infra/bots/recipe_modules/flavor/examples/full.expected/Test-Debian10-Clang-NUC7i5BNK-GPU-IntelIris640-x86_64-Debug-All-Vulkan.json`.
+- `infra/bots/recipe_modules/flavor/examples/full.expected/Test-Debian11-Clang-NUC11TZi5-GPU-IntelIrisXe-x86_64-Debug-All.json`.
+- `infra/bots/recipe_modules/flavor/examples/full.expected/Test-Mac10.13-Clang-MacBookPro11.5-CPU-AVX2-x86_64-Debug-All-ASAN.json`.
+- `infra/bots/recipe_modules/flavor/examples/full.expected/Test-Win10-Clang-NUC7i5BNK-CPU-AVX2-x86_64-Debug-All-NativeFonts_DWriteCore.json`.
+- `infra/bots/recipe_modules/flavor/examples/full.expected/Test-iOS-Clang-iPhone8-GPU-AppleA11-arm64-Release-All-RPI.json`.
+- `infra/bots/recipe_modules/flavor/examples/full.expected/Test-iOS-Clang-iPhone8-GPU-AppleA11-arm64-Release-All.json`.
+- `infra/bots/recipe_modules/flavor/examples/full.expected/cpu_scale_failed.json`.
+- `infra/bots/recipe_modules/flavor/examples/full.expected/cpu_scale_failed_golo.json`.
+- `infra/bots/recipe_modules/flavor/examples/full.expected/cpu_scale_failed_once.json`.
+- `infra/bots/recipe_modules/flavor/examples/full.expected/exceptions.json`.
+- `infra/bots/recipe_modules/flavor/examples/full.expected/failed_infra_step.json`.
+- `infra/bots/recipe_modules/flavor/examples/full.expected/internal_hardware_label.json`.
+- `infra/bots/recipe_modules/flavor/examples/full.expected/ios_rerun_with_debug.json`.
+- `infra/bots/recipe_modules/flavor/examples/full.expected/retry_adb_command.json`.
+- `infra/bots/recipe_modules/flavor/examples/full.expected/retry_adb_command_retries_exhausted.json`.
+- `infra/bots/recipe_modules/flavor/examples/full.expected/retry_ios_install.json`.
+- `infra/bots/recipe_modules/flavor/examples/full.expected/retry_ios_install_retries_exhausted.json`.
+- `infra/bots/recipe_modules/flavor/examples/full.py`.
+- `infra/bots/recipe_modules/flavor/ios.py`.
+- `infra/bots/recipe_modules/flavor/resources/dump_adb_log.py`.
+- `infra/bots/recipe_modules/flavor/resources/ios_debug_cmd.py`.
+- `infra/bots/recipe_modules/flavor/resources/ios_xcode_run.py`.
+- `infra/bots/recipe_modules/flavor/resources/remove_file_on_device.py`.
+- `infra/bots/recipe_modules/flavor/resources/run_sh.py`.
+- `infra/bots/recipe_modules/flavor/resources/scale_cpu.py`.
+- `infra/bots/recipe_modules/flavor/resources/set_cpu_online.py`.
+- `infra/bots/recipe_modules/flavor/resources/set_cpu_scaling_governor.py`.
+- `infra/bots/recipe_modules/flavor/resources/set_gpu_scaling.py`.
+- `infra/bots/recipe_modules/flavor/resources/setup_device_for_asan.py`.
+- `infra/bots/recipe_modules/flavor/resources/symbolize_stack_trace.py`.
+- `infra/bots/recipe_modules/flavor/resources/wait_for_device.py`.
+- `infra/bots/recipe_modules/flavor/resources/win_run_and_check_log.ps1`.
+- `infra/bots/recipe_modules/flavor/resources/win_ssh_cmd.py`.
+- `infra/bots/recipe_modules/flavor/ssh.py`.
+- `infra/bots/recipe_modules/gcloud/__init__.py`.
+- `infra/bots/recipe_modules/gcloud/api.py`.
+- `infra/bots/recipe_modules/gcloud/examples/full.expected/failed_all_uploads.json`.
+- `infra/bots/recipe_modules/gcloud/examples/full.expected/failed_one_upload.json`.
+- `infra/bots/recipe_modules/gcloud/examples/full.expected/gcloud_tests.json`.
+- `infra/bots/recipe_modules/gcloud/examples/full.py`.
+- `infra/bots/recipe_modules/git/__init__.py`.
+- `infra/bots/recipe_modules/git/api.py`.
+- `infra/bots/recipe_modules/git/examples/full.expected/test-win.json`.
+- `infra/bots/recipe_modules/git/examples/full.expected/test.json`.
+- `infra/bots/recipe_modules/git/examples/full.py`.
+- `infra/bots/recipe_modules/gold_upload/__init__.py`.
+- `infra/bots/recipe_modules/gold_upload/api.py`.
+- `infra/bots/recipe_modules/gold_upload/examples/full.expected/upload_mac.json`.
+- `infra/bots/recipe_modules/gold_upload/examples/full.expected/upload_tests.json`.
+- `infra/bots/recipe_modules/gold_upload/examples/full.py`.
+- `infra/bots/recipe_modules/gold_upload/resources/get_uninteresting_hashes.py`.
+- `infra/bots/recipe_modules/infra/__init__.py`.
+- `infra/bots/recipe_modules/infra/api.py`.
+- `infra/bots/recipe_modules/infra/examples/full.expected/infra_tests.json`.
+- `infra/bots/recipe_modules/infra/examples/full.py`.
+- `infra/bots/recipe_modules/infra/resources/copytree.py`.
+- `infra/bots/recipe_modules/infra/resources/parse_lottieweb_trace.py`.
+- `infra/bots/recipe_modules/infra/resources/parse_skottie_trace.py`.
+- `infra/bots/recipe_modules/run/__init__.py`.
+- `infra/bots/recipe_modules/run/api.py`.
+- `infra/bots/recipe_modules/run/examples/full.expected/test.json`.
+- `infra/bots/recipe_modules/run/examples/full.py`.
+- `infra/bots/recipe_modules/vars/__init__.py`.
+- `infra/bots/recipe_modules/vars/api.py`.
+- `infra/bots/recipe_modules/vars/examples/full.expected/Build-Debian10-Clang-x86_64-Release-SKVX_DISABLE_SIMD.json`.
+- `infra/bots/recipe_modules/vars/examples/full.expected/Housekeeper-Weekly-RecreateSKPs.json`.
+- `infra/bots/recipe_modules/vars/examples/full.expected/integer_issue.json`.
+- `infra/bots/recipe_modules/vars/examples/full.expected/win_test.json`.
+- `infra/bots/recipe_modules/vars/examples/full.py`.
+- `infra/bots/recipe_modules/vars/resources/get_env_var.py`.
+- `infra/bots/recipe_modules/xcode/__init__.py`.
+- `infra/bots/recipe_modules/xcode/api.py`.
+- `infra/bots/recipe_modules/xcode/examples/full.expected/xcode-test.json`.
+- `infra/bots/recipe_modules/xcode/examples/full.py`.
+- `infra/bots/recipes.py`.
+- `infra/bots/recipes/README.md`.
+- `infra/bots/recipes/compile.expected/Build-Win-Clang-x86-Debug.json`.
+- `infra/bots/recipes/compile.py`.
+- `infra/bots/recipes/housekeeper.expected/Housekeeper-PerCommit-Trybot.json`.
+- `infra/bots/recipes/housekeeper.expected/Housekeeper-PerCommit.json`.
+- `infra/bots/recipes/housekeeper.py`.
+- `infra/bots/recipes/infra.expected/infra_tests.json`.
+- `infra/bots/recipes/infra.expected/infra_tests_lottie_ci.json`.
+- `infra/bots/recipes/infra.py`.
+- `infra/bots/recipes/perf.expected/Perf-Win10-Clang-Golo-GPU-QuadroP400-x86_64-Release-All-ANGLE.json`.
+- `infra/bots/recipes/perf.expected/Perf-Win10-Clang-Golo-GPU-QuadroP400-x86_64-Release-All-ANGLE_trybot.json`.
+- `infra/bots/recipes/perf.py`.
+- `infra/bots/recipes/perf_skottietrace.expected/Perf-Debian10-Clang-GCE-CPU-AVX2-x86_64-Release-All-SkottieTracing.json`.
+- `infra/bots/recipes/perf_skottietrace.expected/Perf-Debian10-Clang-NUC7i5BNK-GPU-IntelIris640-x86_64-Release-All-SkottieTracing.json`.
+- `infra/bots/recipes/perf_skottietrace.expected/skottietracing_parse_trace_error.json`.
+- `infra/bots/recipes/perf_skottietrace.expected/skottietracing_trybot.json`.
+- `infra/bots/recipes/perf_skottietrace.py`.
+- `infra/bots/recipes/perf_skottiewasm_lottieweb.expected/lottie_web_canvas_perf.json`.
+- `infra/bots/recipes/perf_skottiewasm_lottieweb.expected/lottie_web_canvas_perf_trybot.json`.
+- `infra/bots/recipes/perf_skottiewasm_lottieweb.expected/lottie_web_perf.json`.
+- `infra/bots/recipes/perf_skottiewasm_lottieweb.expected/lottie_web_perf_trybot.json`.
+- `infra/bots/recipes/perf_skottiewasm_lottieweb.expected/skottie_wasm_perf.json`.
+- `infra/bots/recipes/perf_skottiewasm_lottieweb.expected/skottie_wasm_perf_gpu.json`.
+- `infra/bots/recipes/perf_skottiewasm_lottieweb.expected/skottie_wasm_perf_trybot.json`.
+- `infra/bots/recipes/perf_skottiewasm_lottieweb.expected/unrecognized_builder.json`.
+- `infra/bots/recipes/perf_skottiewasm_lottieweb.py`.
+- `infra/bots/recipes/sync_and_compile.expected/Build-Debian10-Clang-arm-Release-NoPatch (tryjob).json`.
+- `infra/bots/recipes/sync_and_compile.expected/Build-Debian10-Clang-arm-Release-NoPatch.json`.
+- `infra/bots/recipes/sync_and_compile.expected/Build-Win10-Clang-x86_64-Release-NoDEPS.json`.
+- `infra/bots/recipes/sync_and_compile.py`.
+- `infra/bots/recipes/test.expected/Test-Debian10-Clang-GCE-CPU-AVX2-x86_64-Debug-All-Fontations.json`.
+- `infra/bots/recipes/test.expected/Test-Debian10-Clang-GCE-CPU-AVX2-x86_64-Release-All-Lottie.json`.
+- `infra/bots/recipes/test.expected/Test-Win11-Clang-Dell3930-GPU-GTX1660-x86_64-Debug-All.json`.
+- `infra/bots/recipes/test.py`.
+- `infra/bots/recipes/test_canvaskit.expected/Test-Debian10-EMCC-GCE-GPU-WEBGL1-wasm-Debug-All-CanvasKit.json`.
+- `infra/bots/recipes/test_canvaskit.expected/canvaskit_trybot.json`.
+- `infra/bots/recipes/test_canvaskit.py`.
+- `infra/bots/recipes/test_lottie_web.expected/Test-Debian10-none-GCE-CPU-AVX2-x86_64-Debug-All-LottieWeb.json`.
+- `infra/bots/recipes/test_lottie_web.expected/lottie_web_trybot.json`.
+- `infra/bots/recipes/test_lottie_web.py`.
+- `infra/bots/run_recipe.py`.
+- `infra/bots/task_drivers/bazel_build/BUILD.bazel`.
+- `infra/bots/task_drivers/bazel_build/bazel_build.go`.
+- `infra/bots/task_drivers/canvaskit_gold/BUILD.bazel`.
+- `infra/bots/task_drivers/canvaskit_gold/canvaskit_gold.go`.
+- `infra/bots/task_drivers/check_generated_files/BUILD.bazel`.
+- `infra/bots/task_drivers/check_generated_files/check_generated_files.go`.
+- `infra/bots/task_drivers/codesize/BUILD.bazel`.
+- `infra/bots/task_drivers/codesize/codesize.go`.
+- `infra/bots/task_drivers/common/BUILD.bazel`.
+- `infra/bots/task_drivers/common/bazel_clean_step.go`.
+- `infra/bots/task_drivers/common/bazel_flags.go`.
+- `infra/bots/task_drivers/common/bazel_utils.go`.
+- `infra/bots/task_drivers/common/perf_steps.go`.
+- `infra/bots/task_drivers/cpu_tests/BUILD.bazel`.
+- `infra/bots/task_drivers/external_client/BUILD.bazel`.
+- `infra/bots/task_drivers/external_client/bazel_build_with_docker.sh`.
+- `infra/bots/task_drivers/external_client/external_client.go`.
+- `infra/bots/task_drivers/g3_canary/BUILD.bazel`.
+- `infra/bots/task_drivers/g3_canary/PROD.md`.
+- `infra/bots/task_drivers/g3_canary/g3_canary.go`.
+- `infra/bots/task_drivers/go_linters/BUILD.bazel`.
+- `infra/bots/task_drivers/go_linters/go_linters.go`.
+- `infra/bots/task_drivers/perf_puppeteer_canvas/BUILD.bazel`.
+- `infra/bots/task_drivers/perf_puppeteer_canvas/perf_puppeteer_canvas.go`.
+- `infra/bots/task_drivers/perf_puppeteer_render_skps/BUILD.bazel`.
+- `infra/bots/task_drivers/perf_puppeteer_render_skps/perf_puppeteer_render_skps.go`.
+- `infra/bots/task_drivers/perf_puppeteer_skottie_frames/BUILD.bazel`.
+- `infra/bots/task_drivers/perf_puppeteer_skottie_frames/make_lotties_with_assets/BUILD.bazel`.
+- `infra/bots/task_drivers/perf_puppeteer_skottie_frames/make_lotties_with_assets/make_lotties_with_assets.go`.
+- `infra/bots/task_drivers/perf_puppeteer_skottie_frames/perf_puppeteer_skottie_frames.go`.
+- `infra/bots/task_drivers/recreate_skps/BUILD.bazel`.
+- `infra/bots/task_drivers/recreate_skps/recreate_skps.go`.
+- `infra/bots/task_drivers/run_gn_to_bp/BUILD.bazel`.
+- `infra/bots/task_drivers/run_gn_to_bp/run_gn_to_bp.go`.
+- `infra/bots/task_drivers/run_wasm_dm/BUILD.bazel`.
+- `infra/bots/task_drivers/run_wasm_dm/chrome_driver.go`.
+- `infra/bots/task_drivers/run_wasm_dm/fetch_chrome.go`.
+- `infra/bots/task_drivers/run_wasm_dm/harness.html`.
+- `infra/bots/task_drivers/run_wasm_dm/logging.go`.
+- `infra/bots/task_drivers/run_wasm_dm/run_wasm_dm.go`.
+- `infra/bots/task_drivers/testutils/BUILD.bazel`.
+- `infra/bots/task_drivers/testutils/testutils.go`.
+- `infra/bots/task_drivers/toolchain_layering_check/BUILD.bazel`.
+- `infra/bots/task_drivers/toolchain_layering_check/toolchain_layering_check.go`.
+- `infra/bots/tasks.json`.
+- `infra/bots/test_utils.py`.
+- `infra/bots/tools/luci-go/README.md`.
+- `infra/bots/tools/luci-go/linux64/isolate.sha1`.
+- `infra/bots/tools/luci-go/mac64/isolate.sha1`.
+- `infra/bots/tools/luci-go/win64/isolate.exe.sha1`.
+- `infra/bots/utils.py`.
+- `infra/bots/zip_utils.py`.
+- `infra/canvaskit/build_canvaskit.sh`.
+- `infra/canvaskit/build_gmtests.sh`.
+- `infra/canvaskit/docker/Makefile`.
+- `infra/canvaskit/docker/canvaskit-emsdk/Dockerfile`.
+- `infra/canvaskit/test_canvaskit.sh`.
+- `infra/cmake/build_skia.sh`.
+- `infra/config/recipes.cfg`.
+- `infra/cross-compile/docker/cross-linux-arm64/Dockerfile`.
+- `infra/debugger-app/Dockerfile`.
+- `infra/debugger-app/README.md`.
+- `infra/debugger-app/build.sh`.
+- `infra/docker/Makefile`.
+- `infra/docker/README.md`.
+- `infra/docker/binary-size/Dockerfile`.
+- `infra/docker/binary-size/build.sh`.
+- `infra/docker/cmake-release/Dockerfile`.
+- `infra/docker/cmake-release/build.sh`.
+- `infra/docker/debian9/Dockerfile`.
+- `infra/docker/docker_build.sh`.
+- `infra/docker/make_image_tag.sh`.
+- `infra/fiddler-backend/Dockerfile`.
+- `infra/fiddler-backend/create_docker_image.sh`.
+- `infra/fiddler-backend/release_tag.sh`.
+- `infra/gcc/Debian11-x86/Dockerfile`.
+- `infra/gcc/Debian11/Dockerfile`.
+- `infra/gcc/Makefile`.
+- `infra/gcc/README.md`.
+- `infra/gcc/Ubuntu18/Dockerfile`.
+- `infra/jsfiddle/Dockerfile`.
+- `infra/jsfiddle/README.md`.
+- `infra/jsfiddle/build.sh`.
+- `infra/lottiecap/.gitignore`.
+- `infra/lottiecap/Makefile`.
+- `infra/lottiecap/docker/README.md`.
+- `infra/lottiecap/docker/gold-lottie-web-puppeteer/Dockerfile`.
+- `infra/lottiecap/docker/lottie-web-puppeteer/Dockerfile`.
+- `infra/lottiecap/docker/lottiecap_gold.sh`.
+- `infra/lottiecap/gold/lottie-web-aggregator.go`.
+- `infra/project-config/README.md`.
+- `infra/project-config/cr-buildbucket.cfg`.
+- `infra/project-config/project.cfg`.
+- `infra/project-config/refs.cfg`.
+- `infra/shaders/Dockerfile`.
+- `infra/shaders/README.md`.
+- `infra/shaders/build.sh`.
+- `infra/skcq.json`.
+- `infra/skottie/Dockerfile`.
+- `infra/skottie/README.md`.
+- `infra/skottie/build.sh`.
+- `infra/wasm-common/.gitignore`.
+- `infra/wasm-common/Makefile`.
+- `infra/wasm-common/README.md`.
+- `infra/wasm-common/docker/Makefile`.
+- `infra/wasm-common/docker/README.md`.
+- `infra/wasm-common/docker/emsdk-base/Dockerfile`.
+- `infra/wasm-common/docker/emsdk-base/build.sh`.
+- `infra/wasm-common/docker/gold-karma-chrome-tests/Dockerfile`.
+- `infra/wasm-common/docker/karma-chrome-tests/Dockerfile`.
+- `infra/wasm-common/docker/perf-karma-chrome-tests/Dockerfile`.
+- `infra/wasm-common/gold/wasm_gold_aggregator.go`.
+- `infra/wasm-common/perf/wasm_perf_aggregator.go`.
+- `package-lock.json`.
+- `package.json`.
+- `platform_tools/debugging/lldb/skia.py`.
+- `platform_tools/debugging/lldb/skiavis.py`.
+- `serve-bazel-test-undeclared-outputs.sh`.
+- `site/_index.html`.
+- `site/about/_index.html`.
+- `site/config.toml`.
+- `specs/web-img-decode/current/index.html`.
+- `specs/web-img-decode/proposed/impl/impl.js`.
+- `specs/web-img-decode/proposed/index.html`.
+- `specs/web-img-decode/proposed/serve.py`.
+- `toolchain/BUILD.bazel`.
+- `toolchain/android_trampolines/clang.sh`.
+- `toolchain/android_trampolines/gen_trampolines/BUILD.bazel`.
+- `toolchain/android_trampolines/gen_trampolines/gen_trampolines.go`.
+- `toolchain/clang_layering_check.bzl`.
+- `toolchain/download_ios_toolchain.bzl`.
+- `toolchain/download_mac_toolchain.bzl`.
+- `toolchain/download_toolchains.bzl`.
+- `toolchain/download_windows_amd64_toolchain.bzl`.
+- `toolchain/ios_toolchain_config.bzl`.
+- `toolchain/linux_amd64_toolchain_config.bzl`.
+- `toolchain/mac_toolchain_config.bzl`.
+- `toolchain/utils.bzl`.
+- `toolchain/windows_toolchain_config.bzl`.
+- `tools.go`.
+- `vpython.toml`.
+
+## Codex: acceptance-test contract
+
+Run every macOS example and repository self-test applicable to the new toolchain, validate clean-checkout builds and verify release artifacts. Complete native Intel Mac execution as well as Apple Silicon; cross-compilation alone is insufficient. Browser tooling runs on macOS hosts.
+
+- Translate the original reachable test bodies and helpers, preserving inputs, order, seeds, assertions, tolerances, expected failures and conditional skips. Retain original names and source locations in the correspondence record.
+- Discover compiled C++ test registrations under the matching macOS feature configuration. The registration CSV is an initial source scan, not a substitute for expanded macro/test discovery. Resolve conditional/custom suites before accepting this milestone.
+- For files split across milestones, translate only the assigned registrations now, including their helper closure; record the rest under their later gate. Do not mark a whole file complete merely because its first tests pass.
+- Port original test utilities needed by these cases, even if their general tool packaging has a later owner. Keep fixture-only implementations in test support and never substitute them for production APIs being checked.
+- Where upstream provides no direct unit test, add clearly labeled supplemental contract/differential tests, separate from faithful translations. Run C++ as an external reference where needed; do not link it as the Rust implementation.
+- Preserve resources and shader/golden inputs by hash. Resource metadata and required downloads must be recorded before running; absent inputs or backend hardware are BLOCKED, not a skip that counts as PASS.
+
+### Port these test/runner/support files (Codex)
+
+- `PRESUBMIT_test.py`.
+- `bazel/device_specific_configs/device_specific_configs_test.go`.
+- `bazel/exporter/bazel_util_test.go`.
+- `bazel/exporter/cmake_exporter_test.go`.
+- `bazel/exporter/cmake_rule_test.go`.
+- `bazel/exporter/cmake_workspace_test.go`.
+- `bazel/exporter/gni_exporter_test.go`.
+- `bazel/exporter/util_test.go`.
+- `bazel/external/dawn/generate_dawn_files_test.py`.
+- `gn/compile_sksl_tests.py`.
+- `gn/minify_sksl_tests.py`.
+- `infra/bots/infra_tests.py`.
+- `infra/bots/task_drivers/codesize/codesize_test.go`.
+- `infra/bots/task_drivers/common/bazel_clean_step_test.go`.
+- `infra/bots/task_drivers/common/bazel_utils_test.go`.
+- `infra/bots/task_drivers/common/perf_steps_test.go`.
+- `infra/bots/task_drivers/cpu_tests/cpu_tests.go`.
+- `infra/bots/task_drivers/perf_puppeteer_canvas/perf_puppeteer_canvas_test.go`.
+- `infra/bots/task_drivers/perf_puppeteer_render_skps/perf_puppeteer_render_skps_test.go`.
+- `infra/bots/task_drivers/perf_puppeteer_skottie_frames/perf_puppeteer_skottie_frames_test.go`.
+- `infra/bots/zip_utils_test.py`.
+
+### Original test registrations assigned to this gate
+
+This milestone uses runner-discovered cases, GMs, fuzz/benchmark/browser suites or supplemental tests. Capture each discovered case in the acceptance manifest; absence from the static registration scan is not an exclusion.
+
+### Preserve these fixtures, metadata and references
+
+- `.bazelignore` — preserve.
+- `.bazeliskrc` — preserve.
+- `.bazelproject` — preserve.
+- `.bazelrc` — preserve.
+- `.bazelversion` — preserve.
+- `.clang-format` — preserve.
+- `.clang-tidy` — preserve.
+- `.dockerignore` — preserve.
+- `.gitignore` — preserve.
+- `.gn` — preserve.
+- `AUTHORS` — preserve.
+- `CONTRIBUTING` — preserve.
+- `CQ_COMMITTERS` — preserve.
+- `DIR_METADATA` — preserve.
+- `LICENSE` — preserve.
+- `OWNERS` — preserve.
+- `README` — preserve.
+- `README.chromium` — preserve.
+- `RELEASE_NOTES.md` — preserve.
+- `agents/core_skills.json` — preserve.
+- `agents/skills/skia-add-test/SKILL.md` — preserve.
+- `agents/skills/skia-gn-workflow/SKILL.md` — preserve.
+- `agents/skills/skia-gn-workflow/assets/example_asset.txt` — preserve.
+- `agents/skills/skia-gn-workflow/references/build_args.md` — preserve.
+- `agents/skills/skia-gn-workflow/references/dm_usage.md` — preserve.
+- `agents/skills/skia-gn-workflow/references/fuzz.md` — preserve.
+- `agents/skills/skia-gn-workflow/references/gms.md` — preserve.
+- `agents/skills/skia-gn-workflow/references/nanobench_usage.md` — preserve.
+- `agents/skills/skia-gn-workflow/references/other_tools.md` — preserve.
+- `agents/skills/skia-gn-workflow/references/testing.md` — preserve.
+- `agents/skills/skia-gn-workflow/references/viewer_usage.md` — preserve.
+- `agents/skills/skia-style-check/SKILL.md` — preserve.
+- `codereview.settings` — preserve.
+- `demos.skia.org/.gitignore` — preserve.
+- `demos.skia.org/Makefile` — preserve.
+- `demos.skia.org/README.md` — preserve.
+- `demos.skia.org/demos/canvas_edit/style.css` — preserve.
+- `demos.skia.org/demos/mesh2d/BeanEater-1s-200px.gif` — preserve.
+- `demos.skia.org/demos/mesh2d/baby_tux.png` — preserve.
+- `demos.skia.org/demos/path_performance/garbage.svg` — preserve.
+- `demos.skia.org/demos/textures/testimg.png` — preserve.
+- `docs/architecture/CPU.dot` — preserve.
+- `docs/architecture/CPU.md` — preserve.
+- `example/external_client/.bazelrc` — preserve.
+- `example/external_client/.bazelversion` — preserve.
+- `example/external_client/README.md` — preserve.
+- `include/third_party/vulkan/BUILD.bazel` — external-dependency.
+- `include/third_party/vulkan/LICENSE` — external-dependency.
+- `include/third_party/vulkan/vulkan/vk_icd.h` — external-dependency.
+- `include/third_party/vulkan/vulkan/vk_layer.h` — external-dependency.
+- `include/third_party/vulkan/vulkan/vk_platform.h` — external-dependency.
+- `include/third_party/vulkan/vulkan/vk_video/vulkan_video_codec_av1std.h` — external-dependency.
+- `include/third_party/vulkan/vulkan/vk_video/vulkan_video_codec_av1std_decode.h` — external-dependency.
+- `include/third_party/vulkan/vulkan/vk_video/vulkan_video_codec_av1std_encode.h` — external-dependency.
+- `include/third_party/vulkan/vulkan/vk_video/vulkan_video_codec_h264std.h` — external-dependency.
+- `include/third_party/vulkan/vulkan/vk_video/vulkan_video_codec_h264std_decode.h` — external-dependency.
+- `include/third_party/vulkan/vulkan/vk_video/vulkan_video_codec_h264std_encode.h` — external-dependency.
+- `include/third_party/vulkan/vulkan/vk_video/vulkan_video_codec_h265std.h` — external-dependency.
+- `include/third_party/vulkan/vulkan/vk_video/vulkan_video_codec_h265std_decode.h` — external-dependency.
+- `include/third_party/vulkan/vulkan/vk_video/vulkan_video_codec_h265std_encode.h` — external-dependency.
+- `include/third_party/vulkan/vulkan/vk_video/vulkan_video_codec_vp9std.h` — external-dependency.
+- `include/third_party/vulkan/vulkan/vk_video/vulkan_video_codec_vp9std_decode.h` — external-dependency.
+- `include/third_party/vulkan/vulkan/vk_video/vulkan_video_codecs_common.h` — external-dependency.
+- `include/third_party/vulkan/vulkan/vulkan.cppm` — external-dependency.
+- `include/third_party/vulkan/vulkan/vulkan.h` — external-dependency.
+- `include/third_party/vulkan/vulkan/vulkan.hpp` — external-dependency.
+- `include/third_party/vulkan/vulkan/vulkan_android.h` — external-dependency.
+- `include/third_party/vulkan/vulkan/vulkan_beta.h` — external-dependency.
+- `include/third_party/vulkan/vulkan/vulkan_core.h` — external-dependency.
+- `include/third_party/vulkan/vulkan/vulkan_directfb.h` — external-dependency.
+- `include/third_party/vulkan/vulkan/vulkan_enums.hpp` — external-dependency.
+- `include/third_party/vulkan/vulkan/vulkan_extension_inspection.hpp` — external-dependency.
+- `include/third_party/vulkan/vulkan/vulkan_format_traits.hpp` — external-dependency.
+- `include/third_party/vulkan/vulkan/vulkan_fuchsia.h` — external-dependency.
+- `include/third_party/vulkan/vulkan/vulkan_funcs.hpp` — external-dependency.
+- `include/third_party/vulkan/vulkan/vulkan_ggp.h` — external-dependency.
+- `include/third_party/vulkan/vulkan/vulkan_handles.hpp` — external-dependency.
+- `include/third_party/vulkan/vulkan/vulkan_hash.hpp` — external-dependency.
+- `include/third_party/vulkan/vulkan/vulkan_hpp_macros.hpp` — external-dependency.
+- `include/third_party/vulkan/vulkan/vulkan_ios.h` — external-dependency.
+- `include/third_party/vulkan/vulkan/vulkan_macos.h` — external-dependency.
+- `include/third_party/vulkan/vulkan/vulkan_metal.h` — external-dependency.
+- `include/third_party/vulkan/vulkan/vulkan_ohos.h` — external-dependency.
+- `include/third_party/vulkan/vulkan/vulkan_raii.hpp` — external-dependency.
+- `include/third_party/vulkan/vulkan/vulkan_screen.h` — external-dependency.
+- `include/third_party/vulkan/vulkan/vulkan_shared.hpp` — external-dependency.
+- `include/third_party/vulkan/vulkan/vulkan_static_assertions.hpp` — external-dependency.
+- `include/third_party/vulkan/vulkan/vulkan_structs.hpp` — external-dependency.
+- `include/third_party/vulkan/vulkan/vulkan_to_string.hpp` — external-dependency.
+- `include/third_party/vulkan/vulkan/vulkan_vi.h` — external-dependency.
+- `include/third_party/vulkan/vulkan/vulkan_video.cppm` — external-dependency.
+- `include/third_party/vulkan/vulkan/vulkan_video.hpp` — external-dependency.
+- `include/third_party/vulkan/vulkan/vulkan_wayland.h` — external-dependency.
+- `include/third_party/vulkan/vulkan/vulkan_win32.h` — external-dependency.
+- `include/third_party/vulkan/vulkan/vulkan_xcb.h` — external-dependency.
+- `include/third_party/vulkan/vulkan/vulkan_xlib.h` — external-dependency.
+- `include/third_party/vulkan/vulkan/vulkan_xlib_xrandr.h` — external-dependency.
+- `libskia_blocklist.txt` — preserve.
+- `platform_tools/debugging/vs/Skia.natvis` — preserve.
+- `relnotes/README.md` — preserve.
+- `relnotes/hdr_metadata_encode.md` — preserve.
+- `relnotes/templated_executor.md` — preserve.
+- `relnotes/webp_encoder_method.md` — preserve.
+- `requirements.txt` — preserve.
+- `site/blog/_index.md` — preserve.
+- `site/blog/news/_index.md` — preserve.
+- `site/blog/news/first-post.md` — preserve.
+- `site/docs/_index.md` — preserve.
+- `site/docs/dev/_index.md` — preserve.
+- `site/docs/dev/chrome/_index.md` — preserve.
+- `site/docs/dev/chrome/blink.md` — preserve.
+- `site/docs/dev/chrome/changes.md` — preserve.
+- `site/docs/dev/chrome/multi_repo_trybots.md` — preserve.
+- `site/docs/dev/chrome/repo.md` — preserve.
+- `site/docs/dev/contrib/SuggestedReviewers.png` — preserve.
+- `site/docs/dev/contrib/_index.md` — preserve.
+- `site/docs/dev/contrib/bazel.md` — preserve.
+- `site/docs/dev/contrib/cqkeywords.md` — preserve.
+- `site/docs/dev/contrib/directory.md` — preserve.
+- `site/docs/dev/contrib/revert.md` — preserve.
+- `site/docs/dev/contrib/style.md` — preserve.
+- `site/docs/dev/contrib/submit.md` — preserve.
+- `site/docs/dev/design/PdfLogicalDocumentStructure.png` — preserve.
+- `site/docs/dev/design/_index.md` — preserve.
+- `site/docs/dev/design/aaa.md` — preserve.
+- `site/docs/dev/design/conical/_index.md` — preserve.
+- `site/docs/dev/design/conical/corollary2.2.1.svg` — preserve.
+- `site/docs/dev/design/conical/corollary2.2.2.svg` — preserve.
+- `site/docs/dev/design/conical/corollary2.3.1.svg` — preserve.
+- `site/docs/dev/design/conical/corollary2.3.2.svg` — preserve.
+- `site/docs/dev/design/conical/corollary2.3.3.svg` — preserve.
+- `site/docs/dev/design/conical/lemma1.svg` — preserve.
+- `site/docs/dev/design/conical/lemma3.1.svg` — preserve.
+- `site/docs/dev/design/conical/lemma3.2.svg` — preserve.
+- `site/docs/dev/design/conical/lemma4.svg` — preserve.
+- `site/docs/dev/design/dangling_pointer_detector.md` — preserve.
+- `site/docs/dev/design/pdftheory.md` — preserve.
+- `site/docs/dev/design/raster_tragedy/_index.md` — preserve.
+- `site/docs/dev/design/text_c2d.md` — preserve.
+- `site/docs/dev/design/text_overview.md` — preserve.
+- `site/docs/dev/design/text_shaper.md` — preserve.
+- `site/docs/dev/design/uni_characterize.md` — preserve.
+- `site/docs/dev/gardening/_index.md` — preserve.
+- `site/docs/dev/gardening/gpu.md` — preserve.
+- `site/docs/dev/gardening/infra.md` — preserve.
+- `site/docs/dev/gardening/skia_perf_columns.png` — preserve.
+- `site/docs/dev/gardening/skia_perf_graph.png` — preserve.
+- `site/docs/dev/gardening/skia_perf_mini_graph.png` — preserve.
+- `site/docs/dev/gardening/skia_perf_mini_graph_triaged.png` — preserve.
+- `site/docs/dev/gardening/skia_perf_view.png` — preserve.
+- `site/docs/dev/gardening/skia_status_view.png` — preserve.
+- `site/docs/dev/internal/_index.md` — preserve.
+- `site/docs/dev/present/_index.md` — preserve.
+- `site/docs/dev/present/pathops.md` — preserve.
+- `site/docs/dev/testing/BlameView.png` — preserve.
+- `site/docs/dev/testing/ByTest.png` — preserve.
+- `site/docs/dev/testing/Cluster.png` — preserve.
+- `site/docs/dev/testing/ClusterConfig.png` — preserve.
+- `site/docs/dev/testing/Digests.png` — preserve.
+- `site/docs/dev/testing/DotDiagram.png` — preserve.
+- `site/docs/dev/testing/Grid.png` — preserve.
+- `site/docs/dev/testing/Ignores.png` — preserve.
+- `site/docs/dev/testing/Isolate.png` — preserve.
+- `site/docs/dev/testing/IssueHighlight.png` — preserve.
+- `site/docs/dev/testing/Perf.png` — preserve.
+- `site/docs/dev/testing/Regression.png` — preserve.
+- `site/docs/dev/testing/Search.png` — preserve.
+- `site/docs/dev/testing/Status.png` — preserve.
+- `site/docs/dev/testing/_index.md` — preserve.
+- `site/docs/dev/testing/automated_testing.md` — preserve.
+- `site/docs/dev/testing/download.md` — preserve.
+- `site/docs/dev/testing/fonts.md` — preserve.
+- `site/docs/dev/testing/fuzz.md` — preserve.
+- `site/docs/dev/testing/ios.md` — preserve.
+- `site/docs/dev/testing/pprof_cpu_flame.png` — preserve.
+- `site/docs/dev/testing/pprof_cpu_web.png` — preserve.
+- `site/docs/dev/testing/pprof_cpu_weblist.png` — preserve.
+- `site/docs/dev/testing/pprof_mem_web.png` — preserve.
+- `site/docs/dev/testing/pprof_mem_weblist.png` — preserve.
+- `site/docs/dev/testing/pprof_webview.png` — preserve.
+- `site/docs/dev/testing/profiling.md` — preserve.
+- `site/docs/dev/testing/skiagold.md` — preserve.
+- `site/docs/dev/testing/skiaperf.md` — preserve.
+- `site/docs/dev/testing/skqp.md` — preserve.
+- `site/docs/dev/testing/swarmingbots.md` — preserve.
+- `site/docs/dev/testing/testing.md` — preserve.
+- `site/docs/dev/testing/tests.md` — preserve.
+- `site/docs/dev/testing/xsan.md` — preserve.
+- `site/docs/dev/tools/_index.md` — preserve.
+- `site/docs/dev/tools/buttons.png` — preserve.
+- `site/docs/dev/tools/calendar.mskp` — preserve.
+- `site/docs/dev/tools/codesearch.md` — preserve.
+- `site/docs/dev/tools/crosshair.png` — preserve.
+- `site/docs/dev/tools/debugger.md` — preserve.
+- `site/docs/dev/tools/debugger.png` — preserve.
+- `site/docs/dev/tools/debugvis.md` — preserve.
+- `site/docs/dev/tools/end.png` — preserve.
+- `site/docs/dev/tools/expand.png` — preserve.
+- `site/docs/dev/tools/eye_icon.png` — preserve.
+- `site/docs/dev/tools/frameplayback.png` — preserve.
+- `site/docs/dev/tools/gpuop.png` — preserve.
+- `site/docs/dev/tools/image.png` — preserve.
+- `site/docs/dev/tools/layers.png` — preserve.
+- `site/docs/dev/tools/markdown.md` — preserve.
+- `site/docs/dev/tools/onlinedebugger.png` — preserve.
+- `site/docs/dev/tools/playcommands.png` — preserve.
+- `site/docs/dev/tools/resources.png` — preserve.
+- `site/docs/dev/tools/settings.png` — preserve.
+- `site/docs/dev/tools/sk.md` — preserve.
+- `site/docs/dev/tools/tracing.md` — preserve.
+- `site/docs/dev/tools/tracing.png` — preserve.
+- `site/docs/dev/tools/tracing_load.png` — preserve.
+- `site/docs/roles.md` — preserve.
+- `site/docs/user/_index.md` — preserve.
+- `site/docs/user/api/SkBlendMode_Overview.md` — preserve.
+- `site/docs/user/api/SkPath_Overview.md` — preserve.
+- `site/docs/user/api/_index.md` — preserve.
+- `site/docs/user/api/skcanvas_creation.md` — preserve.
+- `site/docs/user/api/skcanvas_overview.md` — preserve.
+- `site/docs/user/api/skpaint_overview.md` — preserve.
+- `site/docs/user/build.md` — preserve.
+- `site/docs/user/color.md` — preserve.
+- `site/docs/user/coordinates.md` — preserve.
+- `site/docs/user/download.md` — preserve.
+- `site/docs/user/issue-tracker.md` — preserve.
+- `site/docs/user/modules/PathKit_effects.png` — preserve.
+- `site/docs/user/modules/_index.md` — preserve.
+- `site/docs/user/modules/canvaskit.md` — preserve.
+- `site/docs/user/modules/quickstart.md` — preserve.
+- `site/docs/user/modules/skottie.md` — preserve.
+- `site/docs/user/privacy.md` — preserve.
+- `site/docs/user/release/_index.md` — preserve.
+- `site/docs/user/sample/_index.md` — preserve.
+- `site/docs/user/sample/pdf.md` — preserve.
+- `site/docs/user/sample/viewer.md` — preserve.
+- `site/docs/user/sksl.md` — preserve.
+- `site/docs/user/special/_index.md` — preserve.
+- `site/docs/user/special/angle.md` — preserve.
+- `site/docs/user/special/vulkan.md` — preserve.
+- `site/docs/user/tips.md` — preserve.
+- `site/featured-background.png` — preserve.
+- `site/search.md` — preserve.
+- `specs/README.md` — preserve.
+- `specs/web-img-decode/README.md` — preserve.
+- `third_party/BUILD.gn` — external-dependency.
+- `third_party/README` — external-dependency.
+- `third_party/angle2/BUILD.gn` — external-dependency.
+- `third_party/brotli/BUILD.gn` — external-dependency.
+- `third_party/cpu-features/BUILD.gn` — external-dependency.
+- `third_party/d3d12allocator/BUILD.gn` — external-dependency.
+- `third_party/dawn/BUILD.gn` — external-dependency.
+- `third_party/dawn/args.gni` — external-dependency.
+- `third_party/dawn/build_dawn.py` — external-dependency.
+- `third_party/dawn/build_tint.py` — external-dependency.
+- `third_party/dawn/cmake_utils.py` — external-dependency.
+- `third_party/delaunator/BUILD.gn` — external-dependency.
+- `third_party/dng_sdk/BUILD.gn` — external-dependency.
+- `third_party/etc1/BUILD.bazel` — external-dependency.
+- `third_party/etc1/LICENSE` — external-dependency.
+- `third_party/etc1/README.google` — external-dependency.
+- `third_party/etc1/etc1.cpp` — external-dependency.
+- `third_party/etc1/etc1.h` — external-dependency.
+- `third_party/expat/0001-Do-not-claim-getrandom.patch` — external-dependency.
+- `third_party/expat/0002-Do-not-claim-arc4random_buf.patch` — external-dependency.
+- `third_party/expat/BUILD.gn` — external-dependency.
+- `third_party/expat/LICENSE` — external-dependency.
+- `third_party/expat/include/expat_config/expat_config.h` — external-dependency.
+- `third_party/expat/roll-expat.sh` — external-dependency.
+- `third_party/freetype2/BUILD.gn` — external-dependency.
+- `third_party/freetype2/include/README.md` — external-dependency.
+- `third_party/freetype2/include/freetype-android/freetype/config/ftmodule.h` — external-dependency.
+- `third_party/freetype2/include/freetype-android/freetype/config/ftoption.h` — external-dependency.
+- `third_party/freetype2/include/freetype-no-type1/freetype/config/ftmodule.h` — external-dependency.
+- `third_party/freetype2/include/freetype-no-type1/freetype/config/ftoption.h` — external-dependency.
+- `third_party/freetype2/roll-freetype.sh` — external-dependency.
+- `third_party/go.mod` — external-dependency.
+- `third_party/harfbuzz/BUILD.gn` — external-dependency.
+- `third_party/harfbuzz/LICENSE` — external-dependency.
+- `third_party/harfbuzz/README` — external-dependency.
+- `third_party/harfbuzz/config-override.h` — external-dependency.
+- `third_party/harfbuzz/roll-harfbuzz.sh` — external-dependency.
+- `third_party/highway/BUILD.gn` — external-dependency.
+- `third_party/icu/BUILD.gn` — external-dependency.
+- `third_party/icu/SkLoadICU.cpp` — external-dependency.
+- `third_party/icu/SkLoadICU.h` — external-dependency.
+- `third_party/icu/config/BUILD.gn` — external-dependency.
+- `third_party/icu/icu.gni` — external-dependency.
+- `third_party/icu/make_data_cpp.py` — external-dependency.
+- `third_party/icu4x/BUILD.gn` — external-dependency.
+- `third_party/icu_bidi/BUILD.gn` — external-dependency.
+- `third_party/imgui/BUILD.gn` — external-dependency.
+- `third_party/libavif/BUILD.gn` — external-dependency.
+- `third_party/libgav1/BUILD.gn` — external-dependency.
+- `third_party/libgrapheme/BUILD.gn` — external-dependency.
+- `third_party/libgrapheme/generate_headers.py` — external-dependency.
+- `third_party/libjpeg-turbo/BUILD.gn` — external-dependency.
+- `third_party/libjxl/BUILD.gn` — external-dependency.
+- `third_party/libjxl/include/jxl/jxl_cms_export.h` — external-dependency.
+- `third_party/libjxl/include/jxl/jxl_export.h` — external-dependency.
+- `third_party/libjxl/include/jxl/version.h` — external-dependency.
+- `third_party/libjxl/jxl/jxl_export.h` — external-dependency.
+- `third_party/libpng/BUILD.gn` — external-dependency.
+- `third_party/libpng/png.imp` — external-dependency.
+- `third_party/libpng/pnglibconf.h` — external-dependency.
+- `third_party/libwebp/BUILD.gn` — external-dependency.
+- `third_party/libyuv/BUILD.gn` — external-dependency.
+- `third_party/lua/BUILD.gn` — external-dependency.
+- `third_party/native_app_glue/BUILD.gn` — external-dependency.
+- `third_party/oboe/BUILD.gn` — external-dependency.
+- `third_party/perfetto/BUILD.gn` — external-dependency.
+- `third_party/piex/BUILD.gn` — external-dependency.
+- `third_party/spirv-cross/BUILD.gn` — external-dependency.
+- `third_party/third_party.gni` — external-dependency.
+- `third_party/vello/BUILD.bazel` — external-dependency.
+- `third_party/vello/BUILD.gn` — external-dependency.
+- `third_party/vello/Cargo.toml` — external-dependency.
+- `third_party/vello/build.rs` — external-dependency.
+- `third_party/vello/cpp/path_iterator.h` — external-dependency.
+- `third_party/vello/cpp/vello.h` — external-dependency.
+- `third_party/vello/src/encoding.rs` — external-dependency.
+- `third_party/vello/src/lib.rs` — external-dependency.
+- `third_party/vello/src/shaders.rs` — external-dependency.
+- `third_party/wuffs/BUILD.gn` — external-dependency.
+- `third_party/wuffs/LICENSE` — external-dependency.
+- `third_party/zlib/BUILD.gn` — external-dependency.
+- `third_party/zlib/zlib.gni` — external-dependency.
+- `whitespace.txt` — preserve.
+
+## Dependency and integration notes
+
+The initial scan found 0 quoted includes from this milestone into later-owned production files. See `../inventory/forward-includes.csv`, filtered by `source_milestone=46`. Header inclusion alone does not force implementation of the entire later subsystem; inspect the original registered test bodies and called production paths.
+
+Interfaces with later consumers may be declared now, but the accepted feature set must execute real implementations for every reached call. Where a source spans several features (CPU/GPU, serialization, runtime shaders), record completed and pending symbols separately. Deferred portions have explicit integration gates M14, M22, M26, M38 and M47; no pending portion may disappear from the ledger.
+
+## Commands, required evidence and stop condition
+
+Codex runs the milestone tests and all previously accepted tests in debug and release with the exact feature list from the handoff. The standard baseline commands are:
+
+```sh
+cargo test --locked
+cargo test --release --locked
+cargo fmt --all -- --check
+cargo clippy --all-targets --locked -- -D warnings
+```
+
+For feature-specific crates/backends, record the additional exact package/target/features commands; do not use an unexamined `--all-features` combination. Native backend, GM, browser, fuzz and benchmark commands are added when their harnesses exist and must be copied into the acceptance report.
+
+Acceptance requires: all assigned macOS cases enumerated; every applicable assertion passing; all earlier accepted tests passing; every source row mapped to implemented Rust or a documented non-code disposition; no unexplained missing resources, untested required backends or unsupported required API; and a Codex-authored evidence report. Formatting/build success alone never constitutes acceptance.
+
+Record PASS, FAIL, BLOCKED or NOT_APPLICABLE per test/configuration. NOT_APPLICABLE requires an original platform/capability condition and a reason. M01–M45 require native Apple Silicon macOS evidence; Intel-specific files may remain explicitly pending until M46, whose gate requires native Intel Mac results. This is a scheduled architecture gate, not an assertion that Intel already passed.
+
+Only after Codex marks M46 ACCEPTED may the user hand Deepseek M47.

@@ -1,0 +1,1000 @@
+# Milestone 32: Ganesh engine and mock backend
+
+## Outcome and entry gate
+
+Implement Ganesh contexts, resources/proxies, tasks, effects, ops, surfaces/images, text and geometry against backend traits, with the original mock-backend behavior. Preserve abandon/flush/lifetime state machines and synchronization contracts.
+
+Begin implementation only after milestone 31 is marked ACCEPTED by Codex and the user has handed over this milestone. All earlier accepted tests remain required.
+
+Read `../WORKFLOW.md`, `../MACOS-SCOPE.md` and the inventories before starting. All source paths below are relative to the pinned C++ Skia checkout; all Rust work belongs in the separate rust-skia repository. Never edit the reference checkout to make a test pass.
+
+## Deepseek: implementation contract
+
+Implement Ganesh contexts, resources/proxies, tasks, effects, ops, surfaces/images, text and geometry against backend traits, with the original mock-backend behavior. Preserve abandon/flush/lifetime state machines and synchronization contracts.
+
+- Port the observable behavior of every owned source/header below, including applicable error paths and public declarations. A header is part of the contract, not documentation to skip. Existing Rust files are integration work, not automatic completion.
+- Map original symbols to Rust modules in the handoff. Keep production logic under `src/` (or workspace library crates); use explicit Cargo features for optional macOS backends. Preserve widths, ownership, layout when observable, and binary formats where required by original tests.
+- Keep Skia-owned algorithmic/runtime code in Rust. External codec/shaping/GPU libraries and Apple framework FFI are allowed only as named, versioned dependencies. Never delegate the implementation to a pre-existing Skia Rust port or C++ Skia.
+- Inspect reached dependencies before coding. `forward-includes.csv` contains syntactic warnings, not proof of runtime dependency. Implement a required earlier prerequisite fully and record it in the handoff; if it materially changes this milestone, request a plan amendment before continuing. Never use fake return values, ignored tests or unimplemented runtime branches to clear a gate.
+- Do not author or change Codex-owned acceptance tests, expected values, tolerances, fixtures or pass records. Development checks may be separate and must be labeled as such. Fix production code when acceptance tests fail.
+- Supply reproducible build commands, feature flags, source/symbol mapping, external dependencies, and known unfinished work using `../HANDOFF-TEMPLATE.md`. Stop after the handoff; do not begin the next milestone.
+
+### Port these production files (Deepseek)
+
+- `include/gpu/ganesh/GrBackendSemaphore.h` — port to Rust.
+- `include/gpu/ganesh/GrBackendSurface.h` — port to Rust.
+- `include/gpu/ganesh/GrContextOptions.h` — port to Rust.
+- `include/gpu/ganesh/GrContextThreadSafeProxy.h` — port to Rust.
+- `include/gpu/ganesh/GrDirectContext.h` — port to Rust.
+- `include/gpu/ganesh/GrDriverBugWorkarounds.h` — port to Rust.
+- `include/gpu/ganesh/GrDriverBugWorkaroundsAutogen.h` — port to Rust.
+- `include/gpu/ganesh/GrExternalTextureGenerator.h` — port to Rust.
+- `include/gpu/ganesh/GrRecordingContext.h` — port to Rust.
+- `include/gpu/ganesh/GrTypes.h` — port to Rust.
+- `include/gpu/ganesh/GrYUVABackendTextures.h` — port to Rust.
+- `include/gpu/ganesh/SkImageGanesh.h` — port to Rust.
+- `include/gpu/ganesh/SkMeshGanesh.h` — port to Rust.
+- `include/gpu/ganesh/SkSurfaceGanesh.h` — port to Rust.
+- `include/gpu/ganesh/mock/GrMockBackendSurface.h` — port to Rust.
+- `include/gpu/ganesh/mock/GrMockTypes.h` — port to Rust.
+- `include/private/chromium/GrDeferredDisplayList.h` — port to Rust.
+- `include/private/gpu/ganesh/GrContext_Base.h` — port to Rust.
+- `include/private/gpu/ganesh/GrImageContext.h` — port to Rust.
+- `include/private/gpu/ganesh/GrTextureGenerator.h` — port to Rust.
+- `include/private/gpu/ganesh/GrTypesPriv.h` — port to Rust.
+- `src/gpu/ganesh/ClipStack.cpp` — port to Rust.
+- `src/gpu/ganesh/ClipStack.h` — port to Rust.
+- `src/gpu/ganesh/Device.cpp` — port to Rust.
+- `src/gpu/ganesh/Device.h` — port to Rust.
+- `src/gpu/ganesh/Device_drawTexture.cpp` — port to Rust.
+- `src/gpu/ganesh/GrAppliedClip.h` — port to Rust.
+- `src/gpu/ganesh/GrAtlasTypes.cpp` — port to Rust.
+- `src/gpu/ganesh/GrAtlasTypes.h` — port to Rust.
+- `src/gpu/ganesh/GrAttachment.cpp` — port to Rust.
+- `src/gpu/ganesh/GrAttachment.h` — port to Rust.
+- `src/gpu/ganesh/GrAuditTrail.cpp` — port to Rust.
+- `src/gpu/ganesh/GrAuditTrail.h` — port to Rust.
+- `src/gpu/ganesh/GrBackendSemaphore.cpp` — port to Rust.
+- `src/gpu/ganesh/GrBackendSemaphorePriv.h` — port to Rust.
+- `src/gpu/ganesh/GrBackendSurface.cpp` — port to Rust.
+- `src/gpu/ganesh/GrBackendSurfacePriv.h` — port to Rust.
+- `src/gpu/ganesh/GrBackendTextureImageGenerator.cpp` — port to Rust.
+- `src/gpu/ganesh/GrBackendTextureImageGenerator.h` — port to Rust.
+- `src/gpu/ganesh/GrBackendUtils.cpp` — port to Rust.
+- `src/gpu/ganesh/GrBackendUtils.h` — port to Rust.
+- `src/gpu/ganesh/GrBaseContextPriv.h` — port to Rust.
+- `src/gpu/ganesh/GrBlurUtils.cpp` — port to Rust.
+- `src/gpu/ganesh/GrBlurUtils.h` — port to Rust.
+- `src/gpu/ganesh/GrBuffer.h` — port to Rust.
+- `src/gpu/ganesh/GrBufferAllocPool.cpp` — port to Rust.
+- `src/gpu/ganesh/GrBufferAllocPool.h` — port to Rust.
+- `src/gpu/ganesh/GrBufferTransferRenderTask.cpp` — port to Rust.
+- `src/gpu/ganesh/GrBufferTransferRenderTask.h` — port to Rust.
+- `src/gpu/ganesh/GrBufferUpdateRenderTask.cpp` — port to Rust.
+- `src/gpu/ganesh/GrBufferUpdateRenderTask.h` — port to Rust.
+- `src/gpu/ganesh/GrCanvas.cpp` — port to Rust.
+- `src/gpu/ganesh/GrCanvas.h` — port to Rust.
+- `src/gpu/ganesh/GrCaps.cpp` — port to Rust.
+- `src/gpu/ganesh/GrCaps.h` — port to Rust.
+- `src/gpu/ganesh/GrClientMappedBufferManager.cpp` — port to Rust.
+- `src/gpu/ganesh/GrClientMappedBufferManager.h` — port to Rust.
+- `src/gpu/ganesh/GrClip.h` — port to Rust.
+- `src/gpu/ganesh/GrColor.h` — port to Rust.
+- `src/gpu/ganesh/GrColorInfo.cpp` — port to Rust.
+- `src/gpu/ganesh/GrColorInfo.h` — port to Rust.
+- `src/gpu/ganesh/GrColorSpaceXform.cpp` — port to Rust.
+- `src/gpu/ganesh/GrColorSpaceXform.h` — port to Rust.
+- `src/gpu/ganesh/GrContextThreadSafeProxy.cpp` — port to Rust.
+- `src/gpu/ganesh/GrContextThreadSafeProxyPriv.h` — port to Rust.
+- `src/gpu/ganesh/GrContext_Base.cpp` — port to Rust.
+- `src/gpu/ganesh/GrCopyRenderTask.cpp` — port to Rust.
+- `src/gpu/ganesh/GrCopyRenderTask.h` — port to Rust.
+- `src/gpu/ganesh/GrCpuBuffer.h` — port to Rust.
+- `src/gpu/ganesh/GrDDLContext.cpp` — port to Rust.
+- `src/gpu/ganesh/GrDDLTask.cpp` — port to Rust.
+- `src/gpu/ganesh/GrDDLTask.h` — port to Rust.
+- `src/gpu/ganesh/GrDataUtils.cpp` — port to Rust.
+- `src/gpu/ganesh/GrDataUtils.h` — port to Rust.
+- `src/gpu/ganesh/GrDefaultGeoProcFactory.cpp` — port to Rust.
+- `src/gpu/ganesh/GrDefaultGeoProcFactory.h` — port to Rust.
+- `src/gpu/ganesh/GrDeferredDisplayList.cpp` — port to Rust.
+- `src/gpu/ganesh/GrDeferredDisplayListPriv.h` — port to Rust.
+- `src/gpu/ganesh/GrDeferredDisplayListRecorder.cpp` — port to Rust.
+- `src/gpu/ganesh/GrDeferredProxyUploader.h` — port to Rust.
+- `src/gpu/ganesh/GrDeferredUpload.h` — port to Rust.
+- `src/gpu/ganesh/GrDirectContext.cpp` — port to Rust.
+- `src/gpu/ganesh/GrDirectContextPriv.cpp` — port to Rust.
+- `src/gpu/ganesh/GrDirectContextPriv.h` — port to Rust.
+- `src/gpu/ganesh/GrDistanceFieldGenFromVector.cpp` — port to Rust.
+- `src/gpu/ganesh/GrDistanceFieldGenFromVector.h` — port to Rust.
+- `src/gpu/ganesh/GrDrawIndirectCommand.h` — port to Rust.
+- `src/gpu/ganesh/GrDrawOpAtlas.cpp` — port to Rust.
+- `src/gpu/ganesh/GrDrawOpAtlas.h` — port to Rust.
+- `src/gpu/ganesh/GrDrawOpTest.h` — port to Rust.
+- `src/gpu/ganesh/GrDrawingManager.cpp` — port to Rust.
+- `src/gpu/ganesh/GrDrawingManager.h` — port to Rust.
+- `src/gpu/ganesh/GrDriverBugWorkarounds.cpp` — port to Rust.
+- `src/gpu/ganesh/GrDstProxyView.h` — port to Rust.
+- `src/gpu/ganesh/GrDynamicAtlas.cpp` — port to Rust.
+- `src/gpu/ganesh/GrDynamicAtlas.h` — port to Rust.
+- `src/gpu/ganesh/GrEagerVertexAllocator.cpp` — port to Rust.
+- `src/gpu/ganesh/GrEagerVertexAllocator.h` — port to Rust.
+- `src/gpu/ganesh/GrFPArgs.h` — port to Rust.
+- `src/gpu/ganesh/GrFixedClip.cpp` — port to Rust.
+- `src/gpu/ganesh/GrFixedClip.h` — port to Rust.
+- `src/gpu/ganesh/GrFragmentProcessor.cpp` — port to Rust.
+- `src/gpu/ganesh/GrFragmentProcessor.h` — port to Rust.
+- `src/gpu/ganesh/GrFragmentProcessors.cpp` — port to Rust.
+- `src/gpu/ganesh/GrFragmentProcessors.h` — port to Rust.
+- `src/gpu/ganesh/GrGeometryProcessor.cpp` — port to Rust.
+- `src/gpu/ganesh/GrGeometryProcessor.h` — port to Rust.
+- `src/gpu/ganesh/GrGpu.cpp` — port to Rust.
+- `src/gpu/ganesh/GrGpu.h` — port to Rust.
+- `src/gpu/ganesh/GrGpuBuffer.cpp` — port to Rust.
+- `src/gpu/ganesh/GrGpuBuffer.h` — port to Rust.
+- `src/gpu/ganesh/GrGpuResource.cpp` — port to Rust.
+- `src/gpu/ganesh/GrGpuResource.h` — port to Rust.
+- `src/gpu/ganesh/GrGpuResourceCacheAccess.h` — port to Rust.
+- `src/gpu/ganesh/GrGpuResourcePriv.h` — port to Rust.
+- `src/gpu/ganesh/GrHashMapWithCache.h` — port to Rust.
+- `src/gpu/ganesh/GrImageContext.cpp` — port to Rust.
+- `src/gpu/ganesh/GrImageContextPriv.h` — port to Rust.
+- `src/gpu/ganesh/GrImageInfo.cpp` — port to Rust.
+- `src/gpu/ganesh/GrImageInfo.h` — port to Rust.
+- `src/gpu/ganesh/GrManagedResource.cpp` — port to Rust.
+- `src/gpu/ganesh/GrManagedResource.h` — port to Rust.
+- `src/gpu/ganesh/GrMemoryPool.cpp` — port to Rust.
+- `src/gpu/ganesh/GrMemoryPool.h` — port to Rust.
+- `src/gpu/ganesh/GrMeshBuffers.cpp` — port to Rust.
+- `src/gpu/ganesh/GrMeshBuffers.h` — port to Rust.
+- `src/gpu/ganesh/GrMeshDrawTarget.cpp` — port to Rust.
+- `src/gpu/ganesh/GrMeshDrawTarget.h` — port to Rust.
+- `src/gpu/ganesh/GrNativeRect.h` — port to Rust.
+- `src/gpu/ganesh/GrNonAtomicRef.h` — port to Rust.
+- `src/gpu/ganesh/GrOnFlushResourceProvider.cpp` — port to Rust.
+- `src/gpu/ganesh/GrOnFlushResourceProvider.h` — port to Rust.
+- `src/gpu/ganesh/GrOpFlushState.cpp` — port to Rust.
+- `src/gpu/ganesh/GrOpFlushState.h` — port to Rust.
+- `src/gpu/ganesh/GrOpsRenderPass.cpp` — port to Rust.
+- `src/gpu/ganesh/GrOpsRenderPass.h` — port to Rust.
+- `src/gpu/ganesh/GrOpsTypes.h` — port to Rust.
+- `src/gpu/ganesh/GrPaint.cpp` — port to Rust.
+- `src/gpu/ganesh/GrPaint.h` — port to Rust.
+- `src/gpu/ganesh/GrPersistentCacheUtils.cpp` — port to Rust.
+- `src/gpu/ganesh/GrPersistentCacheUtils.h` — port to Rust.
+- `src/gpu/ganesh/GrPipeline.cpp` — port to Rust.
+- `src/gpu/ganesh/GrPipeline.h` — port to Rust.
+- `src/gpu/ganesh/GrPixmap.h` — port to Rust.
+- `src/gpu/ganesh/GrProcessor.cpp` — port to Rust.
+- `src/gpu/ganesh/GrProcessor.h` — port to Rust.
+- `src/gpu/ganesh/GrProcessorAnalysis.cpp` — port to Rust.
+- `src/gpu/ganesh/GrProcessorAnalysis.h` — port to Rust.
+- `src/gpu/ganesh/GrProcessorSet.cpp` — port to Rust.
+- `src/gpu/ganesh/GrProcessorSet.h` — port to Rust.
+- `src/gpu/ganesh/GrProcessorUnitTest.h` — port to Rust.
+- `src/gpu/ganesh/GrProgramDesc.cpp` — port to Rust.
+- `src/gpu/ganesh/GrProgramDesc.h` — port to Rust.
+- `src/gpu/ganesh/GrProgramInfo.cpp` — port to Rust.
+- `src/gpu/ganesh/GrProgramInfo.h` — port to Rust.
+- `src/gpu/ganesh/GrPromiseImageTexture.cpp` — port to Rust.
+- `src/gpu/ganesh/GrProxyProvider.cpp` — port to Rust.
+- `src/gpu/ganesh/GrProxyProvider.h` — port to Rust.
+- `src/gpu/ganesh/GrRecordingContext.cpp` — port to Rust.
+- `src/gpu/ganesh/GrRecordingContextPriv.cpp` — port to Rust.
+- `src/gpu/ganesh/GrRecordingContextPriv.h` — port to Rust.
+- `src/gpu/ganesh/GrRenderTarget.cpp` — port to Rust.
+- `src/gpu/ganesh/GrRenderTarget.h` — port to Rust.
+- `src/gpu/ganesh/GrRenderTargetProxy.cpp` — port to Rust.
+- `src/gpu/ganesh/GrRenderTargetProxy.h` — port to Rust.
+- `src/gpu/ganesh/GrRenderTask.cpp` — port to Rust.
+- `src/gpu/ganesh/GrRenderTask.h` — port to Rust.
+- `src/gpu/ganesh/GrRenderTaskCluster.cpp` — port to Rust.
+- `src/gpu/ganesh/GrRenderTaskCluster.h` — port to Rust.
+- `src/gpu/ganesh/GrResourceAllocator.cpp` — port to Rust.
+- `src/gpu/ganesh/GrResourceAllocator.h` — port to Rust.
+- `src/gpu/ganesh/GrResourceCache.cpp` — port to Rust.
+- `src/gpu/ganesh/GrResourceCache.h` — port to Rust.
+- `src/gpu/ganesh/GrResourceHandle.h` — port to Rust.
+- `src/gpu/ganesh/GrResourceProvider.cpp` — port to Rust.
+- `src/gpu/ganesh/GrResourceProvider.h` — port to Rust.
+- `src/gpu/ganesh/GrResourceProviderPriv.h` — port to Rust.
+- `src/gpu/ganesh/GrRingBuffer.cpp` — port to Rust.
+- `src/gpu/ganesh/GrRingBuffer.h` — port to Rust.
+- `src/gpu/ganesh/GrSPIRVUniformHandler.cpp` — port to Rust.
+- `src/gpu/ganesh/GrSPIRVUniformHandler.h` — port to Rust.
+- `src/gpu/ganesh/GrSPIRVVaryingHandler.cpp` — port to Rust.
+- `src/gpu/ganesh/GrSPIRVVaryingHandler.h` — port to Rust.
+- `src/gpu/ganesh/GrSWMaskHelper.cpp` — port to Rust.
+- `src/gpu/ganesh/GrSWMaskHelper.h` — port to Rust.
+- `src/gpu/ganesh/GrSamplerState.h` — port to Rust.
+- `src/gpu/ganesh/GrScissorState.h` — port to Rust.
+- `src/gpu/ganesh/GrSemaphore.h` — port to Rust.
+- `src/gpu/ganesh/GrShaderCaps.cpp` — port to Rust.
+- `src/gpu/ganesh/GrShaderCaps.h` — port to Rust.
+- `src/gpu/ganesh/GrShaderVar.cpp` — port to Rust.
+- `src/gpu/ganesh/GrShaderVar.h` — port to Rust.
+- `src/gpu/ganesh/GrSimpleMesh.h` — port to Rust.
+- `src/gpu/ganesh/GrStagingBufferManager.cpp` — port to Rust.
+- `src/gpu/ganesh/GrStagingBufferManager.h` — port to Rust.
+- `src/gpu/ganesh/GrStencilSettings.cpp` — port to Rust.
+- `src/gpu/ganesh/GrStencilSettings.h` — port to Rust.
+- `src/gpu/ganesh/GrStyle.cpp` — port to Rust.
+- `src/gpu/ganesh/GrStyle.h` — port to Rust.
+- `src/gpu/ganesh/GrSurface.cpp` — port to Rust.
+- `src/gpu/ganesh/GrSurface.h` — port to Rust.
+- `src/gpu/ganesh/GrSurfaceCharacterization.cpp` — port to Rust.
+- `src/gpu/ganesh/GrSurfaceProxy.cpp` — port to Rust.
+- `src/gpu/ganesh/GrSurfaceProxy.h` — port to Rust.
+- `src/gpu/ganesh/GrSurfaceProxyPriv.h` — port to Rust.
+- `src/gpu/ganesh/GrSurfaceProxyView.cpp` — port to Rust.
+- `src/gpu/ganesh/GrSurfaceProxyView.h` — port to Rust.
+- `src/gpu/ganesh/GrTTopoSort.h` — port to Rust.
+- `src/gpu/ganesh/GrTestUtils.cpp` — port to Rust.
+- `src/gpu/ganesh/GrTestUtils.h` — port to Rust.
+- `src/gpu/ganesh/GrTexture.cpp` — port to Rust.
+- `src/gpu/ganesh/GrTexture.h` — port to Rust.
+- `src/gpu/ganesh/GrTextureProxy.cpp` — port to Rust.
+- `src/gpu/ganesh/GrTextureProxy.h` — port to Rust.
+- `src/gpu/ganesh/GrTextureProxyCacheAccess.cpp` — port to Rust.
+- `src/gpu/ganesh/GrTextureProxyCacheAccess.h` — port to Rust.
+- `src/gpu/ganesh/GrTextureProxyPriv.h` — port to Rust.
+- `src/gpu/ganesh/GrTextureRenderTargetProxy.cpp` — port to Rust.
+- `src/gpu/ganesh/GrTextureRenderTargetProxy.h` — port to Rust.
+- `src/gpu/ganesh/GrTextureResolveManager.h` — port to Rust.
+- `src/gpu/ganesh/GrTextureResolveRenderTask.cpp` — port to Rust.
+- `src/gpu/ganesh/GrTextureResolveRenderTask.h` — port to Rust.
+- `src/gpu/ganesh/GrThreadSafeCache.cpp` — port to Rust.
+- `src/gpu/ganesh/GrThreadSafeCache.h` — port to Rust.
+- `src/gpu/ganesh/GrThreadSafePipelineBuilder.cpp` — port to Rust.
+- `src/gpu/ganesh/GrThreadSafePipelineBuilder.h` — port to Rust.
+- `src/gpu/ganesh/GrTracing.h` — port to Rust.
+- `src/gpu/ganesh/GrTransferFromRenderTask.cpp` — port to Rust.
+- `src/gpu/ganesh/GrTransferFromRenderTask.h` — port to Rust.
+- `src/gpu/ganesh/GrUniformDataManager.cpp` — port to Rust.
+- `src/gpu/ganesh/GrUniformDataManager.h` — port to Rust.
+- `src/gpu/ganesh/GrUserStencilSettings.h` — port to Rust.
+- `src/gpu/ganesh/GrUtil.cpp` — port to Rust.
+- `src/gpu/ganesh/GrUtil.h` — port to Rust.
+- `src/gpu/ganesh/GrVertexChunkArray.cpp` — port to Rust.
+- `src/gpu/ganesh/GrVertexChunkArray.h` — port to Rust.
+- `src/gpu/ganesh/GrWaitRenderTask.cpp` — port to Rust.
+- `src/gpu/ganesh/GrWaitRenderTask.h` — port to Rust.
+- `src/gpu/ganesh/GrWindowRectangles.h` — port to Rust.
+- `src/gpu/ganesh/GrWindowRectsState.h` — port to Rust.
+- `src/gpu/ganesh/GrWritePixelsRenderTask.cpp` — port to Rust.
+- `src/gpu/ganesh/GrWritePixelsRenderTask.h` — port to Rust.
+- `src/gpu/ganesh/GrXferProcessor.cpp` — port to Rust.
+- `src/gpu/ganesh/GrXferProcessor.h` — port to Rust.
+- `src/gpu/ganesh/GrYUVABackendTextures.cpp` — port to Rust.
+- `src/gpu/ganesh/GrYUVATextureProxies.cpp` — port to Rust.
+- `src/gpu/ganesh/GrYUVATextureProxies.h` — port to Rust.
+- `src/gpu/ganesh/PathRenderer.cpp` — port to Rust.
+- `src/gpu/ganesh/PathRenderer.h` — port to Rust.
+- `src/gpu/ganesh/PathRendererChain.cpp` — port to Rust.
+- `src/gpu/ganesh/PathRendererChain.h` — port to Rust.
+- `src/gpu/ganesh/SkGaneshGPUContextAdapter.h` — port to Rust.
+- `src/gpu/ganesh/SkGaneshRecorder.h` — port to Rust.
+- `src/gpu/ganesh/SkGr.cpp` — port to Rust.
+- `src/gpu/ganesh/SkGr.h` — port to Rust.
+- `src/gpu/ganesh/StencilClip.h` — port to Rust.
+- `src/gpu/ganesh/StencilMaskHelper.cpp` — port to Rust.
+- `src/gpu/ganesh/StencilMaskHelper.h` — port to Rust.
+- `src/gpu/ganesh/SurfaceContext.cpp` — port to Rust.
+- `src/gpu/ganesh/SurfaceContext.h` — port to Rust.
+- `src/gpu/ganesh/SurfaceDrawContext.cpp` — port to Rust.
+- `src/gpu/ganesh/SurfaceDrawContext.h` — port to Rust.
+- `src/gpu/ganesh/SurfaceFillContext.cpp` — port to Rust.
+- `src/gpu/ganesh/SurfaceFillContext.h` — port to Rust.
+- `src/gpu/ganesh/TestFormatColorTypeCombination.h` — port to Rust.
+- `src/gpu/ganesh/effects/GrAtlasedShaderHelpers.h` — port to Rust.
+- `src/gpu/ganesh/effects/GrBezierEffect.cpp` — port to Rust.
+- `src/gpu/ganesh/effects/GrBezierEffect.h` — port to Rust.
+- `src/gpu/ganesh/effects/GrBicubicEffect.cpp` — port to Rust.
+- `src/gpu/ganesh/effects/GrBicubicEffect.h` — port to Rust.
+- `src/gpu/ganesh/effects/GrBitmapTextGeoProc.cpp` — port to Rust.
+- `src/gpu/ganesh/effects/GrBitmapTextGeoProc.h` — port to Rust.
+- `src/gpu/ganesh/effects/GrBlendFragmentProcessor.cpp` — port to Rust.
+- `src/gpu/ganesh/effects/GrBlendFragmentProcessor.h` — port to Rust.
+- `src/gpu/ganesh/effects/GrColorTableEffect.cpp` — port to Rust.
+- `src/gpu/ganesh/effects/GrColorTableEffect.h` — port to Rust.
+- `src/gpu/ganesh/effects/GrConvexPolyEffect.cpp` — port to Rust.
+- `src/gpu/ganesh/effects/GrConvexPolyEffect.h` — port to Rust.
+- `src/gpu/ganesh/effects/GrCoverageSetOpXP.cpp` — port to Rust.
+- `src/gpu/ganesh/effects/GrCoverageSetOpXP.h` — port to Rust.
+- `src/gpu/ganesh/effects/GrCustomXfermode.cpp` — port to Rust.
+- `src/gpu/ganesh/effects/GrCustomXfermode.h` — port to Rust.
+- `src/gpu/ganesh/effects/GrDisableColorXP.cpp` — port to Rust.
+- `src/gpu/ganesh/effects/GrDisableColorXP.h` — port to Rust.
+- `src/gpu/ganesh/effects/GrDistanceFieldGeoProc.cpp` — port to Rust.
+- `src/gpu/ganesh/effects/GrDistanceFieldGeoProc.h` — port to Rust.
+- `src/gpu/ganesh/effects/GrMatrixEffect.cpp` — port to Rust.
+- `src/gpu/ganesh/effects/GrMatrixEffect.h` — port to Rust.
+- `src/gpu/ganesh/effects/GrModulateAtlasCoverageEffect.cpp` — port to Rust.
+- `src/gpu/ganesh/effects/GrModulateAtlasCoverageEffect.h` — port to Rust.
+- `src/gpu/ganesh/effects/GrOvalEffect.cpp` — port to Rust.
+- `src/gpu/ganesh/effects/GrOvalEffect.h` — port to Rust.
+- `src/gpu/ganesh/effects/GrPerlinNoise2Effect.cpp` — port to Rust.
+- `src/gpu/ganesh/effects/GrPerlinNoise2Effect.h` — port to Rust.
+- `src/gpu/ganesh/effects/GrPorterDuffXferProcessor.cpp` — port to Rust.
+- `src/gpu/ganesh/effects/GrPorterDuffXferProcessor.h` — port to Rust.
+- `src/gpu/ganesh/effects/GrRRectEffect.cpp` — port to Rust.
+- `src/gpu/ganesh/effects/GrRRectEffect.h` — port to Rust.
+- `src/gpu/ganesh/effects/GrShadowGeoProc.cpp` — port to Rust.
+- `src/gpu/ganesh/effects/GrShadowGeoProc.h` — port to Rust.
+- `src/gpu/ganesh/effects/GrSkSLFP.cpp` — port to Rust.
+- `src/gpu/ganesh/effects/GrSkSLFP.h` — port to Rust.
+- `src/gpu/ganesh/effects/GrTextureEffect.cpp` — port to Rust.
+- `src/gpu/ganesh/effects/GrTextureEffect.h` — port to Rust.
+- `src/gpu/ganesh/effects/GrYUVtoRGBEffect.cpp` — port to Rust.
+- `src/gpu/ganesh/effects/GrYUVtoRGBEffect.h` — port to Rust.
+- `src/gpu/ganesh/geometry/GrAAConvexTessellator.cpp` — port to Rust.
+- `src/gpu/ganesh/geometry/GrAAConvexTessellator.h` — port to Rust.
+- `src/gpu/ganesh/geometry/GrAATriangulator.cpp` — port to Rust.
+- `src/gpu/ganesh/geometry/GrAATriangulator.h` — port to Rust.
+- `src/gpu/ganesh/geometry/GrInnerFanTriangulator.h` — port to Rust.
+- `src/gpu/ganesh/geometry/GrPathUtils.cpp` — port to Rust.
+- `src/gpu/ganesh/geometry/GrPathUtils.h` — port to Rust.
+- `src/gpu/ganesh/geometry/GrQuad.cpp` — port to Rust.
+- `src/gpu/ganesh/geometry/GrQuad.h` — port to Rust.
+- `src/gpu/ganesh/geometry/GrQuadBuffer.h` — port to Rust.
+- `src/gpu/ganesh/geometry/GrQuadUtils.cpp` — port to Rust.
+- `src/gpu/ganesh/geometry/GrQuadUtils.h` — port to Rust.
+- `src/gpu/ganesh/geometry/GrRect.h` — port to Rust.
+- `src/gpu/ganesh/geometry/GrShape.cpp` — port to Rust.
+- `src/gpu/ganesh/geometry/GrShape.h` — port to Rust.
+- `src/gpu/ganesh/geometry/GrStyledShape.cpp` — port to Rust.
+- `src/gpu/ganesh/geometry/GrStyledShape.h` — port to Rust.
+- `src/gpu/ganesh/geometry/GrTriangulator.cpp` — port to Rust.
+- `src/gpu/ganesh/geometry/GrTriangulator.h` — port to Rust.
+- `src/gpu/ganesh/glsl/GrGLSLBlend.cpp` — port to Rust.
+- `src/gpu/ganesh/glsl/GrGLSLBlend.h` — port to Rust.
+- `src/gpu/ganesh/glsl/GrGLSLColorSpaceXformHelper.h` — port to Rust.
+- `src/gpu/ganesh/glsl/GrGLSLFragmentShaderBuilder.cpp` — port to Rust.
+- `src/gpu/ganesh/glsl/GrGLSLFragmentShaderBuilder.h` — port to Rust.
+- `src/gpu/ganesh/glsl/GrGLSLProgramBuilder.cpp` — port to Rust.
+- `src/gpu/ganesh/glsl/GrGLSLProgramBuilder.h` — port to Rust.
+- `src/gpu/ganesh/glsl/GrGLSLProgramDataManager.cpp` — port to Rust.
+- `src/gpu/ganesh/glsl/GrGLSLProgramDataManager.h` — port to Rust.
+- `src/gpu/ganesh/glsl/GrGLSLShaderBuilder.cpp` — port to Rust.
+- `src/gpu/ganesh/glsl/GrGLSLShaderBuilder.h` — port to Rust.
+- `src/gpu/ganesh/glsl/GrGLSLUniformHandler.cpp` — port to Rust.
+- `src/gpu/ganesh/glsl/GrGLSLUniformHandler.h` — port to Rust.
+- `src/gpu/ganesh/glsl/GrGLSLVarying.cpp` — port to Rust.
+- `src/gpu/ganesh/glsl/GrGLSLVarying.h` — port to Rust.
+- `src/gpu/ganesh/glsl/GrGLSLVertexGeoBuilder.cpp` — port to Rust.
+- `src/gpu/ganesh/glsl/GrGLSLVertexGeoBuilder.h` — port to Rust.
+- `src/gpu/ganesh/gradients/GrGradientBitmapCache.cpp` — port to Rust.
+- `src/gpu/ganesh/gradients/GrGradientBitmapCache.h` — port to Rust.
+- `src/gpu/ganesh/gradients/GrGradientShader.cpp` — port to Rust.
+- `src/gpu/ganesh/gradients/GrGradientShader.h` — port to Rust.
+- `src/gpu/ganesh/image/GrImageUtils.cpp` — port to Rust.
+- `src/gpu/ganesh/image/GrImageUtils.h` — port to Rust.
+- `src/gpu/ganesh/image/GrMippedBitmap.cpp` — port to Rust.
+- `src/gpu/ganesh/image/GrMippedBitmap.h` — port to Rust.
+- `src/gpu/ganesh/image/GrTextureGenerator.cpp` — port to Rust.
+- `src/gpu/ganesh/image/SkImage_Ganesh.cpp` — port to Rust.
+- `src/gpu/ganesh/image/SkImage_Ganesh.h` — port to Rust.
+- `src/gpu/ganesh/image/SkImage_GaneshBase.cpp` — port to Rust.
+- `src/gpu/ganesh/image/SkImage_GaneshBase.h` — port to Rust.
+- `src/gpu/ganesh/image/SkImage_GaneshFactories.cpp` — port to Rust.
+- `src/gpu/ganesh/image/SkImage_GaneshYUVA.cpp` — port to Rust.
+- `src/gpu/ganesh/image/SkImage_GaneshYUVA.h` — port to Rust.
+- `src/gpu/ganesh/image/SkImage_LazyTexture.cpp` — port to Rust.
+- `src/gpu/ganesh/image/SkImage_LazyTexture.h` — port to Rust.
+- `src/gpu/ganesh/image/SkImage_RasterPinnable.cpp` — port to Rust.
+- `src/gpu/ganesh/image/SkImage_RasterPinnable.h` — port to Rust.
+- `src/gpu/ganesh/image/SkSpecialImage_Ganesh.cpp` — port to Rust.
+- `src/gpu/ganesh/image/SkSpecialImage_Ganesh.h` — port to Rust.
+- `src/gpu/ganesh/mock/GrMockAttachment.h` — port to Rust.
+- `src/gpu/ganesh/mock/GrMockBackendSurface.cpp` — port to Rust.
+- `src/gpu/ganesh/mock/GrMockBuffer.h` — port to Rust.
+- `src/gpu/ganesh/mock/GrMockCaps.cpp` — port to Rust.
+- `src/gpu/ganesh/mock/GrMockCaps.h` — port to Rust.
+- `src/gpu/ganesh/mock/GrMockGpu.cpp` — port to Rust.
+- `src/gpu/ganesh/mock/GrMockGpu.h` — port to Rust.
+- `src/gpu/ganesh/mock/GrMockOpTarget.h` — port to Rust.
+- `src/gpu/ganesh/mock/GrMockOpsRenderPass.h` — port to Rust.
+- `src/gpu/ganesh/mock/GrMockRenderTask.h` — port to Rust.
+- `src/gpu/ganesh/mock/GrMockSurfaceProxy.h` — port to Rust.
+- `src/gpu/ganesh/mock/GrMockTexture.h` — port to Rust.
+- `src/gpu/ganesh/mock/GrMockTypes.cpp` — port to Rust.
+- `src/gpu/ganesh/mock/GrMockTypesPriv.h` — port to Rust.
+- `src/gpu/ganesh/ops/AAConvexPathRenderer.cpp` — port to Rust.
+- `src/gpu/ganesh/ops/AAConvexPathRenderer.h` — port to Rust.
+- `src/gpu/ganesh/ops/AAHairLinePathRenderer.cpp` — port to Rust.
+- `src/gpu/ganesh/ops/AAHairLinePathRenderer.h` — port to Rust.
+- `src/gpu/ganesh/ops/AALinearizingConvexPathRenderer.cpp` — port to Rust.
+- `src/gpu/ganesh/ops/AALinearizingConvexPathRenderer.h` — port to Rust.
+- `src/gpu/ganesh/ops/AtlasInstancedHelper.cpp` — port to Rust.
+- `src/gpu/ganesh/ops/AtlasInstancedHelper.h` — port to Rust.
+- `src/gpu/ganesh/ops/AtlasPathRenderer.cpp` — port to Rust.
+- `src/gpu/ganesh/ops/AtlasPathRenderer.h` — port to Rust.
+- `src/gpu/ganesh/ops/AtlasRenderTask.cpp` — port to Rust.
+- `src/gpu/ganesh/ops/AtlasRenderTask.h` — port to Rust.
+- `src/gpu/ganesh/ops/AtlasTextOp.cpp` — port to Rust.
+- `src/gpu/ganesh/ops/AtlasTextOp.h` — port to Rust.
+- `src/gpu/ganesh/ops/ClearOp.cpp` — port to Rust.
+- `src/gpu/ganesh/ops/ClearOp.h` — port to Rust.
+- `src/gpu/ganesh/ops/DashLinePathRenderer.cpp` — port to Rust.
+- `src/gpu/ganesh/ops/DashLinePathRenderer.h` — port to Rust.
+- `src/gpu/ganesh/ops/DashOp.cpp` — port to Rust.
+- `src/gpu/ganesh/ops/DashOp.h` — port to Rust.
+- `src/gpu/ganesh/ops/DefaultPathRenderer.cpp` — port to Rust.
+- `src/gpu/ganesh/ops/DefaultPathRenderer.h` — port to Rust.
+- `src/gpu/ganesh/ops/DrawAtlasOp.cpp` — port to Rust.
+- `src/gpu/ganesh/ops/DrawAtlasOp.h` — port to Rust.
+- `src/gpu/ganesh/ops/DrawAtlasPathOp.cpp` — port to Rust.
+- `src/gpu/ganesh/ops/DrawAtlasPathOp.h` — port to Rust.
+- `src/gpu/ganesh/ops/DrawMeshOp.cpp` — port to Rust.
+- `src/gpu/ganesh/ops/DrawMeshOp.h` — port to Rust.
+- `src/gpu/ganesh/ops/DrawableOp.cpp` — port to Rust.
+- `src/gpu/ganesh/ops/DrawableOp.h` — port to Rust.
+- `src/gpu/ganesh/ops/FillPathFlags.h` — port to Rust.
+- `src/gpu/ganesh/ops/FillRRectOp.cpp` — port to Rust.
+- `src/gpu/ganesh/ops/FillRRectOp.h` — port to Rust.
+- `src/gpu/ganesh/ops/FillRectOp.cpp` — port to Rust.
+- `src/gpu/ganesh/ops/FillRectOp.h` — port to Rust.
+- `src/gpu/ganesh/ops/GrDrawOp.h` — port to Rust.
+- `src/gpu/ganesh/ops/GrMeshDrawOp.cpp` — port to Rust.
+- `src/gpu/ganesh/ops/GrMeshDrawOp.h` — port to Rust.
+- `src/gpu/ganesh/ops/GrOp.cpp` — port to Rust.
+- `src/gpu/ganesh/ops/GrOp.h` — port to Rust.
+- `src/gpu/ganesh/ops/GrOvalOpFactory.cpp` — port to Rust.
+- `src/gpu/ganesh/ops/GrOvalOpFactory.h` — port to Rust.
+- `src/gpu/ganesh/ops/GrPathStencilSettings.h` — port to Rust.
+- `src/gpu/ganesh/ops/GrSimpleMeshDrawOpHelper.cpp` — port to Rust.
+- `src/gpu/ganesh/ops/GrSimpleMeshDrawOpHelper.h` — port to Rust.
+- `src/gpu/ganesh/ops/GrSimpleMeshDrawOpHelperWithStencil.cpp` — port to Rust.
+- `src/gpu/ganesh/ops/GrSimpleMeshDrawOpHelperWithStencil.h` — port to Rust.
+- `src/gpu/ganesh/ops/LatticeOp.cpp` — port to Rust.
+- `src/gpu/ganesh/ops/LatticeOp.h` — port to Rust.
+- `src/gpu/ganesh/ops/OpsTask.cpp` — port to Rust.
+- `src/gpu/ganesh/ops/OpsTask.h` — port to Rust.
+- `src/gpu/ganesh/ops/PathInnerTriangulateOp.cpp` — port to Rust.
+- `src/gpu/ganesh/ops/PathInnerTriangulateOp.h` — port to Rust.
+- `src/gpu/ganesh/ops/PathStencilCoverOp.cpp` — port to Rust.
+- `src/gpu/ganesh/ops/PathStencilCoverOp.h` — port to Rust.
+- `src/gpu/ganesh/ops/PathTessellateOp.cpp` — port to Rust.
+- `src/gpu/ganesh/ops/PathTessellateOp.h` — port to Rust.
+- `src/gpu/ganesh/ops/QuadPerEdgeAA.cpp` — port to Rust.
+- `src/gpu/ganesh/ops/QuadPerEdgeAA.h` — port to Rust.
+- `src/gpu/ganesh/ops/RegionOp.cpp` — port to Rust.
+- `src/gpu/ganesh/ops/RegionOp.h` — port to Rust.
+- `src/gpu/ganesh/ops/ShadowRRectOp.cpp` — port to Rust.
+- `src/gpu/ganesh/ops/ShadowRRectOp.h` — port to Rust.
+- `src/gpu/ganesh/ops/SmallPathAtlasMgr.cpp` — port to Rust.
+- `src/gpu/ganesh/ops/SmallPathAtlasMgr.h` — port to Rust.
+- `src/gpu/ganesh/ops/SmallPathRenderer.cpp` — port to Rust.
+- `src/gpu/ganesh/ops/SmallPathRenderer.h` — port to Rust.
+- `src/gpu/ganesh/ops/SmallPathShapeData.cpp` — port to Rust.
+- `src/gpu/ganesh/ops/SmallPathShapeData.h` — port to Rust.
+- `src/gpu/ganesh/ops/SoftwarePathRenderer.cpp` — port to Rust.
+- `src/gpu/ganesh/ops/SoftwarePathRenderer.h` — port to Rust.
+- `src/gpu/ganesh/ops/StrokeRectOp.cpp` — port to Rust.
+- `src/gpu/ganesh/ops/StrokeRectOp.h` — port to Rust.
+- `src/gpu/ganesh/ops/StrokeTessellateOp.cpp` — port to Rust.
+- `src/gpu/ganesh/ops/StrokeTessellateOp.h` — port to Rust.
+- `src/gpu/ganesh/ops/TessellationPathRenderer.cpp` — port to Rust.
+- `src/gpu/ganesh/ops/TessellationPathRenderer.h` — port to Rust.
+- `src/gpu/ganesh/ops/TextureOp.cpp` — port to Rust.
+- `src/gpu/ganesh/ops/TextureOp.h` — port to Rust.
+- `src/gpu/ganesh/ops/TriangulatingPathRenderer.cpp` — port to Rust.
+- `src/gpu/ganesh/ops/TriangulatingPathRenderer.h` — port to Rust.
+- `src/gpu/ganesh/surface/SkSurface_Ganesh.cpp` — port to Rust.
+- `src/gpu/ganesh/surface/SkSurface_Ganesh.h` — port to Rust.
+- `src/gpu/ganesh/surface/SkSurface_GaneshMtl.mm` — port to Rust.
+- `src/gpu/ganesh/tessellate/GrPathTessellationShader.cpp` — port to Rust.
+- `src/gpu/ganesh/tessellate/GrPathTessellationShader.h` — port to Rust.
+- `src/gpu/ganesh/tessellate/GrStrokeTessellationShader.cpp` — port to Rust.
+- `src/gpu/ganesh/tessellate/GrStrokeTessellationShader.h` — port to Rust.
+- `src/gpu/ganesh/tessellate/GrTessellationShader.cpp` — port to Rust.
+- `src/gpu/ganesh/tessellate/GrTessellationShader.h` — port to Rust.
+- `src/gpu/ganesh/tessellate/PathTessellator.cpp` — port to Rust.
+- `src/gpu/ganesh/tessellate/PathTessellator.h` — port to Rust.
+- `src/gpu/ganesh/tessellate/StrokeTessellator.cpp` — port to Rust.
+- `src/gpu/ganesh/tessellate/StrokeTessellator.h` — port to Rust.
+- `src/gpu/ganesh/tessellate/VertexChunkPatchAllocator.h` — port to Rust.
+- `src/gpu/ganesh/text/GlyphData.cpp` — port to Rust.
+- `src/gpu/ganesh/text/GlyphData.h` — port to Rust.
+- `src/gpu/ganesh/text/GrAtlasManager.cpp` — port to Rust.
+- `src/gpu/ganesh/text/GrAtlasManager.h` — port to Rust.
+- `src/gpu/ganesh/text/TextStrike.cpp` — port to Rust.
+- `src/gpu/ganesh/text/TextStrike.h` — port to Rust.
+- `tools/ganesh/AtlasTextOpTools.cpp` — port to Rust.
+- `tools/ganesh/AtlasTextOpTools.h` — port to Rust.
+- `tools/ganesh/DDLPromiseImageHelper.cpp` — port to Rust.
+- `tools/ganesh/DDLPromiseImageHelper.h` — port to Rust.
+- `tools/ganesh/DDLTileHelper.cpp` — port to Rust.
+- `tools/ganesh/DDLTileHelper.h` — port to Rust.
+- `tools/ganesh/GpuTimer.h` — port to Rust.
+- `tools/ganesh/GrAtlasTools.cpp` — port to Rust.
+- `tools/ganesh/GrAtlasTools.h` — port to Rust.
+- `tools/ganesh/GrContextFactory.cpp` — port to Rust.
+- `tools/ganesh/GrContextFactory.h` — port to Rust.
+- `tools/ganesh/MemoryCache.cpp` — port to Rust.
+- `tools/ganesh/MemoryCache.h` — port to Rust.
+- `tools/ganesh/ProtectedUtils_Ganesh.cpp` — port to Rust.
+- `tools/ganesh/ProxyUtils.cpp` — port to Rust.
+- `tools/ganesh/ProxyUtils.h` — port to Rust.
+
+### Adapt these build/tooling files (Deepseek)
+
+- `include/gpu/ganesh/BUILD.bazel`.
+- `include/gpu/ganesh/mock/BUILD.bazel`.
+- `include/private/gpu/ganesh/BUILD.bazel`.
+- `src/gpu/ganesh/BUILD.bazel`.
+- `src/gpu/ganesh/effects/BUILD.bazel`.
+- `src/gpu/ganesh/geometry/BUILD.bazel`.
+- `src/gpu/ganesh/glsl/BUILD.bazel`.
+- `src/gpu/ganesh/gradients/BUILD.bazel`.
+- `src/gpu/ganesh/image/BUILD.bazel`.
+- `src/gpu/ganesh/mock/BUILD.bazel`.
+- `src/gpu/ganesh/ops/BUILD.bazel`.
+- `src/gpu/ganesh/surface/BUILD.bazel`.
+- `src/gpu/ganesh/tessellate/BUILD.bazel`.
+- `src/gpu/ganesh/text/BUILD.bazel`.
+- `tools/ganesh/BUILD.bazel`.
+- `tools/ganesh/mock/BUILD.bazel`.
+
+## Codex: acceptance-test contract
+
+Translate Ganesh CPU/mock registrations and resource/cache/task tests. Rendering-context registrations are scheduled after native Metal/OpenGL exist. Use the real mock semantics, never a mock that reports successful draws without checking state.
+
+- Translate the original reachable test bodies and helpers, preserving inputs, order, seeds, assertions, tolerances, expected failures and conditional skips. Retain original names and source locations in the correspondence record.
+- Discover compiled C++ test registrations under the matching macOS feature configuration. The registration CSV is an initial source scan, not a substitute for expanded macro/test discovery. Resolve conditional/custom suites before accepting this milestone.
+- For files split across milestones, translate only the assigned registrations now, including their helper closure; record the rest under their later gate. Do not mark a whole file complete merely because its first tests pass.
+- Port original test utilities needed by these cases, even if their general tool packaging has a later owner. Keep fixture-only implementations in test support and never substitute them for production APIs being checked.
+- Where upstream provides no direct unit test, add clearly labeled supplemental contract/differential tests, separate from faithful translations. Run C++ as an external reference where needed; do not link it as the Rust implementation.
+- Preserve resources and shader/golden inputs by hash. Resource metadata and required downloads must be recorded before running; absent inputs or backend hardware are BLOCKED, not a skip that counts as PASS.
+
+### Port these test/runner/support files (Codex)
+
+- `src/gpu/ganesh/GrDrawOpTest.cpp`.
+- `src/gpu/ganesh/GrProcessorUnitTest.cpp`.
+- `tests/AdvancedBlendTest.cpp`.
+- `tests/ApplyGammaTest.cpp`.
+- `tests/BackendAllocationTest.cpp`.
+- `tests/BackendSurfaceMutableStateTest.cpp`.
+- `tests/BlendTest.cpp`.
+- `tests/BulkRectTest.cpp`.
+- `tests/ClearTest.cpp`.
+- `tests/ColorFilterTest.cpp`.
+- `tests/CompressedBackendAllocationTest.cpp`.
+- `tests/CopySurfaceTest.cpp`.
+- `tests/DMSAATest.cpp`.
+- `tests/DashPathEffectTestGanesh.cpp`.
+- `tests/DefaultPathRendererTest.cpp`.
+- `tests/DeferredDisplayListTest.cpp`.
+- `tests/DeviceTest.cpp`.
+- `tests/DrawOpAtlasTest.cpp`.
+- `tests/ExtendedSkColorTypeTests.cpp`.
+- `tests/FloatingPointTextureTest.cpp`.
+- `tests/GaneshContextRecorderTest.cpp`.
+- `tests/GaneshTestUtils.h`.
+- `tests/GpuDrawPathTest.cpp`.
+- `tests/GpuRectanizerTest.cpp`.
+- `tests/GrClipStackTest.cpp`.
+- `tests/GrContextAbandonTest.cpp`.
+- `tests/GrContextFactoryTest.cpp`.
+- `tests/GrContextOOM.cpp`.
+- `tests/GrDDLImageTest.cpp`.
+- `tests/GrFinishedFlushTest.cpp`.
+- `tests/GrGlyphVectorTest.cpp`.
+- `tests/GrGpuBufferTest.cpp`.
+- `tests/GrMemoryPoolTest.cpp`.
+- `tests/GrMeshTest.cpp`.
+- `tests/GrMipMappedTest.cpp`.
+- `tests/GrOpListFlushTest.cpp`.
+- `tests/GrPipelineDynamicStateTest.cpp`.
+- `tests/GrPorterDuffTest.cpp`.
+- `tests/GrQuadBufferTest.cpp`.
+- `tests/GrQuadCropTest.cpp`.
+- `tests/GrRenderTaskClusterTest.cpp`.
+- `tests/GrStyledShapeTest.cpp`.
+- `tests/GrSubmittedFlushTest.cpp`.
+- `tests/GrSurfaceResolveTest.cpp`.
+- `tests/GrSurfaceTest.cpp`.
+- `tests/GrTextBlobTest.cpp`.
+- `tests/GrTextureMipMapInvalidationTest.cpp`.
+- `tests/GrThreadSafeCacheTest.cpp`.
+- `tests/GrUniqueProxyTest.cpp`.
+- `tests/GradientTest.cpp`.
+- `tests/ImageFilterCacheTest.cpp`.
+- `tests/ImageIsOpaqueTest.cpp`.
+- `tests/ImageNewShaderTest.cpp`.
+- `tests/ImageTest.cpp`.
+- `tests/LazyProxyTest.cpp`.
+- `tests/LazyStencilAttachmentTest.cpp`.
+- `tests/MatrixColorFilterTest.cpp`.
+- `tests/MultiPictureDocumentTest.cpp`.
+- `tests/OpChainTest.cpp`.
+- `tests/PathRendererCacheTests.cpp`.
+- `tests/PinnedImageTest.cpp`.
+- `tests/PremulAlphaRoundTripTest.cpp`.
+- `tests/PrimitiveProcessorTest.cpp`.
+- `tests/ProcessorTest.cpp`.
+- `tests/ProgramsTest.cpp`.
+- `tests/PromiseImageTest.cpp`.
+- `tests/ProxyConversionTest.cpp`.
+- `tests/ProxyRefTest.cpp`.
+- `tests/ReadWritePixelsGpuTest.cpp`.
+- `tests/RepeatedClippedBlurTest.cpp`.
+- `tests/ResourceAllocatorTest.cpp`.
+- `tests/ResourceCacheTest.cpp`.
+- `tests/SRGBReadWritePixelsTest.cpp`.
+- `tests/SaveLayerOriginTest.cpp`.
+- `tests/ShaderImageFilterTest.cpp`.
+- `tests/SkSLCross.cpp`.
+- `tests/SkSLES2ConformanceTest.cpp`.
+- `tests/Skbug12214.cpp`.
+- `tests/Skbug5221.cpp`.
+- `tests/Skbug6653.cpp`.
+- `tests/SmallPathRendererTest.cpp`.
+- `tests/SpecialImageTest.cpp`.
+- `tests/SrcSrcOverBatchTest.cpp`.
+- `tests/StencilClearTest.cpp`.
+- `tests/SurfaceDrawContextTest.cpp`.
+- `tests/SurfaceSemaphoreTest.cpp`.
+- `tests/SurfaceTest.cpp`.
+- `tests/Test.h`.
+- `tests/TestTest.cpp`.
+- `tests/TextBlobCacheTest.cpp`.
+- `tests/TextureOpTest.cpp`.
+- `tests/TextureProxyTest.cpp`.
+- `tests/TextureStripAtlasManagerTest.cpp`.
+- `tests/TopoSortTest.cpp`.
+- `tests/TransferPixelsTest.cpp`.
+- `tests/TriangulatingPathRendererTests.cpp`.
+- `tests/WindowRectanglesTest.cpp`.
+- `tests/WrappedSurfaceCopyOnWriteTest.cpp`.
+- `tests/crbug_500172224.cpp`.
+- `tests/ganesh/GaneshTestUtils.cpp`.
+- `tests/ganesh/GaneshTestUtils.h`.
+- `tools/ganesh/GrTest.cpp`.
+- `tools/ganesh/TestCanvas.cpp`.
+- `tools/ganesh/TestCanvas.h`.
+- `tools/ganesh/TestContext.cpp`.
+- `tools/ganesh/TestContext.h`.
+- `tools/ganesh/TestOps.cpp`.
+- `tools/ganesh/TestOps.h`.
+- `tools/ganesh/mock/MockTestContext.cpp`.
+- `tools/ganesh/mock/MockTestContext.h`.
+
+### Original test registrations assigned to this gate
+
+- `ColorTypeBackendAllocationTest` — `tests/BackendAllocationTest.cpp:780`; Ganesh; `DEF_GANESH_TEST`.
+- `Blend_byte_multiply` — `tests/BlendTest.cpp:64`; CPU; `DEF_TEST`.
+- `ColorFilter` — `tests/ColorFilterTest.cpp:64`; CPU; `DEF_TEST`.
+- `WorkingFormatFilterFlags` — `tests/ColorFilterTest.cpp:120`; CPU; `DEF_TEST`.
+- `ColorFilter_OpaqueShaderPaintAlpha` — `tests/ColorFilterTest.cpp:193`; CPU; `DEF_TEST`.
+- `VkProtectedContext_DDLSurfaceCharacterizationTest` — `tests/DeferredDisplayListTest.cpp:797`; Ganesh; `DEF_GANESH_TEST`.
+- `VkProtectedContext_DDLMakeRenderTargetTest` — `tests/DeferredDisplayListTest.cpp:938`; Ganesh; `DEF_GANESH_TEST`.
+- `SpecialImage_BitmapDevice` — `tests/DeviceTest.cpp:38`; CPU; `DEF_TEST`.
+- `GrDrawOpAtlasConfig_Basic` — `tests/DrawOpAtlasTest.cpp:255`; Ganesh; `DEF_GANESH_TEST`.
+- `ExtendedSkColorTypeTests_raster` — `tests/ExtendedSkColorTypeTests.cpp:355`; CPU; `DEF_TEST`.
+- `GpuRectanizer` — `tests/GpuRectanizerTest.cpp:67`; Ganesh; `DEF_GANESH_TEST`.
+- `ClipStack_InitialState` — `tests/GrClipStackTest.cpp:541`; CPU; `DEF_TEST`.
+- `ClipStack_RectRectAACombine` — `tests/GrClipStackTest.cpp:547`; CPU; `DEF_TEST`.
+- `ClipStack_DifferenceNoCombine` — `tests/GrClipStackTest.cpp:609`; CPU; `DEF_TEST`.
+- `ClipStack_RectRectNonAxisAligned` — `tests/GrClipStackTest.cpp:627`; CPU; `DEF_TEST`.
+- `ClipStack_RRectRRectAACombine` — `tests/GrClipStackTest.cpp:673`; CPU; `DEF_TEST`.
+- `ClipStack_RectRRectCombine` — `tests/GrClipStackTest.cpp:730`; CPU; `DEF_TEST`.
+- `ClipStack_RectDeviceClip` — `tests/GrClipStackTest.cpp:765`; CPU; `DEF_TEST`.
+- `ClipStack_ShapeDeviceBoundsClip` — `tests/GrClipStackTest.cpp:786`; CPU; `DEF_TEST`.
+- `ClipStack_PathSimplify` — `tests/GrClipStackTest.cpp:812`; CPU; `DEF_TEST`.
+- `ClipStack_RepeatElement` — `tests/GrClipStackTest.cpp:863`; CPU; `DEF_TEST`.
+- `ClipStack_InverseFilledPath` — `tests/GrClipStackTest.cpp:936`; CPU; `DEF_TEST`.
+- `ClipStack_Offscreen` — `tests/GrClipStackTest.cpp:977`; CPU; `DEF_TEST`.
+- `ClipStack_EmptyShape` — `tests/GrClipStackTest.cpp:1045`; CPU; `DEF_TEST`.
+- `ClipStack_DifferenceBounds` — `tests/GrClipStackTest.cpp:1070`; CPU; `DEF_TEST`.
+- `ClipStack_NoDifferenceInterference` — `tests/GrClipStackTest.cpp:1085`; CPU; `DEF_TEST`.
+- `ClipStack_MultiplePaths` — `tests/GrClipStackTest.cpp:1106`; CPU; `DEF_TEST`.
+- `ClipStack_DeviceRect` — `tests/GrClipStackTest.cpp:1143`; CPU; `DEF_TEST`.
+- `ClipStack_DeviceRRect` — `tests/GrClipStackTest.cpp:1172`; CPU; `DEF_TEST`.
+- `ClipStack_ScaleTranslate` — `tests/GrClipStackTest.cpp:1204`; CPU; `DEF_TEST`.
+- `ClipStack_PreserveAxisAlignment` — `tests/GrClipStackTest.cpp:1243`; CPU; `DEF_TEST`.
+- `ClipStack_ConvexPathContains` — `tests/GrClipStackTest.cpp:1283`; CPU; `DEF_TEST`.
+- `ClipStack_NonAxisAlignedContains` — `tests/GrClipStackTest.cpp:1344`; CPU; `DEF_TEST`.
+- `ClipStack_MixedAAContains` — `tests/GrClipStackTest.cpp:1482`; CPU; `DEF_TEST`.
+- `ClipStack_ShapeContainsDevice` — `tests/GrClipStackTest.cpp:1529`; CPU; `DEF_TEST`.
+- `ClipStack_DisjointShapes` — `tests/GrClipStackTest.cpp:1567`; CPU; `DEF_TEST`.
+- `ClipStack_ComplexClip` — `tests/GrClipStackTest.cpp:1616`; CPU; `DEF_TEST`.
+- `ClipStack_ReplaceClip` — `tests/GrClipStackTest.cpp:1714`; CPU; `DEF_TEST`.
+- `ClipStack_DiffRects` — `tests/GrClipStackTest.cpp:1749`; CPU; `DEF_TEST`.
+- `ClipStack_ForceAA` — `tests/GrClipStackTest.cpp:1784`; CPU; `DEF_TEST`.
+- `ClipStack_PreApply` — `tests/GrClipStackTest.cpp:1831`; CPU; `DEF_TEST`.
+- `ClipStack_Shader` — `tests/GrClipStackTest.cpp:1904`; CPU; `DEF_TEST`.
+- `ClipStack_SimpleApply` — `tests/GrClipStackTest.cpp:1959`; CPU; `DEF_TEST`.
+- `GrContext_abandonContext` — `tests/GrContextAbandonTest.cpp:18`; Ganesh; `DEF_GANESH_TEST`.
+- `GrContextFactory_abandon` — `tests/GrContextFactoryTest.cpp:22`; Ganesh; `DEF_GANESH_TEST`.
+- `GrContextFactory_sharedContexts` — `tests/GrContextFactoryTest.cpp:47`; Ganesh; `DEF_GANESH_TEST`.
+- `GrContextFactory_executorAndTaskGroup` — `tests/GrContextFactoryTest.cpp:85`; Ganesh; `DEF_GANESH_TEST`.
+- `GrContext_oomed` — `tests/GrContextOOM.cpp:26`; Ganesh; `DEF_GANESH_TEST`.
+- `GrDDLImage_MakeSubset` — `tests/GrDDLImageTest.cpp:34`; Ganesh; `DEF_GANESH_TEST`.
+- `GlyphVector_Serialization` — `tests/GrGlyphVectorTest.cpp:49`; CPU; `DEF_TEST`.
+- `GlyphVector_BadLengths` — `tests/GrGlyphVectorTest.cpp:85`; CPU; `DEF_TEST`.
+- `GrMemoryPool` — `tests/GrMemoryPoolTest.cpp:182`; CPU; `DEF_TEST`.
+- `GrMemoryPoolAPI` — `tests/GrMemoryPoolTest.cpp:256`; CPU; `DEF_TEST`.
+- `GrManyDependentsMipMappedTest` — `tests/GrMipMappedTest.cpp:466`; Ganesh; `DEF_GANESH_TEST`.
+- `GrPorterDuff` — `tests/GrPorterDuffTest.cpp:55`; Ganesh; `DEF_GANESH_TEST`.
+- `PorterDuffNoDualSourceBlending` — `tests/GrPorterDuffTest.cpp:1086`; Ganesh; `DEF_GANESH_TEST`.
+- `GrRenderTaskCluster` — `tests/GrRenderTaskClusterTest.cpp:136`; CPU; `DEF_TEST`.
+- `GrStyledShape_empty_shape` — `tests/GrStyledShapeTest.cpp:1523`; CPU; `DEF_TEST`.
+- `GrStyledShape_lines` — `tests/GrStyledShapeTest.cpp:1863`; CPU; `DEF_TEST`.
+- `GrStyledShape_stroked_lines` — `tests/GrStyledShapeTest.cpp:1971`; CPU; `DEF_TEST`.
+- `GrStyledShape_short_path_keys` — `tests/GrStyledShapeTest.cpp:2042`; CPU; `DEF_TEST`.
+- `GrStyledShape` — `tests/GrStyledShapeTest.cpp:2103`; CPU; `DEF_TEST`.
+- `GrStyledShape_arcs` — `tests/GrStyledShapeTest.cpp:2236`; CPU; `DEF_TEST`.
+- `GrShapeInversion` — `tests/GrStyledShapeTest.cpp:2337`; CPU; `DEF_TEST`.
+- `SurfaceResolveProxyStateAfterFailedFlush` — `tests/GrSurfaceResolveTest.cpp:389`; Ganesh; `DEF_GANESH_TEST`.
+- `GrSurface` — `tests/GrSurfaceTest.cpp:72`; Ganesh; `DEF_GANESH_TEST_FOR_MOCK_CONTEXT`.
+- `InitialTextureClear` — `tests/GrSurfaceTest.cpp:274`; Ganesh; `DEF_GANESH_TEST`.
+- `BagOfBytesBasic` — `tests/GrTextBlobTest.cpp:190`; CPU; `DEF_TEST`.
+- `SubRunAllocator` — `tests/GrTextBlobTest.cpp:246`; CPU; `DEF_TEST`.
+- `KeyEqualityOnPerspective` — `tests/GrTextBlobTest.cpp:356`; CPU; `DEF_TEST`.
+- `Gradient` — `tests/GradientTest.cpp:709`; CPU; `DEF_TEST`.
+- `ImageFilterCache_RasterBacked` — `tests/ImageFilterCacheTest.cpp:195`; CPU; `DEF_TEST`.
+- `ImageFilterCache_ImageBackedRaster` — `tests/ImageFilterCacheTest.cpp:248`; CPU; `DEF_TEST`.
+- `PurgeImageFilterCache` — `tests/ImageFilterCacheTest.cpp:349`; CPU; `DEF_SERIAL_TEST`.
+- `ImageFilterCache_64BitUniqueID` — `tests/ImageFilterCacheTest.cpp:370`; CPU; `DEF_TEST`.
+- `ImageIsOpaqueTest` — `tests/ImageIsOpaqueTest.cpp:38`; CPU; `DEF_TEST`.
+- `Image_isAlphaOnly` — `tests/ImageIsOpaqueTest.cpp:76`; CPU; `DEF_TEST`.
+- `ImageNewShader` — `tests/ImageNewShaderTest.cpp:116`; CPU; `DEF_TEST`.
+- `ImageRawShader` — `tests/ImageNewShaderTest.cpp:160`; CPU; `DEF_TEST`.
+- `ImageEncode` — `tests/ImageTest.cpp:211`; CPU; `DEF_TEST`.
+- `Image_MakeFromRasterBitmap` — `tests/ImageTest.cpp:235`; CPU; `DEF_TEST`.
+- `Image_Serialize_Encoding_Failure` — `tests/ImageTest.cpp:268`; CPU; `DEF_TEST`.
+- `Image_RetainSnapshot` — `tests/ImageTest.cpp:302`; CPU; `DEF_TEST`.
+- `image_newfrombitmap` — `tests/ImageTest.cpp:345`; CPU; `DEF_TEST`.
+- `AbandonedContextImage` — `tests/ImageTest.cpp:662`; Ganesh; `DEF_GANESH_TEST`.
+- `ImageEmpty` — `tests/ImageTest.cpp:707`; CPU; `DEF_TEST`.
+- `ImageDataRef` — `tests/ImageTest.cpp:717`; CPU; `DEF_TEST`.
+- `ImageReadPixels` — `tests/ImageTest.cpp:789`; CPU; `DEF_TEST`.
+- `ImageLegacyBitmap` — `tests/ImageTest.cpp:853`; CPU; `DEF_TEST`.
+- `ImagePeek` — `tests/ImageTest.cpp:899`; CPU; `DEF_TEST`.
+- `SkImage_MakeCrossContextFromPixmapRelease` — `tests/ImageTest.cpp:1155`; Ganesh; `DEF_GANESH_TEST`.
+- `SkImage_CrossContextGrayAlphaConfigs` — `tests/ImageTest.cpp:1175`; Ganesh; `DEF_GANESH_TEST`.
+- `Image_ColorSpace` — `tests/ImageTest.cpp:1328`; CPU; `DEF_TEST`.
+- `Image_makeColorSpace` — `tests/ImageTest.cpp:1360`; CPU; `DEF_TEST`.
+- `image_roundtrip_encode` — `tests/ImageTest.cpp:1427`; CPU; `DEF_TEST`.
+- `image_roundtrip_premul` — `tests/ImageTest.cpp:1442`; CPU; `DEF_TEST`.
+- `image_from_encoded_alphatype_override` — `tests/ImageTest.cpp:1457`; CPU; `DEF_TEST`.
+- `ImageScalePixels` — `tests/ImageTest.cpp:1505`; CPU; `DEF_TEST`.
+- `Image_nonfinite_dst` — `tests/ImageTest.cpp:1543`; CPU; `DEF_TEST`.
+- `image_cubicresampler` — `tests/ImageTest.cpp:1671`; CPU; `DEF_TEST`.
+- `image_subset_encode_skbug_7752` — `tests/ImageTest.cpp:1687`; CPU; `DEF_TEST`.
+- `LazyProxyTest` — `tests/LazyProxyTest.cpp:251`; Ganesh; `DEF_GANESH_TEST`.
+- `LazyProxyReleaseTest` — `tests/LazyProxyTest.cpp:286`; Ganesh; `DEF_GANESH_TEST`.
+- `LazyProxyFailedInstantiationTest` — `tests/LazyProxyTest.cpp:466`; Ganesh; `DEF_GANESH_TEST`.
+- `SkMultiPictureDocument_Serialize_and_deserialize` — `tests/MultiPictureDocumentTest.cpp:101`; CPU; `DEF_TEST`.
+- `OpChainTest` — `tests/OpChainTest.cpp:211`; Ganesh; `DEF_GANESH_TEST`.
+- `TriangulatingPathRendererCacheTest` — `tests/PathRendererCacheTests.cpp:167`; Ganesh; `DEF_GANESH_TEST`.
+- `SoftwarePathRendererCacheTest` — `tests/PathRendererCacheTests.cpp:193`; Ganesh; `DEF_GANESH_TEST`.
+- `PremulAlphaRoundTrip` — `tests/PremulAlphaRoundTripTest.cpp:112`; CPU; `DEF_TEST`.
+- `PremulAlphaRoundTripGrConvertPixels` — `tests/PremulAlphaRoundTripTest.cpp:132`; CPU; `DEF_TEST`.
+- `PremulAlphaRoundTripSkConvertPixels` — `tests/PremulAlphaRoundTripTest.cpp:191`; CPU; `DEF_TEST`.
+- `Programs` — `tests/ProgramsTest.cpp:448`; Ganesh; `DEF_GANESH_TEST`.
+- `PromiseImageTextureShutdown` — `tests/PromiseImageTest.cpp:227`; Ganesh; `DEF_GANESH_TEST`.
+- `AsyncReadPixelsContextShutdown` — `tests/ReadWritePixelsGpuTest.cpp:852`; Ganesh; `DEF_GANESH_TEST`.
+- `ResourceCacheMisc` — `tests/ResourceCacheTest.cpp:1670`; Ganesh; `DEF_GANESH_TEST`.
+- `OverbudgetFlush` — `tests/ResourceCacheTest.cpp:1878`; Ganesh; `DEF_GANESH_TEST_FOR_MOCK_CONTEXT`.
+- `ShaderImageFilter` — `tests/ShaderImageFilterTest.cpp:149`; CPU; `DEF_TEST`.
+- `SkRuntimeShaderImageFilter_CPU` — `tests/ShaderImageFilterTest.cpp:213`; CPU; `DEF_TEST`.
+- `SkSL_ES2Conformance_Pass_CPU` — `tests/SkSLES2ConformanceTest.cpp:113`; CPU; `DEF_TEST`.
+- `SkSL_ES2Conformance_Fail` — `tests/SkSLES2ConformanceTest.cpp:136`; CPU; `DEF_TEST`.
+- `skbug5221` — `tests/Skbug5221.cpp:32`; CPU; `DEF_TEST`.
+- `SmallPathShapeDataKey_DomainSeparation` — `tests/SmallPathRendererTest.cpp:58`; CPU; `DEF_TEST`.
+- `SmallPathShapeDataKey_CollisionReproduction` — `tests/SmallPathRendererTest.cpp:71`; CPU; `DEF_TEST`.
+- `SpecialImage_Raster` — `tests/SpecialImageTest.cpp:147`; CPU; `DEF_TEST`.
+- `SpecialImage_Image_Legacy` — `tests/SpecialImageTest.cpp:189`; CPU; `DEF_TEST`.
+- `SurfaceSemaphores` — `tests/SurfaceSemaphoreTest.cpp:219`; Ganesh; `DEF_GANESH_TEST`.
+- `SurfaceEmpty` — `tests/SurfaceTest.cpp:109`; CPU; `DEF_TEST`.
+- `SurfaceCanvasPeek` — `tests/SurfaceTest.cpp:308`; CPU; `DEF_TEST`.
+- `SurfaceSnapshotAlphaType` — `tests/SurfaceTest.cpp:339`; CPU; `DEF_TEST`.
+- `SurfaceCopyOnWrite` — `tests/SurfaceTest.cpp:554`; CPU; `DEF_TEST`.
+- `SurfaceWriteableAfterSnapshotRelease` — `tests/SurfaceTest.cpp:579`; CPU; `DEF_TEST`.
+- `SurfaceGetTexture` — `tests/SurfaceTest.cpp:645`; CPU; `DEF_TEST`.
+- `SurfaceNoCanvas` — `tests/SurfaceTest.cpp:732`; CPU; `DEF_TEST`.
+- `surface_rowbytes` — `tests/SurfaceTest.cpp:779`; CPU; `DEF_TEST`.
+- `surface_raster_zeroinitialized` — `tests/SurfaceTest.cpp:796`; CPU; `DEF_TEST`.
+- `OverdrawSurface_Raster` — `tests/SurfaceTest.cpp:1304`; CPU; `DEF_TEST`.
+- `Surface_null` — `tests/SurfaceTest.cpp:1320`; CPU; `DEF_TEST`.
+- `surface_image_unity` — `tests/SurfaceTest.cpp:1334`; CPU; `DEF_TEST`.
+- `TestName` — `tests/Test.h:262`; CPU; `DEF_TEST`.
+- `TestGpuFactory` — `tests/TestTest.cpp:34`; Ganesh; `DEF_GANESH_TEST`.
+- `TestMockContext` — `tests/TestTest.cpp:57`; Ganesh; `DEF_GANESH_TEST_FOR_MOCK_CONTEXT`.
+- `TextBlobCache` — `tests/TextBlobCacheTest.cpp:205`; Ganesh; `DEF_GANESH_TEST_FOR_MOCK_CONTEXT`.
+- `TextBlobStressCache` — `tests/TextBlobCacheTest.cpp:209`; Ganesh; `DEF_GANESH_TEST_FOR_MOCK_CONTEXT`.
+- `TextBlobAbnormal` — `tests/TextBlobCacheTest.cpp:213`; Ganesh; `DEF_GANESH_TEST_FOR_MOCK_CONTEXT`.
+- `TextBlobStressAbnormal` — `tests/TextBlobCacheTest.cpp:217`; Ganesh; `DEF_GANESH_TEST_FOR_MOCK_CONTEXT`.
+- `TopoSort` — `tests/TopoSortTest.cpp:175`; CPU; `DEF_TEST`.
+- `GrInnerFanTriangulator` — `tests/TriangulatingPathRendererTests.cpp:1066`; CPU; `DEF_TEST`.
+- `Triangulator_Crbug1262444` — `tests/TriangulatingPathRendererTests.cpp:1126`; CPU; `DEF_TEST`.
+- `Triangulator_Crbug337080025` — `tests/TriangulatingPathRendererTests.cpp:1309`; CPU; `DEF_TEST`.
+- `Triangulator_bug421959607` — `tests/TriangulatingPathRendererTests.cpp:1426`; CPU; `DEF_TEST`.
+- `Triangulator_bug424666603` — `tests/TriangulatingPathRendererTests.cpp:1469`; CPU; `DEF_TEST`.
+- `GrPathUtils_bug451448218` — `tests/TriangulatingPathRendererTests.cpp:1516`; CPU; `DEF_TEST`.
+- `GrTriangulator_EdgeDistNullPointer` — `tests/TriangulatingPathRendererTests.cpp:1547`; CPU; `DEF_TEST`.
+- `GrTriangulator_MergeVerticesCorruptEdges` — `tests/TriangulatingPathRendererTests.cpp:1571`; CPU; `DEF_TEST`.
+- `GrTriangulator_CorruptEdgeFailFast` — `tests/TriangulatingPathRendererTests.cpp:1602`; CPU; `DEF_TEST`.
+- `WindowRectangles` — `tests/WindowRectanglesTest.cpp:22`; CPU; `DEF_TEST`.
+
+### Backend variants required at this gate
+
+These variants must be translated/run here even if their cross-backend consolidation is assigned to M38. Apply the original context filter; never execute an ineligible backend just to inflate the count.
+
+- `ColorTypeBackendAllocationTest` — `tests/BackendAllocationTest.cpp`; Ganesh CPU/mock; inspect body for concrete contexts.
+- `VkProtectedContext_DDLSurfaceCharacterizationTest` — `tests/DeferredDisplayListTest.cpp`; Ganesh CPU/mock; inspect body for concrete contexts.
+- `VkProtectedContext_DDLMakeRenderTargetTest` — `tests/DeferredDisplayListTest.cpp`; Ganesh CPU/mock; inspect body for concrete contexts.
+- `GrDrawOpAtlasConfig_Basic` — `tests/DrawOpAtlasTest.cpp`; Ganesh CPU/mock; inspect body for concrete contexts.
+- `GpuRectanizer` — `tests/GpuRectanizerTest.cpp`; Ganesh CPU/mock; inspect body for concrete contexts.
+- `GrContext_abandonContext` — `tests/GrContextAbandonTest.cpp`; Ganesh CPU/mock; inspect body for concrete contexts.
+- `GrContextFactory_abandon` — `tests/GrContextFactoryTest.cpp`; Ganesh CPU/mock; inspect body for concrete contexts.
+- `GrContextFactory_sharedContexts` — `tests/GrContextFactoryTest.cpp`; Ganesh CPU/mock; inspect body for concrete contexts.
+- `GrContextFactory_executorAndTaskGroup` — `tests/GrContextFactoryTest.cpp`; Ganesh CPU/mock; inspect body for concrete contexts.
+- `GrContext_oomed` — `tests/GrContextOOM.cpp`; Ganesh CPU/mock; inspect body for concrete contexts.
+- `GrDDLImage_MakeSubset` — `tests/GrDDLImageTest.cpp`; Ganesh CPU/mock; inspect body for concrete contexts.
+- `GrManyDependentsMipMappedTest` — `tests/GrMipMappedTest.cpp`; Ganesh CPU/mock; inspect body for concrete contexts.
+- `GrPorterDuff` — `tests/GrPorterDuffTest.cpp`; Ganesh CPU/mock; inspect body for concrete contexts.
+- `PorterDuffNoDualSourceBlending` — `tests/GrPorterDuffTest.cpp`; Ganesh CPU/mock; inspect body for concrete contexts.
+- `SurfaceResolveProxyStateAfterFailedFlush` — `tests/GrSurfaceResolveTest.cpp`; Ganesh CPU/mock; inspect body for concrete contexts.
+- `GrSurface` — `tests/GrSurfaceTest.cpp`; Ganesh mock.
+- `InitialTextureClear` — `tests/GrSurfaceTest.cpp`; Ganesh CPU/mock; inspect body for concrete contexts.
+- `AbandonedContextImage` — `tests/ImageTest.cpp`; Ganesh CPU/mock; inspect body for concrete contexts.
+- `SkImage_MakeCrossContextFromPixmapRelease` — `tests/ImageTest.cpp`; Ganesh CPU/mock; inspect body for concrete contexts.
+- `SkImage_CrossContextGrayAlphaConfigs` — `tests/ImageTest.cpp`; Ganesh CPU/mock; inspect body for concrete contexts.
+- `LazyProxyTest` — `tests/LazyProxyTest.cpp`; Ganesh CPU/mock; inspect body for concrete contexts.
+- `LazyProxyReleaseTest` — `tests/LazyProxyTest.cpp`; Ganesh CPU/mock; inspect body for concrete contexts.
+- `LazyProxyFailedInstantiationTest` — `tests/LazyProxyTest.cpp`; Ganesh CPU/mock; inspect body for concrete contexts.
+- `OpChainTest` — `tests/OpChainTest.cpp`; Ganesh CPU/mock; inspect body for concrete contexts.
+- `TriangulatingPathRendererCacheTest` — `tests/PathRendererCacheTests.cpp`; Ganesh CPU/mock; inspect body for concrete contexts.
+- `SoftwarePathRendererCacheTest` — `tests/PathRendererCacheTests.cpp`; Ganesh CPU/mock; inspect body for concrete contexts.
+- `Programs` — `tests/ProgramsTest.cpp`; Ganesh CPU/mock; inspect body for concrete contexts.
+- `PromiseImageTextureShutdown` — `tests/PromiseImageTest.cpp`; Ganesh CPU/mock; inspect body for concrete contexts.
+- `AsyncReadPixelsContextShutdown` — `tests/ReadWritePixelsGpuTest.cpp`; Ganesh CPU/mock; inspect body for concrete contexts.
+- `ResourceCacheMisc` — `tests/ResourceCacheTest.cpp`; Ganesh CPU/mock; inspect body for concrete contexts.
+- `OverbudgetFlush` — `tests/ResourceCacheTest.cpp`; Ganesh mock.
+- `SurfaceSemaphores` — `tests/SurfaceSemaphoreTest.cpp`; Ganesh CPU/mock; inspect body for concrete contexts.
+- `TestGpuFactory` — `tests/TestTest.cpp`; Ganesh CPU/mock; inspect body for concrete contexts.
+- `TestMockContext` — `tests/TestTest.cpp`; Ganesh mock.
+- `TextBlobCache` — `tests/TextBlobCacheTest.cpp`; Ganesh mock.
+- `TextBlobStressCache` — `tests/TextBlobCacheTest.cpp`; Ganesh mock.
+- `TextBlobAbnormal` — `tests/TextBlobCacheTest.cpp`; Ganesh mock.
+- `TextBlobStressAbnormal` — `tests/TextBlobCacheTest.cpp`; Ganesh mock.
+
+### Later integration obligations for these APIs
+
+The following original test files directly reference production headers owned here but contain cases scheduled later. They remain mandatory at the listed gates; they are not excluded or already passed. Keep earlier milestone acceptance limited to the tests/feature contract above.
+
+- `tests/AdvancedBlendTest.cpp` — M38.
+- `tests/ApplyGammaTest.cpp` — M38.
+- `tests/AtlasOobTest.cpp` — M38.
+- `tests/BackendAllocationTest.cpp` — M34.
+- `tests/BigImageTest.cpp` — M38.
+- `tests/BlendTest.cpp` — M34, M38.
+- `tests/BlurTest.cpp` — M35, M38.
+- `tests/BulkRectTest.cpp` — M38.
+- `tests/CanvasTest.cpp` — M35, M38.
+- `tests/ClearTest.cpp` — M38.
+- `tests/ColorFilterTest.cpp` — M38.
+- `tests/CompressedBackendAllocationTest.cpp` — M38.
+- `tests/CopySurfaceTest.cpp` — M38.
+- `tests/DMSAATest.cpp` — M38.
+- `tests/DashPathEffectTestGanesh.cpp` — M38.
+- `tests/DefaultPathRendererTest.cpp` — M38.
+- `tests/DeferredDisplayListTest.cpp` — M34, M38.
+- `tests/DeviceTest.cpp` — M38.
+- `tests/DirectMaskLimitTest.cpp` — M38.
+- `tests/DrawOpAtlasTest.cpp` — M38.
+- `tests/ExtendedSkColorTypeTests.cpp` — M38.
+- `tests/F16DrawTest.cpp` — M38.
+- `tests/FilterResultTest.cpp` — M35, M38.
+- `tests/FloatingPointTextureTest.cpp` — M38.
+- `tests/GLBackendSurfaceTest.cpp` — M34.
+- `tests/GLFramebufferDeletionTest.cpp` — M34.
+- `tests/GaneshContextRecorderTest.cpp` — M38.
+- `tests/GpuDrawPathTest.cpp` — M34, M38.
+- `tests/GrClipStackTest.cpp` — M38.
+- `tests/GrContextFactoryTest.cpp` — M38.
+- `tests/GrFinishedFlushTest.cpp` — M38.
+- `tests/GrGpuBufferTest.cpp` — M38.
+- `tests/GrMeshTest.cpp` — M38.
+- `tests/GrMipMappedTest.cpp` — M38.
+- `tests/GrOpListFlushTest.cpp` — M38.
+- `tests/GrPipelineDynamicStateTest.cpp` — M38.
+- `tests/GrSubmittedFlushTest.cpp` — M38.
+- `tests/GrSurfaceResolveTest.cpp` — M38.
+- `tests/GrSurfaceTest.cpp` — M38.
+- `tests/GrTextBlobTest.cpp` — M38.
+- `tests/GrTextureMipMapInvalidationTest.cpp` — M38.
+- `tests/GrThreadSafeCacheTest.cpp` — M38.
+- `tests/GrUniqueProxyTest.cpp` — M38.
+- `tests/GradientTest.cpp` — M38.
+- `tests/ImageFilterCacheTest.cpp` — M38.
+- `tests/ImageFilterTest.cpp` — M35, M38.
+- `tests/ImageIsOpaqueTest.cpp` — M38.
+- `tests/ImageNewShaderTest.cpp` — M38.
+- `tests/ImageTest.cpp` — M34, M38.
+- `tests/LazyStencilAttachmentTest.cpp` — M38.
+- `tests/MatrixColorFilterTest.cpp` — M38.
+- `tests/MtlBackendAllocationTest.cc` — M33.
+- `tests/MtlCopySurfaceTest.cc` — M33.
+- `tests/MultiPictureDocumentTest.cpp` — M38.
+- `tests/PinnedImageTest.cpp` — M38.
+- `tests/PremulAlphaRoundTripTest.cpp` — M38.
+- `tests/PrimitiveProcessorTest.cpp` — M38.
+- `tests/ProcessorTest.cpp` — M34, M38.
+- `tests/PromiseImageTest.cpp` — M38.
+- `tests/ProtectedTest.cpp` — M38.
+- `tests/ProxyConversionTest.cpp` — M38.
+- `tests/ProxyRefTest.cpp` — M38.
+- `tests/ProxyTest.cpp` — M38.
+- `tests/ReadWritePixelsGpuTest.cpp` — M34, M38.
+- `tests/RectangleTextureTest.cpp` — M34.
+- `tests/RepeatedClippedBlurTest.cpp` — M38.
+- `tests/ResourceAllocatorTest.cpp` — M38.
+- `tests/ResourceCacheTest.cpp` — M38.
+- `tests/RuntimeBlendTest.cpp` — M35, M38.
+- `tests/SRGBReadWritePixelsTest.cpp` — M38.
+- `tests/SaveLayerOriginTest.cpp` — M38.
+- `tests/ShaderImageFilterTest.cpp` — M38.
+- `tests/ShaderTest.cpp` — M35, M38.
+- `tests/SimplifyPaintTest.cpp` — M35, M38.
+- `tests/SkColorSpaceXformStepsTest.cpp` — M35, M38.
+- `tests/SkRemoteGlyphCacheTest.cpp` — M38.
+- `tests/SkRuntimeEffectTest.cpp` — M35, M38.
+- `tests/SkSLCross.cpp` — M38.
+- `tests/SkSLES2ConformanceTest.cpp` — M38.
+- `tests/SkSLTest.cpp` — M37, M38.
+- `tests/Skbug12214.cpp` — M38.
+- `tests/Skbug5221.cpp` — M38.
+- `tests/Skbug6653.cpp` — M38.
+- `tests/SlugTest.cpp` — M38.
+- `tests/SmallPathRendererTest.cpp` — M38.
+- `tests/SpecialImageTest.cpp` — M38.
+- `tests/SrcSrcOverBatchTest.cpp` — M38.
+- `tests/StencilClearTest.cpp` — M38.
+- `tests/SurfaceDrawContextTest.cpp` — M38.
+- `tests/SurfaceSemaphoreTest.cpp` — M38.
+- `tests/SurfaceTest.cpp` — M34, M38.
+- `tests/TextBlobCacheTest.cpp` — M38.
+- `tests/TextureBindingsResetTest.cpp` — M34.
+- `tests/TextureOpTest.cpp` — M38.
+- `tests/TextureProxyTest.cpp` — M38.
+- `tests/TextureSizeTest.cpp` — M38.
+- `tests/TextureStripAtlasManagerTest.cpp` — M38.
+- `tests/TraceMemoryDumpTest.cpp` — M34.
+- `tests/TransferPixelsTest.cpp` — M38.
+- `tests/TriangulatingPathRendererTests.cpp` — M38.
+- `tests/WrappedSurfaceCopyOnWriteTest.cpp` — M38.
+- `tests/WritePixelsTest.cpp` — M35, M38.
+- `tests/crbug_500172224.cpp` — M38.
+
+### Preserve these fixtures, metadata and references
+
+- `src/gpu/ganesh/gradients/README.md` — preserve.
+
+## Dependency and integration notes
+
+The initial scan found 16 quoted includes from this milestone into later-owned production files. See `../inventory/forward-includes.csv`, filtered by `source_milestone=32`. Header inclusion alone does not force implementation of the entire later subsystem; inspect the original registered test bodies and called production paths.
+
+Interfaces with later consumers may be declared now, but the accepted feature set must execute real implementations for every reached call. Where a source spans several features (CPU/GPU, serialization, runtime shaders), record completed and pending symbols separately. Deferred portions have explicit integration gates M14, M22, M26, M38 and M47; no pending portion may disappear from the ledger.
+
+## Commands, required evidence and stop condition
+
+Codex runs the milestone tests and all previously accepted tests in debug and release with the exact feature list from the handoff. The standard baseline commands are:
+
+```sh
+cargo test --locked
+cargo test --release --locked
+cargo fmt --all -- --check
+cargo clippy --all-targets --locked -- -D warnings
+```
+
+For feature-specific crates/backends, record the additional exact package/target/features commands; do not use an unexamined `--all-features` combination. Native backend, GM, browser, fuzz and benchmark commands are added when their harnesses exist and must be copied into the acceptance report.
+
+Acceptance requires: all assigned macOS cases enumerated; every applicable assertion passing; all earlier accepted tests passing; every source row mapped to implemented Rust or a documented non-code disposition; no unexplained missing resources, untested required backends or unsupported required API; and a Codex-authored evidence report. Formatting/build success alone never constitutes acceptance.
+
+Record PASS, FAIL, BLOCKED or NOT_APPLICABLE per test/configuration. NOT_APPLICABLE requires an original platform/capability condition and a reason. M01–M45 require native Apple Silicon macOS evidence; Intel-specific files may remain explicitly pending until M46, whose gate requires native Intel Mac results. This is a scheduled architecture gate, not an assertion that Intel already passed.
+
+Only after Codex marks M32 ACCEPTED may the user hand Deepseek M33.

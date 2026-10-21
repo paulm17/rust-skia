@@ -1,0 +1,17 @@
+COMMAND: ['/Volumes/Data/Users/paul/development/src/github/rust-skia/target/m01-acceptance/reference-debug']
+REGISTERED TestCtsEnforcement CPU
+PASS TestCtsEnforcement
+REGISTERED TestTrueCondition CPU
+PASS TestTrueCondition
+REGISTERED TestNormal CPU
+PASS TestNormal
+REGISTERED Point_setLengthFast CPU
+PASS Point_setLengthFast
+REGISTERED Point CPU
+PASS Point
+REGISTERED Scalar CPU
+PASS Scalar
+enabled=6 failures=0 false_condition_registered=0
+supplemental_contract_failures=0
+
+EXIT: 0

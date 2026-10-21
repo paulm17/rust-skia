@@ -1,0 +1,2161 @@
+# Milestone 43: Complete GM visual regression suite
+
+## Outcome and entry gate
+
+Finish the Rust GM harness and translate every eligible GM, including module GMs already used earlier. Preserve scene construction, dimensions, transforms, resources and rendering configurations. Production fixes remain Deepseek-owned; Codex owns golden comparisons.
+
+Begin implementation only after milestone 42 is marked ACCEPTED by Codex and the user has handed over this milestone. All earlier accepted tests remain required.
+
+Read `../WORKFLOW.md`, `../MACOS-SCOPE.md` and the inventories before starting. All source paths below are relative to the pinned C++ Skia checkout; all Rust work belongs in the separate rust-skia repository. Never edit the reference checkout to make a test pass.
+
+## Deepseek: implementation contract
+
+Finish the Rust GM harness and translate every eligible GM, including module GMs already used earlier. Preserve scene construction, dimensions, transforms, resources and rendering configurations. Production fixes remain Deepseek-owned; Codex owns golden comparisons.
+
+- Port the observable behavior of every owned source/header below, including applicable error paths and public declarations. A header is part of the contract, not documentation to skip. Existing Rust files are integration work, not automatic completion.
+- Map original symbols to Rust modules in the handoff. Keep production logic under `src/` (or workspace library crates); use explicit Cargo features for optional macOS backends. Preserve widths, ownership, layout when observable, and binary formats where required by original tests.
+- Keep Skia-owned algorithmic/runtime code in Rust. External codec/shaping/GPU libraries and Apple framework FFI are allowed only as named, versioned dependencies. Never delegate the implementation to a pre-existing Skia Rust port or C++ Skia.
+- Inspect reached dependencies before coding. `forward-includes.csv` contains syntactic warnings, not proof of runtime dependency. Implement a required earlier prerequisite fully and record it in the handoff; if it materially changes this milestone, request a plan amendment before continuing. Never use fake return values, ignored tests or unimplemented runtime branches to clear a gate.
+- Do not author or change Codex-owned acceptance tests, expected values, tolerances, fixtures or pass records. Development checks may be separate and must be labeled as such. Fix production code when acceptance tests fail.
+- Supply reproducible build commands, feature flags, source/symbol mapping, external dependencies, and known unfinished work using `../HANDOFF-TEMPLATE.md`. Stop after the handoff; do not begin the next milestone.
+
+### Port these production files (Deepseek)
+
+No new production-source ownership is assigned here. Deepseek fixes integration defects in already owned Rust implementations and completes the outcome above; Codex owns the suite below.
+
+### Adapt these build/tooling files (Deepseek)
+
+- `dm/BUILD.bazel`.
+- `gm/BUILD.bazel`.
+
+## Codex: acceptance-test contract
+
+Generate reference outputs from pinned C++ on the same Mac/backend/settings. Run the entire eligible GM matrix. Use upstream comparison rules; where no tolerance exists, start with exact comparison and review every difference rather than selecting an arbitrary threshold.
+
+- Translate the original reachable test bodies and helpers, preserving inputs, order, seeds, assertions, tolerances, expected failures and conditional skips. Retain original names and source locations in the correspondence record.
+- Discover compiled C++ test registrations under the matching macOS feature configuration. The registration CSV is an initial source scan, not a substitute for expanded macro/test discovery. Resolve conditional/custom suites before accepting this milestone.
+- For files split across milestones, translate only the assigned registrations now, including their helper closure; record the rest under their later gate. Do not mark a whole file complete merely because its first tests pass.
+- Port original test utilities needed by these cases, even if their general tool packaging has a later owner. Keep fixture-only implementations in test support and never substitute them for production APIs being checked.
+- Where upstream provides no direct unit test, add clearly labeled supplemental contract/differential tests, separate from faithful translations. Run C++ as an external reference where needed; do not link it as the Rust implementation.
+- Preserve resources and shader/golden inputs by hash. Resource metadata and required downloads must be recorded before running; absent inputs or backend hardware are BLOCKED, not a skip that counts as PASS.
+
+### Port these test/runner/support files (Codex)
+
+- `dm/DM.cpp`.
+- `dm/DMGpuTestProcs.cpp`.
+- `dm/DMJsonWriter.cpp`.
+- `dm/DMJsonWriter.h`.
+- `dm/DMSrcSink.cpp`.
+- `dm/DMSrcSink.h`.
+- `gm/3d.cpp`.
+- `gm/aaa.cpp`.
+- `gm/aaclip.cpp`.
+- `gm/aarecteffect.cpp`.
+- `gm/aarectmodes.cpp`.
+- `gm/aaxfermodes.cpp`.
+- `gm/addarc.cpp`.
+- `gm/all_bitmap_configs.cpp`.
+- `gm/alpha_image.cpp`.
+- `gm/alphagradients.cpp`.
+- `gm/analytic_gradients.cpp`.
+- `gm/animated_gif.cpp`.
+- `gm/animated_image_orientation.cpp`.
+- `gm/animatedimageblurs.cpp`.
+- `gm/anisotropic.cpp`.
+- `gm/annotated_text.cpp`.
+- `gm/arcofzorro.cpp`.
+- `gm/arcto.cpp`.
+- `gm/arithmode.cpp`.
+- `gm/asyncrescaleandread.cpp`.
+- `gm/attributes.cpp`.
+- `gm/b_119394958.cpp`.
+- `gm/backdrop.cpp`.
+- `gm/backdrop_imagefilter_croprect.cpp`.
+- `gm/badpaint.cpp`.
+- `gm/batchedconvexpaths.cpp`.
+- `gm/bc1_transparency.cpp`.
+- `gm/beziereffects.cpp`.
+- `gm/beziers.cpp`.
+- `gm/bicubic.cpp`.
+- `gm/bigblurs.cpp`.
+- `gm/bigmatrix.cpp`.
+- `gm/bigrect.cpp`.
+- `gm/bigrrectaaeffect.cpp`.
+- `gm/bigtext.cpp`.
+- `gm/bigtileimagefilter.cpp`.
+- `gm/bitmapcopy.cpp`.
+- `gm/bitmapfilters.cpp`.
+- `gm/bitmapimage.cpp`.
+- `gm/bitmappremul.cpp`.
+- `gm/bitmaprect.cpp`.
+- `gm/bitmaprecttest.cpp`.
+- `gm/bitmapshader.cpp`.
+- `gm/bitmaptiled.cpp`.
+- `gm/bleed.cpp`.
+- `gm/blurcircles.cpp`.
+- `gm/blurcircles2.cpp`.
+- `gm/blurignorexform.cpp`.
+- `gm/blurimagevmask.cpp`.
+- `gm/blurpositioning.cpp`.
+- `gm/blurquickreject.cpp`.
+- `gm/blurrect.cpp`.
+- `gm/blurredclippedcircle.cpp`.
+- `gm/blurroundrect.cpp`.
+- `gm/blurs.cpp`.
+- `gm/blurtextsmallradii.cpp`.
+- `gm/bmpfilterqualityrepeat.cpp`.
+- `gm/bug12866.cpp`.
+- `gm/bug5252.cpp`.
+- `gm/bug530095.cpp`.
+- `gm/bug615686.cpp`.
+- `gm/bug6643.cpp`.
+- `gm/bug6783.cpp`.
+- `gm/bug9331.cpp`.
+- `gm/circle_sizes.cpp`.
+- `gm/circulararcs.cpp`.
+- `gm/circularclips.cpp`.
+- `gm/clear_swizzle.cpp`.
+- `gm/clip_error.cpp`.
+- `gm/clip_rrects.cpp`.
+- `gm/clip_sierpinski_region.cpp`.
+- `gm/clip_strokerect.cpp`.
+- `gm/clipdrawdraw.cpp`.
+- `gm/clippedbitmapshaders.cpp`.
+- `gm/clipshader.cpp`.
+- `gm/clockwise.cpp`.
+- `gm/closedcappedhairlines.cpp`.
+- `gm/collapsepaths.cpp`.
+- `gm/color4f.cpp`.
+- `gm/coloremoji.cpp`.
+- `gm/coloremoji_blendmodes.cpp`.
+- `gm/colorfilteralpha8.cpp`.
+- `gm/colorfilterimagefilter.cpp`.
+- `gm/colorfilters.cpp`.
+- `gm/colormatrix.cpp`.
+- `gm/colorspace.cpp`.
+- `gm/colorwheel.cpp`.
+- `gm/colrv1.cpp`.
+- `gm/complexclip.cpp`.
+- `gm/complexclip2.cpp`.
+- `gm/complexclip3.cpp`.
+- `gm/complexclip4.cpp`.
+- `gm/complexclip_blur_tiled.cpp`.
+- `gm/composecolorfilter.cpp`.
+- `gm/composeshader.cpp`.
+- `gm/compositor_quads.cpp`.
+- `gm/compressed_textures.cpp`.
+- `gm/concavepaths.cpp`.
+- `gm/conicpaths.cpp`.
+- `gm/constcolorprocessor.cpp`.
+- `gm/convex_all_line_paths.cpp`.
+- `gm/convexpaths.cpp`.
+- `gm/convexpolyclip.cpp`.
+- `gm/convexpolyeffect.cpp`.
+- `gm/coordclampshader.cpp`.
+- `gm/copy_to_4444.cpp`.
+- `gm/crbug_1041204.cpp`.
+- `gm/crbug_1073670.cpp`.
+- `gm/crbug_1086705.cpp`.
+- `gm/crbug_1113794.cpp`.
+- `gm/crbug_1139750.cpp`.
+- `gm/crbug_1156804.cpp`.
+- `gm/crbug_1162942.cpp`.
+- `gm/crbug_1167277.cpp`.
+- `gm/crbug_1174186.cpp`.
+- `gm/crbug_1174354.cpp`.
+- `gm/crbug_1177833.cpp`.
+- `gm/crbug_1257515.cpp`.
+- `gm/crbug_1313579.cpp`.
+- `gm/crbug_224618.cpp`.
+- `gm/crbug_478659067.cpp`.
+- `gm/crbug_531782512.cpp`.
+- `gm/crbug_691386.cpp`.
+- `gm/crbug_788500.cpp`.
+- `gm/crbug_847759.cpp`.
+- `gm/crbug_884166.cpp`.
+- `gm/crbug_887103.cpp`.
+- `gm/crbug_892988.cpp`.
+- `gm/crbug_899512.cpp`.
+- `gm/crbug_905548.cpp`.
+- `gm/crbug_908646.cpp`.
+- `gm/crbug_913349.cpp`.
+- `gm/crbug_918512.cpp`.
+- `gm/crbug_938592.cpp`.
+- `gm/crbug_946965.cpp`.
+- `gm/crbug_947055.cpp`.
+- `gm/crbug_996140.cpp`.
+- `gm/crop_imagefilter.cpp`.
+- `gm/croppedrects.cpp`.
+- `gm/crosscontextimage.cpp`.
+- `gm/cubicpaths.cpp`.
+- `gm/daa.cpp`.
+- `gm/dashcircle.cpp`.
+- `gm/dashcubics.cpp`.
+- `gm/dashing.cpp`.
+- `gm/degeneratesegments.cpp`.
+- `gm/destcolor.cpp`.
+- `gm/dftext.cpp`.
+- `gm/dftext_blob_persp.cpp`.
+- `gm/discard.cpp`.
+- `gm/displacement.cpp`.
+- `gm/distantclip.cpp`.
+- `gm/draw_bitmap_rect_skbug4374.cpp`.
+- `gm/drawable.cpp`.
+- `gm/drawatlas.cpp`.
+- `gm/drawatlascolor.cpp`.
+- `gm/drawbitmaprect.cpp`.
+- `gm/drawglyphs.cpp`.
+- `gm/drawimageset.cpp`.
+- `gm/drawlines_with_local_matrix.cpp`.
+- `gm/drawminibitmaprect.cpp`.
+- `gm/drawquadset.cpp`.
+- `gm/drawregion.cpp`.
+- `gm/drawregionmodes.cpp`.
+- `gm/dropshadowimagefilter.cpp`.
+- `gm/drrect.cpp`.
+- `gm/drrect_small_inner.cpp`.
+- `gm/dstreadshuffle.cpp`.
+- `gm/ducky_yuv_blend.cpp`.
+- `gm/emboss.cpp`.
+- `gm/emptypath.cpp`.
+- `gm/emptyshader.cpp`.
+- `gm/encode.cpp`.
+- `gm/encode_alpha_jpeg.cpp`.
+- `gm/encode_color_types.cpp`.
+- `gm/encode_platform.cpp`.
+- `gm/encode_srgb.cpp`.
+- `gm/exoticformats.cpp`.
+- `gm/fadefilter.cpp`.
+- `gm/fatpathfill.cpp`.
+- `gm/fiddle.cpp`.
+- `gm/fillrect_gradient.cpp`.
+- `gm/filltypes.cpp`.
+- `gm/filltypespersp.cpp`.
+- `gm/filterbug.cpp`.
+- `gm/filterfastbounds.cpp`.
+- `gm/filterindiabox.cpp`.
+- `gm/flippity.cpp`.
+- `gm/fontations.cpp`.
+- `gm/fontations_cbdt.cpp`.
+- `gm/fontations_ebdt.cpp`.
+- `gm/fontations_ft_compare.cpp`.
+- `gm/fontcache.cpp`.
+- `gm/fontmgr.cpp`.
+- `gm/fontregen.cpp`.
+- `gm/fontscaler.cpp`.
+- `gm/fontscalerdistortable.cpp`.
+- `gm/fp_sample_chaining.cpp`.
+- `gm/fpcoordinateoverride.cpp`.
+- `gm/fwidth_squircle.cpp`.
+- `gm/gammatext.cpp`.
+- `gm/getpostextpath.cpp`.
+- `gm/giantbitmap.cpp`.
+- `gm/glyph_pos.cpp`.
+- `gm/gm.cpp`.
+- `gm/gm.h`.
+- `gm/gpu_blur_utils.cpp`.
+- `gm/gradient_dirty_laundry.cpp`.
+- `gm/gradient_matrix.cpp`.
+- `gm/gradients.cpp`.
+- `gm/gradients_2pt_conical.cpp`.
+- `gm/gradients_degenerate.cpp`.
+- `gm/gradients_no_texture.cpp`.
+- `gm/gradtext.cpp`.
+- `gm/graphite_replay.cpp`.
+- `gm/graphitestart.cpp`.
+- `gm/grayscalejpg.cpp`.
+- `gm/hairlines.cpp`.
+- `gm/hairmodes.cpp`.
+- `gm/hardstop_gradients.cpp`.
+- `gm/hardstop_gradients_many.cpp`.
+- `gm/hdr_pip_blur.cpp`.
+- `gm/hello_bazel_world.cpp`.
+- `gm/highcontrastfilter.cpp`.
+- `gm/hittestpath.cpp`.
+- `gm/hsl.cpp`.
+- `gm/hugepath.cpp`.
+- `gm/image.cpp`.
+- `gm/image_pict.cpp`.
+- `gm/image_shader.cpp`.
+- `gm/imageblur.cpp`.
+- `gm/imageblur2.cpp`.
+- `gm/imageblurclampmode.cpp`.
+- `gm/imageblurrepeatmode.cpp`.
+- `gm/imageblurtiled.cpp`.
+- `gm/imagedither.cpp`.
+- `gm/imagefilters.cpp`.
+- `gm/imagefiltersbase.cpp`.
+- `gm/imagefiltersclipped.cpp`.
+- `gm/imagefilterscropexpand.cpp`.
+- `gm/imagefilterscropped.cpp`.
+- `gm/imagefiltersgraph.cpp`.
+- `gm/imagefiltersscaled.cpp`.
+- `gm/imagefiltersstroked.cpp`.
+- `gm/imagefilterstransformed.cpp`.
+- `gm/imagefiltersunpremul.cpp`.
+- `gm/imagefromyuvtextures.cpp`.
+- `gm/imagemagnifier.cpp`.
+- `gm/imagemakewithfilter.cpp`.
+- `gm/imagemasksubset.cpp`.
+- `gm/imageresizetiled.cpp`.
+- `gm/imagesource.cpp`.
+- `gm/imagesource2.cpp`.
+- `gm/internal_links.cpp`.
+- `gm/inverseclip.cpp`.
+- `gm/inversepaths.cpp`.
+- `gm/jpg_color_cube.cpp`.
+- `gm/kawase_blur_rt.cpp`.
+- `gm/labyrinth.cpp`.
+- `gm/largeclippedpath.cpp`.
+- `gm/largeglyphblur.cpp`.
+- `gm/lattice.cpp`.
+- `gm/lazytiling.cpp`.
+- `gm/lcdblendmodes.cpp`.
+- `gm/lcdoverlap.cpp`.
+- `gm/lcdtext.cpp`.
+- `gm/lighting.cpp`.
+- `gm/linepaths.cpp`.
+- `gm/localmatriximagefilter.cpp`.
+- `gm/localmatriximageshader.cpp`.
+- `gm/localmatrixshader.cpp`.
+- `gm/lumafilter.cpp`.
+- `gm/luminosity.cpp`.
+- `gm/mac_aa_explorer.cpp`.
+- `gm/make_raster_image.cpp`.
+- `gm/makecolorspace.cpp`.
+- `gm/mandoline.cpp`.
+- `gm/manypathatlases.cpp`.
+- `gm/manypaths.cpp`.
+- `gm/matrixconvolution.cpp`.
+- `gm/matriximagefilter.cpp`.
+- `gm/mesh.cpp`.
+- `gm/mipmap.cpp`.
+- `gm/mirrortile.cpp`.
+- `gm/mixedtextblobs.cpp`.
+- `gm/mixercolorfilter.cpp`.
+- `gm/modecolorfilters.cpp`.
+- `gm/morphology.cpp`.
+- `gm/nearesthalfpixelimage.cpp`.
+- `gm/nested.cpp`.
+- `gm/ninepatchstretch.cpp`.
+- `gm/nonclosedpaths.cpp`.
+- `gm/offsetimagefilter.cpp`.
+- `gm/orientation.cpp`.
+- `gm/ovals.cpp`.
+- `gm/overdrawcanvas.cpp`.
+- `gm/overdrawcolorfilter.cpp`.
+- `gm/overstroke.cpp`.
+- `gm/p3.cpp`.
+- `gm/palette.cpp`.
+- `gm/patch.cpp`.
+- `gm/path_stroke_with_zero_length.cpp`.
+- `gm/patharcto.cpp`.
+- `gm/pathcontourstart.cpp`.
+- `gm/patheffects.cpp`.
+- `gm/pathfill.cpp`.
+- `gm/pathinterior.cpp`.
+- `gm/pathmaskcache.cpp`.
+- `gm/pathmeasure.cpp`.
+- `gm/pathopsblend.cpp`.
+- `gm/pathopsinverse.cpp`.
+- `gm/pathreverse.cpp`.
+- `gm/pdf_never_embed.cpp`.
+- `gm/perlinnoise.cpp`.
+- `gm/perspimages.cpp`.
+- `gm/perspshaders.cpp`.
+- `gm/persptext.cpp`.
+- `gm/picture.cpp`.
+- `gm/pictureimagefilter.cpp`.
+- `gm/pictureimagegenerator.cpp`.
+- `gm/pictureshader.cpp`.
+- `gm/pictureshadercache.cpp`.
+- `gm/pictureshadertile.cpp`.
+- `gm/plus.cpp`.
+- `gm/points.cpp`.
+- `gm/poly2poly.cpp`.
+- `gm/polygonoffset.cpp`.
+- `gm/polygons.cpp`.
+- `gm/postercircle.cpp`.
+- `gm/preservefillrule.cpp`.
+- `gm/quadpaths.cpp`.
+- `gm/radial_gradient_precision.cpp`.
+- `gm/rasterhandleallocator.cpp`.
+- `gm/readpixels.cpp`.
+- `gm/recordopts.cpp`.
+- `gm/rect_poly_stroke.cpp`.
+- `gm/rectangletexture.cpp`.
+- `gm/rendertomipmappedyuvimageplanes.cpp`.
+- `gm/repeated_bitmap.cpp`.
+- `gm/resizeimagefilter.cpp`.
+- `gm/rippleshadergm.cpp`.
+- `gm/roundrects.cpp`.
+- `gm/rrect.cpp`.
+- `gm/rrectclipdrawpaint.cpp`.
+- `gm/rrects.cpp`.
+- `gm/rsxtext.cpp`.
+- `gm/runtimecolorfilter.cpp`.
+- `gm/runtimefunctions.cpp`.
+- `gm/runtimeimagefilter.cpp`.
+- `gm/runtimeintrinsics.cpp`.
+- `gm/runtimeshader.cpp`.
+- `gm/samplerstress.cpp`.
+- `gm/savelayer.cpp`.
+- `gm/scaledemoji.cpp`.
+- `gm/scaledemoji_rendering.cpp`.
+- `gm/scaledrects.cpp`.
+- `gm/scaledstrokes.cpp`.
+- `gm/shadermaskfilter.cpp`.
+- `gm/shaderpath.cpp`.
+- `gm/shadertext3.cpp`.
+- `gm/shadowutils.cpp`.
+- `gm/shallowgradient.cpp`.
+- `gm/shapes.cpp`.
+- `gm/sharedcorners.cpp`.
+- `gm/showmiplevels.cpp`.
+- `gm/simpleaaclip.cpp`.
+- `gm/simplerect.cpp`.
+- `gm/skbug1719.cpp`.
+- `gm/skbug_12212.cpp`.
+- `gm/skbug_257.cpp`.
+- `gm/skbug_4868.cpp`.
+- `gm/skbug_5321.cpp`.
+- `gm/skbug_8664.cpp`.
+- `gm/skbug_8955.cpp`.
+- `gm/skbug_9319.cpp`.
+- `gm/skbug_9819.cpp`.
+- `gm/slug.cpp`.
+- `gm/smallarc.cpp`.
+- `gm/smallcircles.cpp`.
+- `gm/smallpaths.cpp`.
+- `gm/spritebitmap.cpp`.
+- `gm/srcmode.cpp`.
+- `gm/srgb.cpp`.
+- `gm/stlouisarch.cpp`.
+- `gm/stringart.cpp`.
+- `gm/stroke_rect_shader.cpp`.
+- `gm/strokedlines.cpp`.
+- `gm/strokefill.cpp`.
+- `gm/strokerect.cpp`.
+- `gm/strokerect_anisotropic.cpp`.
+- `gm/strokerects.cpp`.
+- `gm/strokes.cpp`.
+- `gm/stroketext.cpp`.
+- `gm/subsetshader.cpp`.
+- `gm/surface.cpp`.
+- `gm/swizzle.cpp`.
+- `gm/tablecolorfilter.cpp`.
+- `gm/tablemaskfilter.cpp`.
+- `gm/tallstretchedbitmaps.cpp`.
+- `gm/testgradient.cpp`.
+- `gm/texelsubset.cpp`.
+- `gm/text_scale_skew.cpp`.
+- `gm/textblob.cpp`.
+- `gm/textblobblockreordering.cpp`.
+- `gm/textblobcolortrans.cpp`.
+- `gm/textblobgeometrychange.cpp`.
+- `gm/textblobmixedsizes.cpp`.
+- `gm/textblobrandomfont.cpp`.
+- `gm/textblobshader.cpp`.
+- `gm/textblobtransforms.cpp`.
+- `gm/textblobuseaftergpufree.cpp`.
+- `gm/texteffects.cpp`.
+- `gm/thinconcavepaths.cpp`.
+- `gm/thinrects.cpp`.
+- `gm/thinstrokedrects.cpp`.
+- `gm/tiledscaledbitmap.cpp`.
+- `gm/tileimagefilter.cpp`.
+- `gm/tilemodes.cpp`.
+- `gm/tilemodes_alpha.cpp`.
+- `gm/tilemodes_scaled.cpp`.
+- `gm/tinybitmap.cpp`.
+- `gm/transparency.cpp`.
+- `gm/trickycubicstrokes.cpp`.
+- `gm/typeface.cpp`.
+- `gm/unpremul.cpp`.
+- `gm/userfont.cpp`.
+- `gm/variedtext.cpp`.
+- `gm/vertices.cpp`.
+- `gm/verylargebitmap.cpp`.
+- `gm/video_decoder.cpp`.
+- `gm/wacky_yuv_formats.cpp`.
+- `gm/widebuttcaps.cpp`.
+- `gm/windowrectangles.cpp`.
+- `gm/workingspace.cpp`.
+- `gm/xfermodeimagefilter.cpp`.
+- `gm/xfermodes.cpp`.
+- `gm/xfermodes2.cpp`.
+- `gm/xfermodes3.cpp`.
+- `gm/ycbcrimage.cpp`.
+- `gm/yuv420_odd_dim.cpp`.
+- `gm/yuvtorgbsubset.cpp`.
+
+### Original test registrations assigned to this gate
+
+This milestone uses runner-discovered cases, GMs, fuzz/benchmark/browser suites or supplemental tests. Capture each discovered case in the acceptance manifest; absence from the static registration scan is not an exclusion.
+
+### Preserve these fixtures, metadata and references
+
+- `resources/BUILD.bazel` — fixture.
+- `resources/Cowboy.svg` — fixture.
+- `resources/README` — fixture.
+- `resources/android_fonts/alias/fonts_alias_caps.xml` — fixture.
+- `resources/android_fonts/family_list/fonts_family_list.xml` — fixture.
+- `resources/android_fonts/mod/fonts_modification.xml` — fixture.
+- `resources/android_fonts/pre_v17/fallback_fonts.xml` — fixture.
+- `resources/android_fonts/pre_v17/system_fonts.xml` — fixture.
+- `resources/android_fonts/v17/fallback_fonts-ja.xml` — fixture.
+- `resources/android_fonts/v17/fallback_fonts.xml` — fixture.
+- `resources/android_fonts/v17/system_fonts.xml` — fixture.
+- `resources/android_fonts/v22/fonts.xml` — fixture.
+- `resources/crbug769134.fil` — fixture.
+- `resources/diff_canvas_traces/lorem_ipsum.trace` — fixture.
+- `resources/empty_images/zero-dims.gif` — fixture.
+- `resources/empty_images/zero-embedded.ico` — fixture.
+- `resources/empty_images/zero-height.bmp` — fixture.
+- `resources/empty_images/zero-height.jpg` — fixture.
+- `resources/empty_images/zero-height.png` — fixture.
+- `resources/empty_images/zero-height.wbmp` — fixture.
+- `resources/empty_images/zero-width.bmp` — fixture.
+- `resources/empty_images/zero-width.jpg` — fixture.
+- `resources/empty_images/zero-width.png` — fixture.
+- `resources/empty_images/zero-width.wbmp` — fixture.
+- `resources/empty_images/zero_height.tiff` — fixture.
+- `resources/fonts/7630.otf` — fixture.
+- `resources/fonts/DejaVuSans.subset.ttf` — fixture.
+- `resources/fonts/DejaVuSans.subset_noHx.ttf` — fixture.
+- `resources/fonts/Distortable.ttf` — fixture.
+- `resources/fonts/Em.ttf` — fixture.
+- `resources/fonts/Funkster.ttf` — fixture.
+- `resources/fonts/HangingS.ttf` — fixture.
+- `resources/fonts/NotoSansCJK-VF-subset.otf.ttc` — fixture.
+- `resources/fonts/ReallyBigA.ttf` — fixture.
+- `resources/fonts/Roboto-Regular.ttf` — fixture.
+- `resources/fonts/Roboto2-Regular.pfa` — fixture.
+- `resources/fonts/Roboto2-Regular.pfb` — fixture.
+- `resources/fonts/Roboto2-Regular_NoEmbed.ttf` — fixture.
+- `resources/fonts/SampleSVG.ttf` — fixture.
+- `resources/fonts/SpiderSymbol.ttf` — fixture.
+- `resources/fonts/SpiderSymbol.woff` — fixture.
+- `resources/fonts/SpiderSymbol.woff2` — fixture.
+- `resources/fonts/Stroking.otf` — fixture.
+- `resources/fonts/Stroking.ttf` — fixture.
+- `resources/fonts/Variable.ttf` — fixture.
+- `resources/fonts/VaryAlongQuads.ttf` — fixture.
+- `resources/fonts/abc/abc+agrave.ttf` — fixture.
+- `resources/fonts/abc/abc+agrave.ttx` — fixture.
+- `resources/fonts/abc/abc+grave.ttf` — fixture.
+- `resources/fonts/abc/abc+grave.ttx` — fixture.
+- `resources/fonts/abc/abc.ttf` — fixture.
+- `resources/fonts/abc/abc.ttx` — fixture.
+- `resources/fonts/ahem.ttf` — fixture.
+- `resources/fonts/cbdt.ttf` — fixture.
+- `resources/fonts/cbdt_fmt1.ttf` — fixture.
+- `resources/fonts/cbdt_fmt2.ttf` — fixture.
+- `resources/fonts/cbdt_fmt6.ttf` — fixture.
+- `resources/fonts/cbdt_fmt7.ttf` — fixture.
+- `resources/fonts/colr.ttf` — fixture.
+- `resources/fonts/cond-bold-italic.ttf` — fixture.
+- `resources/fonts/ebdt_fmt1.ttf` — fixture.
+- `resources/fonts/ebdt_fmt2.ttf` — fixture.
+- `resources/fonts/ebdt_fmt6.ttf` — fixture.
+- `resources/fonts/ebdt_fmt7.ttf` — fixture.
+- `resources/fonts/ebdt_glyf.ttf` — fixture.
+- `resources/fonts/fonts.xml` — fixture.
+- `resources/fonts/hintgasp.ttf` — fixture.
+- `resources/fonts/planetcbdt.ttf` — fixture.
+- `resources/fonts/planetcolr.ttf` — fixture.
+- `resources/fonts/planetsbix.ttf` — fixture.
+- `resources/fonts/sbix.ttf` — fixture.
+- `resources/fonts/sbix_uncompressed_flags.ttf` — fixture.
+- `resources/fonts/svg/diamond.svg` — fixture.
+- `resources/fonts/svg/empty.svg` — fixture.
+- `resources/fonts/svg/notdef.svg` — fixture.
+- `resources/fonts/svg/planets/earth.svg` — fixture.
+- `resources/fonts/svg/planets/jupiter.svg` — fixture.
+- `resources/fonts/svg/planets/mars.svg` — fixture.
+- `resources/fonts/svg/planets/mercury.svg` — fixture.
+- `resources/fonts/svg/planets/neptune.svg` — fixture.
+- `resources/fonts/svg/planets/pluto.svg` — fixture.
+- `resources/fonts/svg/planets/saturn.svg` — fixture.
+- `resources/fonts/svg/planets/uranus.svg` — fixture.
+- `resources/fonts/svg/planets/venus.svg` — fixture.
+- `resources/fonts/svg/smile.svg` — fixture.
+- `resources/fonts/test.ttc` — fixture.
+- `resources/fonts/test_glyphs-glyf_colr_1.ttf` — fixture.
+- `resources/fonts/test_glyphs-glyf_colr_1_variable.ttf` — fixture.
+- `resources/icc_profiles/AdobeRGB1998.icc` — fixture.
+- `resources/icc_profiles/HP_Z32x.icc` — fixture.
+- `resources/icc_profiles/HP_ZR30w.icc` — fixture.
+- `resources/icc_profiles/apng19.icc` — fixture.
+- `resources/icc_profiles/chromium/colorspin.icc` — fixture.
+- `resources/icc_profiles/chromium/generic_rgb.icc` — fixture.
+- `resources/icc_profiles/color.org/Lower_Left.icc` — fixture.
+- `resources/icc_profiles/color.org/Lower_Right.icc` — fixture.
+- `resources/icc_profiles/color.org/sRGB2014.icc` — fixture.
+- `resources/icc_profiles/color.org/sRGB_D65_MAT.icc` — fixture.
+- `resources/icc_profiles/color.org/sRGB_D65_colorimetric.icc` — fixture.
+- `resources/icc_profiles/color.org/sRGB_ICC_v4_Appearance.icc` — fixture.
+- `resources/icc_profiles/color.org/sRGB_ISO22028.icc` — fixture.
+- `resources/icc_profiles/fuzz/a2b_too_many_input_channels.icc` — fixture.
+- `resources/icc_profiles/fuzz/a2b_too_many_input_channels2.icc` — fixture.
+- `resources/icc_profiles/fuzz/b2a_no_clut.icc` — fixture.
+- `resources/icc_profiles/fuzz/b2a_too_few_output_channels.icc` — fixture.
+- `resources/icc_profiles/fuzz/clut_overflow.icc` — fixture.
+- `resources/icc_profiles/fuzz/curv_size_overflow.icc` — fixture.
+- `resources/icc_profiles/fuzz/direct_fit_negative_a.icc` — fixture.
+- `resources/icc_profiles/fuzz/direct_fit_not_invertible.icc` — fixture.
+- `resources/icc_profiles/fuzz/fit_pq.icc` — fixture.
+- `resources/icc_profiles/fuzz/inf_a.icc` — fixture.
+- `resources/icc_profiles/fuzz/infinite_roundtrip.icc` — fixture.
+- `resources/icc_profiles/fuzz/inverse_tf_adb_negative.icc` — fixture.
+- `resources/icc_profiles/fuzz/inverse_tf_huge_g.icc` — fixture.
+- `resources/icc_profiles/fuzz/inverse_tf_not_invertible.icc` — fixture.
+- `resources/icc_profiles/fuzz/large_g.icc` — fixture.
+- `resources/icc_profiles/fuzz/last_tag_too_small.icc` — fixture.
+- `resources/icc_profiles/fuzz/mangled_trc_tags.icc` — fixture.
+- `resources/icc_profiles/fuzz/named_tag_too_small.icc` — fixture.
+- `resources/icc_profiles/fuzz/nan_s.icc` — fixture.
+- `resources/icc_profiles/fuzz/negative_a_plus_b.icc` — fixture.
+- `resources/icc_profiles/fuzz/negative_a_when_inverted.icc` — fixture.
+- `resources/icc_profiles/fuzz/negative_g_para.icc` — fixture.
+- `resources/icc_profiles/fuzz/one_d_clut.icc` — fixture.
+- `resources/icc_profiles/fuzz/polytf_big_float_to_int_cast.icc` — fixture.
+- `resources/icc_profiles/fuzz/polytf_nan_after_update.icc` — fixture.
+- `resources/icc_profiles/fuzz/truncated_curv_tag.icc` — fixture.
+- `resources/icc_profiles/fuzz/zero_a.icc` — fixture.
+- `resources/icc_profiles/fuzz/zero_g.icc` — fixture.
+- `resources/icc_profiles/misc/AdobeColorSpin.icc` — fixture.
+- `resources/icc_profiles/misc/AdobeRGB.icc` — fixture.
+- `resources/icc_profiles/misc/AppleHagc.icc` — fixture.
+- `resources/icc_profiles/misc/Apple_Color_LCD.icc` — fixture.
+- `resources/icc_profiles/misc/Apple_Wide_Color.icc` — fixture.
+- `resources/icc_profiles/misc/Apple_pq_hagc_hdgm2.icc` — fixture.
+- `resources/icc_profiles/misc/BenQ_GL2450.icc` — fixture.
+- `resources/icc_profiles/misc/BenQ_RL2455.icc` — fixture.
+- `resources/icc_profiles/misc/Calibrated_A2B_XYZ_Mismatch.icc` — fixture.
+- `resources/icc_profiles/misc/Coated_FOGRA27_CMYK.icc` — fixture.
+- `resources/icc_profiles/misc/Coated_FOGRA39_CMYK.icc` — fixture.
+- `resources/icc_profiles/misc/ColorGATE_Sihl_PhotoPaper.icc` — fixture.
+- `resources/icc_profiles/misc/ColorLogic_ISO_Coated_CMYK.icc` — fixture.
+- `resources/icc_profiles/misc/Color_Spin_Gamma_18.icc` — fixture.
+- `resources/icc_profiles/misc/DisplayCal_ASUS_NonMonotonic.icc` — fixture.
+- `resources/icc_profiles/misc/Generic_RGB_Gamma_18.icc` — fixture.
+- `resources/icc_profiles/misc/Gray_Gamma_22.icc` — fixture.
+- `resources/icc_profiles/misc/HD_709.icc` — fixture.
+- `resources/icc_profiles/misc/Japan_Color_2001_Coated.icc` — fixture.
+- `resources/icc_profiles/misc/Kodak_sRGB.icc` — fixture.
+- `resources/icc_profiles/misc/Lexmark_X110.icc` — fixture.
+- `resources/icc_profiles/misc/MR2416GSDF.icc` — fixture.
+- `resources/icc_profiles/misc/MartiMaria_browsertest_A2B.icc` — fixture.
+- `resources/icc_profiles/misc/MartiMaria_browsertest_HARD.icc` — fixture.
+- `resources/icc_profiles/misc/P3_PQ_cicp.icc` — fixture.
+- `resources/icc_profiles/misc/Phase_One_P25.icc` — fixture.
+- `resources/icc_profiles/misc/PrintOpen_ISO_Coated_CMYK.icc` — fixture.
+- `resources/icc_profiles/misc/Rec2020_HLG_cicp.icc` — fixture.
+- `resources/icc_profiles/misc/Rec2020_PQ_cicp.icc` — fixture.
+- `resources/icc_profiles/misc/SM245B.icc` — fixture.
+- `resources/icc_profiles/misc/SWOP_Coated_20_GCR_CMYK.icc` — fixture.
+- `resources/icc_profiles/misc/ThinkpadX1YogaV2.icc` — fixture.
+- `resources/icc_profiles/misc/US_Web_Coated_SWOP_CMYK.icc` — fixture.
+- `resources/icc_profiles/misc/XPS13_9360.icc` — fixture.
+- `resources/icc_profiles/misc/XRite_GRACol7_340_CMYK.icc` — fixture.
+- `resources/icc_profiles/misc/bad_pcs.icc` — fixture.
+- `resources/icc_profiles/misc/calibrated_nonzero_black.icc` — fixture.
+- `resources/icc_profiles/misc/crbug_1017960_19.icc` — fixture.
+- `resources/icc_profiles/misc/crbug_976551.icc` — fixture.
+- `resources/icc_profiles/misc/sRGB_Calibrated_Heterogeneous.icc` — fixture.
+- `resources/icc_profiles/misc/sRGB_Calibrated_Homogeneous.icc` — fixture.
+- `resources/icc_profiles/misc/sRGB_Facebook.icc` — fixture.
+- `resources/icc_profiles/misc/sRGB_HP.icc` — fixture.
+- `resources/icc_profiles/misc/sRGB_HP_2.icc` — fixture.
+- `resources/icc_profiles/misc/sRGB_ICC_v4_beta.icc` — fixture.
+- `resources/icc_profiles/misc/sRGB_black_scaled.icc` — fixture.
+- `resources/icc_profiles/misc/sRGB_lcms.icc` — fixture.
+- `resources/icc_profiles/mobile/Display_P3_LUT.icc` — fixture.
+- `resources/icc_profiles/mobile/Display_P3_parametric.icc` — fixture.
+- `resources/icc_profiles/mobile/iPhone7p.icc` — fixture.
+- `resources/icc_profiles/mobile/sRGB_LUT.icc` — fixture.
+- `resources/icc_profiles/mobile/sRGB_parametric.icc` — fixture.
+- `resources/icc_profiles/mu_gray.icc` — fixture.
+- `resources/icc_profiles/pq_hdr.icc` — fixture.
+- `resources/icc_profiles/srgb_lab_pcs.icc` — fixture.
+- `resources/icc_profiles/swapped.icc` — fixture.
+- `resources/icc_profiles/tiles.icc` — fixture.
+- `resources/icc_profiles/upperLeft.icc` — fixture.
+- `resources/icc_profiles/upperRight.icc` — fixture.
+- `resources/images/16x1.png` — fixture.
+- `resources/images/1x1.png` — fixture.
+- `resources/images/1x16.png` — fixture.
+- `resources/images/1x3.png` — fixture.
+- `resources/images/2x2.png` — fixture.
+- `resources/images/32bpp-topdown-320x240.bmp` — fixture.
+- `resources/images/3x1.png` — fixture.
+- `resources/images/3x3.png` — fixture.
+- `resources/images/CMYK.jpg` — fixture.
+- `resources/images/Connecting.png` — fixture.
+- `resources/images/F-exif-chunk-early.png` — fixture.
+- `resources/images/Generic_Error.png` — fixture.
+- `resources/images/Onboard.png` — fixture.
+- `resources/images/Webkit-logo-P3.jxl` — fixture.
+- `resources/images/alphabetAnim.avif` — fixture.
+- `resources/images/alphabetAnim.gif` — fixture.
+- `resources/images/apng-single-frame-with-offset.png` — fixture.
+- `resources/images/apng-test-suite--basic--ignoring-default-image.png` — fixture.
+- `resources/images/apng-test-suite--basic--trivial-static-image.png` — fixture.
+- `resources/images/apng-test-suite--basic--using-default-image.png` — fixture.
+- `resources/images/apng-test-suite--blend-ops--over-on-solid-and-transparent.png` — fixture.
+- `resources/images/apng-test-suite--blend-ops--over-repeatedly.png` — fixture.
+- `resources/images/apng-test-suite--blend-ops--source-on-nearly-transparent.png` — fixture.
+- `resources/images/apng-test-suite--blend-ops--source-on-solid.png` — fixture.
+- `resources/images/apng-test-suite--dispose-ops--none-basic.png` — fixture.
+- `resources/images/apng-test-suite--invalid--num-frames-outside-valid-range.png` — fixture.
+- `resources/images/apng-test-suite--num-plays--0.png` — fixture.
+- `resources/images/apng-test-suite--num-plays--1.png` — fixture.
+- `resources/images/apng-test-suite--num-plays--2.png` — fixture.
+- `resources/images/apng-test-suite--regions--dispose-op-none.png` — fixture.
+- `resources/images/arrow.png` — fixture.
+- `resources/images/b78329453.jpeg` — fixture.
+- `resources/images/baby_tux.avif` — fixture.
+- `resources/images/baby_tux.png` — fixture.
+- `resources/images/baby_tux.webp` — fixture.
+- `resources/images/basi3p01.png` — fixture.
+- `resources/images/basn2c16-sbit565.png` — fixture.
+- `resources/images/blendBG.webp` — fixture.
+- `resources/images/bmp-size-32x32-8bpp.bmp` — fixture.
+- `resources/images/box.gif` — fixture.
+- `resources/images/brickwork-texture.jpg` — fixture.
+- `resources/images/brickwork_normal-map.jpg` — fixture.
+- `resources/images/cicp_pq.png` — fixture.
+- `resources/images/cmyk_yellow_224_224_32.jpg` — fixture.
+- `resources/images/colorTables.gif` — fixture.
+- `resources/images/color_wheel.avif` — fixture.
+- `resources/images/color_wheel.cur` — fixture.
+- `resources/images/color_wheel.gif` — fixture.
+- `resources/images/color_wheel.ico` — fixture.
+- `resources/images/color_wheel.jpg` — fixture.
+- `resources/images/color_wheel.png` — fixture.
+- `resources/images/color_wheel.webp` — fixture.
+- `resources/images/color_wheel_with_profile.png` — fixture.
+- `resources/images/crbug1465627.jpeg` — fixture.
+- `resources/images/crbug445556737.png` — fixture.
+- `resources/images/crbug807324.png` — fixture.
+- `resources/images/crbug999986.jpeg` — fixture.
+- `resources/images/cropped_mandrill.jpg` — fixture.
+- `resources/images/dng_with_preview.dng` — fixture.
+- `resources/images/dog.avif` — fixture.
+- `resources/images/dog.jpg` — fixture.
+- `resources/images/ducky.avif` — fixture.
+- `resources/images/ducky.jpg` — fixture.
+- `resources/images/ducky.png` — fixture.
+- `resources/images/example_1.png` — fixture.
+- `resources/images/example_1_animated.avif` — fixture.
+- `resources/images/example_2.png` — fixture.
+- `resources/images/example_3.png` — fixture.
+- `resources/images/example_3_10bit.avif` — fixture.
+- `resources/images/example_3_12bit.avif` — fixture.
+- `resources/images/example_4.png` — fixture.
+- `resources/images/example_5.png` — fixture.
+- `resources/images/example_6.png` — fixture.
+- `resources/images/exif-orientation-2-ur.jpg` — fixture.
+- `resources/images/explosion_sprites.png` — fixture.
+- `resources/images/f16-trc-tables.png` — fixture.
+- `resources/images/filter_reference.png` — fixture.
+- `resources/images/flightAnim.gif` — fixture.
+- `resources/images/flower-bc1.dds` — fixture.
+- `resources/images/flower-etc1.ktx` — fixture.
+- `resources/images/flutter_logo.jpg` — fixture.
+- `resources/images/four-colors-limited-range-420-8bpc.jpg` — fixture.
+- `resources/images/gainmap.png` — fixture.
+- `resources/images/gainmap_gcontainer_only.jpg` — fixture.
+- `resources/images/gainmap_gdat_no_gmap.png` — fixture.
+- `resources/images/gainmap_iso21496_1.jpg` — fixture.
+- `resources/images/gainmap_iso21496_1_adobe_gcontainer.jpg` — fixture.
+- `resources/images/gainmap_no_gdat.png` — fixture.
+- `resources/images/gamut.png` — fixture.
+- `resources/images/gif-transparent-index.gif` — fixture.
+- `resources/images/google_chrome.ico` — fixture.
+- `resources/images/gradient_adobe_to_p3.jpeg` — fixture.
+- `resources/images/gradient_adobe_to_p3.png` — fixture.
+- `resources/images/gradient_adobergb.jpeg` — fixture.
+- `resources/images/gradient_adobergb.png` — fixture.
+- `resources/images/gradient_displayp3.jpeg` — fixture.
+- `resources/images/gradient_displayp3.png` — fixture.
+- `resources/images/gradient_p3_to_adobe.jpeg` — fixture.
+- `resources/images/gradient_p3_to_adobe.png` — fixture.
+- `resources/images/grayscale.jpg` — fixture.
+- `resources/images/grayscale.png` — fixture.
+- `resources/images/green15x15.png` — fixture.
+- `resources/images/half-transparent-white-pixel.png` — fixture.
+- `resources/images/half-transparent-white-pixel.webp` — fixture.
+- `resources/images/icc-v2-gbr.jpg` — fixture.
+- `resources/images/ico_nonsquare_128x96.ico` — fixture.
+- `resources/images/ico_nonsquare_200x150.ico` — fixture.
+- `resources/images/ico_nonsquare_48x32.ico` — fixture.
+- `resources/images/ico_nonsquare_64x48.ico` — fixture.
+- `resources/images/ico_oversized_512x384.ico` — fixture.
+- `resources/images/iconstrip.png` — fixture.
+- `resources/images/index8.png` — fixture.
+- `resources/images/interlaced-multiframe-with-blending.png` — fixture.
+- `resources/images/iphone_13_pro.jpeg` — fixture.
+- `resources/images/iphone_15.jpeg` — fixture.
+- `resources/images/lut_identity.png` — fixture.
+- `resources/images/lut_sepia.png` — fixture.
+- `resources/images/mandrill.wbmp` — fixture.
+- `resources/images/mandrill_128.png` — fixture.
+- `resources/images/mandrill_16.png` — fixture.
+- `resources/images/mandrill_1600.png` — fixture.
+- `resources/images/mandrill_256.png` — fixture.
+- `resources/images/mandrill_32.png` — fixture.
+- `resources/images/mandrill_512.png` — fixture.
+- `resources/images/mandrill_512_q075.jpg` — fixture.
+- `resources/images/mandrill_64.png` — fixture.
+- `resources/images/mandrill_cmyk.jpg` — fixture.
+- `resources/images/mandrill_h1v1.jpg` — fixture.
+- `resources/images/mandrill_h2v1.jpg` — fixture.
+- `resources/images/mandrill_sepia.png` — fixture.
+- `resources/images/monochrome.avif` — fixture.
+- `resources/images/ninepatch.png` — fixture.
+- `resources/images/non_interleaved_420_64x64.jpg` — fixture.
+- `resources/images/orientation/1.webp` — fixture.
+- `resources/images/orientation/1_410.jpg` — fixture.
+- `resources/images/orientation/1_411.jpg` — fixture.
+- `resources/images/orientation/1_420.jpg` — fixture.
+- `resources/images/orientation/1_422.jpg` — fixture.
+- `resources/images/orientation/1_440.jpg` — fixture.
+- `resources/images/orientation/1_444.jpg` — fixture.
+- `resources/images/orientation/2.webp` — fixture.
+- `resources/images/orientation/2_410.jpg` — fixture.
+- `resources/images/orientation/2_411.jpg` — fixture.
+- `resources/images/orientation/2_420.jpg` — fixture.
+- `resources/images/orientation/2_422.jpg` — fixture.
+- `resources/images/orientation/2_440.jpg` — fixture.
+- `resources/images/orientation/2_444.jpg` — fixture.
+- `resources/images/orientation/3.webp` — fixture.
+- `resources/images/orientation/3_410.jpg` — fixture.
+- `resources/images/orientation/3_411.jpg` — fixture.
+- `resources/images/orientation/3_420.jpg` — fixture.
+- `resources/images/orientation/3_422.jpg` — fixture.
+- `resources/images/orientation/3_440.jpg` — fixture.
+- `resources/images/orientation/3_444.jpg` — fixture.
+- `resources/images/orientation/4.webp` — fixture.
+- `resources/images/orientation/4_410.jpg` — fixture.
+- `resources/images/orientation/4_411.jpg` — fixture.
+- `resources/images/orientation/4_420.jpg` — fixture.
+- `resources/images/orientation/4_422.jpg` — fixture.
+- `resources/images/orientation/4_440.jpg` — fixture.
+- `resources/images/orientation/4_444.jpg` — fixture.
+- `resources/images/orientation/5.webp` — fixture.
+- `resources/images/orientation/5_410.jpg` — fixture.
+- `resources/images/orientation/5_411.jpg` — fixture.
+- `resources/images/orientation/5_420.jpg` — fixture.
+- `resources/images/orientation/5_422.jpg` — fixture.
+- `resources/images/orientation/5_440.jpg` — fixture.
+- `resources/images/orientation/5_444.jpg` — fixture.
+- `resources/images/orientation/6.webp` — fixture.
+- `resources/images/orientation/6_410.jpg` — fixture.
+- `resources/images/orientation/6_411.jpg` — fixture.
+- `resources/images/orientation/6_420.jpg` — fixture.
+- `resources/images/orientation/6_422.jpg` — fixture.
+- `resources/images/orientation/6_440.jpg` — fixture.
+- `resources/images/orientation/6_444.jpg` — fixture.
+- `resources/images/orientation/7.webp` — fixture.
+- `resources/images/orientation/7_410.jpg` — fixture.
+- `resources/images/orientation/7_411.jpg` — fixture.
+- `resources/images/orientation/7_420.jpg` — fixture.
+- `resources/images/orientation/7_422.jpg` — fixture.
+- `resources/images/orientation/7_440.jpg` — fixture.
+- `resources/images/orientation/7_444.jpg` — fixture.
+- `resources/images/orientation/8.webp` — fixture.
+- `resources/images/orientation/8_410.jpg` — fixture.
+- `resources/images/orientation/8_411.jpg` — fixture.
+- `resources/images/orientation/8_420.jpg` — fixture.
+- `resources/images/orientation/8_422.jpg` — fixture.
+- `resources/images/orientation/8_440.jpg` — fixture.
+- `resources/images/orientation/8_444.jpg` — fixture.
+- `resources/images/orientation/exif.jpg` — fixture.
+- `resources/images/orientation/subifd.jpg` — fixture.
+- `resources/images/out-of-palette.gif` — fixture.
+- `resources/images/plane.png` — fixture.
+- `resources/images/plane_interlaced.png` — fixture.
+- `resources/images/plte_trns.png` — fixture.
+- `resources/images/plte_trns_gama.png` — fixture.
+- `resources/images/png-zero-gamma-color-profile.png` — fixture.
+- `resources/images/pngsuite/basn0g04.png` — fixture.
+- `resources/images/pngsuite/basn2c08.png` — fixture.
+- `resources/images/pngsuite/basn2c16.png` — fixture.
+- `resources/images/pngsuite/basn3p01.png` — fixture.
+- `resources/images/progressive_kitten_missing_eof.jpg` — fixture.
+- `resources/images/purple-displayprofile.png` — fixture.
+- `resources/images/rainbow-gradient.png` — fixture.
+- `resources/images/randPixels.bmp` — fixture.
+- `resources/images/randPixels.gif` — fixture.
+- `resources/images/randPixels.jpg` — fixture.
+- `resources/images/randPixels.png` — fixture.
+- `resources/images/randPixels.webp` — fixture.
+- `resources/images/randPixelsAnim.gif` — fixture.
+- `resources/images/randPixelsAnim2.gif` — fixture.
+- `resources/images/randPixelsOffset.gif` — fixture.
+- `resources/images/red-hlg-profile.png` — fixture.
+- `resources/images/red-pq-profile.png` — fixture.
+- `resources/images/required.gif` — fixture.
+- `resources/images/required.webp` — fixture.
+- `resources/images/rgb24prof.bmp` — fixture.
+- `resources/images/rle.bmp` — fixture.
+- `resources/images/sample_1mp.dng` — fixture.
+- `resources/images/sample_1mp_rotated.dng` — fixture.
+- `resources/images/shadowreference.png` — fixture.
+- `resources/images/ship.png` — fixture.
+- `resources/images/stoplight.webp` — fixture.
+- `resources/images/stoplight_h.webp` — fixture.
+- `resources/images/test0-hdr.exif` — fixture.
+- `resources/images/test1-pixel32.exif` — fixture.
+- `resources/images/test2-nonuniform.exif` — fixture.
+- `resources/images/test3-little-endian.exif` — fixture.
+- `resources/images/test640x479.gif` — fixture.
+- `resources/images/text.png` — fixture.
+- `resources/images/webp-color-profile-crash.webp` — fixture.
+- `resources/images/webp-color-profile-lossless.webp` — fixture.
+- `resources/images/webp-color-profile-lossy-alpha.webp` — fixture.
+- `resources/images/webp-color-profile-lossy.webp` — fixture.
+- `resources/images/wide-gamut.png` — fixture.
+- `resources/images/wide_gamut_yellow_224_224_64.jpeg` — fixture.
+- `resources/images/wrong-frame-dimensions.ico` — fixture.
+- `resources/images/xOffsetTooBig.gif` — fixture.
+- `resources/images/yellow_rose.png` — fixture.
+- `resources/images/yellow_rose.webp` — fixture.
+- `resources/invalid_images/b33251605.bmp` — fixture.
+- `resources/invalid_images/b33651913.bmp` — fixture.
+- `resources/invalid_images/b34778578.bmp` — fixture.
+- `resources/invalid_images/b37623797.ico` — fixture.
+- `resources/invalid_images/b38116746.ico` — fixture.
+- `resources/invalid_images/b464333052.jpg` — fixture.
+- `resources/invalid_images/bad_palette.png` — fixture.
+- `resources/invalid_images/ico_fuzz0.ico` — fixture.
+- `resources/invalid_images/ico_fuzz1.ico` — fixture.
+- `resources/invalid_images/ico_leak01.ico` — fixture.
+- `resources/invalid_images/int_overflow.ico` — fixture.
+- `resources/invalid_images/invalid-offset.webp` — fixture.
+- `resources/invalid_images/many-progressive-scans.jpg` — fixture.
+- `resources/invalid_images/mask-bmp-ico.ico` — fixture.
+- `resources/invalid_images/osfuzz6288.bmp` — fixture.
+- `resources/invalid_images/osfuzz6295.webp` — fixture.
+- `resources/invalid_images/ossfuzz6274.gif` — fixture.
+- `resources/invalid_images/ossfuzz6347` — fixture.
+- `resources/invalid_images/sigabort_favicon.ico` — fixture.
+- `resources/invalid_images/sigsegv_favicon.ico` — fixture.
+- `resources/invalid_images/sigsegv_favicon_2.ico` — fixture.
+- `resources/invalid_images/skbug3429.webp` — fixture.
+- `resources/invalid_images/skbug3442.webp` — fixture.
+- `resources/invalid_images/skbug5883.gif` — fixture.
+- `resources/invalid_images/skbug5887.gif` — fixture.
+- `resources/invalid_images/skbug6046.gif` — fixture.
+- `resources/nov-talk-sequence.txt` — fixture.
+- `resources/pdf_command_stream.txt` — fixture.
+- `resources/skottie/images/mandrill_64.png` — fixture.
+- `resources/skottie/images/mandrill_large.png` — fixture.
+- `resources/skottie/images/triangle.png` — fixture.
+- `resources/skottie/skottie-3d-2planes.json` — fixture.
+- `resources/skottie/skottie-3d-3planes.json` — fixture.
+- `resources/skottie/skottie-3d-parenting-camera.json` — fixture.
+- `resources/skottie/skottie-3d-parenting-nocamera.json` — fixture.
+- `resources/skottie/skottie-3d-rotation-order.json` — fixture.
+- `resources/skottie/skottie-auto-orient-2.json` — fixture.
+- `resources/skottie/skottie-auto-orient.json` — fixture.
+- `resources/skottie/skottie-bezier-extranormal.json` — fixture.
+- `resources/skottie/skottie-blackandwhite-effect.json` — fixture.
+- `resources/skottie/skottie-blendmode-hardmix.json` — fixture.
+- `resources/skottie/skottie-brightnesscontrast-legacy.json` — fixture.
+- `resources/skottie/skottie-brightnesscontrast.json` — fixture.
+- `resources/skottie/skottie-bulge.json` — fixture.
+- `resources/skottie/skottie-camera-one-node.json` — fixture.
+- `resources/skottie/skottie-camera-parent-1.json` — fixture.
+- `resources/skottie/skottie-camera-parent-2.json` — fixture.
+- `resources/skottie/skottie-camera-parent-3.json` — fixture.
+- `resources/skottie/skottie-camera-precomp.json` — fixture.
+- `resources/skottie/skottie-camera-rotation.json` — fixture.
+- `resources/skottie/skottie-cctoner.json` — fixture.
+- `resources/skottie/skottie-chained-mattes.json` — fixture.
+- `resources/skottie/skottie-coloroverlay-style.json` — fixture.
+- `resources/skottie/skottie-corner-pin-effect.json` — fixture.
+- `resources/skottie/skottie-directional-blur.json` — fixture.
+- `resources/skottie/skottie-displacement-expand.json` — fixture.
+- `resources/skottie/skottie-displacement-hsla.json` — fixture.
+- `resources/skottie/skottie-displacement-lfho.json` — fixture.
+- `resources/skottie/skottie-displacement-rgba.json` — fixture.
+- `resources/skottie/skottie-displacement-tiling.json` — fixture.
+- `resources/skottie/skottie-dropshadow-ramp.json` — fixture.
+- `resources/skottie/skottie-dropshadow-style.json` — fixture.
+- `resources/skottie/skottie-effects-transform.json` — fixture.
+- `resources/skottie/skottie-fill-effect.json` — fixture.
+- `resources/skottie/skottie-fractalnoise-basic.json` — fixture.
+- `resources/skottie/skottie-fractalnoise-block.json` — fixture.
+- `resources/skottie/skottie-fractalnoise-cycle.json` — fixture.
+- `resources/skottie/skottie-fractalnoise-linear.json` — fixture.
+- `resources/skottie/skottie-fractalnoise-scalerotate.json` — fixture.
+- `resources/skottie/skottie-fractalnoise-softlinear.json` — fixture.
+- `resources/skottie/skottie-fractalnoise-sphere.json` — fixture.
+- `resources/skottie/skottie-fractalnoise-suboptions.json` — fixture.
+- `resources/skottie/skottie-fractalnoise-turbulentbasic.json` — fixture.
+- `resources/skottie/skottie-fractalnoise-turbulentsharp.json` — fixture.
+- `resources/skottie/skottie-fractalnoise-turbulentsmooth.json` — fixture.
+- `resources/skottie/skottie-gaussian-blur.json` — fixture.
+- `resources/skottie/skottie-glow-spread.json` — fixture.
+- `resources/skottie/skottie-gradient-opacity.json` — fixture.
+- `resources/skottie/skottie-gradient-radial-highlight.json` — fixture.
+- `resources/skottie/skottie-gradient-ramp.json` — fixture.
+- `resources/skottie/skottie-hidden-shapes-layers.json` — fixture.
+- `resources/skottie/skottie-huesaturation-animated.json` — fixture.
+- `resources/skottie/skottie-huesaturation-effect.json` — fixture.
+- `resources/skottie/skottie-inline-fonts.json` — fixture.
+- `resources/skottie/skottie-innerglow-style.json` — fixture.
+- `resources/skottie/skottie-innershadow-style.json` — fixture.
+- `resources/skottie/skottie-invert-effect-yiq.json` — fixture.
+- `resources/skottie/skottie-invert-effect.json` — fixture.
+- `resources/skottie/skottie-levels-effect.json` — fixture.
+- `resources/skottie/skottie-line-height.json` — fixture.
+- `resources/skottie/skottie-linear-wipe-effect.json` — fixture.
+- `resources/skottie/skottie-luma-matte.json` — fixture.
+- `resources/skottie/skottie-mask-feather.json` — fixture.
+- `resources/skottie/skottie-masking-opaque.json` — fixture.
+- `resources/skottie/skottie-masking-translucent.json` — fixture.
+- `resources/skottie/skottie-matte-blendmode.json` — fixture.
+- `resources/skottie/skottie-matte-nonsequential.json` — fixture.
+- `resources/skottie/skottie-matte-visible.json` — fixture.
+- `resources/skottie/skottie-mergepaths-effect.json` — fixture.
+- `resources/skottie/skottie-motion-blur-mask.json` — fixture.
+- `resources/skottie/skottie-motion-blur-ph-360.json` — fixture.
+- `resources/skottie/skottie-motion-blur-ph0.json` — fixture.
+- `resources/skottie/skottie-motion-blur-ph360.json` — fixture.
+- `resources/skottie/skottie-motiontile-effect-phase.json` — fixture.
+- `resources/skottie/skottie-motiontile-effect.json` — fixture.
+- `resources/skottie/skottie-multi-range-selectors.json` — fixture.
+- `resources/skottie/skottie-nested-animation.json` — fixture.
+- `resources/skottie/skottie-offsetpaths-effect.json` — fixture.
+- `resources/skottie/skottie-outerglow-style.json` — fixture.
+- `resources/skottie/skottie-phonehub-connecting.json` — fixture.
+- `resources/skottie/skottie-phonehub-connecting_min.json` — fixture.
+- `resources/skottie/skottie-phonehub-generic-error.json` — fixture.
+- `resources/skottie/skottie-phonehub-generic-error_min.json` — fixture.
+- `resources/skottie/skottie-phonehub-onboard.json` — fixture.
+- `resources/skottie/skottie-phonehub-onboard_min.json` — fixture.
+- `resources/skottie/skottie-phonehub-svgo-connecting.json` — fixture.
+- `resources/skottie/skottie-phonehub-svgo-connecting_min.json` — fixture.
+- `resources/skottie/skottie-phonehub-svgo-generic-error.json` — fixture.
+- `resources/skottie/skottie-phonehub-svgo-generic-error_min.json` — fixture.
+- `resources/skottie/skottie-phonehub-svgo-no-frills-connecting.json` — fixture.
+- `resources/skottie/skottie-phonehub-svgo-no-frills-connecting_min.json` — fixture.
+- `resources/skottie/skottie-phonehub-svgo-no-frills-generic-error.json` — fixture.
+- `resources/skottie/skottie-phonehub-svgo-no-frills-generic-error_min.json` — fixture.
+- `resources/skottie/skottie-phonehub-svgo-no-frills-onboard.json` — fixture.
+- `resources/skottie/skottie-phonehub-svgo-no-frills-onboard_min.json` — fixture.
+- `resources/skottie/skottie-phonehub-svgo-no-masks-connecting.json` — fixture.
+- `resources/skottie/skottie-phonehub-svgo-no-masks-connecting_min.json` — fixture.
+- `resources/skottie/skottie-phonehub-svgo-no-masks-onboard.json` — fixture.
+- `resources/skottie/skottie-phonehub-svgo-no-masks-onboard_min.json` — fixture.
+- `resources/skottie/skottie-phonehub-svgo-onboard.json` — fixture.
+- `resources/skottie/skottie-phonehub-svgo-onboard_min.json` — fixture.
+- `resources/skottie/skottie-prolevels-effect.json` — fixture.
+- `resources/skottie/skottie-puckerbloat-effect.json` — fixture.
+- `resources/skottie/skottie-radial-wipe-effect.json` — fixture.
+- `resources/skottie/skottie-repeater.json` — fixture.
+- `resources/skottie/skottie-sharpen.json` — fixture.
+- `resources/skottie/skottie-shift-channels-effect.json` — fixture.
+- `resources/skottie/skottie-shift-channels-fullon-alpha.json` — fixture.
+- `resources/skottie/skottie-sksl-color-filter.json` — fixture.
+- `resources/skottie/skottie-sksl-effect-2.json` — fixture.
+- `resources/skottie/skottie-sksl-effect.json` — fixture.
+- `resources/skottie/skottie-slots.json` — fixture.
+- `resources/skottie/skottie-spatial-supernormal.json` — fixture.
+- `resources/skottie/skottie-sphere-controls.json` — fixture.
+- `resources/skottie/skottie-sphere-effect.json` — fixture.
+- `resources/skottie/skottie-sphere-lighting-types.json` — fixture.
+- `resources/skottie/skottie-sphere-lighting.json` — fixture.
+- `resources/skottie/skottie-sphere-transparecy.json` — fixture.
+- `resources/skottie/skottie-text-allcaps.json` — fixture.
+- `resources/skottie/skottie-text-animatedglyphs-01.json` — fixture.
+- `resources/skottie/skottie-text-animatedglyphs-02.json` — fixture.
+- `resources/skottie/skottie-text-animatedglyphs-03.json` — fixture.
+- `resources/skottie/skottie-text-animatedglyphs-04.json` — fixture.
+- `resources/skottie/skottie-text-animator-1.json` — fixture.
+- `resources/skottie/skottie-text-animator-2.json` — fixture.
+- `resources/skottie/skottie-text-animator-3.json` — fixture.
+- `resources/skottie/skottie-text-animator-4.json` — fixture.
+- `resources/skottie/skottie-text-animator-5.json` — fixture.
+- `resources/skottie/skottie-text-animator-6.json` — fixture.
+- `resources/skottie/skottie-text-animator-7.json` — fixture.
+- `resources/skottie/skottie-text-animator-8.json` — fixture.
+- `resources/skottie/skottie-text-animator-fillstrokeopacity.json` — fixture.
+- `resources/skottie/skottie-text-animator-linespacing.json` — fixture.
+- `resources/skottie/skottie-text-animator-opacity.json` — fixture.
+- `resources/skottie/skottie-text-animator-randomize-1.json` — fixture.
+- `resources/skottie/skottie-text-animator-randomize-2.json` — fixture.
+- `resources/skottie/skottie-text-animator-strokewidth.json` — fixture.
+- `resources/skottie/skottie-text-baseline-shift.json` — fixture.
+- `resources/skottie/skottie-text-blur.json` — fixture.
+- `resources/skottie/skottie-text-emptylines.json` — fixture.
+- `resources/skottie/skottie-text-fill-over-stroke.json` — fixture.
+- `resources/skottie/skottie-text-grouping-alignment-2.json` — fixture.
+- `resources/skottie/skottie-text-grouping-alignment.json` — fixture.
+- `resources/skottie/skottie-text-perchar-3d.json` — fixture.
+- `resources/skottie/skottie-text-pointmode-downscaletofit.json` — fixture.
+- `resources/skottie/skottie-text-pointmode-scaletofit.json` — fixture.
+- `resources/skottie/skottie-text-resize-to-fit.json` — fixture.
+- `resources/skottie/skottie-text-rtl.json` — fixture.
+- `resources/skottie/skottie-text-scale-to-fit-maxlines.json` — fixture.
+- `resources/skottie/skottie-text-scale-to-fit-minmax.json` — fixture.
+- `resources/skottie/skottie-text-scale-to-fit.json` — fixture.
+- `resources/skottie/skottie-text-strokejoin.json` — fixture.
+- `resources/skottie/skottie-text-strokescale.json` — fixture.
+- `resources/skottie/skottie-text-tracking.json` — fixture.
+- `resources/skottie/skottie-text-valign-2.json` — fixture.
+- `resources/skottie/skottie-text-valign-bottom.json` — fixture.
+- `resources/skottie/skottie-text-valign-scaletofit.json` — fixture.
+- `resources/skottie/skottie-text-valign-visual-2.json` — fixture.
+- `resources/skottie/skottie-text-valign-visual-scaletofit.json` — fixture.
+- `resources/skottie/skottie-text-valign.json` — fixture.
+- `resources/skottie/skottie-text-variations.json` — fixture.
+- `resources/skottie/skottie-text-vertical-clip.json` — fixture.
+- `resources/skottie/skottie-text-whitespace-align.json` — fixture.
+- `resources/skottie/skottie-text-words-linebreak.json` — fixture.
+- `resources/skottie/skottie-textpath-01.json` — fixture.
+- `resources/skottie/skottie-textpath-02.json` — fixture.
+- `resources/skottie/skottie-textpath-03.json` — fixture.
+- `resources/skottie/skottie-textpath-04.json` — fixture.
+- `resources/skottie/skottie-textpath-05.json` — fixture.
+- `resources/skottie/skottie-textpath-paragraph-01.json` — fixture.
+- `resources/skottie/skottie-textpath-paragraph-02.json` — fixture.
+- `resources/skottie/skottie-textpath-paragraph-03.json` — fixture.
+- `resources/skottie/skottie-textpath-tracking.json` — fixture.
+- `resources/skottie/skottie-threshold-compositing.json` — fixture.
+- `resources/skottie/skottie-threshold-effect.json` — fixture.
+- `resources/skottie/skottie-time-reverse.json` — fixture.
+- `resources/skottie/skottie-transform-effect.json` — fixture.
+- `resources/skottie/skottie-transform-skew.json` — fixture.
+- `resources/skottie/skottie-trimpath-fill.json` — fixture.
+- `resources/skottie/skottie-trimpath-modes.json` — fixture.
+- `resources/skottie/skottie-tritone-effect.json` — fixture.
+- `resources/skottie/skottie-venetianblinds-effect.json` — fixture.
+- `resources/skottie/skottie_fill_rule.json` — fixture.
+- `resources/skottie/skottie_sample_1.json` — fixture.
+- `resources/skottie/skottie_sample_2.json` — fixture.
+- `resources/skottie/skottie_sample_multiframe.json` — fixture.
+- `resources/skottie/skottie_sample_search.json` — fixture.
+- `resources/skottie/skottie_sample_webfont.json` — fixture.
+- `resources/sksl/BUILD.bazel` — fixture.
+- `resources/sksl/README.txt` — fixture.
+- `resources/sksl/blend/BlendClear.sksl` — fixture.
+- `resources/sksl/blend/BlendColor.sksl` — fixture.
+- `resources/sksl/blend/BlendColorBurn.sksl` — fixture.
+- `resources/sksl/blend/BlendColorDodge.sksl` — fixture.
+- `resources/sksl/blend/BlendDarken.sksl` — fixture.
+- `resources/sksl/blend/BlendDifference.sksl` — fixture.
+- `resources/sksl/blend/BlendDst.sksl` — fixture.
+- `resources/sksl/blend/BlendDstAtop.sksl` — fixture.
+- `resources/sksl/blend/BlendDstIn.sksl` — fixture.
+- `resources/sksl/blend/BlendDstOut.sksl` — fixture.
+- `resources/sksl/blend/BlendDstOver.sksl` — fixture.
+- `resources/sksl/blend/BlendExclusion.sksl` — fixture.
+- `resources/sksl/blend/BlendHardLight.sksl` — fixture.
+- `resources/sksl/blend/BlendHue.sksl` — fixture.
+- `resources/sksl/blend/BlendLighten.sksl` — fixture.
+- `resources/sksl/blend/BlendLuminosity.sksl` — fixture.
+- `resources/sksl/blend/BlendModulate.sksl` — fixture.
+- `resources/sksl/blend/BlendMultiply.sksl` — fixture.
+- `resources/sksl/blend/BlendOverlay.sksl` — fixture.
+- `resources/sksl/blend/BlendPlus.sksl` — fixture.
+- `resources/sksl/blend/BlendSaturation.sksl` — fixture.
+- `resources/sksl/blend/BlendScreen.sksl` — fixture.
+- `resources/sksl/blend/BlendSoftLight.sksl` — fixture.
+- `resources/sksl/blend/BlendSrc.sksl` — fixture.
+- `resources/sksl/blend/BlendSrcAtop.sksl` — fixture.
+- `resources/sksl/blend/BlendSrcIn.sksl` — fixture.
+- `resources/sksl/blend/BlendSrcOut.sksl` — fixture.
+- `resources/sksl/blend/BlendSrcOver.sksl` — fixture.
+- `resources/sksl/blend/BlendXor.sksl` — fixture.
+- `resources/sksl/compute/ArrayAdd.compute` — fixture.
+- `resources/sksl/compute/AtomicDeclarations.compute` — fixture.
+- `resources/sksl/compute/AtomicOperations.compute` — fixture.
+- `resources/sksl/compute/AtomicOperationsOverArrayAndStruct.compute` — fixture.
+- `resources/sksl/compute/Barrier.compute` — fixture.
+- `resources/sksl/compute/Buffers.compute` — fixture.
+- `resources/sksl/compute/BuiltinStageInputs.compute` — fixture.
+- `resources/sksl/compute/Desaturate.compute` — fixture.
+- `resources/sksl/compute/DesaturateFunction.compute` — fixture.
+- `resources/sksl/compute/DesaturateReadWrite.compute` — fixture.
+- `resources/sksl/compute/MatrixMultiply.compute` — fixture.
+- `resources/sksl/compute/MaximalReconvergence.compute` — fixture.
+- `resources/sksl/compute/ModuleStructInArray.compute` — fixture.
+- `resources/sksl/compute/ModuleStructInExpression.compute` — fixture.
+- `resources/sksl/compute/ModuleStructInInterfaceBlock.compute` — fixture.
+- `resources/sksl/compute/ModuleStructInVariable.compute` — fixture.
+- `resources/sksl/compute/Raytrace.compute` — fixture.
+- `resources/sksl/compute/Uniforms.compute` — fixture.
+- `resources/sksl/compute/Workgroup.compute` — fixture.
+- `resources/sksl/errors/ArgumentCountMismatch.rts` — fixture.
+- `resources/sksl/errors/ArgumentMismatch.rts` — fixture.
+- `resources/sksl/errors/ArgumentModifiers.rts` — fixture.
+- `resources/sksl/errors/ArrayConstructorElementCount.sksl` — fixture.
+- `resources/sksl/errors/ArrayIndexOutOfRange.rts` — fixture.
+- `resources/sksl/errors/ArrayInlinedIndexOutOfRange.sksl` — fixture.
+- `resources/sksl/errors/ArrayNegation.rts` — fixture.
+- `resources/sksl/errors/ArrayOfInvalidSize.rts` — fixture.
+- `resources/sksl/errors/ArrayOfVoid.rts` — fixture.
+- `resources/sksl/errors/ArrayPlus.rts` — fixture.
+- `resources/sksl/errors/ArrayReturnTypes.rts` — fixture.
+- `resources/sksl/errors/ArraySplitDimensions.rts` — fixture.
+- `resources/sksl/errors/ArraySplitDimensionsInFuncBody.rts` — fixture.
+- `resources/sksl/errors/ArraySplitDimensionsInFuncDecl.rts` — fixture.
+- `resources/sksl/errors/ArraySplitDimensionsInStruct.rts` — fixture.
+- `resources/sksl/errors/ArrayTooManyDimensions.rts` — fixture.
+- `resources/sksl/errors/ArrayTooManyDimensionsInFuncBody.rts` — fixture.
+- `resources/sksl/errors/ArrayTooManyDimensionsInFuncBodyUnsized1.rts` — fixture.
+- `resources/sksl/errors/ArrayTooManyDimensionsInFuncBodyUnsized2.rts` — fixture.
+- `resources/sksl/errors/ArrayTooManyDimensionsInFuncDecl.rts` — fixture.
+- `resources/sksl/errors/ArrayTooManyDimensionsInFuncDeclUnsized1.rts` — fixture.
+- `resources/sksl/errors/ArrayTooManyDimensionsInFuncDeclUnsized2.rts` — fixture.
+- `resources/sksl/errors/ArrayTooManyDimensionsInStruct.rts` — fixture.
+- `resources/sksl/errors/ArrayTooManyDimensionsInStructUnsized1.rts` — fixture.
+- `resources/sksl/errors/ArrayTooManyDimensionsInStructUnsized2.rts` — fixture.
+- `resources/sksl/errors/ArrayTooManyDimensionsUnsized1.rts` — fixture.
+- `resources/sksl/errors/ArrayTooManyDimensionsUnsized2.rts` — fixture.
+- `resources/sksl/errors/ArrayTypeTooManyDimensions.rts` — fixture.
+- `resources/sksl/errors/ArrayTypeTooManyDimensionsInFuncBody.rts` — fixture.
+- `resources/sksl/errors/ArrayTypeTooManyDimensionsInFuncBodyUnsized1.rts` — fixture.
+- `resources/sksl/errors/ArrayTypeTooManyDimensionsInFuncBodyUnsized2.rts` — fixture.
+- `resources/sksl/errors/ArrayTypeTooManyDimensionsInFuncDecl.rts` — fixture.
+- `resources/sksl/errors/ArrayTypeTooManyDimensionsInFuncDeclUnsized1.rts` — fixture.
+- `resources/sksl/errors/ArrayTypeTooManyDimensionsInFuncDeclUnsized2.rts` — fixture.
+- `resources/sksl/errors/ArrayTypeTooManyDimensionsInStruct.rts` — fixture.
+- `resources/sksl/errors/ArrayTypeTooManyDimensionsInStructUnsized1.rts` — fixture.
+- `resources/sksl/errors/ArrayTypeTooManyDimensionsInStructUnsized2.rts` — fixture.
+- `resources/sksl/errors/ArrayTypeTooManyDimensionsUnsized1.rts` — fixture.
+- `resources/sksl/errors/ArrayTypeTooManyDimensionsUnsized2.rts` — fixture.
+- `resources/sksl/errors/ArrayUnspecifiedDimensions.sksl` — fixture.
+- `resources/sksl/errors/AssignmentTypeMismatch.rts` — fixture.
+- `resources/sksl/errors/BadCaps.sksl` — fixture.
+- `resources/sksl/errors/BadConstInitializers.rts` — fixture.
+- `resources/sksl/errors/BadFieldAccess.rts` — fixture.
+- `resources/sksl/errors/BadIndex.rts` — fixture.
+- `resources/sksl/errors/BadModifiers.sksl` — fixture.
+- `resources/sksl/errors/BadOctal.rts` — fixture.
+- `resources/sksl/errors/BinaryInvalidType.rts` — fixture.
+- `resources/sksl/errors/BinaryTypeCoercion.sksl` — fixture.
+- `resources/sksl/errors/BinaryTypeMismatch.rts` — fixture.
+- `resources/sksl/errors/BitShiftFloat.rts` — fixture.
+- `resources/sksl/errors/BitShiftFloatMatrix.rts` — fixture.
+- `resources/sksl/errors/BitShiftFloatVector.rts` — fixture.
+- `resources/sksl/errors/BooleanArithmetic.sksl` — fixture.
+- `resources/sksl/errors/BreakOutsideLoop.rts` — fixture.
+- `resources/sksl/errors/CallMain.rts` — fixture.
+- `resources/sksl/errors/CallNonFunction.rts` — fixture.
+- `resources/sksl/errors/CanExitWithoutReturningValue.sksl` — fixture.
+- `resources/sksl/errors/CommasAsConstantExpressions.rts` — fixture.
+- `resources/sksl/errors/CommasWithArrays.sksl` — fixture.
+- `resources/sksl/errors/ComparisonDimensional.rts` — fixture.
+- `resources/sksl/errors/ConstructorArgumentCount.rts` — fixture.
+- `resources/sksl/errors/ConstructorTypeMismatch.rts` — fixture.
+- `resources/sksl/errors/ContinueOutsideLoop.rts` — fixture.
+- `resources/sksl/errors/DivideByZero.rts` — fixture.
+- `resources/sksl/errors/DoTypeMismatch.sksl` — fixture.
+- `resources/sksl/errors/DuplicateBinding.sksl` — fixture.
+- `resources/sksl/errors/DuplicateBuiltinFunction.rts` — fixture.
+- `resources/sksl/errors/DuplicateFunction.rts` — fixture.
+- `resources/sksl/errors/DuplicateInterfaceBlockField.sksl` — fixture.
+- `resources/sksl/errors/DuplicateInterfaceBlockName.sksl` — fixture.
+- `resources/sksl/errors/DuplicateOutput.sksl` — fixture.
+- `resources/sksl/errors/DuplicateRTAdjust.sksl` — fixture.
+- `resources/sksl/errors/DuplicateSkClockwise.sksl` — fixture.
+- `resources/sksl/errors/DuplicateSymbol.rts` — fixture.
+- `resources/sksl/errors/DuplicateSymbolInSwitch.rts` — fixture.
+- `resources/sksl/errors/DuplicateWorkgroupSize.compute` — fixture.
+- `resources/sksl/errors/EmptyArray.rts` — fixture.
+- `resources/sksl/errors/EmptyBuffer.sksl` — fixture.
+- `resources/sksl/errors/EmptyStruct.rts` — fixture.
+- `resources/sksl/errors/ErrorsInDeadCode.rts` — fixture.
+- `resources/sksl/errors/FloatRemainder.rts` — fixture.
+- `resources/sksl/errors/ForInitStmt.sksl` — fixture.
+- `resources/sksl/errors/ForLoopInductionVariableScope.sksl` — fixture.
+- `resources/sksl/errors/ForLoopNEQOverflow.rts` — fixture.
+- `resources/sksl/errors/ForLoopOverflow.rts` — fixture.
+- `resources/sksl/errors/ForTypeMismatch.rts` — fixture.
+- `resources/sksl/errors/FunctionParamBadType.rts` — fixture.
+- `resources/sksl/errors/FunctionParamShadowedByLocal.rts` — fixture.
+- `resources/sksl/errors/FunctionParameterOfVoid.rts` — fixture.
+- `resources/sksl/errors/GenericArgumentMismatch.rts` — fixture.
+- `resources/sksl/errors/IfTypeMismatch.rts` — fixture.
+- `resources/sksl/errors/IllegalRecursionComplex.rts` — fixture.
+- `resources/sksl/errors/IllegalRecursionMutual.rts` — fixture.
+- `resources/sksl/errors/IllegalRecursionSimple.rts` — fixture.
+- `resources/sksl/errors/InVarWithInitializerExpression.sksl` — fixture.
+- `resources/sksl/errors/IncompleteExpression.rts` — fixture.
+- `resources/sksl/errors/IncompleteFunctionCall.rts` — fixture.
+- `resources/sksl/errors/InterfaceBlockMemberReservedName.sksl` — fixture.
+- `resources/sksl/errors/InterfaceBlockMixedCommasAndSemicolons.sksl` — fixture.
+- `resources/sksl/errors/InterfaceBlockPrivateType.sksl` — fixture.
+- `resources/sksl/errors/InterfaceBlockReservedName.sksl` — fixture.
+- `resources/sksl/errors/InterfaceBlockScope.sksl` — fixture.
+- `resources/sksl/errors/InterfaceBlockStorageModifiers.sksl` — fixture.
+- `resources/sksl/errors/InterfaceBlockWithArrayOfStructOfBool.sksl` — fixture.
+- `resources/sksl/errors/InterfaceBlockWithInvalidNestedStruct.sksl` — fixture.
+- `resources/sksl/errors/InterfaceBlockWithInvalidStruct.sksl` — fixture.
+- `resources/sksl/errors/InterfaceBlockWithNoMembers.sksl` — fixture.
+- `resources/sksl/errors/IntrinsicInGlobalVariable.sksl` — fixture.
+- `resources/sksl/errors/InvalidAssignment.rts` — fixture.
+- `resources/sksl/errors/InvalidAssignmentPipelineInputs.sksl` — fixture.
+- `resources/sksl/errors/InvalidAtomicDeclarations.compute` — fixture.
+- `resources/sksl/errors/InvalidAtomicOperations.compute` — fixture.
+- `resources/sksl/errors/InvalidBackendBindingFlagsMetal.sksl` — fixture.
+- `resources/sksl/errors/InvalidBackendBindingFlagsSPIRV.sksl` — fixture.
+- `resources/sksl/errors/InvalidBackendBindingFlagsWGSL.sksl` — fixture.
+- `resources/sksl/errors/InvalidCapsUsage.sksl` — fixture.
+- `resources/sksl/errors/InvalidComputeMainParameters.compute` — fixture.
+- `resources/sksl/errors/InvalidComputeMainReturn.compute` — fixture.
+- `resources/sksl/errors/InvalidExtensionDirective.sksl` — fixture.
+- `resources/sksl/errors/InvalidInOutType.compute` — fixture.
+- `resources/sksl/errors/InvalidLocalSizeQualifier.compute` — fixture.
+- `resources/sksl/errors/InvalidMeshFragmentMainParameters.mfrag` — fixture.
+- `resources/sksl/errors/InvalidMeshFragmentMainReturn.mfrag` — fixture.
+- `resources/sksl/errors/InvalidMeshVertexMainParameters.mvert` — fixture.
+- `resources/sksl/errors/InvalidMeshVertexMainReturn.mvert` — fixture.
+- `resources/sksl/errors/InvalidOutParams.sksl` — fixture.
+- `resources/sksl/errors/InvalidToken.rts` — fixture.
+- `resources/sksl/errors/InvalidUnary.rts` — fixture.
+- `resources/sksl/errors/InvalidUniformTypes.sksl` — fixture.
+- `resources/sksl/errors/InvalidUnsizedArray.compute` — fixture.
+- `resources/sksl/errors/InvalidVersionDirective.sksl` — fixture.
+- `resources/sksl/errors/InvalidWorkgroupCompute.compute` — fixture.
+- `resources/sksl/errors/InvalidWorkgroupRTS.rts` — fixture.
+- `resources/sksl/errors/LayoutInFunctions.sksl` — fixture.
+- `resources/sksl/errors/LayoutInInterfaceBlock.sksl` — fixture.
+- `resources/sksl/errors/LayoutInStruct.sksl` — fixture.
+- `resources/sksl/errors/LayoutRepeatedQualifiers.sksl` — fixture.
+- `resources/sksl/errors/MatrixIndexOutOfRange.rts` — fixture.
+- `resources/sksl/errors/MatrixIndexOutOfRangeES3.sksl` — fixture.
+- `resources/sksl/errors/MatrixInlinedIndexOutOfRange.sksl` — fixture.
+- `resources/sksl/errors/MatrixToVectorCast3x3.rts` — fixture.
+- `resources/sksl/errors/MatrixToVectorCastBoolean.rts` — fixture.
+- `resources/sksl/errors/MatrixToVectorCastInteger.rts` — fixture.
+- `resources/sksl/errors/MatrixToVectorCastTooSmall.rts` — fixture.
+- `resources/sksl/errors/MeshVertexWithBlender.mvert` — fixture.
+- `resources/sksl/errors/MeshVertexWithColorFilter.mvert` — fixture.
+- `resources/sksl/errors/MeshVertexWithShader.mvert` — fixture.
+- `resources/sksl/errors/MismatchedNumbers.rts` — fixture.
+- `resources/sksl/errors/MismatchedNumbersES3.sksl` — fixture.
+- `resources/sksl/errors/MisplacedLocalSizeQualifier.sksl` — fixture.
+- `resources/sksl/errors/MissingWorkgroupSize.compute` — fixture.
+- `resources/sksl/errors/ModifiersInStruct.rts` — fixture.
+- `resources/sksl/errors/ModifiersRepeated.sksl` — fixture.
+- `resources/sksl/errors/MultipleBackendFlags.sksl` — fixture.
+- `resources/sksl/errors/MultipleFields.rts` — fixture.
+- `resources/sksl/errors/MultipleFieldsInInterfaceBlocks.sksl` — fixture.
+- `resources/sksl/errors/NoES3ModifierInUserCode.sksl` — fixture.
+- `resources/sksl/errors/OpaqueTypeAssignment.sksl` — fixture.
+- `resources/sksl/errors/OpaqueTypeConstruction.sksl` — fixture.
+- `resources/sksl/errors/OpaqueTypeInArray.sksl` — fixture.
+- `resources/sksl/errors/OpaqueTypeInInterfaceBlock.sksl` — fixture.
+- `resources/sksl/errors/OpaqueTypeInStruct.sksl` — fixture.
+- `resources/sksl/errors/OpaqueTypeOutParam.sksl` — fixture.
+- `resources/sksl/errors/OpenArray.rts` — fixture.
+- `resources/sksl/errors/Ossfuzz26700.sksl` — fixture.
+- `resources/sksl/errors/Ossfuzz27614.sksl` — fixture.
+- `resources/sksl/errors/Ossfuzz27650.sksl` — fixture.
+- `resources/sksl/errors/Ossfuzz27663.sksl` — fixture.
+- `resources/sksl/errors/Ossfuzz28050.sksl` — fixture.
+- `resources/sksl/errors/Ossfuzz29444.sksl` — fixture.
+- `resources/sksl/errors/Ossfuzz29845.sksl` — fixture.
+- `resources/sksl/errors/Ossfuzz29849.sksl` — fixture.
+- `resources/sksl/errors/Ossfuzz31410.sksl` — fixture.
+- `resources/sksl/errors/Ossfuzz31469.sksl` — fixture.
+- `resources/sksl/errors/Ossfuzz32156.sksl` — fixture.
+- `resources/sksl/errors/Ossfuzz32587.sksl` — fixture.
+- `resources/sksl/errors/Ossfuzz32851.sksl` — fixture.
+- `resources/sksl/errors/Ossfuzz36850.sksl` — fixture.
+- `resources/sksl/errors/Ossfuzz37457.sksl` — fixture.
+- `resources/sksl/errors/Ossfuzz37465.sksl` — fixture.
+- `resources/sksl/errors/Ossfuzz37469.sksl` — fixture.
+- `resources/sksl/errors/Ossfuzz37620.sksl` — fixture.
+- `resources/sksl/errors/Ossfuzz38106.sksl` — fixture.
+- `resources/sksl/errors/Ossfuzz38107.sksl` — fixture.
+- `resources/sksl/errors/Ossfuzz38108.sksl` — fixture.
+- `resources/sksl/errors/Ossfuzz38140.sksl` — fixture.
+- `resources/sksl/errors/Ossfuzz38560.sksl` — fixture.
+- `resources/sksl/errors/Ossfuzz38831.sksl` — fixture.
+- `resources/sksl/errors/Ossfuzz38865.sksl` — fixture.
+- `resources/sksl/errors/Ossfuzz38944.sksl` — fixture.
+- `resources/sksl/errors/Ossfuzz39000.sksl` — fixture.
+- `resources/sksl/errors/Ossfuzz40427.sksl` — fixture.
+- `resources/sksl/errors/Ossfuzz40428.sksl` — fixture.
+- `resources/sksl/errors/Ossfuzz40479.sksl` — fixture.
+- `resources/sksl/errors/Ossfuzz40660.sksl` — fixture.
+- `resources/sksl/errors/Ossfuzz44045.sksl` — fixture.
+- `resources/sksl/errors/Ossfuzz44551.sksl` — fixture.
+- `resources/sksl/errors/Ossfuzz44555.sksl` — fixture.
+- `resources/sksl/errors/Ossfuzz44557.sksl` — fixture.
+- `resources/sksl/errors/Ossfuzz44559.sksl` — fixture.
+- `resources/sksl/errors/Ossfuzz44561.sksl` — fixture.
+- `resources/sksl/errors/Ossfuzz44565.sksl` — fixture.
+- `resources/sksl/errors/Ossfuzz47935.sksl` — fixture.
+- `resources/sksl/errors/Ossfuzz48592.sksl` — fixture.
+- `resources/sksl/errors/Ossfuzz49558.sksl` — fixture.
+- `resources/sksl/errors/Ossfuzz50798.sksl` — fixture.
+- `resources/sksl/errors/Ossfuzz50922.sksl` — fixture.
+- `resources/sksl/errors/Ossfuzz515515145.sksl` — fixture.
+- `resources/sksl/errors/Ossfuzz516126015.sksl` — fixture.
+- `resources/sksl/errors/Ossfuzz519154489.sksl` — fixture.
+- `resources/sksl/errors/Ossfuzz56373.sksl` — fixture.
+- `resources/sksl/errors/Ossfuzz58037.sksl` — fixture.
+- `resources/sksl/errors/Ossfuzz58375.sksl` — fixture.
+- `resources/sksl/errors/Ossfuzz63793.sksl` — fixture.
+- `resources/sksl/errors/Ossfuzz70643.sksl` — fixture.
+- `resources/sksl/errors/OverflowFloatIntrinsic.sksl` — fixture.
+- `resources/sksl/errors/OverflowFloatLiteral.rts` — fixture.
+- `resources/sksl/errors/OverflowInlinedLiteral.sksl` — fixture.
+- `resources/sksl/errors/OverflowInt64Literal.rts` — fixture.
+- `resources/sksl/errors/OverflowIntLiteral.rts` — fixture.
+- `resources/sksl/errors/OverflowParamArraySize.rts` — fixture.
+- `resources/sksl/errors/OverflowShortLiteral.sksl` — fixture.
+- `resources/sksl/errors/OverflowUintLiteral.sksl` — fixture.
+- `resources/sksl/errors/OverloadedBuiltin.sksl` — fixture.
+- `resources/sksl/errors/OverloadedMain.sksl` — fixture.
+- `resources/sksl/errors/PixelFormatMismatch.compute` — fixture.
+- `resources/sksl/errors/PixelFormatMissing.compute` — fixture.
+- `resources/sksl/errors/PixelFormatOverloads.compute` — fixture.
+- `resources/sksl/errors/PrecisionQualifiersDisallowed.sksl` — fixture.
+- `resources/sksl/errors/PrivateTypes.rts` — fixture.
+- `resources/sksl/errors/PrivateVariables.rts` — fixture.
+- `resources/sksl/errors/ProgramTooLarge_Globals.rts` — fixture.
+- `resources/sksl/errors/ProgramTooLarge_InterfaceBlock.sksl` — fixture.
+- `resources/sksl/errors/ProgramTooLarge_Parameters.rts` — fixture.
+- `resources/sksl/errors/ProgramTooLarge_Stack.rts` — fixture.
+- `resources/sksl/errors/ProgramTooLarge_Struct.rts` — fixture.
+- `resources/sksl/errors/PrototypeInFuncBody.rts` — fixture.
+- `resources/sksl/errors/RTAdjustType.sksl` — fixture.
+- `resources/sksl/errors/ReadonlyWriteonly.compute` — fixture.
+- `resources/sksl/errors/RedeclareBasicType.rts` — fixture.
+- `resources/sksl/errors/RedeclareBuiltinVariables.sksl` — fixture.
+- `resources/sksl/errors/RedeclareSamplerType.sksl` — fixture.
+- `resources/sksl/errors/RedeclareShaderType.rts` — fixture.
+- `resources/sksl/errors/RedeclareStruct.rts` — fixture.
+- `resources/sksl/errors/RedeclareStructTypeWithName.rts` — fixture.
+- `resources/sksl/errors/RedeclareUserType.rts` — fixture.
+- `resources/sksl/errors/RedeclareVariable.rts` — fixture.
+- `resources/sksl/errors/ReservedNameAsm.rts` — fixture.
+- `resources/sksl/errors/ReservedNameAtomic.rts` — fixture.
+- `resources/sksl/errors/ReservedNameAttribute.rts` — fixture.
+- `resources/sksl/errors/ReservedNameCast.rts` — fixture.
+- `resources/sksl/errors/ReservedNameDmat2.rts` — fixture.
+- `resources/sksl/errors/ReservedNameDmat3.rts` — fixture.
+- `resources/sksl/errors/ReservedNameDmat4.rts` — fixture.
+- `resources/sksl/errors/ReservedNameDouble.rts` — fixture.
+- `resources/sksl/errors/ReservedNameDvec2.rts` — fixture.
+- `resources/sksl/errors/ReservedNameDvec3.rts` — fixture.
+- `resources/sksl/errors/ReservedNameDvec4.rts` — fixture.
+- `resources/sksl/errors/ReservedNameEnum.rts` — fixture.
+- `resources/sksl/errors/ReservedNameExtern.rts` — fixture.
+- `resources/sksl/errors/ReservedNameExternal.rts` — fixture.
+- `resources/sksl/errors/ReservedNameFixed.rts` — fixture.
+- `resources/sksl/errors/ReservedNameFvec2.rts` — fixture.
+- `resources/sksl/errors/ReservedNameFvec3.rts` — fixture.
+- `resources/sksl/errors/ReservedNameFvec4.rts` — fixture.
+- `resources/sksl/errors/ReservedNameGoto.rts` — fixture.
+- `resources/sksl/errors/ReservedNameHvec2.rts` — fixture.
+- `resources/sksl/errors/ReservedNameHvec3.rts` — fixture.
+- `resources/sksl/errors/ReservedNameHvec4.rts` — fixture.
+- `resources/sksl/errors/ReservedNameImage.rts` — fixture.
+- `resources/sksl/errors/ReservedNameInput.rts` — fixture.
+- `resources/sksl/errors/ReservedNameInterface.rts` — fixture.
+- `resources/sksl/errors/ReservedNameInvariant.rts` — fixture.
+- `resources/sksl/errors/ReservedNameLong.rts` — fixture.
+- `resources/sksl/errors/ReservedNameNamespace.rts` — fixture.
+- `resources/sksl/errors/ReservedNameOutput.rts` — fixture.
+- `resources/sksl/errors/ReservedNamePacked.rts` — fixture.
+- `resources/sksl/errors/ReservedNamePrecision.rts` — fixture.
+- `resources/sksl/errors/ReservedNamePublic.rts` — fixture.
+- `resources/sksl/errors/ReservedNameSampler.rts` — fixture.
+- `resources/sksl/errors/ReservedNameSizeof.rts` — fixture.
+- `resources/sksl/errors/ReservedNameStatic.rts` — fixture.
+- `resources/sksl/errors/ReservedNameSubpassInput.rts` — fixture.
+- `resources/sksl/errors/ReservedNameSuperp.rts` — fixture.
+- `resources/sksl/errors/ReservedNameTemplate.rts` — fixture.
+- `resources/sksl/errors/ReservedNameTexture.rts` — fixture.
+- `resources/sksl/errors/ReservedNameThis.rts` — fixture.
+- `resources/sksl/errors/ReservedNameTypedef.rts` — fixture.
+- `resources/sksl/errors/ReservedNameUnion.rts` — fixture.
+- `resources/sksl/errors/ReservedNameUnsigned.rts` — fixture.
+- `resources/sksl/errors/ReservedNameUsing.rts` — fixture.
+- `resources/sksl/errors/ReservedNameVarying.rts` — fixture.
+- `resources/sksl/errors/ReservedNameVolatile.rts` — fixture.
+- `resources/sksl/errors/ReturnDifferentType.rts` — fixture.
+- `resources/sksl/errors/ReturnFromVoid.rts` — fixture.
+- `resources/sksl/errors/ReturnMissingValue.rts` — fixture.
+- `resources/sksl/errors/ReturnTypeMismatch.rts` — fixture.
+- `resources/sksl/errors/SamplerExternalOES.frag` — fixture.
+- `resources/sksl/errors/SelfReferentialInitializerExpression.rts` — fixture.
+- `resources/sksl/errors/SpuriousFloat.rts` — fixture.
+- `resources/sksl/errors/StructMemberReservedName.rts` — fixture.
+- `resources/sksl/errors/StructNameWithoutIdentifier.rts` — fixture.
+- `resources/sksl/errors/StructRedefinition.rts` — fixture.
+- `resources/sksl/errors/StructTooDeeplyNested.rts` — fixture.
+- `resources/sksl/errors/StructVariableReservedName.rts` — fixture.
+- `resources/sksl/errors/SwitchDuplicateCase.rts` — fixture.
+- `resources/sksl/errors/SwitchDuplicateDefault.rts` — fixture.
+- `resources/sksl/errors/SwitchDuplicateVariable.rts` — fixture.
+- `resources/sksl/errors/SwitchHoistingAtomicArray.sksl` — fixture.
+- `resources/sksl/errors/SwitchTypes.rts` — fixture.
+- `resources/sksl/errors/SwitchVariableScope.rts` — fixture.
+- `resources/sksl/errors/SwitchWithContinueInside.sksl` — fixture.
+- `resources/sksl/errors/SwizzleConstantOutput.rts` — fixture.
+- `resources/sksl/errors/SwizzleDomain.rts` — fixture.
+- `resources/sksl/errors/SwizzleMatrix.rts` — fixture.
+- `resources/sksl/errors/SwizzleOnlyLiterals.rts` — fixture.
+- `resources/sksl/errors/SwizzleOutOfBounds.rts` — fixture.
+- `resources/sksl/errors/SwizzleTooManyComponents.rts` — fixture.
+- `resources/sksl/errors/TernaryMismatch.rts` — fixture.
+- `resources/sksl/errors/UnassignedOutParameter.rts` — fixture.
+- `resources/sksl/errors/UndeclaredFunction.rts` — fixture.
+- `resources/sksl/errors/UndefinedFunction.rts` — fixture.
+- `resources/sksl/errors/UndefinedSymbol.rts` — fixture.
+- `resources/sksl/errors/UniformStructFanOut.sksl` — fixture.
+- `resources/sksl/errors/UniformVarWithInitializerExpression.rts` — fixture.
+- `resources/sksl/errors/UnknownDivideByZero.sksl` — fixture.
+- `resources/sksl/errors/UnscopedVariableInDoWhile.sksl` — fixture.
+- `resources/sksl/errors/UnscopedVariableInElse.rts` — fixture.
+- `resources/sksl/errors/UnscopedVariableInFor.rts` — fixture.
+- `resources/sksl/errors/UnscopedVariableInIf.rts` — fixture.
+- `resources/sksl/errors/UnscopedVariableInWhile.sksl` — fixture.
+- `resources/sksl/errors/UnsupportedGLSLIdentifiers.rts` — fixture.
+- `resources/sksl/errors/UsingInvalidValue.rts` — fixture.
+- `resources/sksl/errors/VectorIndexOutOfRange.rts` — fixture.
+- `resources/sksl/errors/VectorInlinedIndexOutOfRange.sksl` — fixture.
+- `resources/sksl/errors/VectorSlice.rts` — fixture.
+- `resources/sksl/errors/VertexEarlyReturn.vert` — fixture.
+- `resources/sksl/errors/VoidConstructor.rts` — fixture.
+- `resources/sksl/errors/VoidInStruct.rts` — fixture.
+- `resources/sksl/errors/VoidVariable.rts` — fixture.
+- `resources/sksl/errors/WhileTypeMismatch.sksl` — fixture.
+- `resources/sksl/es2_conformance/import_conformance_tests.py` — fixture.
+- `resources/sksl/folding/ArrayFolding.sksl` — fixture.
+- `resources/sksl/folding/ArraySizeFolding.rts` — fixture.
+- `resources/sksl/folding/AssignmentOps.rts` — fixture.
+- `resources/sksl/folding/BoolFolding.rts` — fixture.
+- `resources/sksl/folding/CastFolding.rts` — fixture.
+- `resources/sksl/folding/FloatFolding.rts` — fixture.
+- `resources/sksl/folding/IntFoldingES2.rts` — fixture.
+- `resources/sksl/folding/IntFoldingES3.sksl` — fixture.
+- `resources/sksl/folding/LogicalNot.rts` — fixture.
+- `resources/sksl/folding/MatrixFoldingES2.rts` — fixture.
+- `resources/sksl/folding/MatrixFoldingES3.sksl` — fixture.
+- `resources/sksl/folding/MatrixNoOpFolding.rts` — fixture.
+- `resources/sksl/folding/MatrixScalarNoOpFolding.rts` — fixture.
+- `resources/sksl/folding/MatrixVectorNoOpFolding.rts` — fixture.
+- `resources/sksl/folding/Negation.rts` — fixture.
+- `resources/sksl/folding/PreserveSideEffects.rts` — fixture.
+- `resources/sksl/folding/SelfAssignment.rts` — fixture.
+- `resources/sksl/folding/ShortCircuitBoolFolding.rts` — fixture.
+- `resources/sksl/folding/StructFieldFolding.rts` — fixture.
+- `resources/sksl/folding/StructFieldNoFolding.rts` — fixture.
+- `resources/sksl/folding/SwitchCaseFolding.rts` — fixture.
+- `resources/sksl/folding/SwizzleFolding.rts` — fixture.
+- `resources/sksl/folding/TernaryFolding.rts` — fixture.
+- `resources/sksl/folding/VectorScalarFolding.rts` — fixture.
+- `resources/sksl/folding/VectorVectorFolding.rts` — fixture.
+- `resources/sksl/glsl/BuiltinVariableSetup.sksl` — fixture.
+- `resources/sksl/glsl/ForceHighPrecision.sksl` — fixture.
+- `resources/sksl/glsl/LastFragColor.sksl` — fixture.
+- `resources/sksl/glsl/LastFragColorWithoutCaps.sksl` — fixture.
+- `resources/sksl/glsl/LayoutQualifiers.sksl` — fixture.
+- `resources/sksl/glsl/ShortIntPrecision.sksl` — fixture.
+- `resources/sksl/glsl/TextureSharpenVersion110.sksl` — fixture.
+- `resources/sksl/glsl/TextureVersion110.sksl` — fixture.
+- `resources/sksl/glsl/TypePrecision.sksl` — fixture.
+- `resources/sksl/glsl/Underscores.sksl` — fixture.
+- `resources/sksl/glsl/UsesPrecisionModifiers.sksl` — fixture.
+- `resources/sksl/glsl/Version110.sksl` — fixture.
+- `resources/sksl/glsl/Version450Core.sksl` — fixture.
+- `resources/sksl/inliner/CommaExpressionsAllowInlining.sksl` — fixture.
+- `resources/sksl/inliner/DoWhileBodyMustBeInlinedIntoAScope.sksl` — fixture.
+- `resources/sksl/inliner/DoWhileTestCannotBeInlined.sksl` — fixture.
+- `resources/sksl/inliner/ExponentialGrowth.sksl` — fixture.
+- `resources/sksl/inliner/ForBodyMustBeInlinedIntoAScope.sksl` — fixture.
+- `resources/sksl/inliner/ForInitializerExpressionsCanBeInlined.sksl` — fixture.
+- `resources/sksl/inliner/ForWithReturnInsideCannotBeInlined.sksl` — fixture.
+- `resources/sksl/inliner/ForWithoutReturnInsideCanBeInlined.sksl` — fixture.
+- `resources/sksl/inliner/IfBodyMustBeInlinedIntoAScope.sksl` — fixture.
+- `resources/sksl/inliner/IfElseBodyMustBeInlinedIntoAScope.sksl` — fixture.
+- `resources/sksl/inliner/IfElseChainWithReturnsCanBeInlined.sksl` — fixture.
+- `resources/sksl/inliner/IfTestCanBeInlined.sksl` — fixture.
+- `resources/sksl/inliner/IfWithReturnsCanBeInlined.sksl` — fixture.
+- `resources/sksl/inliner/InlineKeywordOverridesThreshold.sksl` — fixture.
+- `resources/sksl/inliner/InlineThreshold.sksl` — fixture.
+- `resources/sksl/inliner/InlineUnscopedVariable.sksl` — fixture.
+- `resources/sksl/inliner/InlineWithModifiedArgument.sksl` — fixture.
+- `resources/sksl/inliner/InlineWithNestedBigCalls.sksl` — fixture.
+- `resources/sksl/inliner/InlineWithNestedCalls.sksl` — fixture.
+- `resources/sksl/inliner/InlineWithUnmodifiedArgument.sksl` — fixture.
+- `resources/sksl/inliner/InlineWithUnnecessaryBlocks.sksl` — fixture.
+- `resources/sksl/inliner/InlinerAvoidsVariableNameOverlap.sksl` — fixture.
+- `resources/sksl/inliner/InlinerCanBeDisabled.sksl` — fixture.
+- `resources/sksl/inliner/InlinerElidesTempVarForReturnsInsideBlock.sksl` — fixture.
+- `resources/sksl/inliner/InlinerManglesNames.sksl` — fixture.
+- `resources/sksl/inliner/InlinerUsesTempVarForMultipleReturns.sksl` — fixture.
+- `resources/sksl/inliner/InlinerUsesTempVarForReturnsInsideBlockWithVar.sksl` — fixture.
+- `resources/sksl/inliner/IntrinsicNameCollision.sksl` — fixture.
+- `resources/sksl/inliner/ModifiedArrayParametersCannotBeInlined.sksl` — fixture.
+- `resources/sksl/inliner/ModifiedStructParametersCannotBeInlined.sksl` — fixture.
+- `resources/sksl/inliner/NoInline.sksl` — fixture.
+- `resources/sksl/inliner/Ossfuzz37994.sksl` — fixture.
+- `resources/sksl/inliner/Ossfuzz66207.sksl` — fixture.
+- `resources/sksl/inliner/ShortCircuitEvaluationsCannotInlineRightHandSide.sksl` — fixture.
+- `resources/sksl/inliner/StaticSwitch.sksl` — fixture.
+- `resources/sksl/inliner/StructsCanBeInlinedSafely.sksl` — fixture.
+- `resources/sksl/inliner/SwitchWithCastCanBeInlined.sksl` — fixture.
+- `resources/sksl/inliner/SwitchWithoutReturnInsideCanBeInlined.sksl` — fixture.
+- `resources/sksl/inliner/SwizzleCanBeInlinedDirectly.sksl` — fixture.
+- `resources/sksl/inliner/TernaryResultsCannotBeInlined.sksl` — fixture.
+- `resources/sksl/inliner/TernaryTestCanBeInlined.sksl` — fixture.
+- `resources/sksl/inliner/TrivialArgumentsInlineDirectly.sksl` — fixture.
+- `resources/sksl/inliner/TrivialArgumentsInlineDirectlyES3.sksl` — fixture.
+- `resources/sksl/inliner/TypeShadowing.sksl` — fixture.
+- `resources/sksl/inliner/WhileBodyMustBeInlinedIntoAScope.sksl` — fixture.
+- `resources/sksl/inliner/WhileTestCannotBeInlined.sksl` — fixture.
+- `resources/sksl/intrinsics/AbsFloat.sksl` — fixture.
+- `resources/sksl/intrinsics/AbsInt.sksl` — fixture.
+- `resources/sksl/intrinsics/Acos.sksl` — fixture.
+- `resources/sksl/intrinsics/Acosh.sksl` — fixture.
+- `resources/sksl/intrinsics/All.sksl` — fixture.
+- `resources/sksl/intrinsics/Any.sksl` — fixture.
+- `resources/sksl/intrinsics/Asin.sksl` — fixture.
+- `resources/sksl/intrinsics/Asinh.sksl` — fixture.
+- `resources/sksl/intrinsics/Atan.sksl` — fixture.
+- `resources/sksl/intrinsics/Atanh.sksl` — fixture.
+- `resources/sksl/intrinsics/BitCount.sksl` — fixture.
+- `resources/sksl/intrinsics/Ceil.sksl` — fixture.
+- `resources/sksl/intrinsics/ClampFloat.sksl` — fixture.
+- `resources/sksl/intrinsics/ClampInt.sksl` — fixture.
+- `resources/sksl/intrinsics/ClampUInt.sksl` — fixture.
+- `resources/sksl/intrinsics/Cos.sksl` — fixture.
+- `resources/sksl/intrinsics/Cosh.sksl` — fixture.
+- `resources/sksl/intrinsics/Cross.sksl` — fixture.
+- `resources/sksl/intrinsics/CrossNoInline.sksl` — fixture.
+- `resources/sksl/intrinsics/DFdx.sksl` — fixture.
+- `resources/sksl/intrinsics/DFdy.sksl` — fixture.
+- `resources/sksl/intrinsics/DFdyNoRTFlip.sksl` — fixture.
+- `resources/sksl/intrinsics/Degrees.sksl` — fixture.
+- `resources/sksl/intrinsics/Determinant.sksl` — fixture.
+- `resources/sksl/intrinsics/Distance.sksl` — fixture.
+- `resources/sksl/intrinsics/Dot.sksl` — fixture.
+- `resources/sksl/intrinsics/Equal.sksl` — fixture.
+- `resources/sksl/intrinsics/Exp.sksl` — fixture.
+- `resources/sksl/intrinsics/Exp2.sksl` — fixture.
+- `resources/sksl/intrinsics/FaceForward.sksl` — fixture.
+- `resources/sksl/intrinsics/FindLSB.sksl` — fixture.
+- `resources/sksl/intrinsics/FindMSB.sksl` — fixture.
+- `resources/sksl/intrinsics/FloatBitsToInt.sksl` — fixture.
+- `resources/sksl/intrinsics/FloatBitsToUint.sksl` — fixture.
+- `resources/sksl/intrinsics/Floor.sksl` — fixture.
+- `resources/sksl/intrinsics/Fma.sksl` — fixture.
+- `resources/sksl/intrinsics/Fract.sksl` — fixture.
+- `resources/sksl/intrinsics/Frexp.sksl` — fixture.
+- `resources/sksl/intrinsics/Fwidth.sksl` — fixture.
+- `resources/sksl/intrinsics/GreaterThan.sksl` — fixture.
+- `resources/sksl/intrinsics/GreaterThanEqual.sksl` — fixture.
+- `resources/sksl/intrinsics/IntBitsToFloat.sksl` — fixture.
+- `resources/sksl/intrinsics/Inverse.sksl` — fixture.
+- `resources/sksl/intrinsics/Inversesqrt.sksl` — fixture.
+- `resources/sksl/intrinsics/IsInf.sksl` — fixture.
+- `resources/sksl/intrinsics/IsNan.sksl` — fixture.
+- `resources/sksl/intrinsics/Ldexp.sksl` — fixture.
+- `resources/sksl/intrinsics/Length.sksl` — fixture.
+- `resources/sksl/intrinsics/LessThan.sksl` — fixture.
+- `resources/sksl/intrinsics/LessThanEqual.sksl` — fixture.
+- `resources/sksl/intrinsics/Log.sksl` — fixture.
+- `resources/sksl/intrinsics/Log2.sksl` — fixture.
+- `resources/sksl/intrinsics/MatrixCompMultES2.sksl` — fixture.
+- `resources/sksl/intrinsics/MatrixCompMultES3.sksl` — fixture.
+- `resources/sksl/intrinsics/MaxFloat.sksl` — fixture.
+- `resources/sksl/intrinsics/MaxInt.sksl` — fixture.
+- `resources/sksl/intrinsics/MaxUint.sksl` — fixture.
+- `resources/sksl/intrinsics/MinFloat.sksl` — fixture.
+- `resources/sksl/intrinsics/MinInt.sksl` — fixture.
+- `resources/sksl/intrinsics/MinUint.sksl` — fixture.
+- `resources/sksl/intrinsics/MixBool.sksl` — fixture.
+- `resources/sksl/intrinsics/MixFloatES2.sksl` — fixture.
+- `resources/sksl/intrinsics/MixFloatES3.sksl` — fixture.
+- `resources/sksl/intrinsics/Mod.sksl` — fixture.
+- `resources/sksl/intrinsics/Modf.sksl` — fixture.
+- `resources/sksl/intrinsics/Normalize.sksl` — fixture.
+- `resources/sksl/intrinsics/Not.sksl` — fixture.
+- `resources/sksl/intrinsics/NotEqual.sksl` — fixture.
+- `resources/sksl/intrinsics/OuterProduct.sksl` — fixture.
+- `resources/sksl/intrinsics/Pack.sksl` — fixture.
+- `resources/sksl/intrinsics/PackHalf2x16.sksl` — fixture.
+- `resources/sksl/intrinsics/PackSnorm2x16.sksl` — fixture.
+- `resources/sksl/intrinsics/PackUnorm2x16.sksl` — fixture.
+- `resources/sksl/intrinsics/Pow.sksl` — fixture.
+- `resources/sksl/intrinsics/Radians.sksl` — fixture.
+- `resources/sksl/intrinsics/Reflect.sksl` — fixture.
+- `resources/sksl/intrinsics/Refract.sksl` — fixture.
+- `resources/sksl/intrinsics/Round.sksl` — fixture.
+- `resources/sksl/intrinsics/RoundEven.sksl` — fixture.
+- `resources/sksl/intrinsics/Sample.sksl` — fixture.
+- `resources/sksl/intrinsics/SampleGrad.sksl` — fixture.
+- `resources/sksl/intrinsics/SampleLod.sksl` — fixture.
+- `resources/sksl/intrinsics/Saturate.sksl` — fixture.
+- `resources/sksl/intrinsics/SignFloat.sksl` — fixture.
+- `resources/sksl/intrinsics/SignInt.sksl` — fixture.
+- `resources/sksl/intrinsics/Sin.sksl` — fixture.
+- `resources/sksl/intrinsics/Sinh.sksl` — fixture.
+- `resources/sksl/intrinsics/Smoothstep.sksl` — fixture.
+- `resources/sksl/intrinsics/Sqrt.sksl` — fixture.
+- `resources/sksl/intrinsics/Step.sksl` — fixture.
+- `resources/sksl/intrinsics/Tan.sksl` — fixture.
+- `resources/sksl/intrinsics/Tanh.sksl` — fixture.
+- `resources/sksl/intrinsics/TextureReadImage.sksl` — fixture.
+- `resources/sksl/intrinsics/TextureReadSampler.sksl` — fixture.
+- `resources/sksl/intrinsics/TextureReadTexture.sksl` — fixture.
+- `resources/sksl/intrinsics/TextureSizeImage.sksl` — fixture.
+- `resources/sksl/intrinsics/TextureSizeSampler.sksl` — fixture.
+- `resources/sksl/intrinsics/TextureSizeTexture.sksl` — fixture.
+- `resources/sksl/intrinsics/Transpose.sksl` — fixture.
+- `resources/sksl/intrinsics/Trunc.sksl` — fixture.
+- `resources/sksl/intrinsics/UintBitsToFloat.sksl` — fixture.
+- `resources/sksl/intrinsics/Unpack.sksl` — fixture.
+- `resources/sksl/mesh/MeshFragment.mfrag` — fixture.
+- `resources/sksl/mesh/MeshFragmentWithBlender.mfrag` — fixture.
+- `resources/sksl/mesh/MeshFragmentWithColorFilter.mfrag` — fixture.
+- `resources/sksl/mesh/MeshFragmentWithShader.mfrag` — fixture.
+- `resources/sksl/mesh/MeshVertex.mvert` — fixture.
+- `resources/sksl/metal/CastHalf4ToMat2x2.sksl` — fixture.
+- `resources/sksl/metal/CastMat2x2ToMat3x3.sksl` — fixture.
+- `resources/sksl/metal/CastMat2x3ToMat4x4.sksl` — fixture.
+- `resources/sksl/metal/CastMat4x4ToMat3x4.sksl` — fixture.
+- `resources/sksl/metal/CastMat4x4ToMat4x3.sksl` — fixture.
+- `resources/sksl/metal/LastFragColorWithoutCaps.sksl` — fixture.
+- `resources/sksl/metal/LayoutMtlSampler.sksl` — fixture.
+- `resources/sksl/metal/NumericGlobals.sksl` — fixture.
+- `resources/sksl/metal/OpaqueTypeInInterfaceBlock.sksl` — fixture.
+- `resources/sksl/metal/OpaqueTypeInStruct.sksl` — fixture.
+- `resources/sksl/metal/Ossfuzz48371.sksl` — fixture.
+- `resources/sksl/metal/OutParams.sksl` — fixture.
+- `resources/sksl/metal/OutVarsRequireLocation.sksl` — fixture.
+- `resources/sksl/metal/SamplerGlobals.sksl` — fixture.
+- `resources/sksl/metal/SwizzleHelper.sksl` — fixture.
+- `resources/sksl/realistic/BlueNeurons.rts` — fixture.
+- `resources/sksl/realistic/GaussianBlur.sksl` — fixture.
+- `resources/sksl/realistic/HSLColorFilter.rtcf` — fixture.
+- `resources/sksl/realistic/HighContrastFilter.rtcf` — fixture.
+- `resources/sksl/realistic/RippleShader.rts` — fixture.
+- `resources/sksl/runtime/AllowNarrowingConversions.rts` — fixture.
+- `resources/sksl/runtime/ArrayIndexing.rts` — fixture.
+- `resources/sksl/runtime/ArrayNarrowingConversions.rts` — fixture.
+- `resources/sksl/runtime/Blend.rtb` — fixture.
+- `resources/sksl/runtime/ChildEffectSimple.rts` — fixture.
+- `resources/sksl/runtime/ChildEffectSpecialization.privrts` — fixture.
+- `resources/sksl/runtime/ChildEffectSpecializationFanOut.privrts` — fixture.
+- `resources/sksl/runtime/ChildEffects.rts` — fixture.
+- `resources/sksl/runtime/ColorConversion.rts` — fixture.
+- `resources/sksl/runtime/Commutative.rts` — fixture.
+- `resources/sksl/runtime/ConstPreservation.rts` — fixture.
+- `resources/sksl/runtime/ConversionConstructors.rts` — fixture.
+- `resources/sksl/runtime/DivideByZero.rts` — fixture.
+- `resources/sksl/runtime/FragCoordAccess.privrts` — fixture.
+- `resources/sksl/runtime/FunctionParameterAliasingFirst.rts` — fixture.
+- `resources/sksl/runtime/FunctionParameterAliasingSecond.rts` — fixture.
+- `resources/sksl/runtime/GLSLTypeNames.rts` — fixture.
+- `resources/sksl/runtime/GLSLTypeNamesES3.rts` — fixture.
+- `resources/sksl/runtime/GlobalVariables.rts` — fixture.
+- `resources/sksl/runtime/IfElseBinding.rts` — fixture.
+- `resources/sksl/runtime/IncrementDisambiguation.rts` — fixture.
+- `resources/sksl/runtime/LargeProgram_BlocklessLoops.rts` — fixture.
+- `resources/sksl/runtime/LargeProgram_FlatLoop.rts` — fixture.
+- `resources/sksl/runtime/LargeProgram_Functions.rts` — fixture.
+- `resources/sksl/runtime/LargeProgram_NestedLoops.rts` — fixture.
+- `resources/sksl/runtime/LargeProgram_SplitLoops.rts` — fixture.
+- `resources/sksl/runtime/LargeProgram_StackDepth.rts` — fixture.
+- `resources/sksl/runtime/LargeProgram_ZeroIterFor.rts` — fixture.
+- `resources/sksl/runtime/LoopFloat.rts` — fixture.
+- `resources/sksl/runtime/LoopInt.rts` — fixture.
+- `resources/sksl/runtime/MultipleCallsInOneStatement.rts` — fixture.
+- `resources/sksl/runtime/Ossfuzz418486361.rts` — fixture.
+- `resources/sksl/runtime/Ossfuzz52603.rts` — fixture.
+- `resources/sksl/runtime/Ossfuzz65111.rtb` — fixture.
+- `resources/sksl/runtime/PrecisionQualifiers.rts` — fixture.
+- `resources/sksl/runtime/QualifierOrder.rts` — fixture.
+- `resources/sksl/runtime/RecursiveComparison_Arrays.rts` — fixture.
+- `resources/sksl/runtime/RecursiveComparison_Structs.rts` — fixture.
+- `resources/sksl/runtime/RecursiveComparison_Types.rts` — fixture.
+- `resources/sksl/runtime/RecursiveComparison_Vectors.rts` — fixture.
+- `resources/sksl/runtime/SampleWithExplicitCoord.rts` — fixture.
+- `resources/sksl/runtime/SharedFunctions.rts` — fixture.
+- `resources/sksl/runtime/Switch.rts` — fixture.
+- `resources/sksl/runtime/SwitchDefaultOnly.rts` — fixture.
+- `resources/sksl/runtime/SwitchWithFallthrough.rts` — fixture.
+- `resources/sksl/runtime/SwitchWithLoops.rts` — fixture.
+- `resources/sksl/runtime/VectorIndexing.rts` — fixture.
+- `resources/sksl/runtime_errors/Caps.rts` — fixture.
+- `resources/sksl/runtime_errors/DerivativesES2.rts` — fixture.
+- `resources/sksl/runtime_errors/ES3Types.rts` — fixture.
+- `resources/sksl/runtime_errors/FirstClassArrays.rts` — fixture.
+- `resources/sksl/runtime_errors/FragCoordAccess.rts` — fixture.
+- `resources/sksl/runtime_errors/IllegalArrayOps.rts` — fixture.
+- `resources/sksl/runtime_errors/IllegalIndexing.rts` — fixture.
+- `resources/sksl/runtime_errors/IllegalLayoutFlags.rts` — fixture.
+- `resources/sksl/runtime_errors/IllegalModifiers.rts` — fixture.
+- `resources/sksl/runtime_errors/IllegalOperators.rts` — fixture.
+- `resources/sksl/runtime_errors/IllegalPrecisionQualifiers.rts` — fixture.
+- `resources/sksl/runtime_errors/IllegalShaderSampling.rts` — fixture.
+- `resources/sksl/runtime_errors/IllegalShaderUse.rts` — fixture.
+- `resources/sksl/runtime_errors/IllegalStatements.rts` — fixture.
+- `resources/sksl/runtime_errors/InvalidBlendMain.rtb` — fixture.
+- `resources/sksl/runtime_errors/InvalidColorFilterFeatures.rtcf` — fixture.
+- `resources/sksl/runtime_errors/InvalidColorFilterMain.rtcf` — fixture.
+- `resources/sksl/runtime_errors/InvalidShaderMain.rts` — fixture.
+- `resources/sksl/runtime_errors/InvalidUniformTypes.rts` — fixture.
+- `resources/sksl/runtime_errors/InvalidUniformTypesES3.rts` — fixture.
+- `resources/sksl/runtime_errors/LoopConditionErrors.rts` — fixture.
+- `resources/sksl/runtime_errors/LoopExpressionErrors.rts` — fixture.
+- `resources/sksl/runtime_errors/LoopInitializerErrors.rts` — fixture.
+- `resources/sksl/runtime_errors/LoopStructureErrors.rts` — fixture.
+- `resources/sksl/runtime_errors/Ossfuzz36655.rts` — fixture.
+- `resources/sksl/runtime_errors/Ossfuzz38131.rts` — fixture.
+- `resources/sksl/runtime_errors/Ossfuzz45279.rts` — fixture.
+- `resources/sksl/runtime_errors/Ossfuzz66263.rts` — fixture.
+- `resources/sksl/runtime_errors/PrivateFunctions.rts` — fixture.
+- `resources/sksl/runtime_errors/ProgramTooLarge_StackDepth.rts` — fixture.
+- `resources/sksl/runtime_errors/ReservedNameSamplerTypes.rts` — fixture.
+- `resources/sksl/runtime_errors/ReservedNameSubpassInputTypes.rts` — fixture.
+- `resources/sksl/runtime_errors/ReservedNameTexture2D.rts` — fixture.
+- `resources/sksl/runtime_errors/TypeAliases.rts` — fixture.
+- `resources/sksl/runtime_errors/UnsupportedExtension.rts` — fixture.
+- `resources/sksl/runtime_errors/UnsupportedTypeFragmentProcessor.rts` — fixture.
+- `resources/sksl/runtime_errors/UnsupportedTypeSampler.rts` — fixture.
+- `resources/sksl/runtime_errors/UnsupportedTypeTexture.rts` — fixture.
+- `resources/sksl/shared/ArrayCast.sksl` — fixture.
+- `resources/sksl/shared/ArrayComparison.sksl` — fixture.
+- `resources/sksl/shared/ArrayConstructors.sksl` — fixture.
+- `resources/sksl/shared/ArrayFollowedByScalar.sksl` — fixture.
+- `resources/sksl/shared/ArrayIndexTypes.sksl` — fixture.
+- `resources/sksl/shared/ArrayNarrowingConversions.sksl` — fixture.
+- `resources/sksl/shared/ArrayTypes.sksl` — fixture.
+- `resources/sksl/shared/ArrayUnsizedParam.sksl` — fixture.
+- `resources/sksl/shared/Assignment.sksl` — fixture.
+- `resources/sksl/shared/Caps.sksl` — fixture.
+- `resources/sksl/shared/CastsRoundTowardZero.sksl` — fixture.
+- `resources/sksl/shared/Clockwise.sksl` — fixture.
+- `resources/sksl/shared/ClockwiseNoRTFlip.sksl` — fixture.
+- `resources/sksl/shared/CommaMixedTypes.sksl` — fixture.
+- `resources/sksl/shared/CommaSideEffects.sksl` — fixture.
+- `resources/sksl/shared/CompileTimeConstantVariables.sksl` — fixture.
+- `resources/sksl/shared/ComplexDelete.sksl` — fixture.
+- `resources/sksl/shared/ConstArray.sksl` — fixture.
+- `resources/sksl/shared/ConstGlobal.sksl` — fixture.
+- `resources/sksl/shared/ConstVariableComparison.sksl` — fixture.
+- `resources/sksl/shared/ConstantCompositeAccessViaConstantIndex.sksl` — fixture.
+- `resources/sksl/shared/ConstantCompositeAccessViaDynamicIndex.sksl` — fixture.
+- `resources/sksl/shared/ConstantIf.sksl` — fixture.
+- `resources/sksl/shared/Control.sksl` — fixture.
+- `resources/sksl/shared/DeadDoWhileLoop.sksl` — fixture.
+- `resources/sksl/shared/DeadGlobals.sksl` — fixture.
+- `resources/sksl/shared/DeadIfStatement.sksl` — fixture.
+- `resources/sksl/shared/DeadLoopVariable.sksl` — fixture.
+- `resources/sksl/shared/DeadReturn.sksl` — fixture.
+- `resources/sksl/shared/DeadReturnES3.sksl` — fixture.
+- `resources/sksl/shared/DeadStripFunctions.sksl` — fixture.
+- `resources/sksl/shared/DependentInitializers.sksl` — fixture.
+- `resources/sksl/shared/Derivatives.sksl` — fixture.
+- `resources/sksl/shared/DerivativesUnused.sksl` — fixture.
+- `resources/sksl/shared/Discard.sksl` — fixture.
+- `resources/sksl/shared/DoWhileControlFlow.sksl` — fixture.
+- `resources/sksl/shared/DoubleNegation.sksl` — fixture.
+- `resources/sksl/shared/EmptyBlocksES2.sksl` — fixture.
+- `resources/sksl/shared/EmptyBlocksES3.sksl` — fixture.
+- `resources/sksl/shared/ForLoopControlFlow.sksl` — fixture.
+- `resources/sksl/shared/ForLoopMultipleInitES3.sksl` — fixture.
+- `resources/sksl/shared/ForLoopShadowing.sksl` — fixture.
+- `resources/sksl/shared/FragCoords.sksl` — fixture.
+- `resources/sksl/shared/FragCoordsNoRTFlip.sksl` — fixture.
+- `resources/sksl/shared/FunctionAnonymousParameters.sksl` — fixture.
+- `resources/sksl/shared/FunctionArgTypeMatch.sksl` — fixture.
+- `resources/sksl/shared/FunctionParametersOfTextureAndSamplerType.sksl` — fixture.
+- `resources/sksl/shared/FunctionPrototype.sksl` — fixture.
+- `resources/sksl/shared/FunctionReturnTypeMatch.sksl` — fixture.
+- `resources/sksl/shared/Functions.sksl` — fixture.
+- `resources/sksl/shared/GeometricIntrinsics.sksl` — fixture.
+- `resources/sksl/shared/HelloWorld.sksl` — fixture.
+- `resources/sksl/shared/Hex.sksl` — fixture.
+- `resources/sksl/shared/HexUnsigned.sksl` — fixture.
+- `resources/sksl/shared/IfStatement.sksl` — fixture.
+- `resources/sksl/shared/InoutParameters.sksl` — fixture.
+- `resources/sksl/shared/InoutParamsAreDistinct.sksl` — fixture.
+- `resources/sksl/shared/InstanceID.vert` — fixture.
+- `resources/sksl/shared/InstanceIDInFunction.vert` — fixture.
+- `resources/sksl/shared/IntegerDivisionES3.sksl` — fixture.
+- `resources/sksl/shared/InterfaceBlockBuffer.sksl` — fixture.
+- `resources/sksl/shared/InterfaceBlockInoutArray.sksl` — fixture.
+- `resources/sksl/shared/InterfaceBlockMultipleAnonymous.sksl` — fixture.
+- `resources/sksl/shared/InterfaceBlockNamed.sksl` — fixture.
+- `resources/sksl/shared/InterfaceBlockNamedArray.sksl` — fixture.
+- `resources/sksl/shared/InterpolantIn.frag` — fixture.
+- `resources/sksl/shared/InterpolantOut.vert` — fixture.
+- `resources/sksl/shared/LogicalAndShortCircuit.sksl` — fixture.
+- `resources/sksl/shared/LogicalOrShortCircuit.sksl` — fixture.
+- `resources/sksl/shared/Matrices.sksl` — fixture.
+- `resources/sksl/shared/MatricesNonsquare.sksl` — fixture.
+- `resources/sksl/shared/MatrixConstructorsES2.sksl` — fixture.
+- `resources/sksl/shared/MatrixConstructorsES3.sksl` — fixture.
+- `resources/sksl/shared/MatrixEquality.sksl` — fixture.
+- `resources/sksl/shared/MatrixIndexLookup.sksl` — fixture.
+- `resources/sksl/shared/MatrixIndexStore.sksl` — fixture.
+- `resources/sksl/shared/MatrixOpEqualsES2.sksl` — fixture.
+- `resources/sksl/shared/MatrixOpEqualsES3.sksl` — fixture.
+- `resources/sksl/shared/MatrixScalarMath.sksl` — fixture.
+- `resources/sksl/shared/MatrixSwizzleStore.sksl` — fixture.
+- `resources/sksl/shared/MatrixToVectorCast.sksl` — fixture.
+- `resources/sksl/shared/MultipleAssignments.sksl` — fixture.
+- `resources/sksl/shared/NestedComparisonIntrinsics.sksl` — fixture.
+- `resources/sksl/shared/NoFragCoordsPos.vert` — fixture.
+- `resources/sksl/shared/NoFragCoordsPosRT.vert` — fixture.
+- `resources/sksl/shared/NormalizationVert.vert` — fixture.
+- `resources/sksl/shared/NumberCasts.sksl` — fixture.
+- `resources/sksl/shared/NumberConversions.sksl` — fixture.
+- `resources/sksl/shared/Octal.sksl` — fixture.
+- `resources/sksl/shared/Offset.sksl` — fixture.
+- `resources/sksl/shared/OperatorsES2.sksl` — fixture.
+- `resources/sksl/shared/OperatorsES3.sksl` — fixture.
+- `resources/sksl/shared/Optimizations.sksl` — fixture.
+- `resources/sksl/shared/Ossfuzz26167.sksl` — fixture.
+- `resources/sksl/shared/Ossfuzz26759.sksl` — fixture.
+- `resources/sksl/shared/Ossfuzz28794.sksl` — fixture.
+- `resources/sksl/shared/Ossfuzz28904.sksl` — fixture.
+- `resources/sksl/shared/Ossfuzz29085.sksl` — fixture.
+- `resources/sksl/shared/Ossfuzz29494.sksl` — fixture.
+- `resources/sksl/shared/Ossfuzz36770.sksl` — fixture.
+- `resources/sksl/shared/Ossfuzz36852.sksl` — fixture.
+- `resources/sksl/shared/Ossfuzz37466.sksl` — fixture.
+- `resources/sksl/shared/Ossfuzz37677.sksl` — fixture.
+- `resources/sksl/shared/Ossfuzz37900.sksl` — fixture.
+- `resources/sksl/shared/Ossfuzz41000.sksl` — fixture.
+- `resources/sksl/shared/Ossfuzz50636.sksl` — fixture.
+- `resources/sksl/shared/Ossfuzz58483.sksl` — fixture.
+- `resources/sksl/shared/Ossfuzz60077.sksl` — fixture.
+- `resources/sksl/shared/Ossfuzz63170.sksl` — fixture.
+- `resources/sksl/shared/OutParams.sksl` — fixture.
+- `resources/sksl/shared/OutParamsAreDistinct.sksl` — fixture.
+- `resources/sksl/shared/OutParamsAreDistinctFromGlobal.sksl` — fixture.
+- `resources/sksl/shared/OutParamsDoubleSwizzle.sksl` — fixture.
+- `resources/sksl/shared/OutParamsFunctionCallInArgument.sksl` — fixture.
+- `resources/sksl/shared/Overflow.sksl` — fixture.
+- `resources/sksl/shared/PostfixExpressions.sksl` — fixture.
+- `resources/sksl/shared/PrefixExpressionsES2.sksl` — fixture.
+- `resources/sksl/shared/PrefixExpressionsES3.sksl` — fixture.
+- `resources/sksl/shared/RectangleTexture.sksl` — fixture.
+- `resources/sksl/shared/ReservedInGLSLButAllowedInSkSL.sksl` — fixture.
+- `resources/sksl/shared/ResizeMatrix.sksl` — fixture.
+- `resources/sksl/shared/ResizeMatrixNonsquare.sksl` — fixture.
+- `resources/sksl/shared/ReturnBadTypeFromMain.sksl` — fixture.
+- `resources/sksl/shared/ReturnColorFromMain.sksl` — fixture.
+- `resources/sksl/shared/ReturnsValueOnEveryPathES2.sksl` — fixture.
+- `resources/sksl/shared/ReturnsValueOnEveryPathES3.sksl` — fixture.
+- `resources/sksl/shared/SampleLocations.vert` — fixture.
+- `resources/sksl/shared/SampleMask.sksl` — fixture.
+- `resources/sksl/shared/ScalarConversionConstructorsES2.sksl` — fixture.
+- `resources/sksl/shared/ScalarConversionConstructorsES3.sksl` — fixture.
+- `resources/sksl/shared/ScopedSymbol.sksl` — fixture.
+- `resources/sksl/shared/StackingVectorCasts.sksl` — fixture.
+- `resources/sksl/shared/StaticSwitch.sksl` — fixture.
+- `resources/sksl/shared/StaticSwitchWithBreak.sksl` — fixture.
+- `resources/sksl/shared/StaticSwitchWithBreakInsideBlock.sksl` — fixture.
+- `resources/sksl/shared/StaticSwitchWithConditionalBreak.sksl` — fixture.
+- `resources/sksl/shared/StaticSwitchWithConditionalBreakInsideBlock.sksl` — fixture.
+- `resources/sksl/shared/StaticSwitchWithFallthroughA.sksl` — fixture.
+- `resources/sksl/shared/StaticSwitchWithFallthroughB.sksl` — fixture.
+- `resources/sksl/shared/StaticSwitchWithStaticConditionalBreak.sksl` — fixture.
+- `resources/sksl/shared/StaticSwitchWithStaticConditionalBreakInsideBlock.sksl` — fixture.
+- `resources/sksl/shared/StaticSwitchWithVarDecl.sksl` — fixture.
+- `resources/sksl/shared/StorageBuffer.sksl` — fixture.
+- `resources/sksl/shared/StorageBufferVertex.vert` — fixture.
+- `resources/sksl/shared/StructArrayFollowedByScalar.sksl` — fixture.
+- `resources/sksl/shared/StructComparison.sksl` — fixture.
+- `resources/sksl/shared/StructIndexLookup.sksl` — fixture.
+- `resources/sksl/shared/StructIndexStore.sksl` — fixture.
+- `resources/sksl/shared/StructMaxDepth.sksl` — fixture.
+- `resources/sksl/shared/Structs.sksl` — fixture.
+- `resources/sksl/shared/StructsInFunctions.sksl` — fixture.
+- `resources/sksl/shared/Switch.sksl` — fixture.
+- `resources/sksl/shared/SwitchDefaultOnly.sksl` — fixture.
+- `resources/sksl/shared/SwitchWithEarlyReturn.sksl` — fixture.
+- `resources/sksl/shared/SwitchWithFallthrough.sksl` — fixture.
+- `resources/sksl/shared/SwitchWithFallthroughAndVarDecls.sksl` — fixture.
+- `resources/sksl/shared/SwitchWithFallthroughGroups.sksl` — fixture.
+- `resources/sksl/shared/SwitchWithLoops.sksl` — fixture.
+- `resources/sksl/shared/SwitchWithLoopsES3.sksl` — fixture.
+- `resources/sksl/shared/SwizzleAsLValue.sksl` — fixture.
+- `resources/sksl/shared/SwizzleAsLValueES3.sksl` — fixture.
+- `resources/sksl/shared/SwizzleBoolConstants.sksl` — fixture.
+- `resources/sksl/shared/SwizzleByConstantIndex.sksl` — fixture.
+- `resources/sksl/shared/SwizzleByIndex.sksl` — fixture.
+- `resources/sksl/shared/SwizzleConstants.sksl` — fixture.
+- `resources/sksl/shared/SwizzleIndexLookup.sksl` — fixture.
+- `resources/sksl/shared/SwizzleIndexStore.sksl` — fixture.
+- `resources/sksl/shared/SwizzleLTRB.sksl` — fixture.
+- `resources/sksl/shared/SwizzleOpt.sksl` — fixture.
+- `resources/sksl/shared/SwizzleScalar.sksl` — fixture.
+- `resources/sksl/shared/SwizzleScalarBool.sksl` — fixture.
+- `resources/sksl/shared/SwizzleScalarInt.sksl` — fixture.
+- `resources/sksl/shared/TemporaryIndexLookup.sksl` — fixture.
+- `resources/sksl/shared/TernaryAsLValueEntirelyFoldable.sksl` — fixture.
+- `resources/sksl/shared/TernaryAsLValueFoldableTest.sksl` — fixture.
+- `resources/sksl/shared/TernaryComplexNesting.sksl` — fixture.
+- `resources/sksl/shared/TernaryExpression.sksl` — fixture.
+- `resources/sksl/shared/TernaryNesting.sksl` — fixture.
+- `resources/sksl/shared/TernaryOneZeroOptimization.sksl` — fixture.
+- `resources/sksl/shared/TernarySideEffects.sksl` — fixture.
+- `resources/sksl/shared/TernaryTrueFalseOptimization.sksl` — fixture.
+- `resources/sksl/shared/Texture2D.sksl` — fixture.
+- `resources/sksl/shared/TextureSharpen.sksl` — fixture.
+- `resources/sksl/shared/UnaryPositiveNegative.sksl` — fixture.
+- `resources/sksl/shared/UniformArray.sksl` — fixture.
+- `resources/sksl/shared/UniformBuffers.sksl` — fixture.
+- `resources/sksl/shared/UniformMatrixArray.sksl` — fixture.
+- `resources/sksl/shared/UniformMatrixResize.sksl` — fixture.
+- `resources/sksl/shared/UnusedVariables.sksl` — fixture.
+- `resources/sksl/shared/VectorConstructors.sksl` — fixture.
+- `resources/sksl/shared/VectorScalarMath.sksl` — fixture.
+- `resources/sksl/shared/VectorToMatrixCast.sksl` — fixture.
+- `resources/sksl/shared/VertexID.vert` — fixture.
+- `resources/sksl/shared/VertexIDInFunction.vert` — fixture.
+- `resources/sksl/shared/WhileLoopControlFlow.sksl` — fixture.
+- `resources/sksl/skrp/ImmediateOpsOpt.sksl` — fixture.
+- `resources/sksl/spirv/ArrayStrideInDifferentLayouts.sksl` — fixture.
+- `resources/sksl/spirv/CombinedSamplerTypeDawnCompatMode.sksl` — fixture.
+- `resources/sksl/spirv/ConstantVectorFromVector.sksl` — fixture.
+- `resources/sksl/spirv/ConstantVectorize.sksl` — fixture.
+- `resources/sksl/spirv/FunctionParametersOfTextureAndSamplerTypeDawnCompatMode.sksl` — fixture.
+- `resources/sksl/spirv/InterfaceBlockPushConstant.sksl` — fixture.
+- `resources/sksl/spirv/LayoutMultipleOf4.sksl` — fixture.
+- `resources/sksl/spirv/LayoutOutOfOrder.sksl` — fixture.
+- `resources/sksl/spirv/MixedSamplerTypes.sksl` — fixture.
+- `resources/sksl/spirv/OpaqueTypeInArray.sksl` — fixture.
+- `resources/sksl/spirv/Ossfuzz35916.sksl` — fixture.
+- `resources/sksl/spirv/Ossfuzz37627.sksl` — fixture.
+- `resources/sksl/spirv/Ossfuzz44096.sksl` — fixture.
+- `resources/sksl/spirv/Ossfuzz53202.sksl` — fixture.
+- `resources/sksl/spirv/Ossfuzz65538.sksl` — fixture.
+- `resources/sksl/spirv/Ossfuzz70523.sksl` — fixture.
+- `resources/sksl/spirv/SpecializationInCall.sksl` — fixture.
+- `resources/sksl/spirv/SpecializedFieldAccess.sksl` — fixture.
+- `resources/sksl/spirv/SpecializedSamplerFunctions.sksl` — fixture.
+- `resources/sksl/spirv/StructArrayMemberInDifferentLayouts.sksl` — fixture.
+- `resources/sksl/spirv/UnusedInterfaceBlock.sksl` — fixture.
+- `resources/sksl/spirv/WrongCombinedSamplerLayoutForWebGPUSampler.sksl` — fixture.
+- `resources/sksl/update_fuzzer.py` — fixture.
+- `resources/sksl/wgsl/BuiltinFragmentStageIO.sksl` — fixture.
+- `resources/sksl/wgsl/BuiltinVertexStageIO.vert` — fixture.
+- `resources/sksl/wgsl/CastMat2x2ToMat3x3.sksl` — fixture.
+- `resources/sksl/wgsl/CastMat2x2ToVec4.sksl` — fixture.
+- `resources/sksl/wgsl/CastMat2x3ToMat4x4.sksl` — fixture.
+- `resources/sksl/wgsl/CastMat4x4ToMat3x4.sksl` — fixture.
+- `resources/sksl/wgsl/CastMat4x4ToMat4x3.sksl` — fixture.
+- `resources/sksl/wgsl/CastVec4ToMat2x2.sksl` — fixture.
+- `resources/sksl/wgsl/EntrypointIsWrittenLast.sksl` — fixture.
+- `resources/sksl/wgsl/Equality.sksl` — fixture.
+- `resources/sksl/wgsl/ForLoopComplexCondAndNext.sksl` — fixture.
+- `resources/sksl/wgsl/FunctionCallDependencies.sksl` — fixture.
+- `resources/sksl/wgsl/GlobalUniforms.sksl` — fixture.
+- `resources/sksl/wgsl/IfStatement.sksl` — fixture.
+- `resources/sksl/wgsl/IndexExpression.sksl` — fixture.
+- `resources/sksl/wgsl/InterfaceBlockUniforms.sksl` — fixture.
+- `resources/sksl/wgsl/MainDoesNotHaveFragCoordParameter.sksl` — fixture.
+- `resources/sksl/wgsl/MainHasVoidReturn.sksl` — fixture.
+- `resources/sksl/wgsl/MatrixConstructorDiagonal.sksl` — fixture.
+- `resources/sksl/wgsl/NoF16Support.sksl` — fixture.
+- `resources/sksl/wgsl/OutParams.sksl` — fixture.
+- `resources/sksl/wgsl/PixelLocalStorage.sksl` — fixture.
+- `resources/sksl/wgsl/PolyfillIntrinsics.sksl` — fixture.
+- `resources/sksl/wgsl/Sample.sksl` — fixture.
+- `resources/sksl/wgsl/SubpassInput.sksl` — fixture.
+- `resources/sksl/wgsl/TextureIntrinsics.compute` — fixture.
+- `resources/sksl/wgsl/UniformArrays.sksl` — fixture.
+- `resources/sksl/wgsl/UniformMatrices.sksl` — fixture.
+- `resources/sksl/wgsl/UserDefinedPipelineIO.sksl` — fixture.
+- `resources/sksl/wgsl/VertexPositionOutputIsAlwaysDeclared.vert` — fixture.
+- `resources/sksl/wgsl/WorkgroupSize.compute` — fixture.
+- `resources/sksl/workarounds/AbsInt.sksl` — fixture.
+- `resources/sksl/workarounds/BlendGuardedDivide.sksl` — fixture.
+- `resources/sksl/workarounds/BuiltinDeterminantSupport.sksl` — fixture.
+- `resources/sksl/workarounds/BuiltinFMASupport.sksl` — fixture.
+- `resources/sksl/workarounds/DualSourceBlending.sksl` — fixture.
+- `resources/sksl/workarounds/FractNegative.sksl` — fixture.
+- `resources/sksl/workarounds/FragCoords.sksl` — fixture.
+- `resources/sksl/workarounds/LastFragColor.sksl` — fixture.
+- `resources/sksl/workarounds/LoopCondition.sksl` — fixture.
+- `resources/sksl/workarounds/MinAndAbsTogether.sksl` — fixture.
+- `resources/sksl/workarounds/MustDeclareFragmentFrontFacing.sksl` — fixture.
+- `resources/sksl/workarounds/NegatedAtan.sksl` — fixture.
+- `resources/sksl/workarounds/NegatedLdexp.sksl` — fixture.
+- `resources/sksl/workarounds/PowWithConstantExponent.sksl` — fixture.
+- `resources/sksl/workarounds/RewriteDoWhileLoops.sksl` — fixture.
+- `resources/sksl/workarounds/RewriteMatrixComparisons.sksl` — fixture.
+- `resources/sksl/workarounds/RewriteMatrixVectorMultiply.sksl` — fixture.
+- `resources/sksl/workarounds/TernaryShortCircuit.sksl` — fixture.
+- `resources/sksl/workarounds/VoidInSequenceExpressions.sksl` — fixture.
+- `resources/sksl/workarounds/VoidInSequenceExpressionsWithVoidMain.sksl` — fixture.
+- `resources/text/arabic.txt` — fixture.
+- `resources/text/armenian.txt` — fixture.
+- `resources/text/balinese.txt` — fixture.
+- `resources/text/bengali.txt` — fixture.
+- `resources/text/buginese.txt` — fixture.
+- `resources/text/cherokee.txt` — fixture.
+- `resources/text/cyrillic.txt` — fixture.
+- `resources/text/devanagari.txt` — fixture.
+- `resources/text/emoji.txt` — fixture.
+- `resources/text/english.txt` — fixture.
+- `resources/text/ethiopic.txt` — fixture.
+- `resources/text/greek.txt` — fixture.
+- `resources/text/han_simplified.txt` — fixture.
+- `resources/text/han_traditional.txt` — fixture.
+- `resources/text/hangul.txt` — fixture.
+- `resources/text/hebrew.txt` — fixture.
+- `resources/text/javanese.txt` — fixture.
+- `resources/text/kana.txt` — fixture.
+- `resources/text/khmer.txt` — fixture.
+- `resources/text/lao.txt` — fixture.
+- `resources/text/mandaic.txt` — fixture.
+- `resources/text/myanmar.txt` — fixture.
+- `resources/text/newtailue.txt` — fixture.
+- `resources/text/nko.txt` — fixture.
+- `resources/text/sinhala.txt` — fixture.
+- `resources/text/sundanese.txt` — fixture.
+- `resources/text/syriac.txt` — fixture.
+- `resources/text/taitham.txt` — fixture.
+- `resources/text/tamil.txt` — fixture.
+- `resources/text/thaana.txt` — fixture.
+- `resources/text/thai.txt` — fixture.
+- `resources/text/tibetan.txt` — fixture.
+- `resources/text/tifnagh.txt` — fixture.
+- `resources/text/vai.txt` — fixture.
+
+## Dependency and integration notes
+
+The initial scan found 0 quoted includes from this milestone into later-owned production files. See `../inventory/forward-includes.csv`, filtered by `source_milestone=43`. Header inclusion alone does not force implementation of the entire later subsystem; inspect the original registered test bodies and called production paths.
+
+Interfaces with later consumers may be declared now, but the accepted feature set must execute real implementations for every reached call. Where a source spans several features (CPU/GPU, serialization, runtime shaders), record completed and pending symbols separately. Deferred portions have explicit integration gates M14, M22, M26, M38 and M47; no pending portion may disappear from the ledger.
+
+## Commands, required evidence and stop condition
+
+Codex runs the milestone tests and all previously accepted tests in debug and release with the exact feature list from the handoff. The standard baseline commands are:
+
+```sh
+cargo test --locked
+cargo test --release --locked
+cargo fmt --all -- --check
+cargo clippy --all-targets --locked -- -D warnings
+```
+
+For feature-specific crates/backends, record the additional exact package/target/features commands; do not use an unexamined `--all-features` combination. Native backend, GM, browser, fuzz and benchmark commands are added when their harnesses exist and must be copied into the acceptance report.
+
+Acceptance requires: all assigned macOS cases enumerated; every applicable assertion passing; all earlier accepted tests passing; every source row mapped to implemented Rust or a documented non-code disposition; no unexplained missing resources, untested required backends or unsupported required API; and a Codex-authored evidence report. Formatting/build success alone never constitutes acceptance.
+
+Record PASS, FAIL, BLOCKED or NOT_APPLICABLE per test/configuration. NOT_APPLICABLE requires an original platform/capability condition and a reason. M01–M45 require native Apple Silicon macOS evidence; Intel-specific files may remain explicitly pending until M46, whose gate requires native Intel Mac results. This is a scheduled architecture gate, not an assertion that Intel already passed.
+
+Only after Codex marks M43 ACCEPTED may the user hand Deepseek M44.

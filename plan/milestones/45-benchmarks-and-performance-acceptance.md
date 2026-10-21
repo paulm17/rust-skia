@@ -1,0 +1,229 @@
+# Milestone 45: Benchmarks and performance acceptance
+
+## Outcome and entry gate
+
+Port benchmark workloads and runner semantics, including module and Graphite benchmarks. Preserve setup/teardown, warmup, workload sizes and backend selection. Record correctness checks before interpreting performance numbers.
+
+Begin implementation only after milestone 44 is marked ACCEPTED by Codex and the user has handed over this milestone. All earlier accepted tests remain required.
+
+Read `../WORKFLOW.md`, `../MACOS-SCOPE.md` and the inventories before starting. All source paths below are relative to the pinned C++ Skia checkout; all Rust work belongs in the separate rust-skia repository. Never edit the reference checkout to make a test pass.
+
+## Deepseek: implementation contract
+
+Port benchmark workloads and runner semantics, including module and Graphite benchmarks. Preserve setup/teardown, warmup, workload sizes and backend selection. Record correctness checks before interpreting performance numbers.
+
+- Port the observable behavior of every owned source/header below, including applicable error paths and public declarations. A header is part of the contract, not documentation to skip. Existing Rust files are integration work, not automatic completion.
+- Map original symbols to Rust modules in the handoff. Keep production logic under `src/` (or workspace library crates); use explicit Cargo features for optional macOS backends. Preserve widths, ownership, layout when observable, and binary formats where required by original tests.
+- Keep Skia-owned algorithmic/runtime code in Rust. External codec/shaping/GPU libraries and Apple framework FFI are allowed only as named, versioned dependencies. Never delegate the implementation to a pre-existing Skia Rust port or C++ Skia.
+- Inspect reached dependencies before coding. `forward-includes.csv` contains syntactic warnings, not proof of runtime dependency. Implement a required earlier prerequisite fully and record it in the handoff; if it materially changes this milestone, request a plan amendment before continuing. Never use fake return values, ignored tests or unimplemented runtime branches to clear a gate.
+- Do not author or change Codex-owned acceptance tests, expected values, tolerances, fixtures or pass records. Development checks may be separate and must be labeled as such. Fix production code when acceptance tests fail.
+- Supply reproducible build commands, feature flags, source/symbol mapping, external dependencies, and known unfinished work using `../HANDOFF-TEMPLATE.md`. Stop after the handoff; do not begin the next milestone.
+
+### Port these production files (Deepseek)
+
+No new production-source ownership is assigned here. Deepseek fixes integration defects in already owned Rust implementations and completes the outcome above; Codex owns the suite below.
+
+### Adapt these build/tooling files (Deepseek)
+
+- `bench/BUILD.bazel`.
+
+## Codex: acceptance-test contract
+
+Run original workloads against C++ and Rust on the same Mac with matching release settings. Report timing distributions, allocations and memory where available. Performance results never override failed correctness tests; investigate regressions and record accepted tradeoffs explicitly.
+
+- Translate the original reachable test bodies and helpers, preserving inputs, order, seeds, assertions, tolerances, expected failures and conditional skips. Retain original names and source locations in the correspondence record.
+- Discover compiled C++ test registrations under the matching macOS feature configuration. The registration CSV is an initial source scan, not a substitute for expanded macro/test discovery. Resolve conditional/custom suites before accepting this milestone.
+- For files split across milestones, translate only the assigned registrations now, including their helper closure; record the rest under their later gate. Do not mark a whole file complete merely because its first tests pass.
+- Port original test utilities needed by these cases, even if their general tool packaging has a later owner. Keep fixture-only implementations in test support and never substitute them for production APIs being checked.
+- Where upstream provides no direct unit test, add clearly labeled supplemental contract/differential tests, separate from faithful translations. Run C++ as an external reference where needed; do not link it as the Rust implementation.
+- Preserve resources and shader/golden inputs by hash. Resource metadata and required downloads must be recorded before running; absent inputs or backend hardware are BLOCKED, not a skip that counts as PASS.
+
+### Port these test/runner/support files (Codex)
+
+- `bench/AAClipBench.cpp`.
+- `bench/AlternatingColorPatternBench.cpp`.
+- `bench/BenchLogger.cpp`.
+- `bench/BenchLogger.h`.
+- `bench/Benchmark.cpp`.
+- `bench/Benchmark.h`.
+- `bench/BenchmarkDataset.cpp`.
+- `bench/BenchmarkDataset.h`.
+- `bench/BezierBench.cpp`.
+- `bench/BigPath.cpp`.
+- `bench/BigPath.h`.
+- `bench/BigPathBench.cpp`.
+- `bench/BilerpBench.cpp`.
+- `bench/BitmapRegionDecoderBench.cpp`.
+- `bench/BitmapRegionDecoderBench.h`.
+- `bench/BlendmodeBench.cpp`.
+- `bench/BlurBench.cpp`.
+- `bench/BlurImageFilterBench.cpp`.
+- `bench/BlurRectBench.cpp`.
+- `bench/BlurRectsBench.cpp`.
+- `bench/BulkRectBench.cpp`.
+- `bench/CanvasSaveRestoreBench.cpp`.
+- `bench/ChartBench.cpp`.
+- `bench/ChecksumBench.cpp`.
+- `bench/ChromeBench.cpp`.
+- `bench/ClearBench.cpp`.
+- `bench/ClipMaskBench.cpp`.
+- `bench/ClipStrategyBench.cpp`.
+- `bench/CmapBench.cpp`.
+- `bench/CodecBench.cpp`.
+- `bench/CodecBench.h`.
+- `bench/CodecBenchPriv.h`.
+- `bench/ColorFilterBench.cpp`.
+- `bench/ColorPrivBench.cpp`.
+- `bench/ColorSpaceBench.cpp`.
+- `bench/CompositingImagesBench.cpp`.
+- `bench/ControlBench.cpp`.
+- `bench/CoverageBench.cpp`.
+- `bench/CreateBackendTextureBench.cpp`.
+- `bench/CubicMapBench.cpp`.
+- `bench/DDLRecorderBench.cpp`.
+- `bench/DashBench.cpp`.
+- `bench/DecodeBench.cpp`.
+- `bench/DisplacementBench.cpp`.
+- `bench/DrawBitmapAABench.cpp`.
+- `bench/EncodeBench.cpp`.
+- `bench/FSRectBench.cpp`.
+- `bench/FilteringBench.cpp`.
+- `bench/FindCubicConvex180ChopsBench.cpp`.
+- `bench/FontCacheBench.cpp`.
+- `bench/GMBench.cpp`.
+- `bench/GMBench.h`.
+- `bench/GameBench.cpp`.
+- `bench/GeometryBench.cpp`.
+- `bench/GlyphQuadFillBench.cpp`.
+- `bench/GlyphRunRSXformBench.cpp`.
+- `bench/GpuTools.h`.
+- `bench/GrMemoryPoolBench.cpp`.
+- `bench/GrMipmapBench.cpp`.
+- `bench/GrQuadBench.cpp`.
+- `bench/GrResourceCacheBench.cpp`.
+- `bench/GradientBench.cpp`.
+- `bench/HairlinePathBench.cpp`.
+- `bench/HardStopGradientBench_ScaleNumColors.cpp`.
+- `bench/HardStopGradientBench_ScaleNumHardStops.cpp`.
+- `bench/HardStopGradientBench_SpecialHardStops.cpp`.
+- `bench/ImageBench.cpp`.
+- `bench/ImageCacheBench.cpp`.
+- `bench/ImageCacheBudgetBench.cpp`.
+- `bench/ImageCycleBench.cpp`.
+- `bench/ImageFilterCollapse.cpp`.
+- `bench/ImageFilterDAGBench.cpp`.
+- `bench/InterpBench.cpp`.
+- `bench/JSONBench.cpp`.
+- `bench/LightingBench.cpp`.
+- `bench/LineBench.cpp`.
+- `bench/MSKPBench.cpp`.
+- `bench/MSKPBench.h`.
+- `bench/MathBench.cpp`.
+- `bench/Matrix44Bench.cpp`.
+- `bench/MatrixBench.cpp`.
+- `bench/MatrixConvolutionBench.cpp`.
+- `bench/MemsetBench.cpp`.
+- `bench/MergeBench.cpp`.
+- `bench/MipmapBench.cpp`.
+- `bench/MorphologyBench.cpp`.
+- `bench/MutexBench.cpp`.
+- `bench/PDFBench.cpp`.
+- `bench/ParagraphBench.cpp`.
+- `bench/PatchBench.cpp`.
+- `bench/PathBench.cpp`.
+- `bench/PathIterBench.cpp`.
+- `bench/PathOpsBench.cpp`.
+- `bench/PathTextBench.cpp`.
+- `bench/PerlinNoiseBench.cpp`.
+- `bench/PictureNestingBench.cpp`.
+- `bench/PictureOverheadBench.cpp`.
+- `bench/PicturePlaybackBench.cpp`.
+- `bench/PolyUtilsBench.cpp`.
+- `bench/PremulAndUnpremulAlphaOpsBench.cpp`.
+- `bench/QuickRejectBench.cpp`.
+- `bench/RTreeBench.cpp`.
+- `bench/ReadPixBench.cpp`.
+- `bench/RecordingBench.cpp`.
+- `bench/RecordingBench.h`.
+- `bench/RectBench.cpp`.
+- `bench/RectanizerBench.cpp`.
+- `bench/RefCntBench.cpp`.
+- `bench/RegionBench.cpp`.
+- `bench/RegionContainBench.cpp`.
+- `bench/RepeatTileBench.cpp`.
+- `bench/ResultsWriter.h`.
+- `bench/RotatedRectBench.cpp`.
+- `bench/SKPAnimationBench.cpp`.
+- `bench/SKPAnimationBench.h`.
+- `bench/SKPBench.cpp`.
+- `bench/SKPBench.h`.
+- `bench/ShaderMaskFilterBench.cpp`.
+- `bench/ShadowBench.cpp`.
+- `bench/ShaperBench.cpp`.
+- `bench/ShapesBench.cpp`.
+- `bench/Sk4fBench.cpp`.
+- `bench/SkGlyphCacheBench.cpp`.
+- `bench/SkGlyphCacheBench.h`.
+- `bench/SkRPBench.cpp`.
+- `bench/SkSLBench.cpp`.
+- `bench/SkSLBench.h`.
+- `bench/SortBench.cpp`.
+- `bench/StreamBench.cpp`.
+- `bench/StrokeBench.cpp`.
+- `bench/SwizzleBench.cpp`.
+- `bench/TableBench.cpp`.
+- `bench/TessellateBench.cpp`.
+- `bench/TextBlobBench.cpp`.
+- `bench/TileBench.cpp`.
+- `bench/TileImageFilterBench.cpp`.
+- `bench/TopoSortBench.cpp`.
+- `bench/TriangulatorBench.cpp`.
+- `bench/TypefaceBench.cpp`.
+- `bench/VertBench.cpp`.
+- `bench/VertexColorSpaceBench.cpp`.
+- `bench/WebpBlendBench.cpp`.
+- `bench/WritePixelsBench.cpp`.
+- `bench/WriterBench.cpp`.
+- `bench/gUniqueGlyphIDs.h`.
+- `bench/graphite/BoundsManagerBench.cpp`.
+- `bench/graphite/IntersectionTreeBench.cpp`.
+- `bench/graphite/sparse_strips/CoverageBench.cpp`.
+- `bench/graphite/sparse_strips/CullBench.cpp`.
+- `bench/graphite/sparse_strips/FlattenBench.cpp`.
+- `bench/graphite/sparse_strips/TilerBench.cpp`.
+- `bench/nanobench.cpp`.
+- `bench/nanobench.h`.
+
+### Original test registrations assigned to this gate
+
+This milestone uses runner-discovered cases, GMs, fuzz/benchmark/browser suites or supplemental tests. Capture each discovered case in the acceptance manifest; absence from the static registration scan is not an exclusion.
+
+### Preserve these fixtures, metadata and references
+
+- `bench/microbench.json` — fixture.
+- `bench/skpbench.json` — fixture.
+
+## Dependency and integration notes
+
+The initial scan found 0 quoted includes from this milestone into later-owned production files. See `../inventory/forward-includes.csv`, filtered by `source_milestone=45`. Header inclusion alone does not force implementation of the entire later subsystem; inspect the original registered test bodies and called production paths.
+
+Interfaces with later consumers may be declared now, but the accepted feature set must execute real implementations for every reached call. Where a source spans several features (CPU/GPU, serialization, runtime shaders), record completed and pending symbols separately. Deferred portions have explicit integration gates M14, M22, M26, M38 and M47; no pending portion may disappear from the ledger.
+
+## Commands, required evidence and stop condition
+
+Codex runs the milestone tests and all previously accepted tests in debug and release with the exact feature list from the handoff. The standard baseline commands are:
+
+```sh
+cargo test --locked
+cargo test --release --locked
+cargo fmt --all -- --check
+cargo clippy --all-targets --locked -- -D warnings
+```
+
+For feature-specific crates/backends, record the additional exact package/target/features commands; do not use an unexamined `--all-features` combination. Native backend, GM, browser, fuzz and benchmark commands are added when their harnesses exist and must be copied into the acceptance report.
+
+Acceptance requires: all assigned macOS cases enumerated; every applicable assertion passing; all earlier accepted tests passing; every source row mapped to implemented Rust or a documented non-code disposition; no unexplained missing resources, untested required backends or unsupported required API; and a Codex-authored evidence report. Formatting/build success alone never constitutes acceptance.
+
+Record PASS, FAIL, BLOCKED or NOT_APPLICABLE per test/configuration. NOT_APPLICABLE requires an original platform/capability condition and a reason. M01–M45 require native Apple Silicon macOS evidence; Intel-specific files may remain explicitly pending until M46, whose gate requires native Intel Mac results. This is a scheduled architecture gate, not an assertion that Intel already passed.
+
+Only after Codex marks M45 ACCEPTED may the user hand Deepseek M46.

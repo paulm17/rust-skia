@@ -1,0 +1,288 @@
+{
+  "upstream_commit": "b81c69985fd14bb7bfbd356b7618633ce07dc1a4",
+  "scope": "macOS only",
+  "milestones": [
+    {
+      "id": "M01",
+      "title": "Scalar and point baseline",
+      "state": "ACCEPTED",
+      "acceptance_report": "acceptance/M01.md"
+    },
+    {
+      "id": "M02",
+      "title": "Core ownership, containers, data and streams",
+      "state": "NOT_STARTED",
+      "acceptance_report": null
+    },
+    {
+      "id": "M03",
+      "title": "Numeric primitives, SIMD contracts and deterministic random",
+      "state": "NOT_STARTED",
+      "acceptance_report": null
+    },
+    {
+      "id": "M04",
+      "title": "Rectangles, rounded rectangles, sizes and 3D points",
+      "state": "NOT_STARTED",
+      "acceptance_report": null
+    },
+    {
+      "id": "M05",
+      "title": "Matrices, camera transforms and coordinate mapping",
+      "state": "NOT_STARTED",
+      "acceptance_report": null
+    },
+    {
+      "id": "M06",
+      "title": "Bezier geometry, roots and clipping primitives",
+      "state": "NOT_STARTED",
+      "acceptance_report": null
+    },
+    {
+      "id": "M07",
+      "title": "Paths, builders, iteration and measurement",
+      "state": "NOT_STARTED",
+      "acceptance_report": null
+    },
+    {
+      "id": "M08",
+      "title": "Stroking and path effects",
+      "state": "NOT_STARTED",
+      "acceptance_report": null
+    },
+    {
+      "id": "M09",
+      "title": "Regions, clip storage and spatial indexes",
+      "state": "NOT_STARTED",
+      "acceptance_report": null
+    },
+    {
+      "id": "M10",
+      "title": "Colors, profiles and skcms",
+      "state": "NOT_STARTED",
+      "acceptance_report": null
+    },
+    {
+      "id": "M11",
+      "title": "Pixel storage, image information and sampling data",
+      "state": "NOT_STARTED",
+      "acceptance_report": null
+    },
+    {
+      "id": "M12",
+      "title": "Raster pipeline and CPU dispatch",
+      "state": "NOT_STARTED",
+      "acceptance_report": null
+    },
+    {
+      "id": "M13",
+      "title": "Paint, shaders, gradients and color filters",
+      "state": "NOT_STARTED",
+      "acceptance_report": null
+    },
+    {
+      "id": "M14",
+      "title": "CPU canvas, images, surfaces and drawing",
+      "state": "NOT_STARTED",
+      "acceptance_report": null
+    },
+    {
+      "id": "M15",
+      "title": "Image filters, blur, masks and shadows",
+      "state": "NOT_STARTED",
+      "acceptance_report": null
+    },
+    {
+      "id": "M16",
+      "title": "Image codecs, metadata and lazy decoding",
+      "state": "NOT_STARTED",
+      "acceptance_report": null
+    },
+    {
+      "id": "M17",
+      "title": "Image encoding and round trips",
+      "state": "NOT_STARTED",
+      "acceptance_report": null
+    },
+    {
+      "id": "M18",
+      "title": "Font objects, glyph data and SFNT",
+      "state": "NOT_STARTED",
+      "acceptance_report": null
+    },
+    {
+      "id": "M19",
+      "title": "macOS fonts, CoreText and text drawing",
+      "state": "NOT_STARTED",
+      "acceptance_report": null
+    },
+    {
+      "id": "M20",
+      "title": "Unicode and shaping",
+      "state": "NOT_STARTED",
+      "acceptance_report": null
+    },
+    {
+      "id": "M21",
+      "title": "Paragraph layout and editing",
+      "state": "NOT_STARTED",
+      "acceptance_report": null
+    },
+    {
+      "id": "M22",
+      "title": "Pictures, records, serialization and capture",
+      "state": "NOT_STARTED",
+      "acceptance_report": null
+    },
+    {
+      "id": "M23",
+      "title": "Path operations and boolean geometry",
+      "state": "NOT_STARTED",
+      "acceptance_report": null
+    },
+    {
+      "id": "M24",
+      "title": "SkSL frontend, IR and analysis",
+      "state": "NOT_STARTED",
+      "acceptance_report": null
+    },
+    {
+      "id": "M25",
+      "title": "SkSL code generation and shader fixtures",
+      "state": "NOT_STARTED",
+      "acceptance_report": null
+    },
+    {
+      "id": "M26",
+      "title": "Runtime effects, meshes and deferred shader integration",
+      "state": "NOT_STARTED",
+      "acceptance_report": null
+    },
+    {
+      "id": "M27",
+      "title": "PDF, SVG output and XML utilities",
+      "state": "NOT_STARTED",
+      "acceptance_report": null
+    },
+    {
+      "id": "M28",
+      "title": "SVG parsing and rendering module",
+      "state": "NOT_STARTED",
+      "acceptance_report": null
+    },
+    {
+      "id": "M29",
+      "title": "Scene graph and resource providers",
+      "state": "NOT_STARTED",
+      "acceptance_report": null
+    },
+    {
+      "id": "M30",
+      "title": "Skottie animation and audio interfaces",
+      "state": "NOT_STARTED",
+      "acceptance_report": null
+    },
+    {
+      "id": "M31",
+      "title": "Shared GPU infrastructure and tessellation",
+      "state": "NOT_STARTED",
+      "acceptance_report": null
+    },
+    {
+      "id": "M32",
+      "title": "Ganesh engine and mock backend",
+      "state": "NOT_STARTED",
+      "acceptance_report": null
+    },
+    {
+      "id": "M33",
+      "title": "Ganesh Metal backend",
+      "state": "NOT_STARTED",
+      "acceptance_report": null
+    },
+    {
+      "id": "M34",
+      "title": "Ganesh macOS OpenGL backend",
+      "state": "NOT_STARTED",
+      "acceptance_report": null
+    },
+    {
+      "id": "M35",
+      "title": "Graphite engine and scheduling",
+      "state": "NOT_STARTED",
+      "acceptance_report": null
+    },
+    {
+      "id": "M36",
+      "title": "Graphite Metal backend",
+      "state": "NOT_STARTED",
+      "acceptance_report": null
+    },
+    {
+      "id": "M37",
+      "title": "Graphite Dawn with Metal",
+      "state": "NOT_STARTED",
+      "acceptance_report": null
+    },
+    {
+      "id": "M38",
+      "title": "Cross-backend image, surface and text integration",
+      "state": "NOT_STARTED",
+      "acceptance_report": null
+    },
+    {
+      "id": "M39",
+      "title": "macOS application and platform adapters",
+      "state": "NOT_STARTED",
+      "acceptance_report": null
+    },
+    {
+      "id": "M40",
+      "title": "Developer tools, inspection and debug clients",
+      "state": "NOT_STARTED",
+      "acceptance_report": null
+    },
+    {
+      "id": "M41",
+      "title": "CanvasKit and browser-facing bindings on macOS",
+      "state": "NOT_STARTED",
+      "acceptance_report": null
+    },
+    {
+      "id": "M42",
+      "title": "Remaining optional modules and experiments",
+      "state": "NOT_STARTED",
+      "acceptance_report": null
+    },
+    {
+      "id": "M43",
+      "title": "Complete GM visual regression suite",
+      "state": "NOT_STARTED",
+      "acceptance_report": null
+    },
+    {
+      "id": "M44",
+      "title": "Fuzz harnesses and regression corpora",
+      "state": "NOT_STARTED",
+      "acceptance_report": null
+    },
+    {
+      "id": "M45",
+      "title": "Benchmarks and performance acceptance",
+      "state": "NOT_STARTED",
+      "acceptance_report": null
+    },
+    {
+      "id": "M46",
+      "title": "Repository build, examples, documentation and packaging",
+      "state": "NOT_STARTED",
+      "acceptance_report": null
+    },
+    {
+      "id": "M47",
+      "title": "Final macOS completeness and release gate",
+      "state": "NOT_STARTED",
+      "acceptance_report": null
+    }
+  ]
+}

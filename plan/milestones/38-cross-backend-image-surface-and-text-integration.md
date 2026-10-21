@@ -1,0 +1,716 @@
+# Milestone 38: Cross-backend image, surface and text integration
+
+## Outcome and entry gate
+
+Close mixed CPU/Ganesh/Graphite registrations, protected/unsupported-feature cases, interop, async readback, caching and GPU text. Complete any tests whose single body requires several engines together.
+
+Begin implementation only after milestone 37 is marked ACCEPTED by Codex and the user has handed over this milestone. All earlier accepted tests remain required.
+
+Read `../WORKFLOW.md`, `../MACOS-SCOPE.md` and the inventories before starting. All source paths below are relative to the pinned C++ Skia checkout; all Rust work belongs in the separate rust-skia repository. Never edit the reference checkout to make a test pass.
+
+## Deepseek: implementation contract
+
+Close mixed CPU/Ganesh/Graphite registrations, protected/unsupported-feature cases, interop, async readback, caching and GPU text. Complete any tests whose single body requires several engines together.
+
+- Port the observable behavior of every owned source/header below, including applicable error paths and public declarations. A header is part of the contract, not documentation to skip. Existing Rust files are integration work, not automatic completion.
+- Map original symbols to Rust modules in the handoff. Keep production logic under `src/` (or workspace library crates); use explicit Cargo features for optional macOS backends. Preserve widths, ownership, layout when observable, and binary formats where required by original tests.
+- Keep Skia-owned algorithmic/runtime code in Rust. External codec/shaping/GPU libraries and Apple framework FFI are allowed only as named, versioned dependencies. Never delegate the implementation to a pre-existing Skia Rust port or C++ Skia.
+- Inspect reached dependencies before coding. `forward-includes.csv` contains syntactic warnings, not proof of runtime dependency. Implement a required earlier prerequisite fully and record it in the handoff; if it materially changes this milestone, request a plan amendment before continuing. Never use fake return values, ignored tests or unimplemented runtime branches to clear a gate.
+- Do not author or change Codex-owned acceptance tests, expected values, tolerances, fixtures or pass records. Development checks may be separate and must be labeled as such. Fix production code when acceptance tests fail.
+- Supply reproducible build commands, feature flags, source/symbol mapping, external dependencies, and known unfinished work using `../HANDOFF-TEMPLATE.md`. Stop after the handoff; do not begin the next milestone.
+
+### Port these production files (Deepseek)
+
+- `include/private/chromium/Slug.h` — port to Rust.
+- `src/text/gpu/Slug.cpp` — port to Rust.
+
+### Adapt these build/tooling files (Deepseek)
+
+No additional build/tooling files are assigned in this milestone. Update the Rust build only as needed for this milestone.
+
+## Codex: acceptance-test contract
+
+Run original context matrices over raster, Ganesh Metal/GL and Graphite Metal/Dawn-Metal where eligible. Track each test × backend × configuration separately. Verify promises, semaphores, flush completion, surface copy-on-write, image transfers and GPU glyph/slug behavior.
+
+- Translate the original reachable test bodies and helpers, preserving inputs, order, seeds, assertions, tolerances, expected failures and conditional skips. Retain original names and source locations in the correspondence record.
+- Discover compiled C++ test registrations under the matching macOS feature configuration. The registration CSV is an initial source scan, not a substitute for expanded macro/test discovery. Resolve conditional/custom suites before accepting this milestone.
+- For files split across milestones, translate only the assigned registrations now, including their helper closure; record the rest under their later gate. Do not mark a whole file complete merely because its first tests pass.
+- Port original test utilities needed by these cases, even if their general tool packaging has a later owner. Keep fixture-only implementations in test support and never substitute them for production APIs being checked.
+- Where upstream provides no direct unit test, add clearly labeled supplemental contract/differential tests, separate from faithful translations. Run C++ as an external reference where needed; do not link it as the Rust implementation.
+- Preserve resources and shader/golden inputs by hash. Resource metadata and required downloads must be recorded before running; absent inputs or backend hardware are BLOCKED, not a skip that counts as PASS.
+
+### Port these test/runner/support files (Codex)
+
+- `tests/AdvancedBlendTest.cpp`.
+- `tests/ApplyGammaTest.cpp`.
+- `tests/AtlasOobTest.cpp`.
+- `tests/BigImageTest.cpp`.
+- `tests/BlendTest.cpp`.
+- `tests/BlurTest.cpp`.
+- `tests/BulkRectTest.cpp`.
+- `tests/CanvasTest.cpp`.
+- `tests/ClearTest.cpp`.
+- `tests/ColorFilterTest.cpp`.
+- `tests/CompressedBackendAllocationTest.cpp`.
+- `tests/CopySurfaceTest.cpp`.
+- `tests/DMSAATest.cpp`.
+- `tests/DashPathEffectTestGanesh.cpp`.
+- `tests/DefaultPathRendererTest.cpp`.
+- `tests/DeferredDisplayListTest.cpp`.
+- `tests/DeviceTest.cpp`.
+- `tests/DirectMaskLimitTest.cpp`.
+- `tests/DrawOpAtlasTest.cpp`.
+- `tests/ExtendedSkColorTypeTests.cpp`.
+- `tests/F16DrawTest.cpp`.
+- `tests/FilterResultTest.cpp`.
+- `tests/FloatingPointTextureTest.cpp`.
+- `tests/GaneshContextRecorderTest.cpp`.
+- `tests/GpuDrawPathTest.cpp`.
+- `tests/GrClipStackTest.cpp`.
+- `tests/GrContextFactoryTest.cpp`.
+- `tests/GrFinishedFlushTest.cpp`.
+- `tests/GrGpuBufferTest.cpp`.
+- `tests/GrMeshTest.cpp`.
+- `tests/GrMipMappedTest.cpp`.
+- `tests/GrOpListFlushTest.cpp`.
+- `tests/GrPipelineDynamicStateTest.cpp`.
+- `tests/GrSubmittedFlushTest.cpp`.
+- `tests/GrSurfaceResolveTest.cpp`.
+- `tests/GrSurfaceTest.cpp`.
+- `tests/GrTextBlobTest.cpp`.
+- `tests/GrTextureMipMapInvalidationTest.cpp`.
+- `tests/GrThreadSafeCacheTest.cpp`.
+- `tests/GrUniqueProxyTest.cpp`.
+- `tests/GradientTest.cpp`.
+- `tests/ImageFilterCacheTest.cpp`.
+- `tests/ImageFilterTest.cpp`.
+- `tests/ImageIsOpaqueTest.cpp`.
+- `tests/ImageNewShaderTest.cpp`.
+- `tests/ImageTest.cpp`.
+- `tests/LazyStencilAttachmentTest.cpp`.
+- `tests/MatrixColorFilterTest.cpp`.
+- `tests/MultiPictureDocumentTest.cpp`.
+- `tests/PinnedImageTest.cpp`.
+- `tests/PremulAlphaRoundTripTest.cpp`.
+- `tests/PrimitiveProcessorTest.cpp`.
+- `tests/ProcessorTest.cpp`.
+- `tests/PromiseImageTest.cpp`.
+- `tests/ProtectedTest.cpp`.
+- `tests/ProxyConversionTest.cpp`.
+- `tests/ProxyRefTest.cpp`.
+- `tests/ProxyTest.cpp`.
+- `tests/ReadWritePixelsGpuTest.cpp`.
+- `tests/RepeatedClippedBlurTest.cpp`.
+- `tests/ResourceAllocatorTest.cpp`.
+- `tests/ResourceCacheTest.cpp`.
+- `tests/RuntimeBlendTest.cpp`.
+- `tests/SRGBReadWritePixelsTest.cpp`.
+- `tests/SaveLayerOriginTest.cpp`.
+- `tests/ShaderImageFilterTest.cpp`.
+- `tests/ShaderTest.cpp`.
+- `tests/SimplifyPaintTest.cpp`.
+- `tests/SkColorSpaceXformStepsTest.cpp`.
+- `tests/SkRemoteGlyphCacheTest.cpp`.
+- `tests/SkRuntimeEffectTest.cpp`.
+- `tests/SkSLCross.cpp`.
+- `tests/SkSLES2ConformanceTest.cpp`.
+- `tests/SkSLTest.cpp`.
+- `tests/Skbug12214.cpp`.
+- `tests/Skbug5221.cpp`.
+- `tests/Skbug6653.cpp`.
+- `tests/SlugTest.cpp`.
+- `tests/SmallPathRendererTest.cpp`.
+- `tests/SpecialImageTest.cpp`.
+- `tests/SrcSrcOverBatchTest.cpp`.
+- `tests/StencilClearTest.cpp`.
+- `tests/StrikeForGPUTest.cpp`.
+- `tests/SurfaceDrawContextTest.cpp`.
+- `tests/SurfaceSemaphoreTest.cpp`.
+- `tests/SurfaceTest.cpp`.
+- `tests/TestTest.cpp`.
+- `tests/TextBlobCacheTest.cpp`.
+- `tests/TextureOpTest.cpp`.
+- `tests/TextureProxyTest.cpp`.
+- `tests/TextureSizeTest.cpp`.
+- `tests/TextureStripAtlasManagerTest.cpp`.
+- `tests/TransferPixelsTest.cpp`.
+- `tests/TriangulatingPathRendererTests.cpp`.
+- `tests/WrappedSurfaceCopyOnWriteTest.cpp`.
+- `tests/WritePixelsTest.cpp`.
+- `tests/crbug_500172224.cpp`.
+- `tests/graphite/BackendTextureTest.cpp`.
+- `tests/graphite/BufferManagerTest.cpp`.
+- `tests/graphite/CacheBudgetTest.cpp`.
+- `tests/graphite/CacheKeyTest.cpp`.
+- `tests/graphite/ComputeTest.cpp`.
+- `tests/graphite/DeviceTest.cpp`.
+- `tests/graphite/DrawAtlasTest.cpp`.
+- `tests/graphite/GraphiteContextRecorderTest.cpp`.
+- `tests/graphite/GraphitePromiseImageTest.cpp`.
+- `tests/graphite/GraphiteResourceCacheTest.cpp`.
+- `tests/graphite/GraphiteYUVAPromiseImageTest.cpp`.
+- `tests/graphite/ImageOriginTest.cpp`.
+- `tests/graphite/ImageProviderTest.cpp`.
+- `tests/graphite/ImageShaderTest.cpp`.
+- `tests/graphite/ImageWrapTextureMipmapsTest.cpp`.
+- `tests/graphite/InnerFillTest.cpp`.
+- `tests/graphite/KeyTest.cpp`.
+- `tests/graphite/MultisampleTest.cpp`.
+- `tests/graphite/MutableImagesTest.cpp`.
+- `tests/graphite/NotifyInUseTest.cpp`.
+- `tests/graphite/PersistentPipelineStorageTest.cpp`.
+- `tests/graphite/PipelineCallbackTest.cpp`.
+- `tests/graphite/PipelineDataCacheTest.cpp`.
+- `tests/graphite/ProxyCacheTest.cpp`.
+- `tests/graphite/RTEffectTest.cpp`.
+- `tests/graphite/ReadWritePixelsGraphiteTest.cpp`.
+- `tests/graphite/RecorderTest.cpp`.
+- `tests/graphite/RecordingOrderTest.cpp`.
+- `tests/graphite/RecordingSurfacesTest.cpp`.
+- `tests/graphite/StorageContextTest.cpp`.
+- `tests/graphite/SubmitWithFinishProcTest.cpp`.
+- `tests/graphite/TextureFallbackTest.cpp`.
+- `tests/graphite/TextureFormatTest.cpp`.
+- `tests/graphite/TextureProxyTest.cpp`.
+- `tests/graphite/UpdateBackendTextureTest.cpp`.
+- `tests/graphite/UploadBufferManagerTest.cpp`.
+- `tests/graphite/crbug_513836996.cpp`.
+- `tests/graphite/precompile/ChromePrecompileTest.cpp`.
+- `tests/graphite/precompile/CombinationBuilderTest.cpp`.
+- `tests/graphite/precompile/PaintParamsKeyTest.cpp`.
+- `tests/graphite/precompile/PipelineManagerEarlyExit.cpp`.
+- `tests/graphite/precompile/PipelineManagerThreaded.cpp`.
+- `tests/graphite/precompile/PrecompileStatsTest.cpp`.
+- `tests/graphite/precompile/ThreadedPrecompileTest.cpp`.
+- `tests/graphite/precompile/UserdefinedStableKeyTest.cpp`.
+- `tests/graphite/sparse_strips/AtlasTests.cpp`.
+- `tests/graphite/sparse_strips/CoverageTest.cpp`.
+
+### Original test registrations assigned to this gate
+
+- `AdvancedBlendTest` — `tests/AdvancedBlendTest.cpp:28`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `ApplyGamma` — `tests/ApplyGammaTest.cpp:107`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `Atlas_Oob_ganesh` — `tests/AtlasOobTest.cpp:171`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `Atlas_Oob_graphite` — `tests/AtlasOobTest.cpp:188`; Graphite; `DEF_GRAPHITE_TEST_FOR_RENDERING_CONTEXTS`.
+- `BigImageTest_Ganesh` — `tests/BigImageTest.cpp:578`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `TiledDrawCacheTest_Ganesh` — `tests/BigImageTest.cpp:588`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `BigImageTest_Graphite` — `tests/BigImageTest.cpp:602`; Graphite; `DEF_GRAPHITE_TEST_FOR_RENDERING_CONTEXTS`.
+- `TiledDrawCacheTest_Graphite` — `tests/BigImageTest.cpp:612`; Graphite; `DEF_GRAPHITE_TEST_FOR_RENDERING_CONTEXTS`.
+- `BlendRequiringDstReadWithLargeCoordinates` — `tests/BlendTest.cpp:194`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `SmallBoxBlurBug` — `tests/BlurTest.cpp:435`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `BlurMaskBiggerThanDest` — `tests/BlurTest.cpp:561`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `BlurDegenerateAffineFuzzer` — `tests/BlurTest.cpp:607`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `BlurPointCircle` — `tests/BlurTest.cpp:649`; Graphite; `DEF_GRAPHITE_TEST_FOR_RENDERING_CONTEXTS`.
+- `BulkFillRectTest` — `tests/BulkRectTest.cpp:375`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `BulkTextureRectTest` — `tests/BulkRectTest.cpp:382`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `TestManyDrawsGanesh` — `tests/CanvasTest.cpp:768`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `TestManyDrawsGraphite` — `tests/CanvasTest.cpp:782`; Graphite; `DEF_GRAPHITE_TEST_FOR_RENDERING_CONTEXTS`.
+- `ClearOp` — `tests/ClearTest.cpp:338`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `FullScreenClearWithLayers` — `tests/ClearTest.cpp:404`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `ComposeFailureWithInputElision` — `tests/ColorFilterTest.cpp:166`; Ganesh; `DEF_GANESH_TEST_FOR_ALL_CONTEXTS`.
+- `CompressedBackendAllocationTest` — `tests/CompressedBackendAllocationTest.cpp:318`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `CopySurface` — `tests/CopySurfaceTest.cpp:40`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `DMSAA_preserve_contents` — `tests/DMSAATest.cpp:121`; Ganesh; `DEF_GANESH_TEST_FOR_CONTEXTS`.
+- `DMSAA_dst_read` — `tests/DMSAATest.cpp:160`; Ganesh; `DEF_GANESH_TEST_FOR_CONTEXTS`.
+- `DMSAA_aa_dst_read_after_dmsaa` — `tests/DMSAATest.cpp:191`; Ganesh; `DEF_GANESH_TEST_FOR_CONTEXTS`.
+- `DMSAA_dst_read_with_existing_barrier` — `tests/DMSAATest.cpp:223`; Ganesh; `DEF_GANESH_TEST_FOR_CONTEXTS`.
+- `DMSAA_dual_source_blend_disable` — `tests/DMSAATest.cpp:261`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `DashPathEffectTest_2PiInterval` — `tests/DashPathEffectTestGanesh.cpp:20`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `DefaultPathRendererTest` — `tests/DefaultPathRendererTest.cpp:139`; Ganesh; `DEF_GANESH_TEST_FOR_CONTEXTS`.
+- `DDLOperatorEqTest` — `tests/DeferredDisplayListTest.cpp:397`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `DDLSurfaceCharacterizationTest` — `tests/DeferredDisplayListTest.cpp:787`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `DDLNonTextureabilityTest` — `tests/DeferredDisplayListTest.cpp:817`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `DDLMakeRenderTargetTest` — `tests/DeferredDisplayListTest.cpp:927`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `DDLWrapBackendTest` — `tests/DeferredDisplayListTest.cpp:967`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `DDLInvalidRecorder` — `tests/DeferredDisplayListTest.cpp:1020`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `DDLCreateCharacterizationFailures` — `tests/DeferredDisplayListTest.cpp:1049`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `DDLSkSurfaceFlush` — `tests/DeferredDisplayListTest.cpp:1183`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `DDLMultipleDDLs` — `tests/DeferredDisplayListTest.cpp:1262`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `SpecialImage_GPUDevice` — `tests/DeviceTest.cpp:59`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `DirectMaskLimitTest_Ganesh` — `tests/DirectMaskLimitTest.cpp:89`; Ganesh; `DEF_GANESH_TEST_FOR_CONTEXTS`.
+- `DirectMaskLimitTest_Graphite` — `tests/DirectMaskLimitTest.cpp:109`; Graphite; `DEF_CONDITIONAL_GRAPHITE_TEST_FOR_CONTEXTS`.
+- `BasicDrawOpAtlas` — `tests/DrawOpAtlasTest.cpp:122`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `GrAtlasTextOpPreparation` — `tests/DrawOpAtlasTest.cpp:186`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `ExtendedSkColorTypeTests_gpu` — `tests/ExtendedSkColorTypeTests.cpp:343`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `F16DrawTest_Ganesh` — `tests/F16DrawTest.cpp:98`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `F16DrawTest_Graphite` — `tests/F16DrawTest.cpp:110`; Graphite; `DEF_GRAPHITE_TEST_FOR_RENDERING_CONTEXTS`.
+- `FilterResult_ganesh_` — `tests/FilterResultTest.cpp:1347`; Ganesh; `DEF_GANESH_TEST_FOR_CONTEXTS`.
+- `FilterResult_graphite_` — `tests/FilterResultTest.cpp:1362`; Graphite; `DEF_CONDITIONAL_GRAPHITE_TEST_FOR_ALL_CONTEXTS`.
+- `HalfFloatAlphaTextureTest` — `tests/FloatingPointTextureTest.cpp:90`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `HalfFloatRGBATextureTest` — `tests/FloatingPointTextureTest.cpp:103`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `CPUSurface_UsesGaneshContextAndRasterRecorderToDraw_DrawsPixels` — `tests/GaneshContextRecorderTest.cpp:27`; Ganesh; `DEF_GANESH_TEST_FOR_ALL_CONTEXTS`.
+- `ImageMakeColorSpace_GaneshImageWithContext_Success` — `tests/GaneshContextRecorderTest.cpp:48`; Ganesh; `DEF_GANESH_TEST_FOR_ALL_CONTEXTS`.
+- `ImageMakeColorSpace_GaneshImageWithRecorder_Success` — `tests/GaneshContextRecorderTest.cpp:69`; Ganesh; `DEF_GANESH_TEST_FOR_ALL_CONTEXTS`.
+- `ImageMakeScaled_GaneshImageWithRecorder_Success` — `tests/GaneshContextRecorderTest.cpp:92`; Ganesh; `DEF_GANESH_TEST_FOR_ALL_CONTEXTS`.
+- `CanvasBaseRecorder_GaneshBasedCanvas_IsLinkedToDirectContext` — `tests/GaneshContextRecorderTest.cpp:126`; Ganesh; `DEF_GANESH_TEST_FOR_ALL_CONTEXTS`.
+- `GrDrawCollapsedPath` — `tests/GpuDrawPathTest.cpp:99`; Ganesh; `DEF_GANESH_TEST_FOR_ALL_CONTEXTS`.
+- `PathTest_CrBug1232834` — `tests/GpuDrawPathTest.cpp:125`; Ganesh; `DEF_GANESH_TEST_FOR_ALL_CONTEXTS`.
+- `StrokeCircle_Bug356182429` — `tests/GpuDrawPathTest.cpp:148`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `ClipStack_SWMask` — `tests/GrClipStackTest.cpp:2091`; Ganesh; `DEF_GANESH_TEST_FOR_CONTEXTS`.
+- `ClipStack_MixedAA` — `tests/GrClipStackTest.cpp:2195`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `GrContextDump` — `tests/GrContextFactoryTest.cpp:111`; Ganesh; `DEF_GANESH_TEST_FOR_ALL_CONTEXTS`.
+- `FlushFinishedProcTest` — `tests/GrFinishedFlushTest.cpp:56`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `FinishedAsyncProcWhenAbandonedTest` — `tests/GrFinishedFlushTest.cpp:171`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `GrGpuBufferTransferTest` — `tests/GrGpuBufferTest.cpp:219`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `GrGpuBufferUpdateDataTest` — `tests/GrGpuBufferTest.cpp:372`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `GrMeshTest` — `tests/GrMeshTest.cpp:155`; Ganesh; `DEF_GANESH_TEST_FOR_CONTEXTS`.
+- `GrMeshTest` — `tests/GrMeshTest.cpp:157`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `GrWrappedMipMappedTest` — `tests/GrMipMappedTest.cpp:93`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `GrBackendTextureImageMipMappedTest` — `tests/GrMipMappedTest.cpp:181`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `GrImageSnapshotMipMappedTest` — `tests/GrMipMappedTest.cpp:328`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `Gr1x1TextureMipMappedTest` — `tests/GrMipMappedTest.cpp:388`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `OpsTaskFlushCount` — `tests/GrOpListFlushTest.cpp:46`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `GrPipelineDynamicStateTest` — `tests/GrPipelineDynamicStateTest.cpp:226`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `FlushSubmittedProcTest` — `tests/GrSubmittedFlushTest.cpp:40`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `SurfaceResolveTest` — `tests/GrSurfaceResolveTest.cpp:103`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `NonmippedDrawBeforeMippedDraw` — `tests/GrSurfaceResolveTest.cpp:219`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `SurfaceResolveAfterFailedFlush` — `tests/GrSurfaceResolveTest.cpp:547`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `GrSurfaceRenderability` — `tests/GrSurfaceTest.cpp:136`; Ganesh; `DEF_GANESH_TEST_FOR_ALL_CONTEXTS`.
+- `ReadOnlyTexture` — `tests/GrSurfaceTest.cpp:419`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `GrTextBlobScaleAnimation` — `tests/GrTextBlobTest.cpp:83`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `GrTextBlobMoveAround` — `tests/GrTextBlobTest.cpp:114`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `GrTextureMipMapInvalidationTest` — `tests/GrTextureMipMapInvalidationTest.cpp:43`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `ReimportImageTextureWithMipLevels` — `tests/GrTextureMipMapInvalidationTest.cpp:104`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `GrThreadSafeCache1View` — `tests/GrThreadSafeCacheTest.cpp:821`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `GrThreadSafeCache1Verts` — `tests/GrThreadSafeCacheTest.cpp:828`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `GrThreadSafeCache2View` — `tests/GrThreadSafeCacheTest.cpp:865`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `GrThreadSafeCache2Verts` — `tests/GrThreadSafeCacheTest.cpp:872`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `GrThreadSafeCache3View` — `tests/GrThreadSafeCacheTest.cpp:903`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `GrThreadSafeCache3Verts` — `tests/GrThreadSafeCacheTest.cpp:910`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `GrThreadSafeCache4View` — `tests/GrThreadSafeCacheTest.cpp:943`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `GrThreadSafeCache4Verts` — `tests/GrThreadSafeCacheTest.cpp:950`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `GrThreadSafeCache4_5View` — `tests/GrThreadSafeCacheTest.cpp:988`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `GrThreadSafeCache4_5Verts` — `tests/GrThreadSafeCacheTest.cpp:996`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `GrThreadSafeCache4_75View` — `tests/GrThreadSafeCacheTest.cpp:1039`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `GrThreadSafeCache4_75Verts` — `tests/GrThreadSafeCacheTest.cpp:1048`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `GrThreadSafeCache5View` — `tests/GrThreadSafeCacheTest.cpp:1086`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `GrThreadSafeCache5Verts` — `tests/GrThreadSafeCacheTest.cpp:1093`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `GrThreadSafeCache6View` — `tests/GrThreadSafeCacheTest.cpp:1135`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `GrThreadSafeCache6Verts` — `tests/GrThreadSafeCacheTest.cpp:1142`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `GrThreadSafeCache7View` — `tests/GrThreadSafeCacheTest.cpp:1185`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `GrThreadSafeCache7Verts` — `tests/GrThreadSafeCacheTest.cpp:1192`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `GrThreadSafeCache8View` — `tests/GrThreadSafeCacheTest.cpp:1236`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `GrThreadSafeCache8Verts` — `tests/GrThreadSafeCacheTest.cpp:1243`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `GrThreadSafeCache9View` — `tests/GrThreadSafeCacheTest.cpp:1287`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `GrThreadSafeCache9Verts` — `tests/GrThreadSafeCacheTest.cpp:1294`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `GrThreadSafeCache10View` — `tests/GrThreadSafeCacheTest.cpp:1367`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `GrThreadSafeCache11View` — `tests/GrThreadSafeCacheTest.cpp:1418`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `GrThreadSafeCache11Verts` — `tests/GrThreadSafeCacheTest.cpp:1425`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `GrThreadSafeCache12View` — `tests/GrThreadSafeCacheTest.cpp:1474`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `GrThreadSafeCache12Verts` — `tests/GrThreadSafeCacheTest.cpp:1481`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `GrThreadSafeCache13View` — `tests/GrThreadSafeCacheTest.cpp:1525`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `GrThreadSafeCache13Verts` — `tests/GrThreadSafeCacheTest.cpp:1532`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `GrThreadSafeCache14` — `tests/GrThreadSafeCacheTest.cpp:1541`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `GrThreadSafeCache15View` — `tests/GrThreadSafeCacheTest.cpp:1617`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `GrThreadSafeCache15Verts` — `tests/GrThreadSafeCacheTest.cpp:1625`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `GrThreadSafeCache16Verts` — `tests/GrThreadSafeCacheTest.cpp:1643`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `GrUniqueProxyTest` — `tests/GrUniqueProxyTest.cpp:75`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `TestSweepGradientZeroXGanesh` — `tests/GradientTest.cpp:657`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `TestManyStopLinearHardstopsGanesh` — `tests/GradientTest.cpp:669`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `ImageFilterCache_ImageBackedGPU` — `tests/ImageFilterCacheTest.cpp:262`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `ImageFilterCache_GPUBacked` — `tests/ImageFilterCacheTest.cpp:311`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `ImageFilterNegativeBlurSigma_Gpu` — `tests/ImageFilterTest.cpp:645`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `MorphologyFilterRadiusWithMirrorCTM_Gpu` — `tests/ImageFilterTest.cpp:729`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `ImageFilterZeroBlurSigma_Gpu` — `tests/ImageFilterTest.cpp:774`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `ImageFilterFailAffectsTransparentBlack_Gpu` — `tests/ImageFilterTest.cpp:810`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `ImageFilterMergeResultSize_Gpu` — `tests/ImageFilterTest.cpp:1136`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `ImageFilterMatrixConvolutionBigKernel_Gpu` — `tests/ImageFilterTest.cpp:1298`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `ImageFilterCropRect_Gpu` — `tests/ImageFilterTest.cpp:1311`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `ImageFilterClippedPictureImageFilter_Gpu` — `tests/ImageFilterTest.cpp:1378`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `ComposedImageFilterOffset_Gpu` — `tests/ImageFilterTest.cpp:1619`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `ComposedImageFilterBounds_Gpu` — `tests/ImageFilterTest.cpp:1666`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `ImageFilterMakeWithFilter_Ganesh` — `tests/ImageFilterTest.cpp:1939`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `ImageFilterMakeWithFilter_Graphite` — `tests/ImageFilterTest.cpp:1972`; Graphite; `DEF_GRAPHITE_TEST_FOR_RENDERING_CONTEXTS`.
+- `ImageFilterMakeWithFilter_ScratchReuse_Graphite` — `tests/ImageFilterTest.cpp:2006`; Graphite; `DEF_GRAPHITE_TEST_FOR_RENDERING_CONTEXTS`.
+- `ImageFilterHugeBlur_Gpu` — `tests/ImageFilterTest.cpp:2152`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `XfermodeImageFilterCroppedInput_Gpu` — `tests/ImageFilterTest.cpp:2164`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `ImageFilterBlurLargeImage_Gpu` — `tests/ImageFilterTest.cpp:2176`; Ganesh; `DEF_GANESH_TEST_FOR_ALL_CONTEXTS`.
+- `ImageIsOpaqueTest_Gpu` — `tests/ImageIsOpaqueTest.cpp:49`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `ImageNewShader_GPU` — `tests/ImageNewShaderTest.cpp:144`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `ImageEncode_Gpu` — `tests/ImageTest.cpp:226`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `SkImage_Ganesh2Cpu` — `tests/ImageTest.cpp:385`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `SkImage_makeTextureImage` — `tests/ImageTest.cpp:434`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `SkImage_makeNonTextureImage` — `tests/ImageTest.cpp:527`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `GrContext_colorTypeSupportedAsImage` — `tests/ImageTest.cpp:557`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `UnpremulTextureImage` — `tests/ImageTest.cpp:591`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `ImageReadPixels_Gpu` — `tests/ImageTest.cpp:806`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `ImageLegacyBitmap_Gpu` — `tests/ImageTest.cpp:870`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `ImagePeek_Gpu` — `tests/ImageTest.cpp:916`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `ImageBackendAccessAbandoned_Gpu` — `tests/ImageTest.cpp:1291`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `ImageScalePixels_Gpu` — `tests/ImageTest.cpp:1523`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `ImageFlush` — `tests/ImageTest.cpp:1580`; Ganesh; `DEF_GANESH_TEST_FOR_ALL_CONTEXTS`.
+- `crbug_1271431` — `tests/LazyStencilAttachmentTest.cpp:35`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `MatrixColorFilter_TransparentBlack` — `tests/MatrixColorFilterTest.cpp:35`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `SkMultiPictureDocument_AHardwarebuffer` — `tests/MultiPictureDocumentTest.cpp:339`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `PinnedImageTest` — `tests/PinnedImageTest.cpp:157`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `PinnedImageTest_AsGaneshView` — `tests/PinnedImageTest.cpp:166`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `PinnedImageTest_AsFragmentProcessor` — `tests/PinnedImageTest.cpp:197`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `PremulAlphaRoundTrip_Gpu` — `tests/PremulAlphaRoundTripTest.cpp:121`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `VertexAttributeCount` — `tests/PrimitiveProcessorTest.cpp:200`; Ganesh; `DEF_GANESH_TEST_FOR_ALL_CONTEXTS`.
+- `ProcessorRefTest` — `tests/ProcessorTest.cpp:202`; Ganesh; `DEF_GANESH_TEST_FOR_ALL_CONTEXTS`.
+- `PromiseImageTest` — `tests/PromiseImageTest.cpp:147`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `PromiseImageTextureFullCache` — `tests/PromiseImageTest.cpp:306`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `PromiseImageNullFulfill` — `tests/PromiseImageTest.cpp:395`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `Protected_SmokeTest` — `tests/ProtectedTest.cpp:28`; Ganesh; `DEF_GANESH_TEST_FOR_ALL_CONTEXTS`.
+- `Protected_readPixelsFromSurfaces` — `tests/ProtectedTest.cpp:116`; Ganesh; `DEF_GANESH_TEST_FOR_ALL_CONTEXTS`.
+- `Protected_CopyOnWrite` — `tests/ProtectedTest.cpp:139`; Ganesh; `DEF_GANESH_TEST_FOR_ALL_CONTEXTS`.
+- `Protected_asyncRescaleAndReadPixelsFromSurfaces` — `tests/ProtectedTest.cpp:204`; Ganesh; `DEF_GANESH_TEST_FOR_ALL_CONTEXTS`.
+- `Protected_pictureShader` — `tests/ProtectedTest.cpp:235`; Ganesh; `DEF_GANESH_TEST_FOR_ALL_CONTEXTS`.
+- `PreinstantiatedProxyConversionTest` — `tests/ProxyConversionTest.cpp:78`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `DefferredProxyConversionTest` — `tests/ProxyConversionTest.cpp:148`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `ProxyRefTest` — `tests/ProxyRefTest.cpp:64`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `DeferredProxyTest` — `tests/ProxyTest.cpp:126`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `WrappedProxyTest` — `tests/ProxyTest.cpp:260`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `ZeroSizedProxyTest` — `tests/ProxyTest.cpp:392`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `SurfaceContextReadPixels` — `tests/ReadWritePixelsGpuTest.cpp:592`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `ReadPixels_InvalidRowBytes_Gpu` — `tests/ReadWritePixelsGpuTest.cpp:634`; Ganesh; `DEF_GANESH_TEST_FOR_ALL_CONTEXTS`.
+- `WritePixels_InvalidRowBytes_Gpu` — `tests/ReadWritePixelsGpuTest.cpp:653`; Ganesh; `DEF_GANESH_TEST_FOR_ALL_CONTEXTS`.
+- `SurfaceAsyncReadPixels` — `tests/ReadWritePixelsGpuTest.cpp:691`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `ImageAsyncReadPixels_NonRenderable_TopLeft` — `tests/ReadWritePixelsGpuTest.cpp:820`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `ImageAsyncReadPixels_NonRenderable_BottomLeft` — `tests/ReadWritePixelsGpuTest.cpp:828`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `ImageAsyncReadPixels_Renderable_TopLeft` — `tests/ReadWritePixelsGpuTest.cpp:836`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `ImageAsyncReadPixels_Renderable_BottomLeft` — `tests/ReadWritePixelsGpuTest.cpp:844`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `SurfaceContextWritePixels_NonRenderable_TopLeft` — `tests/ReadWritePixelsGpuTest.cpp:1294`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `SurfaceContextWritePixels_NonRenderable_BottomLeft` — `tests/ReadWritePixelsGpuTest.cpp:1302`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `SurfaceContextWritePixels_Renderable_TopLeft` — `tests/ReadWritePixelsGpuTest.cpp:1310`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `SurfaceContextWritePixels_Renderable_BottomLeft` — `tests/ReadWritePixelsGpuTest.cpp:1318`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `SurfaceContextWritePixelsMipped` — `tests/ReadWritePixelsGpuTest.cpp:1326`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `ReadPixelsIntermediateFailedFlush` — `tests/ReadWritePixelsGpuTest.cpp:1534`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `WritePixelsFailedFlushLeaksScratch` — `tests/ReadWritePixelsGpuTest.cpp:1589`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `RepeatedClippedBlurTest` — `tests/RepeatedClippedBlurTest.cpp:46`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `ResourceAllocatorTest` — `tests/ResourceAllocatorTest.cpp:258`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `ResourceAllocatorStressTest` — `tests/ResourceAllocatorTest.cpp:386`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `ResourceAllocatorMemoryBudgetTest` — `tests/ResourceAllocatorTest.cpp:472`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `ResourceCacheCache` — `tests/ResourceCacheTest.cpp:73`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `ResourceCacheStencilBuffers` — `tests/ResourceCacheTest.cpp:158`; Ganesh; `DEF_GANESH_TEST_FOR_CONTEXTS`.
+- `ResourceCacheWrappedResources` — `tests/ResourceCacheTest.cpp:239`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `ResourceMessagesAfterAbandon` — `tests/ResourceCacheTest.cpp:1695`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `GPUMemorySize` — `tests/ResourceCacheTest.cpp:1782`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `PurgeToMakeHeadroom` — `tests/ResourceCacheTest.cpp:1840`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `SkRuntimeBlender_Ganesh` — `tests/RuntimeBlendTest.cpp:116`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `SkRuntimeBlender_Graphite` — `tests/RuntimeBlendTest.cpp:128`; Graphite; `DEF_GRAPHITE_TEST_FOR_RENDERING_CONTEXTS`.
+- `SRGBReadWritePixels` — `tests/SRGBReadWritePixelsTest.cpp:263`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `SaveLayerOrigin` — `tests/SaveLayerOriginTest.cpp:125`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `SkRuntimeShaderImageFilter_GPU` — `tests/ShaderImageFilterTest.cpp:220`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `ShaderTestNestedBlendsGanesh` — `tests/ShaderTest.cpp:187`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `ShaderTestNestedBlendsGraphite` — `tests/ShaderTest.cpp:201`; Graphite; `DEF_GRAPHITE_TEST_FOR_RENDERING_CONTEXTS`.
+- `SimplifyPaintTest_Graphite` — `tests/SimplifyPaintTest.cpp:202`; Graphite; `DEF_GRAPHITE_TEST_FOR_RENDERING_CONTEXTS`.
+- `SimplifyPaintTest_Ganesh` — `tests/SimplifyPaintTest.cpp:217`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `SkColorSpaceXform_Ganesh` — `tests/SkColorSpaceXformStepsTest.cpp:430`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `SkColorSpaceXform_Graphite` — `tests/SkColorSpaceXformStepsTest.cpp:448`; Graphite; `DEF_GRAPHITE_TEST_FOR_RENDERING_CONTEXTS`.
+- `SkRemoteGlyphCache_StrikeSerialization` — `tests/SkRemoteGlyphCacheTest.cpp:273`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `SkRemoteGlyphCache_StrikeSerializationSlug` — `tests/SkRemoteGlyphCacheTest.cpp:323`; Ganesh; `DEF_GANESH_TEST_FOR_CONTEXTS`.
+- `SkRemoteGlyphCache_StrikeSerializationSlugForcePath` — `tests/SkRemoteGlyphCacheTest.cpp:367`; Ganesh; `DEF_GANESH_TEST_FOR_CONTEXTS`.
+- `SkRemoteGlyphCache_SlugSerialization` — `tests/SkRemoteGlyphCacheTest.cpp:411`; Ganesh; `DEF_GANESH_TEST_FOR_CONTEXTS`.
+- `SkRemoteGlyphCache_SlugSerialization_LargeOffset` — `tests/SkRemoteGlyphCacheTest.cpp:455`; Ganesh; `DEF_GANESH_TEST_FOR_CONTEXTS`.
+- `SkRemoteGlyphCache_SubRunBoundsReconstruction` — `tests/SkRemoteGlyphCacheTest.cpp:507`; Ganesh; `DEF_GANESH_TEST_FOR_CONTEXTS`.
+- `SkRemoteGlyphCache_ReleaseTypeFace` — `tests/SkRemoteGlyphCacheTest.cpp:670`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `SkRemoteGlyphCache_StrikeLockingServer` — `tests/SkRemoteGlyphCacheTest.cpp:703`; CPU; `DEF_TEST`.
+- `SkRemoteGlyphCache_StrikeDeletionServer` — `tests/SkRemoteGlyphCacheTest.cpp:737`; CPU; `DEF_TEST`.
+- `SkRemoteGlyphCache_StrikePinningClient` — `tests/SkRemoteGlyphCacheTest.cpp:772`; CPU; `DEF_TEST`.
+- `SkRemoteGlyphCache_ClientMemoryAccounting` — `tests/SkRemoteGlyphCacheTest.cpp:812`; CPU; `DEF_TEST`.
+- `SkRemoteGlyphCache_PurgesServerEntries` — `tests/SkRemoteGlyphCacheTest.cpp:840`; CPU; `DEF_TEST`.
+- `SkRemoteGlyphCache_DrawTextAsPath` — `tests/SkRemoteGlyphCacheTest.cpp:887`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `SkRemoteGlyphCache_DrawTextAsMaskWithPathFallback` — `tests/SkRemoteGlyphCacheTest.cpp:966`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `SkRemoteGlyphCache_DrawTextXY` — `tests/SkRemoteGlyphCacheTest.cpp:1010`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `SkRemoteGlyphCache_DrawTextAsDFT` — `tests/SkRemoteGlyphCacheTest.cpp:1052`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `SkRemoteGlyphCache_CacheMissReporting` — `tests/SkRemoteGlyphCacheTest.cpp:1106`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `SkRemoteGlyphCache_TypefaceWithNoPaths` — `tests/SkRemoteGlyphCacheTest.cpp:1177`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `SkRemoteGlyphCache_TypefaceWithPaths_MaskThenPath` — `tests/SkRemoteGlyphCacheTest.cpp:1256`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `SkRemoteGlyphCache_TypefaceWithPaths_PathThenMask` — `tests/SkRemoteGlyphCacheTest.cpp:1315`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `SkTypefaceProxy_Basic_Serial` — `tests/SkRemoteGlyphCacheTest.cpp:1375`; CPU; `DEF_TEST`.
+- `SkGraphics_Limits` — `tests/SkRemoteGlyphCacheTest.cpp:1403`; CPU; `DEF_TEST`.
+- `SkRemoteGlyphCache_b513780208` — `tests/SkRemoteGlyphCacheTest.cpp:1414`; CPU; `DEF_TEST`.
+- `SkRuntimeEffectSimple_Graphite` — `tests/SkRuntimeEffectTest.cpp:742`; Graphite; `DEF_GRAPHITE_TEST_FOR_RENDERING_CONTEXTS`.
+- `SkRuntimeEffectSimple_GPU` — `tests/SkRuntimeEffectTest.cpp:751`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `SkRuntimeEffectObeysCapabilities_GPU` — `tests/SkRuntimeEffectTest.cpp:866`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `SkRuntimeColorFilterReturningInvalidAlpha_GPU` — `tests/SkRuntimeEffectTest.cpp:877`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `SkRuntimeEffect_Blender_GPU` — `tests/SkRuntimeEffectTest.cpp:1221`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `SkRuntimeStructNameReuse_GPU` — `tests/SkRuntimeEffectTest.cpp:1404`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `SkRuntimeShader_TransformedCoords_Graphite` — `tests/SkRuntimeEffectTest.cpp:1702`; Graphite; `DEF_GRAPHITE_TEST_FOR_RENDERING_CONTEXTS`.
+- `SkRuntimeShader_TransformedCoords_Ganesh` — `tests/SkRuntimeEffectTest.cpp:1713`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `GrSkSLFP_Specialized` — `tests/SkRuntimeEffectTest.cpp:1720`; Ganesh; `DEF_GANESH_TEST_FOR_ALL_CONTEXTS`.
+- `GrSkSLFP_UniformArray` — `tests/SkRuntimeEffectTest.cpp:1756`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `SkSLCross` — `tests/SkSLCross.cpp:51`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `SkSL_ES2Conformance_Pass_GPU` — `tests/SkSLES2ConformanceTest.cpp:123`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `SkSL` — `tests/SkSLTest.cpp:995`; Ganesh; `DEF_CONDITIONAL_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `SkSL` — `tests/SkSLTest.cpp:1012`; Graphite; `DEF_CONDITIONAL_GRAPHITE_TEST_FOR_CONTEXTS`.
+- `flags` — `tests/SkSLTest.cpp:1031`; Ganesh; `DEF_GANESH_SKSL_TEST`.
+- `flags` — `tests/SkSLTest.cpp:1032`; Graphite; `DEF_GRAPHITE_SKSL_TEST`.
+- `skbug12214` — `tests/Skbug12214.cpp:22`; Ganesh; `DEF_GANESH_TEST_FOR_ALL_CONTEXTS`.
+- `skbug5221_GPU` — `tests/Skbug5221.cpp:38`; Ganesh; `DEF_GANESH_TEST_FOR_ALL_CONTEXTS`.
+- `skbug6653` — `tests/Skbug6653.cpp:115`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `Slug_empty` — `tests/SlugTest.cpp:42`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `Slug_b520113415` — `tests/SlugTest.cpp:84`; Ganesh; `DEF_GANESH_TEST_FOR_CONTEXTS`.
+- `Slug_b520571816` — `tests/SlugTest.cpp:159`; Ganesh; `DEF_GANESH_TEST_FOR_CONTEXTS`.
+- `Slug_draw_then_serialize` — `tests/SlugTest.cpp:221`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `Slug_draw_then_serialize_PathSubRun` — `tests/SlugTest.cpp:313`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `Slug_draw_then_serialize_DrawableSubRun` — `tests/SlugTest.cpp:357`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `SmallPathRenderer_crbug505876830` — `tests/SmallPathRendererTest.cpp:19`; Ganesh; `DEF_GANESH_TEST_FOR_CONTEXTS`.
+- `SpecialImage_Gpu` — `tests/SpecialImageTest.cpp:194`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `SrcSrcOverBatchTest` — `tests/SrcSrcOverBatchTest.cpp:32`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `StencilClearTest` — `tests/StencilClearTest.cpp:65`; Ganesh; `DEF_GANESH_TEST_FOR_CONTEXTS`.
+- `StencilClearTest_PreservedAcrossSplit` — `tests/StencilClearTest.cpp:142`; Ganesh; `DEF_GANESH_TEST_FOR_CONTEXTS`.
+- `SkStrikePromise_Basic` — `tests/StrikeForGPUTest.cpp:27`; CPU; `DEF_TEST`.
+- `SurfaceDrawContextTest` — `tests/SurfaceDrawContextTest.cpp:53`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `EmptySurfaceSemaphoreTest` — `tests/SurfaceSemaphoreTest.cpp:262`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `SurfaceEmpty_Gpu` — `tests/SurfaceTest.cpp:134`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `GrContext_colorTypeSupportedAsSurface` — `tests/SurfaceTest.cpp:144`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `GrContext_maxSurfaceSamplesForColorType` — `tests/SurfaceTest.cpp:244`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `SurfaceCanvasPeek_Gpu` — `tests/SurfaceTest.cpp:316`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `SurfaceSnapshotAlphaType_Gpu` — `tests/SurfaceTest.cpp:348`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `SurfaceBackendSurfaceAccessCopyOnWrite_Gpu` — `tests/SurfaceTest.cpp:386`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `SurfaceBackendHandleAccessIDs_Gpu` — `tests/SurfaceTest.cpp:435`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `SurfaceAbandonPostFlush_Gpu` — `tests/SurfaceTest.cpp:454`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `SurfaceBackendAccessAbandoned_Gpu` — `tests/SurfaceTest.cpp:472`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `SurfaceCopyOnWrite_Gpu` — `tests/SurfaceTest.cpp:558`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `SurfaceWriteableAfterSnapshotRelease_Gpu` — `tests/SurfaceTest.cpp:583`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `SurfaceCRBug263329_Gpu` — `tests/SurfaceTest.cpp:632`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `SurfacepeekTexture_Gpu` — `tests/SurfaceTest.cpp:653`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `SurfaceBudget` — `tests/SurfaceTest.cpp:686`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `SurfaceNoCanvas_Gpu` — `tests/SurfaceTest.cpp:742`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `SurfacePartialDraw_Gpu` — `tests/SurfaceTest.cpp:1002`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `SurfaceWrappedWithRelease_Gpu` — `tests/SurfaceTest.cpp:1030`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `DrawSnapshotBackIntoWappedSurface` — `tests/SurfaceTest.cpp:1140`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `ReplaceSurfaceBackendTexture` — `tests/SurfaceTest.cpp:1178`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `OverdrawSurface_Gpu` — `tests/SurfaceTest.cpp:1310`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `TestGpuAllContexts` — `tests/TestTest.cpp:40`; Ganesh; `DEF_GANESH_TEST_FOR_ALL_CONTEXTS`.
+- `TestGpuRenderingContexts` — `tests/TestTest.cpp:47`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `TestGpuAllContextsWithTrueCondition` — `tests/TestTest.cpp:64`; Ganesh; `DEF_CONDITIONAL_GANESH_TEST_FOR_ALL_CONTEXTS`.
+- `TestGpuAllContextsWithFalseCondition` — `tests/TestTest.cpp:70`; Ganesh; `DEF_CONDITIONAL_GANESH_TEST_FOR_ALL_CONTEXTS`.
+- `TestGpuRenderingContextsWithTrueCondition` — `tests/TestTest.cpp:77`; Ganesh; `DEF_CONDITIONAL_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `TestGpuRenderingContextsWithFalseCondition` — `tests/TestTest.cpp:86`; Ganesh; `DEF_CONDITIONAL_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `TextBlobIntegerOverflowTest` — `tests/TextBlobCacheTest.cpp:309`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `TextBlobJaggedGlyph` — `tests/TextBlobCacheTest.cpp:332`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `TextBlobSmoothScroll` — `tests/TextBlobCacheTest.cpp:391`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `TextBlob_draw_releases_strike_from_cache` — `tests/TextBlobCacheTest.cpp:442`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `TextureOpTest` — `tests/TextureOpTest.cpp:112`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `TextureProxyTest` — `tests/TextureProxyTest.cpp:372`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `ImageSizeTest_Ganesh` — `tests/TextureSizeTest.cpp:77`; Ganesh; `DEF_GANESH_TEST_FOR_ALL_CONTEXTS`.
+- `ImageSizeTest_Graphite` — `tests/TextureSizeTest.cpp:95`; Graphite; `DEF_GRAPHITE_TEST_FOR_ALL_CONTEXTS`.
+- `TextureStripAtlasManagerGradientTest` — `tests/TextureStripAtlasManagerTest.cpp:37`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `TextureStripAtlasManagerColorFilterTest` — `tests/TextureStripAtlasManagerTest.cpp:65`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `TransferPixelsToTextureTest` — `tests/TransferPixelsTest.cpp:504`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `TransferPixelsFromTextureTest` — `tests/TransferPixelsTest.cpp:544`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `TriangulatingPathRendererTests` — `tests/TriangulatingPathRendererTests.cpp:807`; Ganesh; `DEF_GANESH_TEST_FOR_ALL_CONTEXTS`.
+- `WrappedSurfaceCopyOnWrite` — `tests/WrappedSurfaceCopyOnWriteTest.cpp:53`; Ganesh; `DEF_GANESH_TEST_FOR_ALL_CONTEXTS`.
+- `SkipCopyTaskTest` — `tests/WrappedSurfaceCopyOnWriteTest.cpp:121`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `SkipOpsTaskTest` — `tests/WrappedSurfaceCopyOnWriteTest.cpp:176`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `WritePixels_Gpu` — `tests/WritePixelsTest.cpp:479`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `WritePixelsMSAA_Gpu` — `tests/WritePixelsTest.cpp:486`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `WritePixels_Graphite` — `tests/WritePixelsTest.cpp:505`; Graphite; `DEF_GRAPHITE_TEST_FOR_RENDERING_CONTEXTS`.
+- `WritePixelsNonTexture_Gpu` — `tests/WritePixelsTest.cpp:532`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `WritePixelsNonTextureMSAA_Gpu` — `tests/WritePixelsTest.cpp:539`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `WritePixelsPendingIO` — `tests/WritePixelsTest.cpp:572`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `crbug_500172224_aa_double` — `tests/crbug_500172224.cpp:106`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `crbug_500172224_non_aa_double` — `tests/crbug_500172224.cpp:117`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `crbug_500172224_aa` — `tests/crbug_500172224.cpp:128`; Ganesh; `DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS`.
+- `BackendTextureTest` — `tests/graphite/BackendTextureTest.cpp:34`; Graphite; `DEF_GRAPHITE_TEST_FOR_ALL_CONTEXTS`.
+- `SurfaceBackendTextureTest` — `tests/graphite/BackendTextureTest.cpp:89`; Graphite; `DEF_GRAPHITE_TEST_FOR_ALL_CONTEXTS`.
+- `ImageBackendTextureTest` — `tests/graphite/BackendTextureTest.cpp:136`; Graphite; `DEF_GRAPHITE_TEST_FOR_ALL_CONTEXTS`.
+- `BufferManagerGpuOnlyBufferTest` — `tests/graphite/BufferManagerTest.cpp:29`; Graphite; `DEF_GRAPHITE_TEST_FOR_RENDERING_CONTEXTS`.
+- `BufferManagerStaleAllocatorTest` — `tests/graphite/BufferManagerTest.cpp:73`; Graphite; `DEF_GRAPHITE_TEST_FOR_RENDERING_CONTEXTS`.
+- `CacheBudgetTest` — `tests/graphite/CacheBudgetTest.cpp:20`; Graphite; `DEF_CONDITIONAL_GRAPHITE_TEST_FOR_CONTEXTS`.
+- `CacheKeyTest_Picture` — `tests/graphite/CacheKeyTest.cpp:56`; Graphite; `DEF_GRAPHITE_TEST_FOR_ALL_CONTEXTS`.
+- `CacheKeyTest_Bitmap` — `tests/graphite/CacheKeyTest.cpp:102`; Graphite; `DEF_GRAPHITE_TEST_FOR_ALL_CONTEXTS`.
+- `Compute_SingleDispatchTest` — `tests/graphite/ComputeTest.cpp:122`; Graphite; `DEF_GRAPHITE_TEST_FOR_COMPUTE_CONTEXTS`.
+- `Compute_DispatchGroupTest` — `tests/graphite/ComputeTest.cpp:257`; Graphite; `DEF_GRAPHITE_TEST_FOR_COMPUTE_CONTEXTS`.
+- `Compute_UniformBufferTest` — `tests/graphite/ComputeTest.cpp:505`; Graphite; `DEF_GRAPHITE_TEST_FOR_COMPUTE_CONTEXTS`.
+- `Compute_ExternallyAssignedBuffer` — `tests/graphite/ComputeTest.cpp:655`; Graphite; `DEF_GRAPHITE_TEST_FOR_COMPUTE_CONTEXTS`.
+- `Compute_StorageTexture` — `tests/graphite/ComputeTest.cpp:778`; Graphite; `DEF_GRAPHITE_TEST_FOR_COMPUTE_CONTEXTS`.
+- `Compute_StorageTextureReadAndWrite` — `tests/graphite/ComputeTest.cpp:887`; Graphite; `DEF_GRAPHITE_TEST_FOR_COMPUTE_CONTEXTS`.
+- `Compute_ReadOnlyStorageBuffer` — `tests/graphite/ComputeTest.cpp:1056`; Graphite; `DEF_GRAPHITE_TEST_FOR_COMPUTE_CONTEXTS`.
+- `Compute_StorageTextureMultipleComputeSteps` — `tests/graphite/ComputeTest.cpp:1203`; Graphite; `DEF_GRAPHITE_TEST_FOR_COMPUTE_CONTEXTS`.
+- `Compute_SampledTexture` — `tests/graphite/ComputeTest.cpp:1357`; Graphite; `DEF_GRAPHITE_TEST_FOR_COMPUTE_CONTEXTS`.
+- `Compute_AtomicOperationsTest` — `tests/graphite/ComputeTest.cpp:1530`; Graphite; `DEF_GRAPHITE_TEST_FOR_COMPUTE_CONTEXTS`.
+- `Compute_AtomicOperationsOverArrayAndStructTest` — `tests/graphite/ComputeTest.cpp:1668`; Graphite; `DEF_GRAPHITE_TEST_FOR_COMPUTE_CONTEXTS`.
+- `Compute_ClearedBuffer` — `tests/graphite/ComputeTest.cpp:1810`; Graphite; `DEF_GRAPHITE_TEST_FOR_COMPUTE_CONTEXTS`.
+- `Compute_ClearOrdering` — `tests/graphite/ComputeTest.cpp:1921`; Graphite; `DEF_GRAPHITE_TEST_FOR_COMPUTE_CONTEXTS`.
+- `Compute_ClearOrderingScratchBuffers` — `tests/graphite/ComputeTest.cpp:2039`; Graphite; `DEF_GRAPHITE_TEST_FOR_COMPUTE_CONTEXTS`.
+- `Compute_IndirectDispatch` — `tests/graphite/ComputeTest.cpp:2165`; Graphite; `DEF_GRAPHITE_TEST_FOR_COMPUTE_CONTEXTS`.
+- `Compute_WorkgroupUniformLoadTest` — `tests/graphite/ComputeTest.cpp:2716`; Graphite; `DEF_GRAPHITE_TEST_FOR_COMPUTE_CONTEXTS`.
+- `DeviceTestVertexTransparency` — `tests/graphite/DeviceTest.cpp:21`; Graphite; `DEF_GRAPHITE_TEST_FOR_ALL_CONTEXTS`.
+- `BasicDrawAtlas` — `tests/graphite/DrawAtlasTest.cpp:62`; Graphite; `DEF_GRAPHITE_TEST_FOR_RENDERING_CONTEXTS`.
+- `ThrashDrawAtlasCache` — `tests/graphite/DrawAtlasTest.cpp:165`; Graphite; `DEF_GRAPHITE_TEST_FOR_RENDERING_CONTEXTS`.
+- `DrawAtlasProxyLifetime` — `tests/graphite/DrawAtlasTest.cpp:269`; Graphite; `DEF_GRAPHITE_TEST_FOR_RENDERING_CONTEXTS`.
+- `CPUSurface_UsesGraphiteContextAndRasterRecorderToDraw_DrawsPixels` — `tests/graphite/GraphiteContextRecorderTest.cpp:23`; Graphite; `DEF_GRAPHITE_TEST_FOR_ALL_CONTEXTS`.
+- `ImageMakeColorSpace_GraphiteImageWithRecorder_Success` — `tests/graphite/GraphiteContextRecorderTest.cpp:47`; Graphite; `DEF_GRAPHITE_TEST_FOR_ALL_CONTEXTS`.
+- `ImageMakeScaled_GraphiteImageWithRecorder_Success` — `tests/graphite/GraphiteContextRecorderTest.cpp:71`; Graphite; `DEF_GRAPHITE_TEST_FOR_ALL_CONTEXTS`.
+- `CanvasBaseRecorder_GraphiteBasedCanvas_IsOriginalRecorder` — `tests/graphite/GraphiteContextRecorderTest.cpp:106`; Graphite; `DEF_GRAPHITE_TEST_FOR_ALL_CONTEXTS`.
+- `NonVolatileGraphitePromiseImageTest` — `tests/graphite/GraphitePromiseImageTest.cpp:242`; Graphite; `DEF_CONDITIONAL_GRAPHITE_TEST_FOR_RENDERING_CONTEXTS`.
+- `NonVolatileGraphitePromiseImageFulfillFailureTest` — `tests/graphite/GraphitePromiseImageTest.cpp:328`; Graphite; `DEF_CONDITIONAL_GRAPHITE_TEST_FOR_RENDERING_CONTEXTS`.
+- `NonVolatileGraphitePromiseImageCreationFailureTest` — `tests/graphite/GraphitePromiseImageTest.cpp:402`; Graphite; `DEF_CONDITIONAL_GRAPHITE_TEST_FOR_RENDERING_CONTEXTS`.
+- `VolatileGraphitePromiseImageTest` — `tests/graphite/GraphitePromiseImageTest.cpp:424`; Graphite; `DEF_CONDITIONAL_GRAPHITE_TEST_FOR_RENDERING_CONTEXTS`.
+- `VolatileGraphitePromiseImageFulfillFailureTest` — `tests/graphite/GraphitePromiseImageTest.cpp:519`; Graphite; `DEF_CONDITIONAL_GRAPHITE_TEST_FOR_RENDERING_CONTEXTS`.
+- `GraphitePromiseImageRecorderLoss` — `tests/graphite/GraphitePromiseImageTest.cpp:593`; Graphite; `DEF_CONDITIONAL_GRAPHITE_TEST_FOR_RENDERING_CONTEXTS`.
+- `GraphitePromiseImageMultipleImgUses` — `tests/graphite/GraphitePromiseImageTest.cpp:631`; Graphite; `DEF_CONDITIONAL_GRAPHITE_TEST_FOR_RENDERING_CONTEXTS`.
+- `GraphiteBudgetedResourcesTest` — `tests/graphite/GraphiteResourceCacheTest.cpp:96`; Graphite; `DEF_CONDITIONAL_GRAPHITE_TEST_FOR_ALL_CONTEXTS`.
+- `GraphitePurgeAsNeededResourcesTest` — `tests/graphite/GraphiteResourceCacheTest.cpp:320`; Graphite; `DEF_GRAPHITE_TEST_FOR_ALL_CONTEXTS`.
+- `GraphiteZeroSizedResourcesTest` — `tests/graphite/GraphiteResourceCacheTest.cpp:447`; Graphite; `DEF_GRAPHITE_TEST_FOR_ALL_CONTEXTS`.
+- `GraphitePurgeNotUsedSinceResourcesTest` — `tests/graphite/GraphiteResourceCacheTest.cpp:552`; Graphite; `DEF_GRAPHITE_TEST_FOR_ALL_CONTEXTS`.
+- `GraphitePurgeNotUsedOverBudgetTest` — `tests/graphite/GraphiteResourceCacheTest.cpp:643`; Graphite; `DEF_GRAPHITE_TEST_FOR_ALL_CONTEXTS`.
+- `GraphitePurgeResourcesTest` — `tests/graphite/GraphiteResourceCacheTest.cpp:734`; Graphite; `DEF_GRAPHITE_TEST_FOR_ALL_CONTEXTS`.
+- `GraphiteScratchResourcesTest` — `tests/graphite/GraphiteResourceCacheTest.cpp:801`; Graphite; `DEF_GRAPHITE_TEST_FOR_ALL_CONTEXTS`.
+- `GraphiteTimeLimitedPurgeTest` — `tests/graphite/GraphiteResourceCacheTest.cpp:899`; Graphite; `DEF_GRAPHITE_TEST_FOR_ALL_CONTEXTS`.
+- `NonVolatileGraphiteYUVAPromiseImageTest` — `tests/graphite/GraphiteYUVAPromiseImageTest.cpp:279`; Graphite; `DEF_CONDITIONAL_GRAPHITE_TEST_FOR_RENDERING_CONTEXTS`.
+- `NonVolatileGraphiteYUVAPromiseImageFulfillFailureTest` — `tests/graphite/GraphiteYUVAPromiseImageTest.cpp:377`; Graphite; `DEF_CONDITIONAL_GRAPHITE_TEST_FOR_RENDERING_CONTEXTS`.
+- `NonVolatileGraphiteYUVAPromiseImageCreationFailureTest` — `tests/graphite/GraphiteYUVAPromiseImageTest.cpp:460`; Graphite; `DEF_GRAPHITE_TEST_FOR_RENDERING_CONTEXTS`.
+- `VolatileGraphiteYUVAPromiseImageTest` — `tests/graphite/GraphiteYUVAPromiseImageTest.cpp:481`; Graphite; `DEF_CONDITIONAL_GRAPHITE_TEST_FOR_RENDERING_CONTEXTS`.
+- `VolatileGraphiteYUVAPromiseImageFulfillFailureTest` — `tests/graphite/GraphiteYUVAPromiseImageTest.cpp:602`; Graphite; `DEF_CONDITIONAL_GRAPHITE_TEST_FOR_RENDERING_CONTEXTS`.
+- `GraphiteYUVAPromiseImageRecorderLoss` — `tests/graphite/GraphiteYUVAPromiseImageTest.cpp:688`; Graphite; `DEF_CONDITIONAL_GRAPHITE_TEST_FOR_RENDERING_CONTEXTS`.
+- `GraphiteYUVAPromiseImageMultipleImgUses` — `tests/graphite/GraphiteYUVAPromiseImageTest.cpp:730`; Graphite; `DEF_CONDITIONAL_GRAPHITE_TEST_FOR_RENDERING_CONTEXTS`.
+- `ImageOriginTest_drawImage_Graphite` — `tests/graphite/ImageOriginTest.cpp:171`; Graphite; `DEF_GRAPHITE_TEST_FOR_RENDERING_CONTEXTS`.
+- `ImageOriginTest_imageShader_Graphite` — `tests/graphite/ImageOriginTest.cpp:176`; Graphite; `DEF_GRAPHITE_TEST_FOR_RENDERING_CONTEXTS`.
+- `ImageProviderTest_Graphite_Default` — `tests/graphite/ImageProviderTest.cpp:287`; Graphite; `DEF_GRAPHITE_TEST_FOR_RENDERING_CONTEXTS`.
+- `ImageProviderTest_Graphite_Testing` — `tests/graphite/ImageProviderTest.cpp:329`; Graphite; `DEF_GRAPHITE_TEST_FOR_RENDERING_CONTEXTS`.
+- `Make_TextureImage_Subset_Test` — `tests/graphite/ImageProviderTest.cpp:348`; Graphite; `DEF_GRAPHITE_TEST_FOR_RENDERING_CONTEXTS`.
+- `MakeColorSpace_Test` — `tests/graphite/ImageProviderTest.cpp:475`; Graphite; `DEF_GRAPHITE_TEST_FOR_RENDERING_CONTEXTS`.
+- `ImageShaderTest` — `tests/graphite/ImageShaderTest.cpp:88`; Graphite; `DEF_GRAPHITE_TEST_FOR_RENDERING_CONTEXTS`.
+- `ImageWrapTextureMipmapsTest` — `tests/graphite/ImageWrapTextureMipmapsTest.cpp:25`; Graphite; `DEF_CONDITIONAL_GRAPHITE_TEST_FOR_ALL_CONTEXTS`.
+- `InnerFillTest` — `tests/graphite/InnerFillTest.cpp:26`; Graphite; `DEF_GRAPHITE_TEST_FOR_ALL_CONTEXTS`.
+- `OptimizeForOpacity` — `tests/graphite/InnerFillTest.cpp:125`; Graphite; `DEF_GRAPHITE_TEST_FOR_ALL_CONTEXTS`.
+- `KeyWithInvalidCodeSnippetIDTest` — `tests/graphite/KeyTest.cpp:59`; Graphite; `DEF_GRAPHITE_TEST_FOR_ALL_CONTEXTS`.
+- `KeyEqualityChecksSnippetID` — `tests/graphite/KeyTest.cpp:91`; Graphite; `DEF_GRAPHITE_TEST_FOR_ALL_CONTEXTS`.
+- `ShaderInfoDetectsFixedFunctionBlend` — `tests/graphite/KeyTest.cpp:107`; Graphite; `DEF_GRAPHITE_TEST_FOR_ALL_CONTEXTS`.
+- `MultisampleRetainTest` — `tests/graphite/MultisampleTest.cpp:26`; Graphite; `DEF_GRAPHITE_TEST_FOR_ALL_CONTEXTS`.
+- `MultisampleClearThenLoad` — `tests/graphite/MultisampleTest.cpp:92`; Graphite; `DEF_GRAPHITE_TEST_FOR_ALL_CONTEXTS`.
+- `MutableImagesTest` — `tests/graphite/MutableImagesTest.cpp:505`; Graphite; `DEF_GRAPHITE_TEST_FOR_RENDERING_CONTEXTS`.
+- `NotifyInUseTestSnapshot` — `tests/graphite/NotifyInUseTest.cpp:103`; Graphite; `DEF_GRAPHITE_TEST_FOR_CONTEXTS`.
+- `NotifyInUseTestAsImage` — `tests/graphite/NotifyInUseTest.cpp:182`; Graphite; `DEF_GRAPHITE_TEST_FOR_CONTEXTS`.
+- `NotifyInUseTestLayer` — `tests/graphite/NotifyInUseTest.cpp:342`; Graphite; `DEF_GRAPHITE_TEST_FOR_CONTEXTS`.
+- `PersistentPipelineStorageTest` — `tests/graphite/PersistentPipelineStorageTest.cpp:85`; Graphite; `DEF_CONDITIONAL_GRAPHITE_TEST_FOR_CONTEXTS`.
+- `PipelineCallbackTest_Deprecated_Normal` — `tests/graphite/PipelineCallbackTest.cpp:185`; Graphite; `DEF_CONDITIONAL_GRAPHITE_TEST_FOR_CONTEXTS`.
+- `PipelineCallbackTest_Normal` — `tests/graphite/PipelineCallbackTest.cpp:204`; Graphite; `DEF_CONDITIONAL_GRAPHITE_TEST_FOR_CONTEXTS`.
+- `PipelineCallbackTest_Deprecated_Precompile` — `tests/graphite/PipelineCallbackTest.cpp:224`; Graphite; `DEF_CONDITIONAL_GRAPHITE_TEST_FOR_CONTEXTS`.
+- `PipelineCallbackTest_Precompile` — `tests/graphite/PipelineCallbackTest.cpp:243`; Graphite; `DEF_CONDITIONAL_GRAPHITE_TEST_FOR_CONTEXTS`.
+- `PipelineCallbackTest_UniqueHash` — `tests/graphite/PipelineCallbackTest.cpp:340`; Graphite; `DEF_CONDITIONAL_GRAPHITE_TEST_FOR_CONTEXTS`.
+- `PipelineDataCacheTest` — `tests/graphite/PipelineDataCacheTest.cpp:19`; Graphite; `DEF_GRAPHITE_TEST_FOR_ALL_CONTEXTS`.
+- `ProxyCacheTest1` — `tests/graphite/ProxyCacheTest.cpp:32`; Graphite; `DEF_GRAPHITE_TEST_FOR_ALL_CONTEXTS`.
+- `ProxyCacheTest2` — `tests/graphite/ProxyCacheTest.cpp:59`; Graphite; `DEF_GRAPHITE_TEST_FOR_ALL_CONTEXTS`.
+- `ProxyCacheTest4` — `tests/graphite/ProxyCacheTest.cpp:160`; Graphite; `DEF_CONDITIONAL_GRAPHITE_TEST_FOR_ALL_CONTEXTS`.
+- `ProxyCacheTest5` — `tests/graphite/ProxyCacheTest.cpp:188`; Graphite; `DEF_CONDITIONAL_GRAPHITE_TEST_FOR_ALL_CONTEXTS`.
+- `ProxyCacheTest6` — `tests/graphite/ProxyCacheTest.cpp:215`; Graphite; `DEF_CONDITIONAL_GRAPHITE_TEST_FOR_ALL_CONTEXTS`.
+- `ProxyCacheTest7` — `tests/graphite/ProxyCacheTest.cpp:252`; Graphite; `DEF_CONDITIONAL_GRAPHITE_TEST_FOR_ALL_CONTEXTS`.
+- `ProxyCacheTest8` — `tests/graphite/ProxyCacheTest.cpp:272`; Graphite; `DEF_CONDITIONAL_GRAPHITE_TEST_FOR_ALL_CONTEXTS`.
+- `ProxyCacheTest9` — `tests/graphite/ProxyCacheTest.cpp:323`; Graphite; `DEF_CONDITIONAL_GRAPHITE_TEST_FOR_ALL_CONTEXTS`.
+- `ProxyCacheTest10` — `tests/graphite/ProxyCacheTest.cpp:428`; Graphite; `DEF_CONDITIONAL_GRAPHITE_TEST_FOR_ALL_CONTEXTS`.
+- `Shader_FindOrCreateSnippetForRuntimeEffect` — `tests/graphite/RTEffectTest.cpp:19`; Graphite; `DEF_GRAPHITE_TEST_FOR_ALL_CONTEXTS`.
+- `ColorFilter_FindOrCreateSnippetForRuntimeEffect` — `tests/graphite/RTEffectTest.cpp:44`; Graphite; `DEF_GRAPHITE_TEST_FOR_ALL_CONTEXTS`.
+- `ShaderUniforms_FindOrCreateSnippetForRuntimeEffect` — `tests/graphite/RTEffectTest.cpp:72`; Graphite; `DEF_GRAPHITE_TEST_FOR_ALL_CONTEXTS`.
+- `ColorFilterUniforms_FindOrCreateSnippetForRuntimeEffect` — `tests/graphite/RTEffectTest.cpp:115`; Graphite; `DEF_GRAPHITE_TEST_FOR_ALL_CONTEXTS`.
+- `ImageAsyncReadPixelsGraphite` — `tests/graphite/ReadWritePixelsGraphiteTest.cpp:559`; Graphite; `DEF_CONDITIONAL_GRAPHITE_TEST_FOR_RENDERING_CONTEXTS`.
+- `SurfaceAsyncReadPixelsGraphite` — `tests/graphite/ReadWritePixelsGraphiteTest.cpp:657`; Graphite; `DEF_CONDITIONAL_GRAPHITE_TEST_FOR_RENDERING_CONTEXTS`.
+- `ImageAsyncRescaleReadPixelsOriginGraphite` — `tests/graphite/ReadWritePixelsGraphiteTest.cpp:732`; Graphite; `DEF_CONDITIONAL_GRAPHITE_TEST_FOR_RENDERING_CONTEXTS`.
+- `RecorderDevicePtrTest` — `tests/graphite/RecorderTest.cpp:23`; Graphite; `DEF_GRAPHITE_TEST_FOR_ALL_CONTEXTS`.
+- `RecorderOrderingTest` — `tests/graphite/RecorderTest.cpp:109`; Graphite; `DEF_GRAPHITE_TEST_FOR_ALL_CONTEXTS`.
+- `NullRecordingInsertTest` — `tests/graphite/RecorderTest.cpp:153`; Graphite; `DEF_GRAPHITE_TEST_FOR_ALL_CONTEXTS`.
+- `InsertRecordingPendingCountsTest` — `tests/graphite/RecorderTest.cpp:174`; Graphite; `DEF_GRAPHITE_TEST_FOR_ALL_CONTEXTS`.
+- `RecordingOrderTest_Graphite` — `tests/graphite/RecordingOrderTest.cpp:127`; Graphite; `DEF_GRAPHITE_TEST_FOR_RENDERING_CONTEXTS`.
+- `RecordingSurfacesTestClear` — `tests/graphite/RecordingSurfacesTest.cpp:110`; Graphite; `DEF_GRAPHITE_TEST_FOR_ALL_CONTEXTS`.
+- `RecordingSurfacesTestDraw` — `tests/graphite/RecordingSurfacesTest.cpp:133`; Graphite; `DEF_GRAPHITE_TEST_FOR_ALL_CONTEXTS`.
+- `RecordingSurfacesTestWritePixels` — `tests/graphite/RecordingSurfacesTest.cpp:160`; Graphite; `DEF_GRAPHITE_TEST_FOR_ALL_CONTEXTS`.
+- `RecordingSurfacesTestWritePixelsOffscreen` — `tests/graphite/RecordingSurfacesTest.cpp:191`; Graphite; `DEF_GRAPHITE_TEST_FOR_ALL_CONTEXTS`.
+- `RecordingSurfacesTestDrawWithClip` — `tests/graphite/RecordingSurfacesTest.cpp:223`; Graphite; `DEF_GRAPHITE_TEST_FOR_ALL_CONTEXTS`.
+- `RecordingSurfacesTestNegativeClip` — `tests/graphite/RecordingSurfacesTest.cpp:274`; Graphite; `DEF_GRAPHITE_TEST_FOR_ALL_CONTEXTS`.
+- `RecordingSurfacesTestWritePixelsWithClip` — `tests/graphite/RecordingSurfacesTest.cpp:304`; Graphite; `DEF_GRAPHITE_TEST_FOR_ALL_CONTEXTS`.
+- `RecordingSurfacesTestMipmapped` — `tests/graphite/RecordingSurfacesTest.cpp:336`; Graphite; `DEF_GRAPHITE_TEST_FOR_ALL_CONTEXTS`.
+- `RecordingSurfacesTestMipmappedWritePixels` — `tests/graphite/RecordingSurfacesTest.cpp:445`; Graphite; `DEF_GRAPHITE_TEST_FOR_ALL_CONTEXTS`.
+- `RecordingSurfacesTestTwoCanvases` — `tests/graphite/RecordingSurfacesTest.cpp:474`; Graphite; `DEF_GRAPHITE_TEST_FOR_ALL_CONTEXTS`.
+- `RecordingSurfacesTestUnnecessarySurface` — `tests/graphite/RecordingSurfacesTest.cpp:493`; Graphite; `DEF_GRAPHITE_TEST_FOR_ALL_CONTEXTS`.
+- `StorageContextAlignmentTest` — `tests/graphite/StorageContextTest.cpp:50`; Graphite; `DEF_GRAPHITE_TEST_FOR_ALL_CONTEXTS`.
+- `StorageContextPaddingAlignmentTest` — `tests/graphite/StorageContextTest.cpp:125`; Graphite; `DEF_GRAPHITE_TEST_FOR_ALL_CONTEXTS`.
+- `StorageContextAppendVertexTest` — `tests/graphite/StorageContextTest.cpp:187`; Graphite; `DEF_GRAPHITE_TEST_FOR_ALL_CONTEXTS`.
+- `StorageContextMultipleRenderStepsTest` — `tests/graphite/StorageContextTest.cpp:260`; Graphite; `DEF_GRAPHITE_TEST_FOR_ALL_CONTEXTS`.
+- `StorageContextLCMVariantsTest` — `tests/graphite/StorageContextTest.cpp:347`; Graphite; `DEF_GRAPHITE_TEST_FOR_ALL_CONTEXTS`.
+- `StorageContextVertexOnlyAndResetTest` — `tests/graphite/StorageContextTest.cpp:447`; Graphite; `DEF_GRAPHITE_TEST_FOR_ALL_CONTEXTS`.
+- `StorageContextMultiStopGradientTest` — `tests/graphite/StorageContextTest.cpp:533`; Graphite; `DEF_GRAPHITE_TEST_FOR_ALL_CONTEXTS`.
+- `StorageContextFallbackStridedCopyTest` — `tests/graphite/StorageContextTest.cpp:647`; Graphite; `DEF_GRAPHITE_TEST_FOR_ALL_CONTEXTS`.
+- `StorageContextCapacityLimitsTest` — `tests/graphite/StorageContextTest.cpp:692`; Graphite; `DEF_GRAPHITE_TEST_FOR_ALL_CONTEXTS`.
+- `SubmitWithFinishProc_PendingCommandBuffer` — `tests/graphite/SubmitWithFinishProcTest.cpp:36`; Graphite; `DEF_CONDITIONAL_GRAPHITE_TEST_FOR_ALL_CONTEXTS`.
+- `SubmitWithFinishProc_NoPendingCommandBuffer` — `tests/graphite/SubmitWithFinishProcTest.cpp:80`; Graphite; `DEF_CONDITIONAL_GRAPHITE_TEST_FOR_ALL_CONTEXTS`.
+- `TextureFallbackScalarsAndBitcastsTest` — `tests/graphite/TextureFallbackTest.cpp:63`; Graphite; `DEF_GRAPHITE_TEST_FOR_ALL_CONTEXTS`.
+- `TextureFallbackAlignmentAndPaddingTest` — `tests/graphite/TextureFallbackTest.cpp:95`; Graphite; `DEF_GRAPHITE_TEST_FOR_ALL_CONTEXTS`.
+- `TextureFallbackMatricesTest` — `tests/graphite/TextureFallbackTest.cpp:211`; Graphite; `DEF_GRAPHITE_TEST_FOR_ALL_CONTEXTS`.
+- `TextureFallbackVectorBitcastsTest` — `tests/graphite/TextureFallbackTest.cpp:266`; Graphite; `DEF_GRAPHITE_TEST_FOR_ALL_CONTEXTS`.
+- `TextureFallbackMultiInstanceMathTest` — `tests/graphite/TextureFallbackTest.cpp:294`; Graphite; `DEF_GRAPHITE_TEST_FOR_ALL_CONTEXTS`.
+- `TextureFallbackStressMixedTypesAndAlignmentTest` — `tests/graphite/TextureFallbackTest.cpp:405`; Graphite; `DEF_GRAPHITE_TEST_FOR_ALL_CONTEXTS`.
+- `TextureFallbackStressBackToBackComplexStructuresTest` — `tests/graphite/TextureFallbackTest.cpp:463`; Graphite; `DEF_GRAPHITE_TEST_FOR_ALL_CONTEXTS`.
+- `TextureFallbackMultiStopGradientsDrawTest` — `tests/graphite/TextureFallbackTest.cpp:502`; Graphite; `DEF_GRAPHITE_TEST_FOR_ALL_CONTEXTS`.
+- `TextureFormatTest` — `tests/graphite/TextureFormatTest.cpp:1393`; Graphite; `DEF_GRAPHITE_TEST_FOR_ALL_CONTEXTS`.
+- `GraphiteTextureProxyTest` — `tests/graphite/TextureProxyTest.cpp:27`; Graphite; `DEF_GRAPHITE_TEST_FOR_ALL_CONTEXTS`.
+- `GraphiteTextureTooLargeTest` — `tests/graphite/TextureProxyTest.cpp:202`; Graphite; `DEF_GRAPHITE_TEST_FOR_ALL_CONTEXTS`.
+- `GraphiteLazyTextureInvalidDimensions` — `tests/graphite/TextureProxyTest.cpp:223`; Graphite; `DEF_GRAPHITE_TEST_FOR_ALL_CONTEXTS`.
+- `UpdateImageBackendTextureTest` — `tests/graphite/UpdateBackendTextureTest.cpp:195`; Graphite; `DEF_GRAPHITE_TEST_FOR_RENDERING_CONTEXTS`.
+- `UpdateBackendTextureFinishedProcTest` — `tests/graphite/UpdateBackendTextureTest.cpp:252`; Graphite; `DEF_CONDITIONAL_GRAPHITE_TEST_FOR_ALL_CONTEXTS`.
+- `UploadBufferManagerTest` — `tests/graphite/UploadBufferManagerTest.cpp:19`; Graphite; `DEF_GRAPHITE_TEST_FOR_RENDERING_CONTEXTS`.
+- `crbug_513836996` — `tests/graphite/crbug_513836996.cpp:26`; Graphite; `DEF_GRAPHITE_TEST_FOR_ALL_CONTEXTS`.
+- `ChromePrecompileTest` — `tests/graphite/precompile/ChromePrecompileTest.cpp:1039`; Graphite; `DEF_GRAPHITE_TEST_FOR_CONTEXTS`.
+- `CombinationBuilderTest` — `tests/graphite/precompile/CombinationBuilderTest.cpp:595`; Graphite; `DEF_GRAPHITE_TEST_FOR_ALL_CONTEXTS`.
+- `PaintParamsKeyTestReduced` — `tests/graphite/precompile/PaintParamsKeyTest.cpp:510`; Graphite; `DEF_CONDITIONAL_GRAPHITE_TEST_FOR_ALL_CONTEXTS`.
+- `PaintParamsKeyTest` — `tests/graphite/precompile/PaintParamsKeyTest.cpp:599`; Graphite; `DEF_CONDITIONAL_GRAPHITE_TEST_FOR_ALL_CONTEXTS`.
+- `PipelineManagerEarlyExitTest_1` — `tests/graphite/precompile/PipelineManagerEarlyExit.cpp:128`; Graphite; `DEF_CONDITIONAL_GRAPHITE_TEST_FOR_CONTEXTS`.
+- `PipelineManagerEarlyExitTest_2` — `tests/graphite/precompile/PipelineManagerEarlyExit.cpp:142`; Graphite; `DEF_CONDITIONAL_GRAPHITE_TEST_FOR_CONTEXTS`.
+- `PipelineManagerEarlyExitTest_3` — `tests/graphite/precompile/PipelineManagerEarlyExit.cpp:156`; Graphite; `DEF_CONDITIONAL_GRAPHITE_TEST_FOR_CONTEXTS`.
+- `PipelineManagerEarlyExitTest_4` — `tests/graphite/precompile/PipelineManagerEarlyExit.cpp:169`; Graphite; `DEF_CONDITIONAL_GRAPHITE_TEST_FOR_CONTEXTS`.
+- `PipelineManagerThreadedTest_1` — `tests/graphite/precompile/PipelineManagerThreaded.cpp:132`; Graphite; `DEF_CONDITIONAL_GRAPHITE_TEST_FOR_CONTEXTS`.
+- `PipelineManagerThreadedTest_2` — `tests/graphite/precompile/PipelineManagerThreaded.cpp:145`; Graphite; `DEF_CONDITIONAL_GRAPHITE_TEST_FOR_CONTEXTS`.
+- `PipelineManagerThreadedTest_3` — `tests/graphite/precompile/PipelineManagerThreaded.cpp:160`; Graphite; `DEF_CONDITIONAL_GRAPHITE_TEST_FOR_CONTEXTS`.
+- `PipelineManagerThreadedTest_4` — `tests/graphite/precompile/PipelineManagerThreaded.cpp:173`; Graphite; `DEF_CONDITIONAL_GRAPHITE_TEST_FOR_CONTEXTS`.
+- `PrecompileStatsTest` — `tests/graphite/precompile/PrecompileStatsTest.cpp:29`; Graphite; `DEF_GRAPHITE_TEST_FOR_CONTEXTS`.
+- `ThreadedPipelinePrecompileTest` — `tests/graphite/precompile/ThreadedPrecompileTest.cpp:390`; Graphite; `DEF_GRAPHITE_TEST_FOR_ALL_CONTEXTS`.
+- `ThreadedPipelinePrecompileCompileTest` — `tests/graphite/precompile/ThreadedPrecompileTest.cpp:428`; Graphite; `DEF_GRAPHITE_TEST_FOR_ALL_CONTEXTS`.
+- `ThreadedPipelineCompilePurgingTest` — `tests/graphite/precompile/ThreadedPrecompileTest.cpp:465`; Graphite; `DEF_GRAPHITE_TEST_FOR_ALL_CONTEXTS`.
+- `ThreadedPipelinePrecompilePurgingTest` — `tests/graphite/precompile/ThreadedPrecompileTest.cpp:518`; Graphite; `DEF_GRAPHITE_TEST_FOR_ALL_CONTEXTS`.
+- `ThreadedPipelinePrecompileCompilePurgingTest` — `tests/graphite/precompile/ThreadedPrecompileTest.cpp:558`; Graphite; `DEF_GRAPHITE_TEST_FOR_ALL_CONTEXTS`.
+- `UserDefinedStableKeyTest` — `tests/graphite/precompile/UserdefinedStableKeyTest.cpp:357`; Graphite; `DEF_CONDITIONAL_GRAPHITE_TEST_FOR_CONTEXTS`.
+- `UserDefinedStableKeyTest_Duplicates` — `tests/graphite/precompile/UserdefinedStableKeyTest.cpp:450`; Graphite; `DEF_CONDITIONAL_GRAPHITE_TEST_FOR_CONTEXTS`.
+- `UserDefinedStableKeyTest_Nullptrs` — `tests/graphite/precompile/UserdefinedStableKeyTest.cpp:489`; Graphite; `DEF_CONDITIONAL_GRAPHITE_TEST_FOR_CONTEXTS`.
+- `UserDefinedStableKeyTest_Overflow` — `tests/graphite/precompile/UserdefinedStableKeyTest.cpp:530`; Graphite; `DEF_CONDITIONAL_GRAPHITE_TEST_FOR_CONTEXTS`.
+- `SparseStrips_AtlasDimensionsAndStride` — `tests/graphite/sparse_strips/AtlasTests.cpp:17`; Graphite; `DEF_GRAPHITE_TEST_FOR_RENDERING_CONTEXTS`.
+- `SparseStrips_AtlasDynamicGrowthAndDoubling` — `tests/graphite/sparse_strips/AtlasTests.cpp:56`; Graphite; `DEF_GRAPHITE_TEST_FOR_RENDERING_CONTEXTS`.
+- `SparseStrips_AtlasNullBufferAndNullCaps` — `tests/graphite/sparse_strips/AtlasTests.cpp:87`; Graphite; `DEF_GRAPHITE_TEST_FOR_RENDERING_CONTEXTS`.
+- `SparseStrips_AtlasStraddleToNullBuffer` — `tests/graphite/sparse_strips/AtlasTests.cpp:186`; Graphite; `DEF_GRAPHITE_TEST_FOR_RENDERING_CONTEXTS`.
+- `SparseStrips_AtlasEndCapAtomicity` — `tests/graphite/sparse_strips/AtlasTests.cpp:236`; Graphite; `DEF_GRAPHITE_TEST_FOR_RENDERING_CONTEXTS`.
+- `SparseStrips_AtlasFlipFlopAtFlush` — `tests/graphite/sparse_strips/AtlasTests.cpp:268`; Graphite; `DEF_GRAPHITE_TEST_FOR_RENDERING_CONTEXTS`.
+- `SparseStrips_AtlasStraddleAndMemmove` — `tests/graphite/sparse_strips/AtlasTests.cpp:340`; Graphite; `DEF_GRAPHITE_TEST_FOR_RENDERING_CONTEXTS`.
+- `SparseStrips_CoverageScalar_4x4` — `tests/graphite/sparse_strips/CoverageTest.cpp:591`; Graphite; `DEF_GRAPHITE_TEST_FOR_RENDERING_CONTEXTS`.
+- `SparseStrips_CoverageSIMD_4x4` — `tests/graphite/sparse_strips/CoverageTest.cpp:600`; Graphite; `DEF_GRAPHITE_TEST_FOR_RENDERING_CONTEXTS`.
+- `SparseStrips_CoverageSIMD_8x8` — `tests/graphite/sparse_strips/CoverageTest.cpp:609`; Graphite; `DEF_GRAPHITE_TEST_FOR_RENDERING_CONTEXTS`.
+- `SparseStrips_Coverage_CullingSimplification_SIMD_4x4` — `tests/graphite/sparse_strips/CoverageTest.cpp:618`; Graphite; `DEF_GRAPHITE_TEST_FOR_RENDERING_CONTEXTS`.
+- `SparseStrips_Coverage_CullingSimplification_SIMD_8x8` — `tests/graphite/sparse_strips/CoverageTest.cpp:627`; Graphite; `DEF_GRAPHITE_TEST_FOR_RENDERING_CONTEXTS`.
+- `SparseStrips_Coverage_CullingSimplification_Scalar_4x4` — `tests/graphite/sparse_strips/CoverageTest.cpp:636`; Graphite; `DEF_GRAPHITE_TEST_FOR_RENDERING_CONTEXTS`.
+- `SparseStrips_Coverage_CulledGeometry_SIMD_4x4` — `tests/graphite/sparse_strips/CoverageTest.cpp:645`; Graphite; `DEF_GRAPHITE_TEST_FOR_RENDERING_CONTEXTS`.
+- `SparseStrips_Coverage_CulledGeometry_SIMD_8x8` — `tests/graphite/sparse_strips/CoverageTest.cpp:654`; Graphite; `DEF_GRAPHITE_TEST_FOR_RENDERING_CONTEXTS`.
+- `SparseStrips_Coverage_CulledGeometry_Scalar_4x4` — `tests/graphite/sparse_strips/CoverageTest.cpp:663`; Graphite; `DEF_GRAPHITE_TEST_FOR_RENDERING_CONTEXTS`.
+- `SparseStrips_Coverage_StripGeneratorHistogramReuse` — `tests/graphite/sparse_strips/CoverageTest.cpp:675`; Graphite; `DEF_GRAPHITE_TEST_FOR_RENDERING_CONTEXTS`.
+- `SparseStrips_Coverage_SKP_SIMD_4x4` — `tests/graphite/sparse_strips/CoverageTest.cpp:709`; Graphite; `DEF_GRAPHITE_TEST_FOR_RENDERING_CONTEXTS`.
+- `SparseStrips_Coverage_SKP_SIMD_8x8` — `tests/graphite/sparse_strips/CoverageTest.cpp:718`; Graphite; `DEF_GRAPHITE_TEST_FOR_RENDERING_CONTEXTS`.
+
+### Preserve these fixtures, metadata and references
+
+Use the immutable fixtures reached by the assigned tests. Shared `resources/` files are indexed under M43 for final audit but are available from the first consuming milestone.
+
+## Dependency and integration notes
+
+The initial scan found 0 quoted includes from this milestone into later-owned production files. See `../inventory/forward-includes.csv`, filtered by `source_milestone=38`. Header inclusion alone does not force implementation of the entire later subsystem; inspect the original registered test bodies and called production paths.
+
+Interfaces with later consumers may be declared now, but the accepted feature set must execute real implementations for every reached call. Where a source spans several features (CPU/GPU, serialization, runtime shaders), record completed and pending symbols separately. Deferred portions have explicit integration gates M14, M22, M26, M38 and M47; no pending portion may disappear from the ledger.
+
+## Commands, required evidence and stop condition
+
+Codex runs the milestone tests and all previously accepted tests in debug and release with the exact feature list from the handoff. The standard baseline commands are:
+
+```sh
+cargo test --locked
+cargo test --release --locked
+cargo fmt --all -- --check
+cargo clippy --all-targets --locked -- -D warnings
+```
+
+For feature-specific crates/backends, record the additional exact package/target/features commands; do not use an unexamined `--all-features` combination. Native backend, GM, browser, fuzz and benchmark commands are added when their harnesses exist and must be copied into the acceptance report.
+
+Acceptance requires: all assigned macOS cases enumerated; every applicable assertion passing; all earlier accepted tests passing; every source row mapped to implemented Rust or a documented non-code disposition; no unexplained missing resources, untested required backends or unsupported required API; and a Codex-authored evidence report. Formatting/build success alone never constitutes acceptance.
+
+Record PASS, FAIL, BLOCKED or NOT_APPLICABLE per test/configuration. NOT_APPLICABLE requires an original platform/capability condition and a reason. M01–M45 require native Apple Silicon macOS evidence; Intel-specific files may remain explicitly pending until M46, whose gate requires native Intel Mac results. This is a scheduled architecture gate, not an assertion that Intel already passed.
+
+Only after Codex marks M38 ACCEPTED may the user hand Deepseek M39.

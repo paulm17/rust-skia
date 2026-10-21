@@ -1,0 +1,757 @@
+# Milestone 02: Core ownership, containers, data and streams
+
+## Outcome and entry gate
+
+Implement reference ownership, allocation helpers, safe arithmetic support, arrays, lists, hashes, strings, byte storage, streams, synchronization, jobs, tracing and portable OS services used by subsequent modules. Map reference-count lifetime and destructor behavior explicitly to Rust. Retain serialization primitives as usable byte readers/writers; high-level object serialization comes later.
+
+Begin implementation only after milestone 01 is marked ACCEPTED by Codex and the user has handed over this milestone. All earlier accepted tests remain required.
+
+Read `../WORKFLOW.md`, `../MACOS-SCOPE.md` and the inventories before starting. All source paths below are relative to the pinned C++ Skia checkout; all Rust work belongs in the separate rust-skia repository. Never edit the reference checkout to make a test pass.
+
+## Deepseek: implementation contract
+
+Implement reference ownership, allocation helpers, safe arithmetic support, arrays, lists, hashes, strings, byte storage, streams, synchronization, jobs, tracing and portable OS services used by subsequent modules. Map reference-count lifetime and destructor behavior explicitly to Rust. Retain serialization primitives as usable byte readers/writers; high-level object serialization comes later.
+
+- Port the observable behavior of every owned source/header below, including applicable error paths and public declarations. A header is part of the contract, not documentation to skip. Existing Rust files are integration work, not automatic completion.
+- Map original symbols to Rust modules in the handoff. Keep production logic under `src/` (or workspace library crates); use explicit Cargo features for optional macOS backends. Preserve widths, ownership, layout when observable, and binary formats where required by original tests.
+- Keep Skia-owned algorithmic/runtime code in Rust. External codec/shaping/GPU libraries and Apple framework FFI are allowed only as named, versioned dependencies. Never delegate the implementation to a pre-existing Skia Rust port or C++ Skia.
+- Inspect reached dependencies before coding. `forward-includes.csv` contains syntactic warnings, not proof of runtime dependency. Implement a required earlier prerequisite fully and record it in the handoff; if it materially changes this milestone, request a plan amendment before continuing. Never use fake return values, ignored tests or unimplemented runtime branches to clear a gate.
+- Do not author or change Codex-owned acceptance tests, expected values, tolerances, fixtures or pass records. Development checks may be separate and must be labeled as such. Fix production code when acceptance tests fail.
+- Supply reproducible build commands, feature flags, source/symbol mapping, external dependencies, and known unfinished work using `../HANDOFF-TEMPLATE.md`. Stop after the handoff; do not begin the next milestone.
+
+### Port these production files (Deepseek)
+
+- `bazel/external/icu4x/src/lib.rs` — integrate existing Rust.
+- `bazel/external/vello/src/lib.rs` — integrate existing Rust.
+- `include/config/SkUserConfig.h` — port to Rust.
+- `include/core/SkCoverageMode.h` — port to Rust.
+- `include/core/SkData.h` — port to Rust.
+- `include/core/SkDataTable.h` — port to Rust.
+- `include/core/SkExecutor.h` — port to Rust.
+- `include/core/SkFourByteTag.h` — port to Rust.
+- `include/core/SkMilestone.h` — port to Rust.
+- `include/core/SkRefCnt.h` — port to Rust.
+- `include/core/SkSpan.h` — port to Rust.
+- `include/core/SkStream.h` — port to Rust.
+- `include/core/SkString.h` — port to Rust.
+- `include/core/SkTraceMemoryDump.h` — port to Rust.
+- `include/core/SkTypes.h` — port to Rust.
+- `include/private/SingleOwner.h` — port to Rust.
+- `include/private/SkAPI.h` — port to Rust.
+- `include/private/SkASAN.h` — port to Rust.
+- `include/private/SkAlign.h` — port to Rust.
+- `include/private/SkAlignedStorage.h` — port to Rust.
+- `include/private/SkAnySubclass.h` — port to Rust.
+- `include/private/SkAssert.h` — port to Rust.
+- `include/private/SkAttributes.h` — port to Rust.
+- `include/private/SkCPUTypes.h` — port to Rust.
+- `include/private/SkContainers.h` — port to Rust.
+- `include/private/SkDebug.h` — port to Rust.
+- `include/private/SkDeque.h` — port to Rust.
+- `include/private/SkFeatures.h` — port to Rust.
+- `include/private/SkIDChangeListener.h` — port to Rust.
+- `include/private/SkLoadUserConfig.h` — port to Rust.
+- `include/private/SkLog.h` — port to Rust.
+- `include/private/SkLogPriority.h` — port to Rust.
+- `include/private/SkMacros.h` — port to Rust.
+- `include/private/SkMalloc.h` — port to Rust.
+- `include/private/SkMutex.h` — port to Rust.
+- `include/private/SkNoncopyable.h` — port to Rust.
+- `include/private/SkOnce.h` — port to Rust.
+- `include/private/SkOnlyStackAllocatable.h` — port to Rust.
+- `include/private/SkSemaphore.h` — port to Rust.
+- `include/private/SkTArray.h` — port to Rust.
+- `include/private/SkTDArray.h` — port to Rust.
+- `include/private/SkTLogic.h` — port to Rust.
+- `include/private/SkTPin.h` — port to Rust.
+- `include/private/SkTemplates.h` — port to Rust.
+- `include/private/SkThreadID.h` — port to Rust.
+- `include/private/SkTypeTraits.h` — port to Rust.
+- `include/private/SkWeakRefCnt.h` — port to Rust.
+- `include/private/chromium/SkDiscardableMemory.h` — port to Rust.
+- `include/utils/SkEventTracer.h` — port to Rust.
+- `include/utils/SkLogHandler.h` — port to Rust.
+- `include/utils/SkParse.h` — port to Rust.
+- `include/utils/SkTraceEventPhase.h` — port to Rust.
+- `src/core/SkATrace.cpp` — port to Rust.
+- `src/core/SkATrace.h` — port to Rust.
+- `src/core/SkArenaAlloc.cpp` — port to Rust.
+- `src/core/SkArenaAlloc.h` — port to Rust.
+- `src/core/SkArenaAllocList.h` — port to Rust.
+- `src/core/SkAutoLocaleSetter.h` — port to Rust.
+- `src/core/SkAutoMalloc.h` — port to Rust.
+- `src/core/SkBase64.cpp` — port to Rust.
+- `src/core/SkBase64.h` — port to Rust.
+- `src/core/SkBlockAllocator.cpp` — port to Rust.
+- `src/core/SkBlockAllocator.h` — port to Rust.
+- `src/core/SkBuffer.cpp` — port to Rust.
+- `src/core/SkBuffer.h` — port to Rust.
+- `src/core/SkCachedData.cpp` — port to Rust.
+- `src/core/SkCachedData.h` — port to Rust.
+- `src/core/SkChecksum.cpp` — port to Rust.
+- `src/core/SkChecksum.h` — port to Rust.
+- `src/core/SkContainers.cpp` — port to Rust.
+- `src/core/SkData.cpp` — port to Rust.
+- `src/core/SkDataTable.cpp` — port to Rust.
+- `src/core/SkDebug.cpp` — port to Rust.
+- `src/core/SkDebugUtils.h` — port to Rust.
+- `src/core/SkDeque.cpp` — port to Rust.
+- `src/core/SkEndian.h` — port to Rust.
+- `src/core/SkEnumerate.h` — port to Rust.
+- `src/core/SkExecutor.cpp` — port to Rust.
+- `src/core/SkExecutors.cpp` — port to Rust.
+- `src/core/SkExecutors.h` — port to Rust.
+- `src/core/SkGlobalInitialization_core.cpp` — port to Rust.
+- `src/core/SkIDChangeListener.cpp` — port to Rust.
+- `src/core/SkLRUCache.h` — port to Rust.
+- `src/core/SkLog.cpp` — port to Rust.
+- `src/core/SkMD5.cpp` — port to Rust.
+- `src/core/SkMD5.h` — port to Rust.
+- `src/core/SkMSAN.h` — port to Rust.
+- `src/core/SkMalloc.cpp` — port to Rust.
+- `src/core/SkMessageBus.h` — port to Rust.
+- `src/core/SkNextID.h` — port to Rust.
+- `src/core/SkNoDestructor.h` — port to Rust.
+- `src/core/SkOSFile.h` — port to Rust.
+- `src/core/SkResourceCache.cpp` — port to Rust.
+- `src/core/SkResourceCache.h` — port to Rust.
+- `src/core/SkSafeRange.h` — port to Rust.
+- `src/core/SkSafetyChecks.h` — port to Rust.
+- `src/core/SkScopeExit.h` — port to Rust.
+- `src/core/SkSemaphore.cpp` — port to Rust.
+- `src/core/SkSharedMutex.cpp` — port to Rust.
+- `src/core/SkSharedMutex.h` — port to Rust.
+- `src/core/SkSpanPriv.h` — port to Rust.
+- `src/core/SkSpinlock.cpp` — port to Rust.
+- `src/core/SkSpinlock.h` — port to Rust.
+- `src/core/SkStream.cpp` — port to Rust.
+- `src/core/SkStreamPriv.h` — port to Rust.
+- `src/core/SkString.cpp` — port to Rust.
+- `src/core/SkStringUtils.cpp` — port to Rust.
+- `src/core/SkStringUtils.h` — port to Rust.
+- `src/core/SkStringView.h` — port to Rust.
+- `src/core/SkSynchronizedResourceCache.cpp` — port to Rust.
+- `src/core/SkSynchronizedResourceCache.h` — port to Rust.
+- `src/core/SkTBlockList.h` — port to Rust.
+- `src/core/SkTDArray.cpp` — port to Rust.
+- `src/core/SkTDPQueue.h` — port to Rust.
+- `src/core/SkTDynamicHash.h` — port to Rust.
+- `src/core/SkTHash.h` — port to Rust.
+- `src/core/SkTInternalLList.h` — port to Rust.
+- `src/core/SkTLazy.h` — port to Rust.
+- `src/core/SkTMultiMap.h` — port to Rust.
+- `src/core/SkTSearch.cpp` — port to Rust.
+- `src/core/SkTSearch.h` — port to Rust.
+- `src/core/SkTSort.h` — port to Rust.
+- `src/core/SkTaskGroup.cpp` — port to Rust.
+- `src/core/SkTaskGroup.h` — port to Rust.
+- `src/core/SkThreadID.cpp` — port to Rust.
+- `src/core/SkTime.cpp` — port to Rust.
+- `src/core/SkTime.h` — port to Rust.
+- `src/core/SkTraceEvent.h` — port to Rust.
+- `src/core/SkTraceEventCommon.h` — port to Rust.
+- `src/core/SkUTF.cpp` — port to Rust.
+- `src/core/SkUTF.h` — port to Rust.
+- `src/core/SkUtils.cpp` — port to Rust.
+- `src/core/SkUtils.h` — port to Rust.
+- `src/core/SkValidationUtils.h` — port to Rust.
+- `src/core/SkWriter32.cpp` — port to Rust.
+- `src/core/SkWriter32.h` — port to Rust.
+- `src/core/SkZip.h` — port to Rust.
+- `src/partition_alloc/noop/raw_ptr.h` — port to Rust.
+- `src/partition_alloc/noop/raw_ptr_exclusion.h` — port to Rust.
+- `src/partition_alloc/noop/raw_ref.h` — port to Rust.
+- `src/partition_alloc/raw_ptr.h` — port to Rust.
+- `src/partition_alloc/raw_ptr_exclusion.h` — port to Rust.
+- `src/partition_alloc/raw_ref.h` — port to Rust.
+- `src/partition_alloc/safety_checks.h` — port to Rust.
+- `src/ports/SkDiscardableMemory_none.cpp` — port to Rust.
+- `src/ports/SkGlobalInitialization_default.cpp` — port to Rust.
+- `src/ports/SkLog_stdio.cpp` — port to Rust.
+- `src/ports/SkMemory_malloc.cpp` — port to Rust.
+- `src/ports/SkMemory_mozalloc.cpp` — port to Rust.
+- `src/ports/SkOSFile_posix.cpp` — port to Rust.
+- `src/ports/SkOSFile_stdio.cpp` — port to Rust.
+- `src/utils/SkBitSet.h` — port to Rust.
+- `src/utils/SkCallableTraits.h` — port to Rust.
+- `src/utils/SkEventTracer.cpp` — port to Rust.
+- `src/utils/SkJSONWriter.cpp` — port to Rust.
+- `src/utils/SkJSONWriter.h` — port to Rust.
+- `src/utils/SkLogHandler.cpp` — port to Rust.
+- `src/utils/SkOSPath.cpp` — port to Rust.
+- `src/utils/SkOSPath.h` — port to Rust.
+- `src/utils/SkParse.cpp` — port to Rust.
+
+### Adapt these build/tooling files (Deepseek)
+
+- `include/BUILD.bazel`.
+- `include/config/BUILD.bazel`.
+- `include/config/MODULE.bazel`.
+- `include/config/WORKSPACE.bazel`.
+- `include/config/copts.bzl`.
+- `include/config/linkopts.bzl`.
+- `include/core/BUILD.bazel`.
+- `include/cpu/BUILD.bazel`.
+- `include/docs/BUILD.bazel`.
+- `include/ports/BUILD.bazel`.
+- `include/private/BUILD.bazel`.
+- `include/private/chromium/BUILD.bazel`.
+- `include/utils/BUILD.bazel`.
+- `include/utils/mac/BUILD.bazel`.
+- `src/BUILD.bazel`.
+- `src/core/BUILD.bazel`.
+- `src/partition_alloc/BUILD.bazel`.
+- `src/partition_alloc/BUILD.gn`.
+- `src/ports/BUILD.bazel`.
+- `src/utils/BUILD.bazel`.
+- `src/utils/mac/BUILD.bazel`.
+- `tests/BUILD.bazel`.
+
+## Codex: acceptance-test contract
+
+Translate ownership, allocation, container, stream, string, threading and utility tests. Verify overflow rejection, reference release ordering, byte order, stream seek/rewind, truncation and deterministic concurrency assertions. Port the original random generator as a test dependency if a fixture requires it before milestone 03.
+
+- Translate the original reachable test bodies and helpers, preserving inputs, order, seeds, assertions, tolerances, expected failures and conditional skips. Retain original names and source locations in the correspondence record.
+- Discover compiled C++ test registrations under the matching macOS feature configuration. The registration CSV is an initial source scan, not a substitute for expanded macro/test discovery. Resolve conditional/custom suites before accepting this milestone.
+- For files split across milestones, translate only the assigned registrations now, including their helper closure; record the rest under their later gate. Do not mark a whole file complete merely because its first tests pass.
+- Port original test utilities needed by these cases, even if their general tool packaging has a later owner. Keep fixture-only implementations in test support and never substitute them for production APIs being checked.
+- Where upstream provides no direct unit test, add clearly labeled supplemental contract/differential tests, separate from faithful translations. Run C++ as an external reference where needed; do not link it as the Rust implementation.
+- Preserve resources and shader/golden inputs by hash. Resource metadata and required downloads must be recorded before running; absent inputs or backend hardware are BLOCKED, not a skip that counts as PASS.
+
+### Port these test/runner/support files (Codex)
+
+- `tests/ArenaAllocTest.cpp`.
+- `tests/CtsEnforcement.h`.
+- `tests/DataRefTest.cpp`.
+- `tests/DequeTest.cpp`.
+- `tests/ExecutorTest.cpp`.
+- `tests/FakeStreams.h`.
+- `tests/HashTest.cpp`.
+- `tests/IncrTopoSortTest.cpp`.
+- `tests/LListTest.cpp`.
+- `tests/LRUCacheTest.cpp`.
+- `tests/MD5Test.cpp`.
+- `tests/MemoryTest.cpp`.
+- `tests/MessageBusTest.cpp`.
+- `tests/MetaDataTest.cpp`.
+- `tests/OnceTest.cpp`.
+- `tests/RawPtrTest.cpp`.
+- `tests/RefCntTest.cpp`.
+- `tests/SkBlockAllocatorTest.cpp`.
+- `tests/SkContainersTest.cpp`.
+- `tests/SkMallocTest.cpp`.
+- `tests/SkSharedMutexTest.cpp`.
+- `tests/SkSpanTest.cpp`.
+- `tests/SkStringViewTest.cpp`.
+- `tests/SkTBlockListTest.cpp`.
+- `tests/SkUTFTest.cpp`.
+- `tests/StringTest.cpp`.
+- `tests/TLazyTest.cpp`.
+- `tests/TemplatesTest.cpp`.
+- `tests/Test.cpp`.
+- `tools/Resources.cpp`.
+- `tools/Resources.h`.
+
+### Original test registrations assigned to this gate
+
+- `ArenaAlloc` — `tests/ArenaAllocTest.cpp:19`; CPU; `DEF_TEST`.
+- `ArenaAllocReset` — `tests/ArenaAllocTest.cpp:115`; CPU; `DEF_TEST`.
+- `ArenaAllocIsEmpty` — `tests/ArenaAllocTest.cpp:122`; CPU; `DEF_TEST`.
+- `ArenaAllocWithMultipleBlocks` — `tests/ArenaAllocTest.cpp:143`; CPU; `DEF_TEST`.
+- `ArenaAllocDestructionOrder` — `tests/ArenaAllocTest.cpp:165`; CPU; `DEF_TEST`.
+- `ArenaAllocUnusualAlignment` — `tests/ArenaAllocTest.cpp:202`; CPU; `DEF_TEST`.
+- `SkFibBlockSizes` — `tests/ArenaAllocTest.cpp:211`; CPU; `DEF_TEST`.
+- `DataTable` — `tests/DataRefTest.cpp:113`; CPU; `DEF_TEST`.
+- `Data` — `tests/DataRefTest.cpp:260`; CPU; `DEF_TEST`.
+- `Data_empty` — `tests/DataRefTest.cpp:289`; CPU; `DEF_TEST`.
+- `Deque` — `tests/DequeTest.cpp:164`; CPU; `DEF_TEST`.
+- `ExecutorTest_StdFunction` — `tests/ExecutorTest.cpp:202`; CPU; `DEF_TEST`.
+- `ExecutorTest_Callback` — `tests/ExecutorTest.cpp:206`; CPU; `DEF_TEST`.
+- `HashMap` — `tests/HashTest.cpp:29`; CPU; `DEF_TEST`.
+- `HashMapCtor` — `tests/HashTest.cpp:152`; CPU; `DEF_TEST`.
+- `HashMapCtorOneElem` — `tests/HashTest.cpp:180`; CPU; `DEF_TEST`.
+- `HashSetCtor` — `tests/HashTest.cpp:204`; CPU; `DEF_TEST`.
+- `HashSetCtorOneElem` — `tests/HashTest.cpp:217`; CPU; `DEF_TEST`.
+- `HashSetWithSkString` — `tests/HashTest.cpp:294`; CPU; `DEF_TEST`.
+- `HashSetWithStdString` — `tests/HashTest.cpp:298`; CPU; `DEF_TEST`.
+- `HashSetWithStdStringView` — `tests/HashTest.cpp:302`; CPU; `DEF_TEST`.
+- `HashSetCopyCounter` — `tests/HashTest.cpp:351`; CPU; `DEF_TEST`.
+- `HashFindOrNull` — `tests/HashTest.cpp:378`; CPU; `DEF_TEST`.
+- `HashTableGrowsAndShrinks` — `tests/HashTest.cpp:399`; CPU; `DEF_TEST`.
+- `HashMapSwap` — `tests/HashTest.cpp:477`; CPU; `DEF_TEST`.
+- `HashSetSwap` — `tests/HashTest.cpp:499`; CPU; `DEF_TEST`.
+- `IncrTopoSort` — `tests/IncrTopoSortTest.cpp:493`; CPU; `DEF_TEST`.
+- `InternalLList` — `tests/LListTest.cpp:44`; CPU; `DEF_TEST`.
+- `LRUCacheSequential` — `tests/LRUCacheTest.cpp:29`; CPU; `DEF_TEST`.
+- `LRUCacheRandom` — `tests/LRUCacheTest.cpp:51`; CPU; `DEF_TEST`.
+- `MD5` — `tests/MD5Test.cpp:67`; CPU; `DEF_TEST`.
+- `memory_calloc` — `tests/MemoryTest.cpp:12`; CPU; `DEF_TEST`.
+- `MessageBus` — `tests/MessageBusTest.cpp:36`; CPU; `DEF_TEST`.
+- `MessageBusSp` — `tests/MessageBusTest.cpp:90`; CPU; `DEF_TEST`.
+- `MessageBus_SkShouldPostMessageToBus` — `tests/MessageBusTest.cpp:144`; CPU; `DEF_TEST`.
+- `MetaData` — `tests/MetaDataTest.cpp:17`; CPU; `DEF_TEST`.
+- `SkOnce_Singlethreaded` — `tests/OnceTest.cpp:18`; CPU; `DEF_TEST`.
+- `SkOnce_Multithreaded` — `tests/OnceTest.cpp:32`; CPU; `DEF_TEST`.
+- `SkOnce_NoArg` — `tests/OnceTest.cpp:52`; CPU; `DEF_TEST`.
+- `RawPtr_DanglingPointerDetected` — `tests/RawPtrTest.cpp:57`; CPU; `DEF_SERIAL_TEST`.
+- `RawPtr_DisableDanglingPtrDetection` — `tests/RawPtrTest.cpp:87`; CPU; `DEF_TEST`.
+- `RawPtr_DefaultConstructor` — `tests/RawPtrTest.cpp:98`; CPU; `DEF_TEST`.
+- `RawPtr_NullptrConstructor` — `tests/RawPtrTest.cpp:104`; CPU; `DEF_TEST`.
+- `RawPtr_RawPointerConstructor` — `tests/RawPtrTest.cpp:110`; CPU; `DEF_TEST`.
+- `RawPtr_CopyAndMove` — `tests/RawPtrTest.cpp:118`; CPU; `DEF_TEST`.
+- `RawPtr_Assignment` — `tests/RawPtrTest.cpp:133`; CPU; `DEF_TEST`.
+- `RawPtr_SelfAssignment` — `tests/RawPtrTest.cpp:149`; CPU; `DEF_TEST`.
+- `RawPtr_Upcasting` — `tests/RawPtrTest.cpp:163`; CPU; `DEF_TEST`.
+- `RawPtr_DereferenceAndMemberAccess` — `tests/RawPtrTest.cpp:191`; CPU; `DEF_TEST`.
+- `RawPtr_PointerArithmetic` — `tests/RawPtrTest.cpp:202`; CPU; `DEF_TEST`.
+- `RawPtr_EqualityComparisons` — `tests/RawPtrTest.cpp:248`; CPU; `DEF_TEST`.
+- `RawPtr_RelationalComparisons` — `tests/RawPtrTest.cpp:270`; CPU; `DEF_TEST`.
+- `RawPtr_Void` — `tests/RawPtrTest.cpp:291`; CPU; `DEF_TEST`.
+- `RawPtr_Stl` — `tests/RawPtrTest.cpp:301`; CPU; `DEF_TEST`.
+- `RefCnt` — `tests/RefCntTest.cpp:73`; CPU; `DEF_TEST`.
+- `sk_sp` — `tests/RefCntTest.cpp:152`; CPU; `DEF_TEST`.
+- `sk_make_sp` — `tests/RefCntTest.cpp:346`; CPU; `DEF_TEST`.
+- `sk_sp_reset` — `tests/RefCntTest.cpp:352`; CPU; `DEF_TEST`.
+- `sk_sp_ref` — `tests/RefCntTest.cpp:368`; CPU; `DEF_TEST`.
+- `SkBlockAllocatorPreallocSize` — `tests/SkBlockAllocatorTest.cpp:81`; CPU; `DEF_TEST`.
+- `SkBlockAllocatorAlloc` — `tests/SkBlockAllocatorTest.cpp:107`; CPU; `DEF_TEST`.
+- `SkBlockAllocatorResize` — `tests/SkBlockAllocatorTest.cpp:188`; CPU; `DEF_TEST`.
+- `SkBlockAllocatorRelease` — `tests/SkBlockAllocatorTest.cpp:241`; CPU; `DEF_TEST`.
+- `SkBlockAllocatorRewind` — `tests/SkBlockAllocatorTest.cpp:273`; CPU; `DEF_TEST`.
+- `SkBlockAllocatorGrowthPolicy` — `tests/SkBlockAllocatorTest.cpp:298`; CPU; `DEF_TEST`.
+- `SkBlockAllocatorReset` — `tests/SkBlockAllocatorTest.cpp:327`; CPU; `DEF_TEST`.
+- `SkBlockAllocatorReleaseBlock` — `tests/SkBlockAllocatorTest.cpp:360`; CPU; `DEF_TEST`.
+- `SkBlockAllocatorIterateAndRelease` — `tests/SkBlockAllocatorTest.cpp:421`; CPU; `DEF_TEST`.
+- `SkBlockAllocatorScratchBlockReserve` — `tests/SkBlockAllocatorTest.cpp:458`; CPU; `DEF_TEST`.
+- `SkBlockAllocatorStealBlocks` — `tests/SkBlockAllocatorTest.cpp:521`; CPU; `DEF_TEST`.
+- `SkBlockAllocatorMetadata` — `tests/SkBlockAllocatorTest.cpp:571`; CPU; `DEF_TEST`.
+- `SkBlockAllocatorAllocatorMetadata` — `tests/SkBlockAllocatorTest.cpp:609`; CPU; `DEF_TEST`.
+- `SkBlockAllocatorOwningBlock` — `tests/SkBlockAllocatorTest.cpp:657`; CPU; `DEF_TEST`.
+- `SkContainerAllocatorBasic` — `tests/SkContainersTest.cpp:30`; CPU; `DEF_TEST`.
+- `SkFree_SafeToPassNull` — `tests/SkMallocTest.cpp:15`; CPU; `DEF_TEST`.
+- `SkCalloc_DataIsZeroInitializedAndWriteable` — `tests/SkMallocTest.cpp:20`; CPU; `DEF_TEST`.
+- `SkMalloc_DataIsWriteable` — `tests/SkMallocTest.cpp:40`; CPU; `DEF_TEST`.
+- `SkRealloc_DataIsWriteableAndEventuallyFreed` — `tests/SkMallocTest.cpp:58`; CPU; `DEF_TEST`.
+- `SkSharedMutexBasic` — `tests/SkSharedMutexTest.cpp:15`; CPU; `DEF_TEST`.
+- `SkSharedMutexMultiThreaded` — `tests/SkSharedMutexTest.cpp:25`; CPU; `DEF_TEST`.
+- `SkSpanBasicTemplateGuide` — `tests/SkSpanTest.cpp:17`; CPU; `DEF_TEST`.
+- `SkSpanDeduceParam` — `tests/SkSpanTest.cpp:81`; CPU; `DEF_TEST`.
+- `SkSpanDeduceSize` — `tests/SkSpanTest.cpp:113`; CPU; `DEF_TEST`.
+- `SkStringViewStartsAndEnds` — `tests/SkStringViewTest.cpp:14`; CPU; `DEF_TEST`.
+- `SkStringViewContains` — `tests/SkStringViewTest.cpp:53`; CPU; `DEF_TEST`.
+- `SkTBlockList` — `tests/SkTBlockListTest.cpp:330`; CPU; `DEF_TEST`.
+- `SkUTF_UTF16` — `tests/SkUTFTest.cpp:13`; CPU; `DEF_TEST`.
+- `SkUTF_UTF8` — `tests/SkUTFTest.cpp:31`; CPU; `DEF_TEST`.
+- `SkUTF_CountUTF8` — `tests/SkUTFTest.cpp:66`; CPU; `DEF_TEST`.
+- `SkUTF_NextUTF8_ToUTF8` — `tests/SkUTFTest.cpp:102`; CPU; `DEF_TEST`.
+- `String` — `tests/StringTest.cpp:25`; CPU; `DEF_TEST`.
+- `String_overflow` — `tests/StringTest.cpp:197`; CPU; `DEF_TEST`.
+- `String_SkStrSplit` — `tests/StringTest.cpp:219`; CPU; `DEF_TEST`.
+- `String_SkStrSplit_All` — `tests/StringTest.cpp:244`; CPU; `DEF_TEST`.
+- `String_Threaded` — `tests/StringTest.cpp:294`; CPU; `DEF_TEST`.
+- `String_huge` — `tests/StringTest.cpp:311`; CPU; `DEF_TEST`.
+- `String_fromUTF16` — `tests/StringTest.cpp:331`; CPU; `DEF_TEST`.
+- `String_VAList` — `tests/StringTest.cpp:392`; CPU; `DEF_TEST`.
+- `String_VAList_overflow` — `tests/StringTest.cpp:444`; CPU; `DEF_TEST`.
+- `String_resize_to_nothing` — `tests/StringTest.cpp:450`; CPU; `DEF_TEST`.
+- `String_resize_shrink` — `tests/StringTest.cpp:457`; CPU; `DEF_TEST`.
+- `String_resize_grow` — `tests/StringTest.cpp:464`; CPU; `DEF_TEST`.
+- `String_resize_after_assignment` — `tests/StringTest.cpp:472`; CPU; `DEF_TEST`.
+- `String_resize_after_copy_construction` — `tests/StringTest.cpp:493`; CPU; `DEF_TEST`.
+- `TLazy_copy` — `tests/TLazyTest.cpp:11`; CPU; `DEF_TEST`.
+- `TCopyOnFirstWrite_copy` — `tests/TLazyTest.cpp:36`; CPU; `DEF_TEST`.
+- `Templates` — `tests/TemplatesTest.cpp:75`; CPU; `DEF_TEST`.
+- `TemplateContainerAPIsTrim` — `tests/TemplatesTest.cpp:148`; CPU; `DEF_TEST`.
+- `TemplateContainerAPIs` — `tests/TemplatesTest.cpp:167`; CPU; `DEF_TEST`.
+- `AutoReallocToZero` — `tests/TemplatesTest.cpp:192`; CPU; `DEF_TEST`.
+- `AutoTMallocSelfMove` — `tests/TemplatesTest.cpp:197`; CPU; `DEF_TEST`.
+
+### Later integration obligations for these APIs
+
+The following original test files directly reference production headers owned here but contain cases scheduled later. They remain mandatory at the listed gates; they are not excluded or already passed. Keep earlier milestone acceptance limited to the tests/feature contract above.
+
+- `modules/skottie/tests/AudioLayer.cpp` — M30.
+- `modules/skottie/tests/Expression.cpp` — M30.
+- `modules/skottie/tests/Image.cpp` — M30.
+- `modules/skottie/tests/PropertyObserver.cpp` — M30.
+- `modules/skottie/tests/Shaper.cpp` — M30.
+- `modules/skottie/tests/SkottieTest.cpp` — M30.
+- `modules/skottie/tests/Text.cpp` — M30.
+- `modules/skparagraph/tests/SkParagraphTest.cpp` — M21.
+- `modules/skparagraph/tests/SkShaperJSONWriterTest.cpp` — M21.
+- `modules/sksg/tests/SGTest.cpp` — M29.
+- `modules/skshaper/tests/ShaperTest.cpp` — M20.
+- `modules/skunicode/tests/SkUnicodeTest.cpp` — M20.
+- `modules/svg/tests/Filters.cpp` — M28.
+- `modules/svg/tests/PaintServer.cpp` — M28.
+- `tests/AAClipTest.cpp` — M14.
+- `tests/AnimatedImageTest.cpp` — M22.
+- `tests/AnnotationTest.cpp` — M27.
+- `tests/ApplyGammaTest.cpp` — M38.
+- `tests/AsADashTest.cpp` — M08.
+- `tests/AvifTest.cpp` — M16.
+- `tests/BRDTest.cpp` — M16.
+- `tests/BackendAllocationTest.cpp` — M32, M34.
+- `tests/BadIcoTest.cpp` — M16.
+- `tests/BezierCurveTest.cpp` — M06.
+- `tests/BigImageTest.cpp` — M38.
+- `tests/BitSetTest.cpp` — M03.
+- `tests/BitmapCopyTest.cpp` — M12.
+- `tests/BitmapGetColorTest.cpp` — M11.
+- `tests/BitmapTest.cpp` — M11.
+- `tests/BlendTest.cpp` — M32, M34, M38.
+- `tests/BlitMaskClip.cpp` — M14.
+- `tests/BlurTest.cpp` — M35, M38.
+- `tests/BulkRectTest.cpp` — M38.
+- `tests/CPUContextRecorderTest.cpp` — M22.
+- `tests/CachedDataTest.cpp` — M16.
+- `tests/CachedDecodingPixelRefTest.cpp` — M16.
+- `tests/CanvasStateTest.cpp` — M17.
+- `tests/CanvasTest.cpp` — M35, M38.
+- `tests/ChecksumTest.cpp` — M03.
+- `tests/ClearTest.cpp` — M38.
+- `tests/ClipCubicTest.cpp` — M14.
+- `tests/ClipStackTest.cpp` — M09.
+- `tests/ClipperTest.cpp` — M14.
+- `tests/CodecAnimTest.cpp` — M29.
+- `tests/CodecExactReadTest.cpp` — M16.
+- `tests/CodecPartialTest.cpp` — M16.
+- `tests/CodecRecommendedTypeTest.cpp` — M17.
+- `tests/CodecTest.cpp` — M17.
+- `tests/ColorFilterTest.cpp` — M32, M38.
+- `tests/ColorMatrixTest.cpp` — M14.
+- `tests/ColorPrivTest.cpp` — M10.
+- `tests/ColorSpaceTest.cpp` — M16.
+- `tests/ColorTest.cpp` — M10.
+- `tests/CompressedBackendAllocationTest.cpp` — M38.
+- `tests/CopySurfaceTest.cpp` — M38.
+- `tests/CubicChopTest.cpp` — M23.
+- `tests/CubicMapTest.cpp` — M06.
+- `tests/CubicRootsTest.cpp` — M23.
+- `tests/CullTestTest.cpp` — M31.
+- `tests/DMSAATest.cpp` — M38.
+- `tests/DashPathEffectTest.cpp` — M14.
+- `tests/DebugLayerManagerTest.cpp` — M40.
+- `tests/DefaultPathRendererTest.cpp` — M38.
+- `tests/DeferredDisplayListTest.cpp` — M32, M34, M38.
+- `tests/DescriptorTest.cpp` — M22.
+- `tests/DeviceTest.cpp` — M32, M38.
+- `tests/DiscardableMemoryPoolTest.cpp` — M16.
+- `tests/DiscardableMemoryTest.cpp` — M16.
+- `tests/DrawBitmapRectTest.cpp` — M14.
+- `tests/DrawOpAtlasTest.cpp` — M32, M38.
+- `tests/DrawPathTest.cpp` — M14.
+- `tests/DrawTextTest.cpp` — M18.
+- `tests/EdgeTest.cpp` — M14.
+- `tests/EmptyPathTest.cpp` — M14.
+- `tests/EncodeTest.cpp` — M17.
+- `tests/EncodedInfoTest.cpp` — M17.
+- `tests/ExifTest.cpp` — M17.
+- `tests/ExtendedSkColorTypeTests.cpp` — M32, M38.
+- `tests/FCITest.cpp` — M18.
+- `tests/FillPathTest.cpp` — M14.
+- `tests/FilterResultTest.cpp` — M35, M38.
+- `tests/FindCubicConvex180ChopsTest.cpp` — M31.
+- `tests/FitsInTest.cpp` — M03.
+- `tests/FlattenDrawableTest.cpp` — M22.
+- `tests/FlattenableFactoryToName.cpp` — M22.
+- `tests/FloatingPointTest.cpp` — M03.
+- `tests/FloatingPointTextureTest.cpp` — M38.
+- `tests/FontHostStreamTest.cpp` — M19.
+- `tests/FontHostTest.cpp` — M19.
+- `tests/FontMgrTest.cpp` — M19.
+- `tests/FontNamesTest.cpp` — M19.
+- `tests/FontTest.cpp` — M22.
+- `tests/FontationsFtCompTest.cpp` — M20.
+- `tests/FontationsTest.cpp` — M19.
+- `tests/FrontBufferedStreamTest.cpp` — M16.
+- `tests/GLBackendSurfaceTest.cpp` — M34.
+- `tests/GLFramebufferDeletionTest.cpp` — M34.
+- `tests/GainmapShaderTest.cpp` — M16.
+- `tests/GaneshContextRecorderTest.cpp` — M38.
+- `tests/GeometryTest.cpp` — M06.
+- `tests/GifTest.cpp` — M16.
+- `tests/GpuDrawPathTest.cpp` — M34, M38.
+- `tests/GpuRectanizerTest.cpp` — M32.
+- `tests/GrClipStackTest.cpp` — M32, M38.
+- `tests/GrContextAbandonTest.cpp` — M32.
+- `tests/GrContextFactoryTest.cpp` — M32, M38.
+- `tests/GrContextOOM.cpp` — M32.
+- `tests/GrDDLImageTest.cpp` — M32.
+- `tests/GrFinishedFlushTest.cpp` — M38.
+- `tests/GrGLExtensionsTest.cpp` — M34.
+- `tests/GrGlyphVectorTest.cpp` — M32.
+- `tests/GrGpuBufferTest.cpp` — M38.
+- `tests/GrMemoryPoolTest.cpp` — M32.
+- `tests/GrMeshTest.cpp` — M38.
+- `tests/GrMipMappedTest.cpp` — M32, M38.
+- `tests/GrOpListFlushTest.cpp` — M38.
+- `tests/GrPipelineDynamicStateTest.cpp` — M38.
+- `tests/GrPorterDuffTest.cpp` — M32.
+- `tests/GrRenderTaskClusterTest.cpp` — M32.
+- `tests/GrStyledShapeTest.cpp` — M32.
+- `tests/GrSubmittedFlushTest.cpp` — M38.
+- `tests/GrSurfaceResolveTest.cpp` — M32, M38.
+- `tests/GrSurfaceTest.cpp` — M32, M38.
+- `tests/GrTextBlobTest.cpp` — M32, M38.
+- `tests/GrTextureMipMapInvalidationTest.cpp` — M38.
+- `tests/GrThreadSafeCacheTest.cpp` — M38.
+- `tests/GradientTest.cpp` — M32, M38.
+- `tests/HSVRoundTripTest.cpp` — M10.
+- `tests/HdrMetadataTest.cpp` — M16.
+- `tests/HighContrastFilterTest.cpp` — M13.
+- `tests/ICCTest.cpp` — M17.
+- `tests/ImageBitmapTest.cpp` — M14.
+- `tests/ImageCacheTest.cpp` — M16.
+- `tests/ImageFilterCacheTest.cpp` — M32, M38.
+- `tests/ImageFilterTest.cpp` — M35, M38.
+- `tests/ImageFrom565Bitmap.cpp` — M14.
+- `tests/ImageGeneratorOrientationTest.cpp` — M16.
+- `tests/ImageGeneratorTest.cpp` — M22.
+- `tests/ImageIsOpaqueTest.cpp` — M32, M38.
+- `tests/ImageNewShaderTest.cpp` — M32, M38.
+- `tests/ImageTest.cpp` — M32, M34, M38.
+- `tests/IndexedPngOverflowTest.cpp` — M16.
+- `tests/InfRectTest.cpp` — M14.
+- `tests/InsetConvexPolyTest.cpp` — M06.
+- `tests/JSONTest.cpp` — M42.
+- `tests/JpegGainmapTest.cpp` — M17.
+- `tests/JpegxlTest.cpp` — M16.
+- `tests/LazyProxyTest.cpp` — M32.
+- `tests/LazyStencilAttachmentTest.cpp` — M38.
+- `tests/M44Test.cpp` — M05, M07.
+- `tests/MallocPixelRefTest.cpp` — M11.
+- `tests/MaskCacheTest.cpp` — M15.
+- `tests/MathTest.cpp` — M03.
+- `tests/MatrixColorFilterTest.cpp` — M38.
+- `tests/MatrixProcsTest.cpp` — M12.
+- `tests/MatrixTest.cpp` — M05.
+- `tests/MeshTest.cpp` — M26.
+- `tests/MipMapTest.cpp` — M14.
+- `tests/MultiPictureDocumentTest.cpp` — M32, M38.
+- `tests/NonlinearBlendingTest.cpp` — M13.
+- `tests/OSPathTest.cpp` — M07.
+- `tests/OffsetSimplePolyTest.cpp` — M06.
+- `tests/OpChainTest.cpp` — M32.
+- `tests/OverAlignedTest.cpp` — M03.
+- `tests/PDFDeflateWStreamTest.cpp` — M27.
+- `tests/PDFDocumentTest.cpp` — M27.
+- `tests/PDFGlyphsToUnicodeTest.cpp` — M27.
+- `tests/PDFJpegEmbedTest.cpp` — M27.
+- `tests/PDFMetadataAttributeTest.cpp` — M27.
+- `tests/PDFOpaqueSrcModeToSrcOverTest.cpp` — M27.
+- `tests/PDFPrimitivesTest.cpp` — M27.
+- `tests/PDFTaggedLinkTest.cpp` — M27.
+- `tests/PDFTaggedTableTest.cpp` — M27.
+- `tests/PDFTaggedTest.cpp` — M27.
+- `tests/PaintTest.cpp` — M22.
+- `tests/ParseColorTest.cpp` — M10.
+- `tests/ParsePathTest.cpp` — M07.
+- `tests/PathCoverageTest.cpp` — M07.
+- `tests/PathMeasureTest.cpp` — M07.
+- `tests/PathOpsAngleIdeas.cpp` — M23.
+- `tests/PathOpsAngleTest.cpp` — M23.
+- `tests/PathOpsAsWindingTest.cpp` — M23.
+- `tests/PathOpsBoundsTest.cpp` — M23.
+- `tests/PathOpsChalkboardTest.cpp` — M23.
+- `tests/PathOpsConicIntersectionTest.cpp` — M23.
+- `tests/PathOpsConicLineIntersectionTest.cpp` — M23.
+- `tests/PathOpsConicQuadIntersectionTest.cpp` — M23.
+- `tests/PathOpsCubicConicIntersectionTest.cpp` — M23.
+- `tests/PathOpsCubicIntersectionTest.cpp` — M23.
+- `tests/PathOpsCubicLineIntersectionIdeas.cpp` — M23.
+- `tests/PathOpsCubicLineIntersectionTest.cpp` — M23.
+- `tests/PathOpsCubicQuadIntersectionTest.cpp` — M23.
+- `tests/PathOpsCubicReduceOrderTest.cpp` — M23.
+- `tests/PathOpsDCubicTest.cpp` — M23.
+- `tests/PathOpsDLineTest.cpp` — M23.
+- `tests/PathOpsDPointTest.cpp` — M23.
+- `tests/PathOpsDRectTest.cpp` — M23.
+- `tests/PathOpsDVectorTest.cpp` — M23.
+- `tests/PathOpsInverseTest.cpp` — M23.
+- `tests/PathOpsLineIntersectionTest.cpp` — M23.
+- `tests/PathOpsLineParametetersTest.cpp` — M23.
+- `tests/PathOpsOpCircleThreadedTest.cpp` — M23.
+- `tests/PathOpsOpCubicThreadedTest.cpp` — M23.
+- `tests/PathOpsOpLoopThreadedTest.cpp` — M23.
+- `tests/PathOpsOpRectThreadedTest.cpp` — M23.
+- `tests/PathOpsOpTest.cpp` — M23.
+- `tests/PathOpsQuadIntersectionTest.cpp` — M23.
+- `tests/PathOpsQuadLineIntersectionTest.cpp` — M23.
+- `tests/PathOpsQuadLineIntersectionThreadedTest.cpp` — M23.
+- `tests/PathOpsQuadReduceOrderTest.cpp` — M23.
+- `tests/PathOpsSimplifyDegenerateThreadedTest.cpp` — M23.
+- `tests/PathOpsSimplifyQuadThreadedTest.cpp` — M23.
+- `tests/PathOpsSimplifyQuadralateralsThreadedTest.cpp` — M23.
+- `tests/PathOpsSimplifyRectThreadedTest.cpp` — M23.
+- `tests/PathOpsSimplifyTest.cpp` — M23.
+- `tests/PathOpsSimplifyTrianglesThreadedTest.cpp` — M23.
+- `tests/PathOpsThreeWayTest.cpp` — M23.
+- `tests/PathOpsTigerTest.cpp` — M23.
+- `tests/PathOpsTightBoundsTest.cpp` — M23.
+- `tests/PathRendererCacheTests.cpp` — M32.
+- `tests/PathTest.cpp` — M22.
+- `tests/PictureBBHTest.cpp` — M22.
+- `tests/PictureShaderTest.cpp` — M22.
+- `tests/PictureTest.cpp` — M22.
+- `tests/PinnedImageTest.cpp` — M38.
+- `tests/PixelRefTest.cpp` — M11.
+- `tests/PngGainmapTest.cpp` — M17.
+- `tests/PolyUtilsTest.cpp` — M06.
+- `tests/PremulAlphaRoundTripTest.cpp` — M32, M38.
+- `tests/PrimitiveProcessorTest.cpp` — M38.
+- `tests/ProcessorTest.cpp` — M34, M38.
+- `tests/ProgramsTest.cpp` — M32.
+- `tests/PromiseImageTest.cpp` — M32, M38.
+- `tests/ProxyConversionTest.cpp` — M38.
+- `tests/ProxyRefTest.cpp` — M38.
+- `tests/ProxyTest.cpp` — M38.
+- `tests/QuadRootsTest.cpp` — M23.
+- `tests/QuickRejectTest.cpp` — M15.
+- `tests/RRectInPathTest.cpp` — M07.
+- `tests/RTreeTest.cpp` — M09.
+- `tests/RandomTest.cpp` — M03.
+- `tests/RasterPipelineBuilderTest.cpp` — M25.
+- `tests/RasterPipelineCodeGeneratorTest.cpp` — M25.
+- `tests/ReadPixelsTest.cpp` — M14.
+- `tests/ReadWritePixelsGpuTest.cpp` — M32, M34, M38.
+- `tests/RecordDrawTest.cpp` — M22.
+- `tests/RecordOptsTest.cpp` — M22.
+- `tests/RecorderTest.cpp` — M22.
+- `tests/RecordingXfermodeTest.cpp` — M22.
+- `tests/RectTest.cpp` — M04, M05, M07, M14.
+- `tests/RectangleTextureTest.cpp` — M34.
+- `tests/RegionTest.cpp` — M14.
+- `tests/RepeatedClippedBlurTest.cpp` — M38.
+- `tests/ResourceAllocatorTest.cpp` — M38.
+- `tests/ResourceCacheTest.cpp` — M32, M38.
+- `tests/RoundRectTest.cpp` — M04, M07, M23.
+- `tests/RuntimeBlendTest.cpp` — M35, M38.
+- `tests/SRGBReadWritePixelsTest.cpp` — M38.
+- `tests/SRGBTest.cpp` — M12.
+- `tests/SVGDeviceTest.cpp` — M27.
+- `tests/SamplingTest.cpp` — M14.
+- `tests/SaveLayerOriginTest.cpp` — M38.
+- `tests/SerialProcsTest.cpp` — M22.
+- `tests/SerializationTest.cpp` — M22.
+- `tests/ShaderImageFilterTest.cpp` — M32, M38.
+- `tests/ShaderOpacityTest.cpp` — M13.
+- `tests/ShaderTest.cpp` — M35, M38.
+- `tests/ShadowTest.cpp` — M15.
+- `tests/SimplifyPaintTest.cpp` — M35, M38.
+- `tests/SkBase64Test.cpp` — M03.
+- `tests/SkBmpRustDecoderTest.cpp` — M16.
+- `tests/SkColorSpaceXformStepsTest.cpp` — M35, M38.
+- `tests/SkDOMTest.cpp` — M27.
+- `tests/SkGlyphTest.cpp` — M26.
+- `tests/SkIcoRustDecoderTest.cpp` — M16.
+- `tests/SkImageTest.cpp` — M14.
+- `tests/SkJpegRustCodecTest.cpp` — M17.
+- `tests/SkJpegXmpTest.cpp` — M16.
+- `tests/SkPngRustDecoderTest.cpp` — M16.
+- `tests/SkPngRustEncoderTest.cpp` — M17.
+- `tests/SkRasterPipelineTest.cpp` — M12, M24, M31.
+- `tests/SkRemoteGlyphCacheTest.cpp` — M38.
+- `tests/SkResourceCacheTest.cpp` — M22.
+- `tests/SkRuntimeEffectTest.cpp` — M35, M38.
+- `tests/SkSLCross.cpp` — M38.
+- `tests/SkSLDebugTracePlayerTest.cpp` — M26.
+- `tests/SkSLDebugTraceTest.cpp` — M26.
+- `tests/SkSLES2ConformanceTest.cpp` — M32, M38.
+- `tests/SkSLErrorTest.cpp` — M24.
+- `tests/SkSLGLSLTestbed.cpp` — M25.
+- `tests/SkSLMemoryLayoutTest.cpp` — M24.
+- `tests/SkSLMetalTestbed.cpp` — M25.
+- `tests/SkSLPipelineStageTestbed.cpp` — M25.
+- `tests/SkSLSPIRVTestbed.cpp` — M25.
+- `tests/SkSLTest.cpp` — M37, M38.
+- `tests/SkSLWGSLTestbed.cpp` — M25.
+- `tests/SkStrikeCacheTest.cpp` — M22.
+- `tests/SkStrikeTest.cpp` — M22.
+- `tests/SkVxTest.cpp` — M03.
+- `tests/SkXmpTest.cpp` — M16.
+- `tests/Skbug12214.cpp` — M38.
+- `tests/Skbug5221.cpp` — M32, M38.
+- `tests/Skbug6389.cpp` — M15.
+- `tests/Skbug6653.cpp` — M38.
+- `tests/SlugTest.cpp` — M38.
+- `tests/SortTest.cpp` — M03.
+- `tests/SpecialImageTest.cpp` — M32, M38.
+- `tests/SrcSrcOverBatchTest.cpp` — M38.
+- `tests/StreamTest.cpp` — M03.
+- `tests/StrikeForGPUTest.cpp` — M38.
+- `tests/StrokerTest.cpp` — M23.
+- `tests/SurfaceDrawContextTest.cpp` — M38.
+- `tests/SurfaceSemaphoreTest.cpp` — M32, M38.
+- `tests/SurfaceTest.cpp` — M32, M34, M38.
+- `tests/TArrayTest.cpp` — M03.
+- `tests/TDPQueueTest.cpp` — M03.
+- `tests/Test.h` — M32.
+- `tests/TextBlobCacheTest.cpp` — M32, M38.
+- `tests/TextBlobTest.cpp` — M22.
+- `tests/TextureBindingsResetTest.cpp` — M34.
+- `tests/TextureOpTest.cpp` — M38.
+- `tests/TextureProxyTest.cpp` — M38.
+- `tests/TextureSizeTest.cpp` — M38.
+- `tests/TextureStripAtlasManagerTest.cpp` — M38.
+- `tests/Time.cpp` — M27.
+- `tests/TopoSortTest.cpp` — M32.
+- `tests/TraceMemoryDumpTest.cpp` — M34.
+- `tests/TracingTest.cpp` — M11.
+- `tests/TransferPixelsTest.cpp` — M38.
+- `tests/TriangulatingPathRendererTests.cpp` — M32, M38.
+- `tests/TypefaceMacTest.cpp` — M19.
+- `tests/TypefaceTest.cpp` — M19.
+- `tests/UnicodeTest.cpp` — M18.
+- `tests/UtilsTest.cpp` — M03.
+- `tests/VerticesTest.cpp` — M22.
+- `tests/WangsFormulaTest.cpp` — M31.
+- `tests/WindowRectanglesTest.cpp` — M32.
+- `tests/WrappedSurfaceCopyOnWriteTest.cpp` — M38.
+- `tests/WritePixelsTest.cpp` — M35, M38.
+- `tests/Writer32Test.cpp` — M22.
+- `tests/YUVCacheTest.cpp` — M11.
+- `tests/YUVTest.cpp` — M17.
+- `tests/crbug_500172224.cpp` — M38.
+- `tests/graphite/ImageProviderTest.cpp` — M38.
+- `tests/graphite/KeyTest.cpp` — M38.
+- `tests/graphite/PipelineCallbackTest.cpp` — M38.
+- `tests/graphite/TextureFormatTest.cpp` — M38.
+- `tests/graphite/crbug_513836996.cpp` — M38.
+- `tests/graphite/precompile/PipelineManagerEarlyExit.cpp` — M38.
+- `tests/graphite/precompile/PipelineManagerThreaded.cpp` — M38.
+- `tests/graphite/precompile/UserdefinedStableKeyTest.cpp` — M38.
+- `tests/graphite/sparse_strips/CoverageTest.cpp` — M38.
+- `tests/graphite/sparse_strips/FlattenTest.cpp` — M35.
+- `tests/graphite/sparse_strips/OracleTest.cpp` — M35.
+
+### Preserve these fixtures, metadata and references
+
+- `include/OWNERS` — preserve.
+- `include/config/OWNERS` — preserve.
+- `include/private/OWNERS` — preserve.
+
+## Dependency and integration notes
+
+The initial scan found 92 quoted includes from this milestone into later-owned production files. See `../inventory/forward-includes.csv`, filtered by `source_milestone=2`. Header inclusion alone does not force implementation of the entire later subsystem; inspect the original registered test bodies and called production paths.
+
+Interfaces with later consumers may be declared now, but the accepted feature set must execute real implementations for every reached call. Where a source spans several features (CPU/GPU, serialization, runtime shaders), record completed and pending symbols separately. Deferred portions have explicit integration gates M14, M22, M26, M38 and M47; no pending portion may disappear from the ledger.
+
+## Commands, required evidence and stop condition
+
+Codex runs the milestone tests and all previously accepted tests in debug and release with the exact feature list from the handoff. The standard baseline commands are:
+
+```sh
+cargo test --locked
+cargo test --release --locked
+cargo fmt --all -- --check
+cargo clippy --all-targets --locked -- -D warnings
+```
+
+For feature-specific crates/backends, record the additional exact package/target/features commands; do not use an unexamined `--all-features` combination. Native backend, GM, browser, fuzz and benchmark commands are added when their harnesses exist and must be copied into the acceptance report.
+
+Acceptance requires: all assigned macOS cases enumerated; every applicable assertion passing; all earlier accepted tests passing; every source row mapped to implemented Rust or a documented non-code disposition; no unexplained missing resources, untested required backends or unsupported required API; and a Codex-authored evidence report. Formatting/build success alone never constitutes acceptance.
+
+Record PASS, FAIL, BLOCKED or NOT_APPLICABLE per test/configuration. NOT_APPLICABLE requires an original platform/capability condition and a reason. M01–M45 require native Apple Silicon macOS evidence; Intel-specific files may remain explicitly pending until M46, whose gate requires native Intel Mac results. This is a scheduled architecture gate, not an assertion that Intel already passed.
+
+Only after Codex marks M02 ACCEPTED may the user hand Deepseek M03.
