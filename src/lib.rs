@@ -73,12 +73,26 @@ pub mod scale_to_sides;
 pub mod size;
 pub mod sk_bezier_curves;
 pub mod sk_cg_geometry;
+pub mod sk_contour_measure;
 pub mod sk_cubic_clipper;
 pub mod sk_cubic_map;
 pub mod sk_cubics;
 pub mod sk_edge_clipper;
 pub mod sk_geometry;
+pub mod sk_get_executable_path;
 pub mod sk_line_clipper;
+pub mod sk_parse_path;
+pub mod sk_path;
+pub mod sk_path_builder;
+pub mod sk_path_data;
+pub mod sk_path_edge_iter;
+pub mod sk_path_iter;
+pub mod sk_path_makers;
+pub mod sk_path_measure;
+pub mod sk_path_priv;
+pub mod sk_path_raw;
+pub mod sk_path_raw_shapes;
+pub mod sk_path_types;
 pub mod sk_poly_utils;
 pub mod sk_quad_clipper;
 pub mod sk_quads;
@@ -273,6 +287,11 @@ pub use sk_cg_geometry::{
     CGFloat, CGPoint, CGRect, CGSize, sk_cg_rect_get_max_x, sk_cg_rect_get_max_y,
     sk_cg_rect_get_min_x, sk_cg_rect_get_min_y, sk_cg_rect_get_width, sk_cg_rect_is_empty,
 };
+pub use sk_contour_measure::{
+    ForwardVerbIterator, K_MAX_T_VALUE, MatrixFlags, Segment, SkContourMeasure,
+    SkContourMeasureIter, SkPathMeasurePriv, SkSegType, VerbMeasure, sk_contour_measure_seg_to,
+    t_value_to_scalar,
+};
 pub use sk_cubic_clipper::SkCubicClipper;
 pub use sk_cubic_map::{CubicMap, SkCubicMap};
 pub use sk_cubics::SkCubics;
@@ -294,7 +313,37 @@ pub use sk_geometry::{
     sk_measure_angle_between_vectors, sk_measure_non_inflect_cubic_rotation,
     sk_measure_quad_rotation,
 };
+pub use sk_get_executable_path::sk_get_executable_path;
 pub use sk_line_clipper::{K_MAX_CLIPPED_LINE_SEGMENTS, K_MAX_POINTS, clip_line, intersect_line};
+pub use sk_parse_path::{PathEncoding, SkParsePath, append_scalar_as_text};
+pub use sk_path::{AddPathMode, Iter, RangeIter, RawIter, SegmentMask, SkPath, Verb};
+pub use sk_path_builder::{ArcSize, DumpFormat, Reserve, SkPathBuilder};
+pub use sk_path_data::{
+    SkPathData, SkPathIsAData, SkPathIsAType, SkPathOvalInfo, SkPathRRectInfo, SkPathRectInfo,
+};
+pub use sk_path_edge_iter::{SkPathEdge, SkPathEdgeIter, SkPathEdgeIterResult};
+pub use sk_path_iter::{SkPathContourIter, SkPathContourIterRec, SkPathIter, SkPathIterRec};
+pub use sk_path_makers::{OvalPointIterator, RRectPointIterator, RectPointIterator};
+pub use sk_path_measure::SkPathMeasure;
+pub use sk_path_priv::{
+    KW0_PLANE_DISTANCE, RRectAsEnum, RectContour, SkPathPriv, as_first_direction,
+    compute_convexity, compute_first_direction, compute_segment_mask, compute_tight_bounds,
+    contains, deduce_rrect_from_contour, find_last_move_to_index, is_axis_aligned,
+    is_nested_fill_rects, is_rect_contour, pts_in_iter, pts_in_verb, simplify_rrect,
+    transform_convexity, transform_dir_and_start, trimmed_bounds,
+};
+pub use sk_path_raw::SkPathRaw;
+pub use sk_path_raw_shapes::SkPathRawShapes;
+pub use sk_path_types::{
+    K_CONIC_SK_PATH_SEGMENT_MASK, K_CUBIC_SK_PATH_SEGMENT_MASK, K_LINE_SK_PATH_SEGMENT_MASK,
+    K_QUAD_SK_PATH_SEGMENT_MASK, SkArc, SkArcType, SkPathConvexity, SkPathFillType,
+    SkPathFirstDirection, SkResolveConvexity, sk_path_convexity_is_convex,
+    sk_path_convexity_opposite_convex_direction, sk_path_convexity_to_direction,
+    sk_path_convexity_to_first_direction, sk_path_direction_to_convexity,
+    sk_path_direction_to_first, sk_path_fill_type_convert_to_non_inverse,
+    sk_path_fill_type_is_even_odd, sk_path_fill_type_is_inverse, sk_path_fill_type_toggle_inverse,
+    sk_path_first_direction_to_convexity, sk_point_make,
+};
 pub use sk_poly_utils::{
     K_CROSS_TOLERANCE, OffsetSegment, compute_offset_vector, sk_compute_radial_steps,
     sk_get_polygon_winding, sk_inset_convex_polygon, sk_is_convex_polygon, sk_is_simple_polygon,

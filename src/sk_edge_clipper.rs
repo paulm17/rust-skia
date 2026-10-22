@@ -12,6 +12,8 @@ use crate::sk_geometry::{
     sk_chop_quad_at_y_extrema, sk_find_unit_quad_roots,
 };
 use crate::sk_line_clipper::{K_MAX_POINTS as K_LINE_MAX_POINTS, clip_line};
+use crate::sk_path_edge_iter::{SkPathEdge, SkPathEdgeIter};
+use crate::sk_path_raw::SkPathRaw;
 
 /// `SkPathVerb` from `include/core/SkPathTypes.h`, declared here for the clipper's iterator API.
 /// Path ownership (M07) adopts this enum unchanged.
@@ -541,6 +543,59 @@ impl SkEdgeClipper {
             self.points[self.curr_point..self.curr_point + 4].copy_from_slice(&pts[..4]);
         }
         self.curr_point += 4;
+    }
+
+    /// `SkEdgeClipper::ClipPath`.
+    pub fn clip_path<F: FnMut(&mut SkEdgeClipper, bool)>(
+        raw: &SkPathRaw,
+        clip: &Rect,
+        can_cull_to_the_right: bool,
+        mut consume: F,
+    ) {
+        let mut quadder = crate::sk_geometry::SkAutoConicToQuads::new();
+        const K_CONIC_TOL: f32 = 0.25;
+
+        let mut iter = SkPathEdgeIter::from_raw(raw);
+        let mut clipper = SkEdgeClipper::new(can_cull_to_the_right);
+
+        loop {
+            let e = iter.next();
+            if e.is_done() {
+                break;
+            }
+            match e.f_edge {
+                SkPathEdge::Line => {
+                    if clipper.clip_line(e.f_pts[0], e.f_pts[1], clip) {
+                        consume(&mut clipper, e.f_is_new_contour);
+                    }
+                }
+                SkPathEdge::Quad => {
+                    if clipper.clip_quad(&[e.f_pts[0], e.f_pts[1], e.f_pts[2]], clip) {
+                        consume(&mut clipper, e.f_is_new_contour);
+                    }
+                }
+                SkPathEdge::Conic => {
+                    let quad_pts = quadder
+                        .compute_quads_pts(&e.f_pts[..3], iter.conic_weight(), K_CONIC_TOL)
+                        .to_vec();
+                    let count = quadder.count_quads() as usize;
+                    for i in 0..count {
+                        let base = i * 2;
+                        if clipper.clip_quad(
+                            &[quad_pts[base], quad_pts[base + 1], quad_pts[base + 2]],
+                            clip,
+                        ) {
+                            consume(&mut clipper, e.f_is_new_contour);
+                        }
+                    }
+                }
+                SkPathEdge::Cubic => {
+                    if clipper.clip_cubic(&[e.f_pts[0], e.f_pts[1], e.f_pts[2], e.f_pts[3]], clip) {
+                        consume(&mut clipper, e.f_is_new_contour);
+                    }
+                }
+            }
+        }
     }
 
     pub fn next(&mut self, pts: &mut [Point]) -> Option<SkPathVerb> {

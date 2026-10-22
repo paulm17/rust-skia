@@ -41,8 +41,8 @@
     {
       "id": "M07",
       "title": "Paths, builders, iteration and measurement",
-      "state": "NOT_STARTED",
-      "acceptance_report": null
+      "state": "ACCEPTED",
+      "acceptance_report": "acceptance/M07.md"
     },
     {
       "id": "M08",

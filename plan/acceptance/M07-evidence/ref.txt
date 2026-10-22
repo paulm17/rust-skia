@@ -1,0 +1,15 @@
+parse0 bounds -5.39999962 -10.3142004 5.77000046 1 pts 11 vbs 12
+parse1 bounds 0 0 0 0 pts 0 vbs 0
+parse2 bounds 0 0 10 10 pts 2 vbs 2
+parse3 bounds -5.5 -0.5 6 6.5 pts 3 vbs 2
+rect bounds 0 0 10 10.5 pts 4 vbs 5
+oval bounds 0 0 10 10.5 pts 9 vbs 6
+rrect bounds 0 0 10 10.5 pts 13 vbs 10
+meas1 length 4
+meas2 length 5
+meas2 postan 1 1.5 2 0.600000024 0.800000012
+cm length 92.4281845 closed 0
+done
+make3 0
+makemove 1 empty 0
+makeline 0

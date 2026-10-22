@@ -1,0 +1,2 @@
+PASS: 12474 source paths, 47 milestones, 2580 registration sites, 1086 backend obligations; links and source locations valid.
+This checks accounting, not runtime dependency completeness or implementation correctness.

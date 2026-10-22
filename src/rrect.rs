@@ -1,5 +1,6 @@
 use crate::float_utils::SkFloatingPoint;
 use crate::floating_point::{self, float_midpoint};
+use crate::matrix::Matrix;
 use crate::point::Point;
 use crate::rect::Rect;
 use crate::rect_priv::RectPriv;
@@ -388,6 +389,47 @@ impl RRect {
 
     pub fn make_offset(&self, dx: Scalar, dy: Scalar) -> Self {
         Self::with_parts(self.rect.make_offset(dx, dy), self.radii, self.kind)
+    }
+
+    /// `SkRRect::transform` (non-legacy overload).
+    ///
+    /// Transforms by `matrix` and returns the result if possible. If the matrix does not
+    /// preserve axis-alignment (e.g. rotates, skews, etc.) then this returns `None`.
+    pub fn transform(&self, matrix: &Matrix) -> Option<RRect> {
+        if matrix.is_identity() {
+            return Some(*self);
+        }
+
+        if !matrix.preserves_axis_alignment() {
+            return None;
+        }
+
+        if self.is_empty() {
+            return Some(Self::make_empty());
+        }
+
+        let new_rect = matrix.map_rect(&self.rect);
+        if !new_rect.is_finite() || new_rect.is_empty() {
+            return None;
+        }
+
+        match self.get_type() {
+            Type::Rect => return Some(Self::make_rect(&new_rect)),
+            Type::Oval => return Some(Self::make_oval(&new_rect)),
+            _ => {}
+        }
+
+        let mut raw = crate::sk_path_raw_shapes::SkPathRawShapes::rrect(
+            self,
+            crate::sk_path_types::SkPathDirection::Cw,
+            6,
+        );
+        matrix.map_points_in_place(&mut raw.f_points);
+        Some(crate::sk_path_priv::deduce_rrect_from_contour(
+            &new_rect,
+            &raw.f_points,
+            &raw.f_verbs,
+        ))
     }
 
     pub fn contains(&self, point: &Point) -> bool {

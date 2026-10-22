@@ -1,0 +1,171 @@
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.04s
+     Running tests/m07_test.rs (target/debug/deps/m07_test-60cd793d5df82229)
+
+running 68 tests
+test builder::SkPathBuilder_arcToPtPtRad_invalidInputsResultInALine ... first point equals previous point
+two points equal
+radius is zero
+second point equals previous point
+reporter assertions=28 failures=0
+ok
+test builder::SkPathBuilder_assign ... reporter assertions=4 failures=0
+ok
+test builder::SkPathBuilder_b520944501 ... ok
+test builder::SkPathBuilder_b_463584612 ... reporter assertions=1 failures=0
+ok
+test builder::SkPathBuilder_cleaning ... reporter assertions=5 failures=0
+ok
+test builder::SkPathBuilder_conic_semantics ... reporter assertions=20 failures=0
+ok
+test builder::SkPathBuilder_dump ... reporter assertions=1 failures=0
+ok
+test builder::SkPathBuilder_equality ... reporter assertions=27 failures=0
+ok
+test builder::SkPathBuilder_getLastPt ... reporter assertions=4 failures=0
+ok
+test builder::SkPathBuilder_lineToMoveTo ... reporter assertions=16 failures=0
+ok
+test builder::SkPathBuilder_multipleMoveTos ... reporter assertions=9 failures=0
+ok
+test builder::SkPathBuilder_path_roundtrip ... reporter assertions=57 failures=0
+ok
+test builder::SkPathBuilder_rMoveTo ... reporter assertions=28 failures=0
+ok
+test builder::SkPathBuilder_trailingmove_addpath ... reporter assertions=12 failures=0
+ok
+test builder::SkPathBuilder_transform ... reporter assertions=17 failures=0
+ok
+test builder::pathbuilder ... reporter assertions=15 failures=0
+ok
+test builder::pathbuilder_addOval ... reporter assertions=46 failures=0
+ok
+test builder::pathbuilder_addPath ... reporter assertions=85 failures=0
+ok
+test builder::pathbuilder_addPolygon ... reporter assertions=10 failures=0
+ok
+test builder::pathbuilder_addRRect ... reporter assertions=14 failures=0
+ok
+test builder::pathbuilder_addRect ... reporter assertions=64 failures=0
+ok
+test builder::pathbuilder_addpath_crbug_1153516 ... reporter assertions=8 failures=0
+ok
+test builder::pathbuilder_filltype ... reporter assertions=32 failures=0
+ok
+test builder::pathbuilder_genid ... reporter assertions=1 failures=0
+ok
+test builder::pathbuilder_make ... reporter assertions=1 failures=0
+ok
+test builder::pathbuilder_missing_move ... reporter assertions=2 failures=0
+ok
+test data::pathdata_empty ... reporter assertions=11 failures=0
+ok
+test data::pathdata_inverted_bounds ... reporter assertions=168 failures=0
+ok
+test data::pathdata_make_edgecases ... reporter assertions=15 failures=0
+ok
+test data::pathdata_make_nonfinite ... reporter assertions=10 failures=0
+ok
+test data::pathdata_oval ... reporter assertions=144 failures=0
+ok
+test data::pathdata_polygon ... reporter assertions=152 failures=0
+ok
+test data::pathdata_rect ... reporter assertions=168 failures=0
+ok
+test data::pathdata_rrect ... reporter assertions=288 failures=0
+ok
+test data::pathdata_transform ... reporter assertions=5 failures=0
+ok
+test data::pathdata_transform_convexity ... reporter assertions=16 failures=0
+ok
+test measure::PathMeasure ... reporter assertions=38 failures=0
+ok
+test measure::PathMeasureConic ... reporter assertions=4 failures=0
+ok
+test measure::PathMeasure_nextctr ... reporter assertions=1 failures=0
+ok
+test measure::contour_measure ... reporter assertions=22 failures=0
+ok
+test measure::contour_measure_verbs ... reporter assertions=44 failures=0
+ok
+test misc::IsClosedSingleContourTest ... reporter assertions=8 failures=0
+ok
+test misc::M44_mapRect ... reporter assertions=74 failures=0
+ok
+test misc::PathCoverage ... reporter assertions=0 failures=0
+ok
+test misc::Rect_path_nan ... reporter assertions=1 failures=0
+ok
+test misc::SkPath_RangeIter ... reporter assertions=23 failures=0
+ok
+test parse_os::OSPath ... reporter assertions=38 failures=0
+ok
+test parse_os::ParsePath ... reporter assertions=22 failures=0
+ok
+test parse_os::ParsePathArcFlags ... reporter assertions=3 failures=0
+ok
+test parse_os::ParsePathOptionalCommand ... reporter assertions=60 failures=0
+ok
+test parse_os::ParsePath_InvalidDoesNotCrash ... empty move
+partial move
+partial vertical line
+partial horizontal line
+partial cubic
+partial continued cubic
+partial quad
+partial continued quad
+partial arc
+partial ~
+reporter assertions=10 failures=0
+ok
+test raw::pathraw_iter ... reporter assertions=91 failures=0
+ok
+test raw::pathraw_segmentmask ... move-only
+line
+quad
+conic
+cubic
+line-quad
+conic-cubic
+all
+empty path
+reporter assertions=9 failures=0
+ok
+test raw::pathrawshapes_oval ... reporter assertions=16 failures=0
+ok
+test raw::pathrawshapes_rect ... reporter assertions=16 failures=0
+ok
+test raw::pathrawshapes_rrect ... reporter assertions=16 failures=0
+ok
+test rrect::RRect_b561770646_part1 ... reporter assertions=1 failures=0
+ok
+test rrect::RRect_b561770646_part2 ... reporter assertions=2 failures=0
+ok
+test rrect::RRect_fragile ... ok
+test rrect::RoundRectInPath ... reporter assertions=16352 failures=0
+ok
+test supplemental::supplemental_executable_path ... reporter assertions=3 failures=0
+ok
+test supplemental::supplemental_measure_boundaries_and_output_ownership ... reporter assertions=45 failures=0
+ok
+test supplemental::supplemental_path_copy_builder_snapshot_and_lifetimes ... reporter assertions=16 failures=0
+ok
+test supplemental::supplemental_raw_counts_and_generation_boundaries ... reporter assertions=9 failures=0
+ok
+test supplemental::supplemental_serialization_byte_order_and_v4_compatibility ... reporter assertions=16 failures=0
+ok
+test supplemental::supplemental_serialization_truncation_overflow_and_invalid_payloads ... reporter assertions=138 failures=0
+ok
+test supplemental::supplemental_t_value_width_and_overflow_growth ... reporter assertions=23 failures=0
+ok
+test support::tests::reporter_collects_failures_and_evaluates_once ... reporter assertions=3 failures=2
+
+thread 'support::tests::reporter_collects_failures_and_evaluates_once' (16592520) panicked at tests/support/mod.rs:25:9:
+2 assertion(s) failed:
+tests/support/mod.rs:49: { evaluations += 1; false }
+tests/support/mod.rs:53: false
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+reporter assertions=0 failures=0
+ok
+
+test result: ok. 68 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s
+

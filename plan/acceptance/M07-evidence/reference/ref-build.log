@@ -1,0 +1,12 @@
+# M07 C++ reference build (macOS arm64)
+# Reference checkout: /Volumes/Data/Users/paul/development/src/github/skia @ b81c69985fd14bb7bfbd356b7618633ce07dc1a4
+SK=/Volumes/Data/Users/paul/development/src/github/skia
+CXX=clang++ -std=c++20 -O2 -fno-exceptions -fno-rtti -ffunction-sections -fdata-sections -I$SK
+
+TUS='src/core/SkPath.cpp src/core/SkPathBuilder.cpp src/core/SkPathData.cpp src/core/SkPath_serial.cpp src/core/SkPathMeasure.cpp src/core/SkContourMeasure.cpp src/core/SkPathPriv.cpp src/core/SkPathRaw.cpp src/core/SkPathRawShapes.cpp src/core/SkPathIter.cpp src/core/SkPathDump.cpp src/core/SkPath_interpolate.cpp src/core/SkPathUtils.cpp src/core/SkRRect.cpp src/core/SkMatrix.cpp src/core/SkRect.cpp src/core/SkPoint.cpp src/core/SkGeometry.cpp src/core/SkEdgeClipper.cpp src/core/SkBezierCurves.cpp src/core/SkCubics.cpp src/core/SkQuads.cpp src/core/SkFloatingPoint.cpp src/core/SkLineClipper.cpp src/core/SkString.cpp src/core/SkStringUtils.cpp src/core/SkContainers.cpp src/core/SkSafeMath.cpp src/core/SkMalloc.cpp src/core/SkMemory_malloc.cpp src/ports/SkMemory_malloc.cpp src/core/SkLog.cpp src/core/SkTDArray.cpp src/core/SkIDChangeListener.cpp src/core/SkSemaphore.cpp src/core/SkDebug.cpp src/ports/SkLog_stdio.cpp src/utils/SkLogHandler.cpp src/utils/SkParse.cpp src/utils/SkParsePath.cpp'
+
+for f in $TUS; do $CXX -c $SK/$f -o $(basename $f .cpp).o || exit 1; done
+$CXX -c ref_dump.cpp -o ref_dump.o
+clang++ -O2 -Wl,-dead_strip *.o -o ref_dump
+
+BUILD_EXIT=0

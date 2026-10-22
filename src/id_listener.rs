@@ -65,6 +65,9 @@ impl SkIDChangeListenerList {
     pub fn is_empty(&self) -> bool {
         self.listeners.is_empty()
     }
+    pub fn len(&self) -> usize {
+        self.listeners.len()
+    }
 }
 
 impl Drop for SkIDChangeListenerList {

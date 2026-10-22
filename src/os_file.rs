@@ -1,4 +1,4 @@
-//! POSIX/std stream file helpers and `SkOSPath`.
+//! POSIX/std stream file helpers and `SkOSPath` (port of `src/utils/SkOSPath.h`).
 
 use std::fs::{self, File, OpenOptions};
 use std::io::{Read, Seek, SeekFrom, Write};
@@ -156,35 +156,56 @@ impl SkOSFileIter {
     }
 }
 
+/// `SkOSPath` from `src/utils/SkOSPath.h`. `nullptr` C-string arguments become `None`.
 pub struct SkOSPath;
 
 impl SkOSPath {
-    pub fn join(root: &str, relative: &str) -> SkString {
-        if root.is_empty() {
-            return SkString::from_str(relative);
-        }
-        if root.ends_with('/') {
-            SkString::from_str(&format!("{root}{relative}"))
-        } else {
-            SkString::from_str(&format!("{root}/{relative}"))
-        }
-    }
+    #[cfg(windows)]
+    pub const SEPARATOR: u8 = b'\\';
+    #[cfg(not(windows))]
+    pub const SEPARATOR: u8 = b'/';
 
-    pub fn basename(path: &str) -> SkString {
-        let path = path.trim_end_matches('/');
-        match path.rsplit_once('/') {
-            Some((_, name)) => SkString::from_str(name),
-            None => SkString::from_str(path),
-        }
-    }
-
-    pub fn dirname(path: &str) -> SkString {
-        let trimmed = path.trim_end_matches('/');
-        match trimmed.rfind('/') {
-            Some(0) if trimmed.len() == 1 => SkString::from_str("/"),
-            Some(0) => SkString::from_str("/"),
-            Some(pos) => SkString::from_str(&path[..pos]),
+    pub fn join(root_path: Option<&str>, relative_path: Option<&str>) -> SkString {
+        let mut result = match root_path {
+            Some(root) => SkString::from_str(root),
             None => SkString::new(),
+        };
+        if result.as_bytes().last() != Some(&Self::SEPARATOR) && !result.is_empty_bytes() {
+            result.append_unichar(Self::SEPARATOR as u32);
         }
+        if let Some(relative) = relative_path {
+            result.append_str(relative);
+        }
+        result
+    }
+
+    pub fn basename(full_path: Option<&str>) -> SkString {
+        let full_path = match full_path {
+            Some(path) => path,
+            None => return SkString::new(),
+        };
+        let bytes = full_path.as_bytes();
+        let filename = match bytes.iter().rposition(|&c| c == Self::SEPARATOR) {
+            None => 0,
+            Some(index) => index + 1,
+        };
+        SkString::from_bytes(&bytes[filename..])
+    }
+
+    pub fn dirname(full_path: Option<&str>) -> SkString {
+        let full_path = match full_path {
+            Some(path) => path,
+            None => return SkString::new(),
+        };
+        let bytes = full_path.as_bytes();
+        let mut end = match bytes.iter().rposition(|&c| c == Self::SEPARATOR) {
+            None => return SkString::new(),
+            Some(index) => index,
+        };
+        if end == 0 {
+            debug_assert_eq!(bytes[0], Self::SEPARATOR);
+            end += 1;
+        }
+        SkString::from_bytes(&bytes[..end])
     }
 }
