@@ -19,6 +19,11 @@ impl SkPathIterRec<'_> {
 }
 
 /// `SkPathIter` from `include/core/SkPathIter.h`.
+///
+/// `Clone` reproduces the reference `SkPath::Iter copy = *iter` snapshot used by the stroker's
+/// `has_valid_tangent` probe: all iterator state is copyable (indices, slices and the two-point
+/// close storage).
+#[derive(Clone)]
 pub struct SkPathIter<'p> {
     p_index: usize,
     v_index: usize,
@@ -100,6 +105,35 @@ impl<'p> SkPathIter<'p> {
             f_conic_weight: w,
             f_verb: v,
         })
+    }
+
+    /// `SkPath::Iter::isClosedContour`.
+    ///
+    /// Scans from the current position (one verb past the one just returned) to the end of this
+    /// contour, skipping an initial move. `fForceClose` is always false for the iterators created
+    /// by `SkPath::iter`/`SkPathBuilder::iter`.
+    pub fn is_closed_contour(&self) -> bool {
+        if self.v_index >= self.f_verbs.len() {
+            return false;
+        }
+
+        let mut index = self.v_index;
+        if self.f_verbs[index] == SkPathVerb::Move {
+            index += 1; // skip the initial moveto
+        }
+
+        while index < self.f_verbs.len() {
+            // verbs points one beyond the current verb, decrement first.
+            let v = self.f_verbs[index];
+            index += 1;
+            if SkPathVerb::Move == v {
+                break;
+            }
+            if SkPathVerb::Close == v {
+                return true;
+            }
+        }
+        false
     }
 
     pub fn peek_next_verb(&self) -> Option<SkPathVerb> {

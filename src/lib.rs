@@ -71,21 +71,29 @@ pub mod safe_math;
 pub mod scalar;
 pub mod scale_to_sides;
 pub mod size;
+pub mod sk_1d_path_effect;
+pub mod sk_2d_path_effect;
 pub mod sk_bezier_curves;
 pub mod sk_cg_geometry;
 pub mod sk_contour_measure;
+pub mod sk_corner_path_effect;
 pub mod sk_cubic_clipper;
 pub mod sk_cubic_map;
 pub mod sk_cubics;
+pub mod sk_dash_path;
+pub mod sk_dash_path_effect;
+pub mod sk_discrete_path_effect;
 pub mod sk_edge_clipper;
 pub mod sk_geometry;
 pub mod sk_get_executable_path;
 pub mod sk_line_clipper;
+pub mod sk_paint_types;
 pub mod sk_parse_path;
 pub mod sk_path;
 pub mod sk_path_builder;
 pub mod sk_path_data;
 pub mod sk_path_edge_iter;
+pub mod sk_path_effect;
 pub mod sk_path_iter;
 pub mod sk_path_makers;
 pub mod sk_path_measure;
@@ -96,7 +104,11 @@ pub mod sk_path_types;
 pub mod sk_poly_utils;
 pub mod sk_quad_clipper;
 pub mod sk_quads;
+pub mod sk_stroke;
+pub mod sk_stroke_rec;
+pub mod sk_stroker_priv;
 pub mod sk_to;
+pub mod sk_trim_path_effect;
 pub mod stream;
 pub mod string;
 pub mod string_utf;
@@ -282,6 +294,12 @@ pub use scalar::{
 };
 pub use scale_to_sides::{ScaleToSides, adjust_radii};
 pub use size::{ISize, Size};
+pub use sk_1d_path_effect::{
+    MAX_REASONABLE_ITERATIONS, SkPath1DPathEffect, SkPath1DPathEffectStyle, make_1d_path_effect,
+};
+pub use sk_2d_path_effect::{
+    SkLine2DPathEffect, SkPath2DPathEffect, make_line_2d_path_effect, make_path_2d_path_effect,
+};
 pub use sk_bezier_curves::{SkBezierCubic, SkBezierQuad};
 pub use sk_cg_geometry::{
     CGFloat, CGPoint, CGRect, CGSize, sk_cg_rect_get_max_x, sk_cg_rect_get_max_y,
@@ -292,9 +310,16 @@ pub use sk_contour_measure::{
     SkContourMeasureIter, SkPathMeasurePriv, SkSegType, VerbMeasure, sk_contour_measure_seg_to,
     t_value_to_scalar,
 };
+pub use sk_corner_path_effect::{SkCornerPathEffect, make_corner_path_effect};
 pub use sk_cubic_clipper::SkCubicClipper;
 pub use sk_cubic_map::{CubicMap, SkCubicMap};
 pub use sk_cubics::SkCubics;
+pub use sk_dash_path::{
+    K_MAX_DASH_COUNT, StrokeRecApplication, calc_dash_parameters, filter_dash_path,
+    internal_filter, valid_dash_path,
+};
+pub use sk_dash_path_effect::{SkDashImpl, SkDashPathEffect, make_dash_path_effect};
+pub use sk_discrete_path_effect::{SkDiscretePathEffect, make_discrete_path_effect};
 pub use sk_edge_clipper::{SkEdgeClipper, SkPathVerb};
 pub use sk_geometry::{
     AutoConicToQuads, Conic, CubicCoeff, SkAutoConicToQuads, SkConic, SkCubicCoeff, SkCubicType,
@@ -315,6 +340,10 @@ pub use sk_geometry::{
 };
 pub use sk_get_executable_path::sk_get_executable_path;
 pub use sk_line_clipper::{K_MAX_CLIPPED_LINE_SEGMENTS, K_MAX_POINTS, clip_line, intersect_line};
+pub use sk_paint_types::{
+    SK_PAINT_CAP_COUNT, SK_PAINT_DEFAULT_CAP, SK_PAINT_DEFAULT_JOIN, SK_PAINT_DEFAULTS_MITER_LIMIT,
+    SK_PAINT_JOIN_COUNT, SK_PAINT_STYLE_COUNT, SkPaintCap, SkPaintJoin, SkPaintStyle,
+};
 pub use sk_parse_path::{PathEncoding, SkParsePath, append_scalar_as_text};
 pub use sk_path::{AddPathMode, Iter, RangeIter, RawIter, SegmentMask, SkPath, Verb};
 pub use sk_path_builder::{ArcSize, DumpFormat, Reserve, SkPathBuilder};
@@ -322,6 +351,10 @@ pub use sk_path_data::{
     SkPathData, SkPathIsAData, SkPathIsAType, SkPathOvalInfo, SkPathRRectInfo, SkPathRectInfo,
 };
 pub use sk_path_edge_iter::{SkPathEdge, SkPathEdgeIter, SkPathEdgeIterResult};
+pub use sk_path_effect::{
+    DashInfo, K_CIRCLES_POINT_FLAG, K_USE_CLIP_POINT_FLAG, K_USE_PATH_POINT_FLAG, PointData,
+    SkPathEffect, SkPathEffectBase,
+};
 pub use sk_path_iter::{SkPathContourIter, SkPathContourIterRec, SkPathIter, SkPathIterRec};
 pub use sk_path_makers::{OvalPointIterator, RRectPointIterator, RectPointIterator};
 pub use sk_path_measure::SkPathMeasure;
@@ -351,11 +384,24 @@ pub use sk_poly_utils::{
 };
 pub use sk_quad_clipper::SkQuadClipper;
 pub use sk_quads::{RootResult, SkQuads};
+pub use sk_stroke::{
+    IntersectRayType, K_CONIC_RECURSIVE_LIMIT, K_CUBIC_RECURSIVE_LIMIT, K_QUAD_RECURSIVE_LIMIT,
+    K_RECURSIVE_LIMITS, K_TANGENT_RECURSIVE_LIMIT, ReductionType, SkPathStroker, SkQuadConstruct,
+    SkStroke, StrokeResultType,
+};
+pub use sk_stroke_rec::{
+    K_STROKE_REC_FILL_STYLE_WIDTH, SK_STROKE_REC_STYLE_COUNT, SkStrokeRec, SkStrokeRecInitStyle,
+    SkStrokeRecStyle,
+};
+pub use sk_stroker_priv::{
+    AngleType, CUBIC_ARC_FACTOR, CapProc, JoinProc, cap_factory, join_factory, rotate_cw,
+};
 pub use sk_to::{
     checked_to_i8, checked_to_i16, checked_to_i32, checked_to_i64, checked_to_u8, checked_to_u16,
     checked_to_u32, checked_to_u64, checked_to_usize, sk_to_bool, sk_to_int, sk_to_s8, sk_to_s16,
     sk_to_s32, sk_to_s64, sk_to_size_t, sk_to_u8, sk_to_u16, sk_to_u32, sk_to_u64, sk_to_uint,
 };
+pub use sk_trim_path_effect::{SkTrimPE, SkTrimPathEffect, SkTrimPathEffectMode};
 pub use stream::{
     SkDynamicMemoryWStream, SkFILEStream, SkFILEWStream, SkMemoryStream, SkNullWStream, SkStream,
     SkWStream, remaining_length_is_below, sk_copy_stream_to_data, sk_size_of_packed_u32,

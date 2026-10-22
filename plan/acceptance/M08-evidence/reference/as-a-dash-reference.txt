@@ -1,0 +1,40 @@
+corner valid=0
+dash valid=1 n=4 phase=40000000
+  i 40800000
+  i 40000000
+  i 3f800000
+  i 40400000
+dashneg valid=1 n=4 phase=40400000
+  i 40800000
+  i 40000000
+  i 3f800000
+  i 40400000
+dashwrap valid=1 n=4 phase=40e00000
+  i 40800000
+  i 40000000
+  i 3f800000
+  i 40400000
+dashnegzero valid=1 n=4 phase=00000000
+  i 40800000
+  i 40000000
+  i 3f800000
+  i 40400000
+dashtinyneg valid=1 n=4 phase=00000000
+  i 40800000
+  i 40000000
+  i 3f800000
+  i 40400000
+odd null=1
+zero null=1
+nan null=1
+inf null=1
+maxsum null=1
+phnan null=1
+phinf null=1
+zeroton valid=1 n=2 phase=00000000
+  i 00000000
+  i 3f800000
+corner0 null=1
+cornernan null=1
+cornerinf null=1
+cornertiny valid=0

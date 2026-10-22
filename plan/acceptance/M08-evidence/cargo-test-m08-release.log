@@ -1,0 +1,28 @@
+   Compiling rust-skia v0.1.0 (/Volumes/Data/Users/paul/development/src/github/rust-skia)
+    Finished `release` profile [optimized] target(s) in 0.36s
+     Running tests/m08_test.rs (target/release/deps/m08_test-36f101414a345612)
+
+running 9 tests
+test AsADashTest_noneDash ... reporter assertions=1 failures=0
+ok
+test AsADashTest_nullInfo ... reporter assertions=1 failures=0
+ok
+test AsADashTest_usingDash ... reporter assertions=7 failures=0
+ok
+test supplemental::corner_radius_boundaries ... ok
+test supplemental::dash_phase_wrap_and_negative_rounding_boundary ... ok
+test supplemental::dash_source_copy_shared_effect_and_owned_info_lifetimes ... ok
+test supplemental::dash_validation_boundaries_and_sum_overflow ... ok
+test supplemental::stroke_rec_dense_layout_and_native_byte_order ... ok
+test support::tests::reporter_collects_failures_and_evaluates_once ... reporter assertions=3 failures=2
+
+thread 'support::tests::reporter_collects_failures_and_evaluates_once' (16687339) panicked at tests/support/mod.rs:25:9:
+2 assertion(s) failed:
+tests/support/mod.rs:49: { evaluations += 1; false }
+tests/support/mod.rs:53: false
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+reporter assertions=0 failures=0
+ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

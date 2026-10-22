@@ -1,0 +1,26 @@
+# Reference registration discovery: tests/AsADashTest.cpp (pinned b81c6998)
+19:DEF_TEST(AsADashTest_noneDash, reporter) {
+27:DEF_TEST(AsADashTest_nullInfo, reporter) {
+36:DEF_TEST(AsADashTest_usingDash, reporter) {
+
+# plan/inventory/test-registrations.csv rows with milestone 8
+source,line,macro,test,milestone,context,status,notes
+tests/AsADashTest.cpp,19,DEF_TEST,AsADashTest_noneDash,8,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
+tests/AsADashTest.cpp,27,DEF_TEST,AsADashTest_nullInfo,8,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
+tests/AsADashTest.cpp,36,DEF_TEST,AsADashTest_usingDash,8,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
+
+# Rust test binary registry (cargo test --test m08_test -- --list)
+AsADashTest_noneDash: test
+AsADashTest_nullInfo: test
+AsADashTest_usingDash: test
+supplemental::corner_radius_boundaries: test
+supplemental::dash_phase_wrap_and_negative_rounding_boundary: test
+supplemental::dash_source_copy_shared_effect_and_owned_info_lifetimes: test
+supplemental::dash_validation_boundaries_and_sum_overflow: test
+supplemental::stroke_rec_dense_layout_and_native_byte_order: test
+support::tests::reporter_collects_failures_and_evaluates_once: test
+
+# Other registration macros in the reference file (none expected)
+19:DEF_TEST(AsADashTest_noneDash, reporter) {
+27:DEF_TEST(AsADashTest_nullInfo, reporter) {
+36:DEF_TEST(AsADashTest_usingDash, reporter) {

@@ -1,0 +1,35 @@
+date: 2026-10-22T16:56:14Z
+ProductName:		macOS
+ProductVersion:		15.6
+BuildVersion:		24G84
+arm64
+rustc 1.94.1 (e408947bf 2026-03-25)
+cargo 1.94.1 (29ea6fb6a 2026-03-24)
+Apple clang version 17.0.0 (clang-1700.4.4.1)
+Target: arm64-apple-darwin24.6.0
+26.1
+HEAD: 13a77302e5ffef592c15b7d526e5eacd63dbcf8f
+ M .DS_Store
+ M plan/status.json
+ D session-ses_e9c1.md
+ M src/lib.rs
+ M src/sk_path.rs
+ M src/sk_path_iter.rs
+?? plan/acceptance/M08-evidence/
+?? plan/handoffs/M08.md
+?? src/sk_1d_path_effect.rs
+?? src/sk_2d_path_effect.rs
+?? src/sk_corner_path_effect.rs
+?? src/sk_dash_path.rs
+?? src/sk_dash_path_effect.rs
+?? src/sk_discrete_path_effect.rs
+?? src/sk_paint_types.rs
+?? src/sk_path_effect.rs
+?? src/sk_stroke.rs
+?? src/sk_stroke_rec.rs
+?? src/sk_stroker_priv.rs
+?? src/sk_trim_path_effect.rs
+?? tests/m08/
+?? tests/m08_test.rs
+features: default (none optional)
+Cargo.toml:7:libc = "0.2"

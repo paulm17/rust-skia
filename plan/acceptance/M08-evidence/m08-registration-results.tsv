@@ -1,0 +1,9 @@
+rust_test	original_source	assertions_debug	assertions_release	result
+AsADashTest_noneDash	tests/AsADashTest.cpp:19	1	1	PASS
+AsADashTest_nullInfo	tests/AsADashTest.cpp:27	1	1	PASS
+AsADashTest_usingDash	tests/AsADashTest.cpp:36	7	7	PASS
+supplemental::dash_validation_boundaries_and_sum_overflow	supplemental (no original)	n/a	n/a	PASS
+supplemental::dash_phase_wrap_and_negative_rounding_boundary	supplemental (no original)	n/a	n/a	PASS
+supplemental::corner_radius_boundaries	supplemental (no original)	n/a	n/a	PASS
+supplemental::dash_source_copy_shared_effect_and_owned_info_lifetimes	supplemental (no original)	n/a	n/a	PASS
+supplemental::stroke_rec_dense_layout_and_native_byte_order	supplemental (no original)	n/a	n/a	PASS

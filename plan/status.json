@@ -47,8 +47,8 @@
     {
       "id": "M08",
       "title": "Stroking and path effects",
-      "state": "NOT_STARTED",
-      "acceptance_report": null
+      "state": "ACCEPTED",
+      "acceptance_report": "acceptance/M08.md"
     },
     {
       "id": "M09",

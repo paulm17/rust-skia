@@ -1147,6 +1147,10 @@ impl Default for SkPath {
 }
 
 /// Port of `SkPath::Iter`.
+/// `SkPath::Iter` is copied by the stroker (`Iter copy = *iter`) for its tangent probe, which
+/// requires the same snapshot. All fields are plain indices/slices/points, so `Clone` reproduces
+/// the reference's by-value copy.
+#[derive(Clone)]
 pub struct Iter<'p> {
     f_pts: &'p [Point],
     f_pt_index: usize,
