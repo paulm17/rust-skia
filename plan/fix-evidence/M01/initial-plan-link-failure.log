@@ -1,0 +1,8 @@
+COMMAND: ['python3', 'plan/validate_plan.py', '--source', '/Volumes/Data/Users/paul/development/src/github/skia', '--check-hashes']
+Traceback (most recent call last):
+  File "/Volumes/Data/Users/paul/development/src/github/rust-skia/plan/validate_plan.py", line 54, in <module>
+    assert (doc.parent / target.split('#')[0]).exists(), f'Broken link in {doc}: {target}'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: Broken link in /Volumes/Data/Users/paul/development/src/github/rust-skia/plan/fix.md: plan/handoffs/M01.md
+
+EXIT: 1

@@ -1,0 +1,5 @@
+---
+triple:          'arm64-apple-darwin'
+binary-path:     '/Volumes/Data/Users/paul/development/src/github/rust-skia/plan/fix-evidence/M01/reference/reference-debug'
+relocations:     []
+...

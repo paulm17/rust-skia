@@ -1,0 +1,3 @@
+['rustc', '--edition=2024', 'plan/fix-evidence/M01/adaptations.rs', '--extern', 'rust_skia=target/debug/deps/librust_skia-bb20f04997e03f91.rlib', '-L', 'dependency=target/debug/deps', '-o', 'plan/fix-evidence/M01/adaptations-debug']
+
+EXIT: 0

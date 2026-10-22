@@ -1,0 +1,5 @@
+COMMAND: ['cargo', 'clippy', '--all-targets', '--locked', '--', '-D', 'warnings']
+    Checking rust-skia v0.1.0 (/Volumes/Data/Users/paul/development/src/github/rust-skia)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 2.34s
+
+EXIT: 0

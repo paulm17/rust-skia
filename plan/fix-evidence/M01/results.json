@@ -1,0 +1,13 @@
+{
+  "discovery-debug-before": 0,
+  "discovery-release-before": 0,
+  "test-debug": 0,
+  "test-release": 0,
+  "fmt": 0,
+  "clippy": 0,
+  "validate-plan": 0,
+  "reference": 0,
+  "discovery-debug-after": 0,
+  "discovery-release-after": 0,
+  "integrity": 0
+}

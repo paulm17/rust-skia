@@ -1,0 +1,5 @@
+COMMAND: ['python3', 'plan/fix-evidence/M01/verify.py', 'check']
+Protected entries: 7949 changed: 0
+
+
+EXIT: 0

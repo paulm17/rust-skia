@@ -1,0 +1,8 @@
+['xcrun', 'clang++', '-std=c++20', '-Wl,-dead_strip', '-DSK_DISABLE_TRACING', '-I/Volumes/Data/Users/paul/development/src/github/skia', '-O0', '-g', '-DSK_DEBUG', 'plan/fix-evidence/M01/boundary.cpp', '/Volumes/Data/Users/paul/development/src/github/skia/src/core/SkPoint.cpp', '/Volumes/Data/Users/paul/development/src/github/skia/src/core/SkScalar.cpp', '/Volumes/Data/Users/paul/development/src/github/skia/src/core/SkFloatingPoint.cpp', '/Volumes/Data/Users/paul/development/src/github/skia/src/core/SkDebug.cpp', '/Volumes/Data/Users/paul/development/src/github/skia/src/core/SkMalloc.cpp', '/Volumes/Data/Users/paul/development/src/github/skia/src/ports/SkMemory_malloc.cpp', '-o', 'plan/fix-evidence/M01/cpp-debug']
+Undefined symbols for architecture arm64:
+  "SkLog(SkLogPriority, char const*, ...)", referenced from:
+      bool set_point_length<true>(SkPoint*, float, float, float, float*)::'lambda'()::operator()() const in SkPoint-0198c6.o
+ld: symbol(s) not found for architecture arm64
+clang++: error: linker command failed with exit code 1 (use -v to see invocation)
+
+EXIT: 1

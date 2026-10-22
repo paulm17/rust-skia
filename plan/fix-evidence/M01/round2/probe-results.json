@@ -1,0 +1,93 @@
+{
+  "probe-cpp-build-debug": 0,
+  "probe-rust-build-debug": 0,
+  "probe-cpp-debug": 0,
+  "probe-rust-debug": 0,
+  "compare-debug": {
+    "cpp_tokens": 23122,
+    "rust_tokens": 23122,
+    "differences": 0,
+    "first_differences": []
+  },
+  "probe-cpp-build-release": 0,
+  "probe-rust-build-release": 0,
+  "probe-cpp-release": 0,
+  "probe-rust-release": 0,
+  "compare-release": {
+    "cpp_tokens": 23122,
+    "rust_tokens": 23122,
+    "differences": 14,
+    "first_differences": [
+      [
+        2669,
+        "55b851ee",
+        "55b851ef"
+      ],
+      [
+        4679,
+        "55b851ee",
+        "55b851ef"
+      ],
+      [
+        5684,
+        "55b851ee",
+        "55b851ef"
+      ],
+      [
+        6345,
+        "3c23d709",
+        "3c23d70a"
+      ],
+      [
+        6346,
+        "3c23d709",
+        "3c23d70a"
+      ],
+      [
+        7694,
+        "55b851eb",
+        "55b851ee"
+      ],
+      [
+        8699,
+        "55b851ef",
+        "55b851f1"
+      ],
+      [
+        13681,
+        "5423d709",
+        "5423d70a"
+      ],
+      [
+        13683,
+        "4b3504f4",
+        "4b3504f3"
+      ],
+      [
+        13724,
+        "5423d6fe",
+        "5423d6fb"
+      ],
+      [
+        14645,
+        "4b3504f4",
+        "4b3504f3"
+      ],
+      [
+        14729,
+        "5423d70d",
+        "5423d70a"
+      ],
+      [
+        15777,
+        "5c23d709",
+        "5c23d70a"
+      ],
+      [
+        16825,
+        "5c23d709",
+        "5c23d70a"
+      ]
+    ]
+  }
+}

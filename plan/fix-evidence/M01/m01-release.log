@@ -1,0 +1,43 @@
+['cargo', 'test', '--release', '--locked', '--test', 'point_test', '--test', 'scalar_test', '--test', 'harness_test', '--test', 'supplemental_m01']
+    Finished `release` profile [optimized] target(s) in 0.00s
+     Running tests/harness_test.rs (target/release/deps/harness_test-c90fcca87ef25b59)
+
+running 5 tests
+test TestCtsEnforcement ... ok
+test TestNormal ... ok
+test TestTrueCondition ... ok
+test support::tests::reporter_collects_failures_and_evaluates_once ... ok
+test supplemental_registry_excludes_false_condition_and_preserves_head_order ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/point_test.rs (target/release/deps/point_test-6fd9c0c94f3ed5ba)
+
+running 3 tests
+test Point_setLengthFast ... ok
+test Point ... ok
+test support::tests::reporter_collects_failures_and_evaluates_once ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/scalar_test.rs (target/release/deps/scalar_test-3965b042505793cf)
+
+running 2 tests
+test Scalar ... ok
+test support::tests::reporter_collects_failures_and_evaluates_once ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/supplemental_m01.rs (target/release/deps/supplemental_m01-789901ed82ea5d7e)
+
+running 5 tests
+test supplemental_float_bit_encodings ... ok
+test supplemental_point_distances_and_saturation ... ok
+test supplemental_interpolation_and_equality ... ok
+test supplemental_ulp_boundaries ... ok
+test supplemental_saturation_rounding_and_midpoint ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+EXIT: 0

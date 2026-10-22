@@ -1,0 +1,18 @@
+      "/wd5051",
+    ]
+  } else {
+    cflags += [ "-Wno-attributes" ]
+  }
+
+  if (is_clang && !is_win) {
+    # In Clang 14, this default was changed. We turn this off to (hopefully) make our
+    # GMs more consistent in the transition.
+    cflags += [ "-ffp-contract=off" ]
+  }
+
+  if (is_win) {
+    if (is_clang && current_cpu == "arm64") {
+      cflags += [ "--target=arm64-windows" ]
+    }
+    cflags += [
+      "/bigobj",  # Some of our files are bigger than the regular limits.

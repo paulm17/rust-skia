@@ -1,0 +1,26 @@
+{
+  "probe-cpp-build-debug": 0,
+  "probe-rust-build-debug": 0,
+  "probe-cpp-debug": 0,
+  "probe-rust-debug": 0,
+  "adaptations-build-debug": 0,
+  "adaptations-debug": 0,
+  "compare-debug": {
+    "cpp_tokens": 26457,
+    "rust_tokens": 26457,
+    "differences": 0,
+    "first_differences": []
+  },
+  "probe-cpp-build-release": 0,
+  "probe-rust-build-release": 0,
+  "probe-cpp-release": 0,
+  "probe-rust-release": 0,
+  "adaptations-build-release": 0,
+  "adaptations-release": 0,
+  "compare-release": {
+    "cpp_tokens": 26457,
+    "rust_tokens": 26457,
+    "differences": 0,
+    "first_differences": []
+  }
+}

@@ -1,0 +1,5 @@
+COMMAND: ['python3', 'plan/validate_plan.py', '--source', '/Volumes/Data/Users/paul/development/src/github/skia', '--check-hashes']
+PASS: 12474 source paths, 47 milestones, 2580 registration sites, 1086 backend obligations; links and source locations valid.
+This checks accounting, not runtime dependency completeness or implementation correctness.
+
+EXIT: 0

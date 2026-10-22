@@ -1,0 +1,43 @@
+['cargo', 'test', '--locked', '--test', 'point_test', '--test', 'scalar_test', '--test', 'harness_test', '--test', 'supplemental_m01']
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.00s
+     Running tests/harness_test.rs (target/debug/deps/harness_test-e8a7a3b41c6a7907)
+
+running 5 tests
+test TestCtsEnforcement ... ok
+test TestNormal ... ok
+test TestTrueCondition ... ok
+test supplemental_registry_excludes_false_condition_and_preserves_head_order ... ok
+test support::tests::reporter_collects_failures_and_evaluates_once ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/point_test.rs (target/debug/deps/point_test-574b31f80a1bf881)
+
+running 3 tests
+test Point_setLengthFast ... ok
+test Point ... ok
+test support::tests::reporter_collects_failures_and_evaluates_once ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/scalar_test.rs (target/debug/deps/scalar_test-711fe47d1b7ac3e7)
+
+running 2 tests
+test Scalar ... ok
+test support::tests::reporter_collects_failures_and_evaluates_once ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/supplemental_m01.rs (target/debug/deps/supplemental_m01-9ced227385ff341b)
+
+running 5 tests
+test supplemental_float_bit_encodings ... ok
+test supplemental_point_distances_and_saturation ... ok
+test supplemental_interpolation_and_equality ... ok
+test supplemental_saturation_rounding_and_midpoint ... ok
+test supplemental_ulp_boundaries ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+EXIT: 0
