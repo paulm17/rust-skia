@@ -40,6 +40,7 @@ pub mod floating_point;
 pub mod half;
 pub mod id_listener;
 pub mod ipoint;
+pub mod ipoint16;
 pub mod json;
 pub mod logging;
 pub mod math;
@@ -47,14 +48,20 @@ pub mod math_priv;
 pub mod memory;
 pub mod os_file;
 pub mod point;
+pub mod point3;
 pub mod point_priv;
 pub mod random;
 pub mod rect;
+pub mod rect_memcpy;
+pub mod rect_priv;
 pub mod ref_cnt;
 pub mod ref_ext;
+pub mod rrect;
 pub mod safe32;
 pub mod safe_math;
 pub mod scalar;
+pub mod scale_to_sides;
+pub mod size;
 pub mod sk_to;
 pub mod stream;
 pub mod string;
@@ -154,6 +161,7 @@ pub use half::{
 };
 pub use id_listener::{SkIDChangeListener, SkIDChangeListenerFunc, SkIDChangeListenerList};
 pub use ipoint::{IPoint, IVector};
+pub use ipoint16::IPoint16;
 pub use json::{SkJSONWriter, SkJSONWriterMode};
 pub use logging::{
     SkEventTracer, SkLogHandler, SkLogPriority, SkTraceEventPhase, SkTraceMemoryDump,
@@ -190,13 +198,17 @@ pub use os_file::{
 };
 pub use point::{Point, Vector};
 pub use point_priv::{PointPriv, Side};
+pub use point3::{Color3f, Point3, Vector3};
 pub use random::SkRandom;
-pub use rect::Rect;
+pub use rect::{IRect, Rect};
+pub use rect_memcpy::sk_rect_memcpy;
+pub use rect_priv::RectPriv;
 pub use ref_cnt::{
     NVRefCnt, NVRefCntBase, RefCnt, RefCntBase, SkSp, SkWeakRef, WeakRefCnt, WeakRefCntBase,
     sk_make_sp, sk_make_sp_as, sk_ref_sp,
 };
 pub use ref_ext::{SingleOwner, SkAnySubclass, SkNVRefCnt, SkRefCnt, SkWeakRefCnt};
+pub use rrect::{Corner, RRect, RRectPriv, Type};
 pub use safe_math::{SkSafeMath, sk_safe_math_add, sk_safe_math_align4, sk_safe_math_mul};
 pub use safe32::{
     pin_to_s32, sat_add, sat_sub, sk_abs32, sk32_can_overflow_add, sk32_can_overflow_sub,
@@ -215,6 +227,8 @@ pub use scalar::{
     scalar_sin_snap_to_zero, scalar_sqrt, scalar_square, scalar_tan, scalar_to_double,
     scalar_to_float, scalar_trunc_to_int, scalar_trunc_to_scalar, scalars_equal, scalars_equal_n,
 };
+pub use scale_to_sides::{ScaleToSides, adjust_radii};
+pub use size::{ISize, Size};
 pub use sk_to::{
     checked_to_i8, checked_to_i16, checked_to_i32, checked_to_i64, checked_to_u8, checked_to_u16,
     checked_to_u32, checked_to_u64, checked_to_usize, sk_to_bool, sk_to_int, sk_to_s8, sk_to_s16,

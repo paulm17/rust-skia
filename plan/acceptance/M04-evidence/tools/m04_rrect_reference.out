@@ -1,0 +1,15 @@
+excess.x=50.0000038 bits=0x42480001
+AreRectAndRadiiValid(exact)=1
+AreRectAndRadiiValid(excess)=1
+exactRR.isValid=1
+exactRR.isOval=1
+excessRR.isValid=1
+excessRR.isOval=1
+fuzz1.read=48 valid=1
+fuzz2.read=48 valid=1
+fuzz3.read=48 valid=1
+b511 setRectXY valid=1
+b511 setNinePatch valid=1
+b511 setRectRadii valid=1
+b527 offset valid=1
+b527 offset oval=1

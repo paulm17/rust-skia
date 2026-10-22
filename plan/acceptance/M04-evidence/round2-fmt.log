@@ -1,0 +1,1079 @@
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m04/point3.rs:1:
+ // Point3Test.cpp:126 and its full helper closure. BSD license: tests/LICENSE.skia.
+ use super::*;
+[31m-use rust_skia::scalar::{scalar_nearly_equal as near, SCALAR_ROOT2_OVER2};
+(B[m[32m+use rust_skia::scalar::{SCALAR_ROOT2_OVER2, scalar_nearly_equal as near};
+(B[m fn test_eq_ops(r: &mut Reporter) {
+[31m-    let p0 = Point3::make(0.0,0.0,0.0);
+(B[m[31m-    let p1 = Point3::make(1.0,1.0,1.0);
+(B[m[31m-    let p2 = Point3::make(1.0,1.0,1.0);
+(B[m[32m+    let p0 = Point3::make(0.0, 0.0, 0.0);
+(B[m[32m+    let p1 = Point3::make(1.0, 1.0, 1.0);
+(B[m[32m+    let p2 = Point3::make(1.0, 1.0, 1.0);
+(B[m     check!(r, p0 != p1);
+     check!(r, p1 == p2);
+ }
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m04/point3.rs:11:
+ fn test_ops(r: &mut Reporter) {
+[31m-    let mut v = Point3::make(1.0,1.0,1.0);
+(B[m[32m+    let mut v = Point3::make(1.0, 1.0, 1.0);
+(B[m     v.normalize();
+[31m-    check!(r, near(v.length(),1.0));
+(B[m[32m+    check!(r, near(v.length(), 1.0));
+(B[m     let mut p = v.make_scale(3.0);
+[31m-    check!(r, near(p.length(),3.0));
+(B[m[31m-    p.scale(1.0/3.0);
+(B[m[31m-    check!(r, near(p.length(),1.0));
+(B[m[31m-    let p1 = Point3::make(20.0,2.0,10.0);
+(B[m[32m+    check!(r, near(p.length(), 3.0));
+(B[m[32m+    p.scale(1.0 / 3.0);
+(B[m[32m+    check!(r, near(p.length(), 1.0));
+(B[m[32m+    let p1 = Point3::make(20.0, 2.0, 10.0);
+(B[m     let p2 = -p1;
+[31m-    p = p1-p1;
+(B[m[31m-    check!(r, near(p.x(),0.0));
+(B[m[31m-    check!(r, near(p.y(),0.0));
+(B[m[31m-    check!(r, near(p.z(),0.0));
+(B[m[31m-    p = p1+p2;
+(B[m[31m-    check!(r, near(p.x(),0.0));
+(B[m[31m-    check!(r, near(p.y(),0.0));
+(B[m[31m-    check!(r, near(p.z(),0.0));
+(B[m[32m+    p = p1 - p1;
+(B[m[32m+    check!(r, near(p.x(), 0.0));
+(B[m[32m+    check!(r, near(p.y(), 0.0));
+(B[m[32m+    check!(r, near(p.z(), 0.0));
+(B[m[32m+    p = p1 + p2;
+(B[m[32m+    check!(r, near(p.x(), 0.0));
+(B[m[32m+    check!(r, near(p.y(), 0.0));
+(B[m[32m+    check!(r, near(p.z(), 0.0));
+(B[m }
+ fn test_dot(r: &mut Reporter) {
+[31m-    let x_axis = Point3::make(1.0,0.0,0.0);
+(B[m[31m-    let y_axis = Point3::make(0.0,1.0,0.0);
+(B[m[31m-    let z_axis = Point3::make(0.0,0.0,1.0);
+(B[m[32m+    let x_axis = Point3::make(1.0, 0.0, 0.0);
+(B[m[32m+    let y_axis = Point3::make(0.0, 1.0, 0.0);
+(B[m[32m+    let z_axis = Point3::make(0.0, 0.0, 1.0);
+(B[m     let mut dot = x_axis.dot(&y_axis);
+[31m-    check!(r, near(dot,0.0));
+(B[m[32m+    check!(r, near(dot, 0.0));
+(B[m     dot = y_axis.dot(&z_axis);
+[31m-    check!(r, near(dot,0.0));
+(B[m[32m+    check!(r, near(dot, 0.0));
+(B[m     dot = z_axis.dot(&x_axis);
+[31m-    check!(r, near(dot,0.0));
+(B[m[31m-    let mut v = Point3::make(13.0,2.0,7.0);
+(B[m[32m+    check!(r, near(dot, 0.0));
+(B[m[32m+    let mut v = Point3::make(13.0, 2.0, 7.0);
+(B[m     v.normalize();
+     dot = v.dot(&v);
+[31m-    check!(r, near(dot,1.0));
+(B[m[31m-    v = Point3::make(SCALAR_ROOT2_OVER2,SCALAR_ROOT2_OVER2,0.0);
+(B[m[32m+    check!(r, near(dot, 1.0));
+(B[m[32m+    v = Point3::make(SCALAR_ROOT2_OVER2, SCALAR_ROOT2_OVER2, 0.0);
+(B[m     dot = x_axis.dot(&v);
+[31m-    check!(r, near(dot,SCALAR_ROOT2_OVER2));
+(B[m[32m+    check!(r, near(dot, SCALAR_ROOT2_OVER2));
+(B[m     dot = y_axis.dot(&v);
+[31m-    check!(r, near(dot,SCALAR_ROOT2_OVER2));
+(B[m[32m+    check!(r, near(dot, SCALAR_ROOT2_OVER2));
+(B[m }
+[31m-fn test_length(r: &mut Reporter, x: f32,y: f32,z: f32,expected_len: f32) {
+(B[m[31m-    let point = Point3::make(x,y,z);
+(B[m[32m+fn test_length(r: &mut Reporter, x: f32, y: f32, z: f32, expected_len: f32) {
+(B[m[32m+    let point = Point3::make(x, y, z);
+(B[m     let s1 = point.length();
+[31m-    let s2 = Point3::length_xyz(x,y,z);
+(B[m[31m-    check!(r, near(s1,s2));
+(B[m[31m-    check!(r, near(s1,expected_len));
+(B[m[32m+    let s2 = Point3::length_xyz(x, y, z);
+(B[m[32m+    check!(r, near(s1, s2));
+(B[m[32m+    check!(r, near(s1, expected_len));
+(B[m }
+[31m-fn test_normalize(r: &mut Reporter, x: f32,y: f32,z: f32,expected_len: f32) {
+(B[m[31m-    let mut point = Point3::make(x,y,z);
+(B[m[32m+fn test_normalize(r: &mut Reporter, x: f32, y: f32, z: f32, expected_len: f32) {
+(B[m[32m+    let mut point = Point3::make(x, y, z);
+(B[m     let result = point.normalize();
+     let new_length = point.length();
+     if expected_len == 0.0 {
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m04/point3.rs:62:
+[31m-        let empty = Point3::make(0.0,0.0,0.0);
+(B[m[31m-        check!(r, near(new_length,0.0));
+(B[m[32m+        let empty = Point3::make(0.0, 0.0, 0.0);
+(B[m[32m+        check!(r, near(new_length, 0.0));
+(B[m         check!(r, !result);
+         check!(r, point == empty);
+     } else {
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m04/point3.rs:67:
+[31m-        check!(r, near(new_length,1.0));
+(B[m[32m+        check!(r, near(new_length, 1.0));
+(B[m         check!(r, result);
+     }
+     let mut random = SkRandom::new();
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m04/point3.rs:74:
+     for _index in 0..test_count {
+         let mut test_val;
+         loop {
+[31m-            test_val = random.next_range_f(0.0,2.0);
+(B[m[31m-            if test_val != 0.0 { break; }
+(B[m[32m+            test_val = random.next_range_f(0.0, 2.0);
+(B[m[32m+            if test_val != 0.0 {
+(B[m[32m+                break;
+(B[m[32m+            }
+(B[m         }
+[31m-        pt3.set(test_val,0.0,0.0);
+(B[m[32m+        pt3.set(test_val, 0.0, 0.0);
+(B[m         check!(r, !pt3.normalize() || 1.0 == pt3.x());
+     }
+ }
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m04/point3.rs:88:
+     test_ops(&mut r);
+     test_dot(&mut r);
+     let g_rec = [
+[31m-        (0.0,0.0,0.0,0.0),
+(B[m[31m-        (0.3,0.4,0.5,SCALAR_ROOT2_OVER2),
+(B[m[31m-        (1.0e-37,1.0e-37,1.0e-37,0.0),
+(B[m[31m-        (3.4e38,0.0,0.0,3.4e38),
+(B[m[32m+        (0.0, 0.0, 0.0, 0.0),
+(B[m[32m+        (0.3, 0.4, 0.5, SCALAR_ROOT2_OVER2),
+(B[m[32m+        (1.0e-37, 1.0e-37, 1.0e-37, 0.0),
+(B[m[32m+        (3.4e38, 0.0, 0.0, 3.4e38),
+(B[m     ];
+[31m-    for (x,y,z,length) in g_rec {
+(B[m[31m-        test_length(&mut r,x,y,z,length);
+(B[m[31m-        test_normalize(&mut r,x,y,z,length);
+(B[m[32m+    for (x, y, z, length) in g_rec {
+(B[m[32m+        test_length(&mut r, x, y, z, length);
+(B[m[32m+        test_normalize(&mut r, x, y, z, length);
+(B[m     }
+     r.finish();
+ }
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m04/rect.rs:13:
+ }
+ #[test]
+ fn Rect_setbounds() {
+[31m-    let p0 = [Point::new(f32::INFINITY, 0.0), Point::new(1.0,1.0), Point::new(2.0,2.0), Point::new(3.0,3.0)];
+(B[m[31m-    let p1 = [Point::new(0.0, f32::INFINITY), Point::new(1.0,1.0), Point::new(2.0,2.0), Point::new(3.0,3.0)];
+(B[m[31m-    let p2 = [Point::new(f32::NAN, 0.0), Point::new(1.0,1.0), Point::new(2.0,2.0), Point::new(3.0,3.0)];
+(B[m[31m-    let p3 = [Point::new(0.0, f32::NAN), Point::new(1.0,1.0), Point::new(2.0,2.0), Point::new(3.0,3.0)];
+(B[m[32m+    let p0 = [
+(B[m[32m+        Point::new(f32::INFINITY, 0.0),
+(B[m[32m+        Point::new(1.0, 1.0),
+(B[m[32m+        Point::new(2.0, 2.0),
+(B[m[32m+        Point::new(3.0, 3.0),
+(B[m[32m+    ];
+(B[m[32m+    let p1 = [
+(B[m[32m+        Point::new(0.0, f32::INFINITY),
+(B[m[32m+        Point::new(1.0, 1.0),
+(B[m[32m+        Point::new(2.0, 2.0),
+(B[m[32m+        Point::new(3.0, 3.0),
+(B[m[32m+    ];
+(B[m[32m+    let p2 = [
+(B[m[32m+        Point::new(f32::NAN, 0.0),
+(B[m[32m+        Point::new(1.0, 1.0),
+(B[m[32m+        Point::new(2.0, 2.0),
+(B[m[32m+        Point::new(3.0, 3.0),
+(B[m[32m+    ];
+(B[m[32m+    let p3 = [
+(B[m[32m+        Point::new(0.0, f32::NAN),
+(B[m[32m+        Point::new(1.0, 1.0),
+(B[m[32m+        Point::new(2.0, 2.0),
+(B[m[32m+        Point::new(3.0, 3.0),
+(B[m[32m+    ];
+(B[m     let mut reporter = Reporter::default();
+     let mut r = Rect::default();
+[31m-    let zeror = Rect::new(0.0,0.0,0.0,0.0);
+(B[m[31m-    for pts in [p0,p1,p2,p3] {
+(B[m[32m+    let zeror = Rect::new(0.0, 0.0, 0.0, 0.0);
+(B[m[32m+    for pts in [p0, p1, p2, p3] {
+(B[m         for n in 1..=4 {
+             let isfinite = r.set_bounds_check(&pts[..n]);
+             check!(reporter, !isfinite);
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m04/rect.rs:27:
+             check!(reporter, r == zeror);
+             r.set_bounds_no_check(&pts[..n]);
+[31m-            if r.is_finite() { r.set_bounds_no_check(&pts[..n]); }
+(B[m[32m+            if r.is_finite() {
+(B[m[32m+                r.set_bounds_no_check(&pts[..n]);
+(B[m[32m+            }
+(B[m             check!(reporter, !r.is_finite());
+         }
+     }
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m04/rect.rs:34:
+ }
+ fn make_big_value(reporter: Option<&Reporter>) -> f32 {
+     assert!(reporter.is_some());
+[31m-    if reporter.is_some() { f32::MAX * 0.75 } else { 0.0 }
+(B[m[32m+    if reporter.is_some() {
+(B[m[32m+        f32::MAX * 0.75
+(B[m[32m+    } else {
+(B[m[32m+        0.0
+(B[m[32m+    }
+(B[m }
+ #[test]
+ fn Rect_whOverflow() {
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m04/rect.rs:41:
+     let mut reporter = Reporter::default();
+     let big = make_big_value(Some(&reporter));
+[31m-    let r = Rect::new(-big,-big,big,big);
+(B[m[32m+    let r = Rect::new(-big, -big, big, big);
+(B[m     check!(reporter, r.is_finite());
+     check!(reporter, !r.width().is_finite());
+     check!(reporter, !r.height().is_finite());
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m04/rect.rs:53:
+ #[test]
+ fn Rect_subtract() {
+     let mut reporter = Reporter::default();
+[31m-    let a = IRect::make_ltrb(2,3,12,15);
+(B[m[32m+    let a = IRect::make_ltrb(2, 3, 12, 15);
+(B[m     let tests = [
+         (a, a.make_outset(2, 2), IRect::make_empty(), true),
+[31m-        (a, IRect::new(6, 6, 10, 10), IRect::new(2, 10, 12, 15), false),
+(B[m[32m+        (
+(B[m[32m+            a,
+(B[m[32m+            IRect::new(6, 6, 10, 10),
+(B[m[32m+            IRect::new(2, 10, 12, 15),
+(B[m[32m+            false,
+(B[m[32m+        ),
+(B[m         (IRect::make_empty(), a, IRect::make_empty(), true),
+         (a, IRect::make_empty(), a, true),
+[31m-        (IRect::make_empty(), IRect::make_empty(), IRect::make_empty(), true),
+(B[m[32m+        (
+(B[m[32m+            IRect::make_empty(),
+(B[m[32m+            IRect::make_empty(),
+(B[m[32m+            IRect::make_empty(),
+(B[m[32m+            true,
+(B[m[32m+        ),
+(B[m         (a, IRect::new(15, 17, 20, 40), a, true),
+         (a, IRect::new(0, 0, 6, 20), IRect::new(6, 3, 12, 15), true),
+         (a, IRect::new(6, 0, 20, 20), IRect::new(2, 3, 6, 15), true),
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m04/rect.rs:66:
+         (a, IRect::new(0, 0, 20, 6), IRect::new(2, 6, 12, 15), true),
+         (a, IRect::new(0, 10, 20, 20), IRect::new(2, 3, 12, 10), true),
+[31m-        (a, IRect::new(0, 6, 20, 10), IRect::new(2, 10, 12, 15), false),
+(B[m[32m+        (
+(B[m[32m+            a,
+(B[m[32m+            IRect::new(0, 6, 20, 10),
+(B[m[32m+            IRect::new(2, 10, 12, 15),
+(B[m[32m+            false,
+(B[m[32m+        ),
+(B[m         (a, IRect::new(6, 0, 10, 20), IRect::new(2, 3, 6, 15), false),
+         (a, IRect::new(0, 0, 4, 4), IRect::new(2, 4, 12, 15), false),
+         (a, IRect::new(10, 0, 14, 7), IRect::new(2, 3, 10, 15), false),
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m04/rect.rs:72:
+         (a, IRect::new(0, 12, 5, 20), IRect::new(2, 3, 12, 12), false),
+[31m-        (a, IRect::new(10, 12, 20, 20), IRect::new(2, 3, 10, 15), false),
+(B[m[32m+        (
+(B[m[32m+            a,
+(B[m[32m+            IRect::new(10, 12, 20, 20),
+(B[m[32m+            IRect::new(2, 3, 10, 15),
+(B[m[32m+            false,
+(B[m[32m+        ),
+(B[m         (a, IRect::new(0, 6, 8, 10), IRect::new(2, 10, 12, 15), false),
+         (a, IRect::new(8, 6, 20, 10), IRect::new(2, 3, 8, 15), false),
+         (a, IRect::new(6, 0, 10, 7), IRect::new(2, 7, 12, 15), false),
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m04/rect.rs:77:
+         (a, IRect::new(4, 6, 8, 20), IRect::new(8, 3, 12, 15), false),
+     ];
+[31m-    for (a,b,expected,want_exact) in tests {
+(B[m[32m+    for (a, b, expected, want_exact) in tests {
+(B[m         let mut difference = IRect::default();
+[31m-        let mut exact = RectPriv::subtract_irect(&a,&b,&mut difference);
+(B[m[32m+        let mut exact = RectPriv::subtract_irect(&a, &b, &mut difference);
+(B[m         check!(reporter, exact == want_exact);
+         check!(reporter, difference == expected);
+         let mut af = Rect::from(a);
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m04/rect.rs:85:
+         let mut bf = Rect::from(b);
+         let mut ef = Rect::from(expected);
+[31m-        af.offset(0.5,0.5);
+(B[m[31m-        bf.offset(0.5,0.5);
+(B[m[31m-        ef.offset(0.5,0.5);
+(B[m[32m+        af.offset(0.5, 0.5);
+(B[m[32m+        bf.offset(0.5, 0.5);
+(B[m[32m+        ef.offset(0.5, 0.5);
+(B[m         let mut df = Rect::default();
+[31m-        exact = RectPriv::subtract(&af,&bf,&mut df);
+(B[m[32m+        exact = RectPriv::subtract(&af, &bf, &mut df);
+(B[m         check!(reporter, exact == want_exact);
+         check!(reporter, (df.is_empty() && ef.is_empty()) || df == ef);
+     }
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m04/rect.rs:97:
+ #[test]
+ fn Rect_subtract_overflow() {
+     let mut reporter = Reporter::default();
+[31m-    let really_big = IRect::make_ltrb(-i32::MAX+1000,0,i32::MAX-1000,100);
+(B[m[31m-    let reasonable = IRect::make_ltrb(-50,-5,50,125);
+(B[m[32m+    let really_big = IRect::make_ltrb(-i32::MAX + 1000, 0, i32::MAX - 1000, 100);
+(B[m[32m+    let reasonable = IRect::make_ltrb(-50, -5, 50, 125);
+(B[m     let mut difference = IRect::default();
+[31m-    let mut exact = RectPriv::subtract_irect(&really_big,&reasonable,&mut difference);
+(B[m[32m+    let mut exact = RectPriv::subtract_irect(&really_big, &reasonable, &mut difference);
+(B[m     check!(reporter, exact);
+     check!(reporter, difference == really_big);
+[31m-    exact = RectPriv::subtract_irect(&reasonable,&really_big,&mut difference);
+(B[m[32m+    exact = RectPriv::subtract_irect(&reasonable, &really_big, &mut difference);
+(B[m     check!(reporter, exact);
+     check!(reporter, difference == reasonable);
+     reporter.finish();
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m04/rect.rs:111:
+ #[test]
+ fn Rect_ClosestDisjointEdge() {
+     let mut reporter = Reporter::default();
+[31m-    let src = IRect::new(0,0,10,10);
+(B[m[32m+    let src = IRect::new(0, 0, 10, 10);
+(B[m     let tests = [
+[31m-        ("src left edge", IRect::new(-15, -5, -2, 15), IRect::new(0, 0,  1, 10)),
+(B[m[31m-        ("src left edge clipped to dst", IRect::new(-15,  2, -2,  8), IRect::new(0, 2,  1,  8)),
+(B[m[31m-        ("src top-left corner", IRect::new(-15,-15, -2, -2), IRect::new(0, 0,  1,  1)),
+(B[m[31m-        ("src top edge", IRect::new( -5,-10, 15, -2), IRect::new(0, 0, 10,  1)),
+(B[m[31m-        ("src top edge clipped to dst", IRect::new(  2,-10,  8, -2), IRect::new(2, 0,  8,  1)),
+(B[m[31m-        ("src top-right corner", IRect::new( 15,-15, 20, -2), IRect::new(9, 0, 10,  1)),
+(B[m[31m-        ("src right edge", IRect::new( 15, -5, 20, 15), IRect::new(9, 0, 10, 10)),
+(B[m[31m-        ("src right edge clipped to dst", IRect::new( 15,  2, 20,  8), IRect::new(9, 2, 10,  8)),
+(B[m[31m-        ("src bottom-right corner", IRect::new( 15, 15, 20, 20), IRect::new(9, 9, 10, 10)),
+(B[m[31m-        ("src bottom edge", IRect::new( -5, 15, 15, 20), IRect::new(0, 9, 10, 10)),
+(B[m[31m-        ("src bottom edge clipped to dst", IRect::new(  2, 15,  8, 20), IRect::new(2, 9,  8, 10)),
+(B[m[31m-        ("src bottom-left corner", IRect::new(-15, 15, -2, 20), IRect::new(0, 9,  1, 10)),
+(B[m[31m-        ("src intersects dst high", IRect::new(  2,  2, 15, 15), IRect::new(2, 2, 10, 10)),
+(B[m[31m-        ("src intersects dst low", IRect::new( -5, -5,  8,  8), IRect::new(0, 0,  8,  8)),
+(B[m[31m-        ("src contains dst", IRect::new(  2,  2,  8,  8), IRect::new(2, 2,  8,  8)),
+(B[m[31m-        ("src contained in dst", IRect::new( -5, -5, 15, 15), IRect::new(0, 0, 10, 10)),
+(B[m[32m+        (
+(B[m[32m+            "src left edge",
+(B[m[32m+            IRect::new(-15, -5, -2, 15),
+(B[m[32m+            IRect::new(0, 0, 1, 10),
+(B[m[32m+        ),
+(B[m[32m+        (
+(B[m[32m+            "src left edge clipped to dst",
+(B[m[32m+            IRect::new(-15, 2, -2, 8),
+(B[m[32m+            IRect::new(0, 2, 1, 8),
+(B[m[32m+        ),
+(B[m[32m+        (
+(B[m[32m+            "src top-left corner",
+(B[m[32m+            IRect::new(-15, -15, -2, -2),
+(B[m[32m+            IRect::new(0, 0, 1, 1),
+(B[m[32m+        ),
+(B[m[32m+        (
+(B[m[32m+            "src top edge",
+(B[m[32m+            IRect::new(-5, -10, 15, -2),
+(B[m[32m+            IRect::new(0, 0, 10, 1),
+(B[m[32m+        ),
+(B[m[32m+        (
+(B[m[32m+            "src top edge clipped to dst",
+(B[m[32m+            IRect::new(2, -10, 8, -2),
+(B[m[32m+            IRect::new(2, 0, 8, 1),
+(B[m[32m+        ),
+(B[m[32m+        (
+(B[m[32m+            "src top-right corner",
+(B[m[32m+            IRect::new(15, -15, 20, -2),
+(B[m[32m+            IRect::new(9, 0, 10, 1),
+(B[m[32m+        ),
+(B[m[32m+        (
+(B[m[32m+            "src right edge",
+(B[m[32m+            IRect::new(15, -5, 20, 15),
+(B[m[32m+            IRect::new(9, 0, 10, 10),
+(B[m[32m+        ),
+(B[m[32m+        (
+(B[m[32m+            "src right edge clipped to dst",
+(B[m[32m+            IRect::new(15, 2, 20, 8),
+(B[m[32m+            IRect::new(9, 2, 10, 8),
+(B[m[32m+        ),
+(B[m[32m+        (
+(B[m[32m+            "src bottom-right corner",
+(B[m[32m+            IRect::new(15, 15, 20, 20),
+(B[m[32m+            IRect::new(9, 9, 10, 10),
+(B[m[32m+        ),
+(B[m[32m+        (
+(B[m[32m+            "src bottom edge",
+(B[m[32m+            IRect::new(-5, 15, 15, 20),
+(B[m[32m+            IRect::new(0, 9, 10, 10),
+(B[m[32m+        ),
+(B[m[32m+        (
+(B[m[32m+            "src bottom edge clipped to dst",
+(B[m[32m+            IRect::new(2, 15, 8, 20),
+(B[m[32m+            IRect::new(2, 9, 8, 10),
+(B[m[32m+        ),
+(B[m[32m+        (
+(B[m[32m+            "src bottom-left corner",
+(B[m[32m+            IRect::new(-15, 15, -2, 20),
+(B[m[32m+            IRect::new(0, 9, 1, 10),
+(B[m[32m+        ),
+(B[m[32m+        (
+(B[m[32m+            "src intersects dst high",
+(B[m[32m+            IRect::new(2, 2, 15, 15),
+(B[m[32m+            IRect::new(2, 2, 10, 10),
+(B[m[32m+        ),
+(B[m[32m+        (
+(B[m[32m+            "src intersects dst low",
+(B[m[32m+            IRect::new(-5, -5, 8, 8),
+(B[m[32m+            IRect::new(0, 0, 8, 8),
+(B[m[32m+        ),
+(B[m[32m+        (
+(B[m[32m+            "src contains dst",
+(B[m[32m+            IRect::new(2, 2, 8, 8),
+(B[m[32m+            IRect::new(2, 2, 8, 8),
+(B[m[32m+        ),
+(B[m[32m+        (
+(B[m[32m+            "src contained in dst",
+(B[m[32m+            IRect::new(-5, -5, 15, 15),
+(B[m[32m+            IRect::new(0, 0, 10, 10),
+(B[m[32m+        ),
+(B[m     ];
+[31m-    for (label,dst,expect) in tests {
+(B[m[31m-        let actual = RectPriv::closest_disjoint_edge(&src,&dst);
+(B[m[32m+    for (label, dst, expect) in tests {
+(B[m[32m+        let actual = RectPriv::closest_disjoint_edge(&src, &dst);
+(B[m         reporter.record(actual == expect, label, file!(), line!());
+     }
+[31m-    check!(reporter, RectPriv::closest_disjoint_edge(&IRect::make_empty(),&IRect::new(0,0,8,8)).is_empty());
+(B[m[31m-    check!(reporter, RectPriv::closest_disjoint_edge(&IRect::new(0,0,8,8),&IRect::make_empty()).is_empty());
+(B[m[31m-    check!(reporter, RectPriv::closest_disjoint_edge(&IRect::new(10,10,-1,2),&IRect::new(15,8,-2,20)).is_empty());
+(B[m[32m+    check!(
+(B[m[32m+        reporter,
+(B[m[32m+        RectPriv::closest_disjoint_edge(&IRect::make_empty(), &IRect::new(0, 0, 8, 8)).is_empty()
+(B[m[32m+    );
+(B[m[32m+    check!(
+(B[m[32m+        reporter,
+(B[m[32m+        RectPriv::closest_disjoint_edge(&IRect::new(0, 0, 8, 8), &IRect::make_empty()).is_empty()
+(B[m[32m+    );
+(B[m[32m+    check!(
+(B[m[32m+        reporter,
+(B[m[32m+        RectPriv::closest_disjoint_edge(&IRect::new(10, 10, -1, 2), &IRect::new(15, 8, -2, 20))
+(B[m[32m+            .is_empty()
+(B[m[32m+    );
+(B[m     reporter.finish();
+ }
+ 
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m04/rrect.rs:6:
+     let mut r = Reporter::default();
+     {
+         let buf: [u8; 48] = [
+[31m-            0x0a, 0x00, 0x00, 0xff, 0x00, 0x30, 0x00, 0x00, 0x00, 0x00, 0x00, 0x7f,
+(B[m[31m-            0x7f, 0x7f, 0x7f, 0x7f, 0x7f, 0x7f, 0x7f, 0x7f, 0x7f, 0x7f, 0x7f, 0x7f,
+(B[m[31m-            0x7f, 0x7f, 0x7f, 0x7f, 0x7f, 0x7f, 0x7f, 0x7f, 0x7f, 0x7f, 0x7f, 0x7f,
+(B[m[31m-            0x7f, 0x7f, 0x7f, 0x02, 0x00, 0x00, 0x00, 0x00, 0x20, 0x00, 0x02, 0x00
+(B[m[32m+            0x0a, 0x00, 0x00, 0xff, 0x00, 0x30, 0x00, 0x00, 0x00, 0x00, 0x00, 0x7f, 0x7f, 0x7f,
+(B[m[32m+            0x7f, 0x7f, 0x7f, 0x7f, 0x7f, 0x7f, 0x7f, 0x7f, 0x7f, 0x7f, 0x7f, 0x7f, 0x7f, 0x7f,
+(B[m[32m+            0x7f, 0x7f, 0x7f, 0x7f, 0x7f, 0x7f, 0x7f, 0x7f, 0x7f, 0x7f, 0x7f, 0x02, 0x00, 0x00,
+(B[m[32m+            0x00, 0x00, 0x20, 0x00, 0x02, 0x00,
+(B[m         ];
+         check!(r, buf.len() == RRect::new().read_from_memory(&buf));
+     }
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m04/rrect.rs:16:
+ 
+     {
+         let buf: [u8; 48] = [
+[31m-            0x5d, 0xff, 0xff, 0x5d, 0x0a, 0x60, 0x0a, 0x0a, 0x0a, 0x7e, 0x0a, 0x5a,
+(B[m[31m-            0x0a, 0x12, 0x3a, 0x3a, 0x3a, 0x3a, 0x3a, 0x3a, 0x3a, 0x3a, 0x3a, 0x3a,
+(B[m[31m-            0x3a, 0x3a, 0x3a, 0x3a, 0x3a, 0x3a, 0x3a, 0x3a, 0x00, 0x00, 0x00, 0x0a,
+(B[m[31m-            0x0a, 0x0a, 0x0a, 0x26, 0x0a, 0x0a, 0x0a, 0x0a, 0xff, 0xff, 0x0a, 0x0a
+(B[m[32m+            0x5d, 0xff, 0xff, 0x5d, 0x0a, 0x60, 0x0a, 0x0a, 0x0a, 0x7e, 0x0a, 0x5a, 0x0a, 0x12,
+(B[m[32m+            0x3a, 0x3a, 0x3a, 0x3a, 0x3a, 0x3a, 0x3a, 0x3a, 0x3a, 0x3a, 0x3a, 0x3a, 0x3a, 0x3a,
+(B[m[32m+            0x3a, 0x3a, 0x3a, 0x3a, 0x00, 0x00, 0x00, 0x0a, 0x0a, 0x0a, 0x0a, 0x26, 0x0a, 0x0a,
+(B[m[32m+            0x0a, 0x0a, 0xff, 0xff, 0x0a, 0x0a,
+(B[m         ];
+         check!(r, buf.len() == RRect::new().read_from_memory(&buf));
+     }
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m04/rrect.rs:26:
+ 
+     {
+         let buf: [u8; 48] = [
+[31m-            0xfe, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0e, 0x04, 0xdd, 0xdd, 0x15,
+(B[m[31m-            0xfe, 0x00, 0x00, 0x04, 0x05, 0x7e, 0x00, 0x00, 0x00, 0xff, 0x08, 0x04,
+(B[m[31m-            0xff, 0xff, 0xfe, 0xfe, 0xff, 0x32, 0x32, 0x32, 0x32, 0x00, 0x32, 0x32,
+(B[m[31m-            0x04, 0xdd, 0x3d, 0x1c, 0xfe, 0x89, 0x04, 0x0a, 0x0e, 0x05, 0x7e, 0x0a
+(B[m[32m+            0xfe, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0e, 0x04, 0xdd, 0xdd, 0x15, 0xfe, 0x00,
+(B[m[32m+            0x00, 0x04, 0x05, 0x7e, 0x00, 0x00, 0x00, 0xff, 0x08, 0x04, 0xff, 0xff, 0xfe, 0xfe,
+(B[m[32m+            0xff, 0x32, 0x32, 0x32, 0x32, 0x00, 0x32, 0x32, 0x04, 0xdd, 0x3d, 0x1c, 0xfe, 0x89,
+(B[m[32m+            0x04, 0x0a, 0x0e, 0x05, 0x7e, 0x0a,
+(B[m         ];
+         check!(r, buf.len() == RRect::new().read_from_memory(&buf));
+     }
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m04/rrect.rs:58:
+ 
+     {
+         let rect = Rect::make_ltrb(0.0f32, 0.0f32, kValB, kValB);
+[31m-        let radii = [Point::new(kValA, kValA),
+(B[m[31m-                             Point::new(kValA, kValA),
+(B[m[31m-                             Point::new(kValA, kValA),
+(B[m[31m-                             Point::new(kValA, kValA)];
+(B[m[32m+        let radii = [
+(B[m[32m+            Point::new(kValA, kValA),
+(B[m[32m+            Point::new(kValA, kValA),
+(B[m[32m+            Point::new(kValA, kValA),
+(B[m[32m+            Point::new(kValA, kValA),
+(B[m[32m+        ];
+(B[m         let mut rrect = RRect::new();
+         rrect.set_rect_radii(&rect, &radii);
+         check!(r, rrect.is_valid());
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m04/rrect.rs:97:
+ 
+     // Overlapping right side (UR.y + LR.y > height)
+     {
+[31m-        let radii = [Point::new(0.0f32, 0.0f32), Point::new(0.0f32, 60.0f32), Point::new(0.0f32, 60.0f32), Point::new(0.0f32, 0.0f32)];
+(B[m[32m+        let radii = [
+(B[m[32m+            Point::new(0.0f32, 0.0f32),
+(B[m[32m+            Point::new(0.0f32, 60.0f32),
+(B[m[32m+            Point::new(0.0f32, 60.0f32),
+(B[m[32m+            Point::new(0.0f32, 0.0f32),
+(B[m[32m+        ];
+(B[m         check!(r, !RRectPriv::are_rect_and_radii_valid(&rect, &radii));
+ 
+         // Constructing via setRectRadii scales radii to fit, making it valid.
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m04/rrect.rs:108:
+ 
+     // Overlapping top side (UL.x + UR.x > width)
+     {
+[31m-        let radii = [Point::new(70.0f32, 0.0f32), Point::new(70.0f32, 0.0f32), Point::new(0.0f32, 0.0f32), Point::new(0.0f32, 0.0f32)];
+(B[m[32m+        let radii = [
+(B[m[32m+            Point::new(70.0f32, 0.0f32),
+(B[m[32m+            Point::new(70.0f32, 0.0f32),
+(B[m[32m+            Point::new(0.0f32, 0.0f32),
+(B[m[32m+            Point::new(0.0f32, 0.0f32),
+(B[m[32m+        ];
+(B[m         check!(r, !RRectPriv::are_rect_and_radii_valid(&rect, &radii));
+     }
+ 
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m04/rrect.rs:115:
+     // Overlapping bottom side (LL.x + LR.x > width)
+     {
+[31m-        let radii = [Point::new(0.0f32, 0.0f32), Point::new(0.0f32, 0.0f32), Point::new(60.0f32, 0.0f32), Point::new(60.0f32, 0.0f32)];
+(B[m[32m+        let radii = [
+(B[m[32m+            Point::new(0.0f32, 0.0f32),
+(B[m[32m+            Point::new(0.0f32, 0.0f32),
+(B[m[32m+            Point::new(60.0f32, 0.0f32),
+(B[m[32m+            Point::new(60.0f32, 0.0f32),
+(B[m[32m+        ];
+(B[m         check!(r, !RRectPriv::are_rect_and_radii_valid(&rect, &radii));
+     }
+ 
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m04/rrect.rs:121:
+     // Overlapping left side (UL.y + LL.y > height)
+     {
+[31m-        let radii = [Point::new(0.0f32, 55.0f32), Point::new(0.0f32, 0.0f32), Point::new(0.0f32, 0.0f32), Point::new(0.0f32, 55.0f32)];
+(B[m[32m+        let radii = [
+(B[m[32m+            Point::new(0.0f32, 55.0f32),
+(B[m[32m+            Point::new(0.0f32, 0.0f32),
+(B[m[32m+            Point::new(0.0f32, 0.0f32),
+(B[m[32m+            Point::new(0.0f32, 55.0f32),
+(B[m[32m+        ];
+(B[m         check!(r, !RRectPriv::are_rect_and_radii_valid(&rect, &radii));
+     }
+ 
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m04/rrect.rs:127:
+     // Negative radii must be rejected by AreRectAndRadiiValid.
+     {
+[31m-        let radii = [Point::new(-5.0f32, 0.0f32), Point::new(0.0f32, 0.0f32), Point::new(0.0f32, 0.0f32), Point::new(0.0f32, 0.0f32)];
+(B[m[32m+        let radii = [
+(B[m[32m+            Point::new(-5.0f32, 0.0f32),
+(B[m[32m+            Point::new(0.0f32, 0.0f32),
+(B[m[32m+            Point::new(0.0f32, 0.0f32),
+(B[m[32m+            Point::new(0.0f32, 0.0f32),
+(B[m[32m+        ];
+(B[m         check!(r, !RRectPriv::are_rect_and_radii_valid(&rect, &radii));
+     }
+     {
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m04/rrect.rs:133:
+[31m-        let radii = [Point::new(0.0f32, -5.0f32), Point::new(0.0f32, 0.0f32), Point::new(0.0f32, 0.0f32), Point::new(0.0f32, 0.0f32)];
+(B[m[32m+        let radii = [
+(B[m[32m+            Point::new(0.0f32, -5.0f32),
+(B[m[32m+            Point::new(0.0f32, 0.0f32),
+(B[m[32m+            Point::new(0.0f32, 0.0f32),
+(B[m[32m+            Point::new(0.0f32, 0.0f32),
+(B[m[32m+        ];
+(B[m         check!(r, !RRectPriv::are_rect_and_radii_valid(&rect, &radii));
+     }
+ 
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m04/rrect.rs:137:
+     // Test the specific testcase geometry from b/547198215
+     {
+[31m-        let fuzzedRect =
+(B[m[31m-                Rect::make_ltrb(1.35631564e-19f32, 1.35631564e-19f32, 163968.5f32, 800.501953f32);
+(B[m[31m-        let fuzzedRadii = [Point::new(1.35631564e-19f32, 1.35631564e-19f32),
+(B[m[31m-                                         Point::new(1.35631564e-19f32, 640.501953f32),
+(B[m[31m-                                         Point::new(1.35631564e-19f32, 640.501953f32),
+(B[m[31m-                                         Point::new(1.35631564e-19f32, 1.35631564e-19f32)];
+(B[m[31m-        check!(r, !RRectPriv::are_rect_and_radii_valid(&fuzzedRect, &fuzzedRadii));
+(B[m[32m+        let fuzzedRect = Rect::make_ltrb(
+(B[m[32m+            1.35631564e-19f32,
+(B[m[32m+            1.35631564e-19f32,
+(B[m[32m+            163968.5f32,
+(B[m[32m+            800.501953f32,
+(B[m[32m+        );
+(B[m[32m+        let fuzzedRadii = [
+(B[m[32m+            Point::new(1.35631564e-19f32, 1.35631564e-19f32),
+(B[m[32m+            Point::new(1.35631564e-19f32, 640.501953f32),
+(B[m[32m+            Point::new(1.35631564e-19f32, 640.501953f32),
+(B[m[32m+            Point::new(1.35631564e-19f32, 1.35631564e-19f32),
+(B[m[32m+        ];
+(B[m[32m+        check!(
+(B[m[32m+            r,
+(B[m[32m+            !RRectPriv::are_rect_and_radii_valid(&fuzzedRect, &fuzzedRadii)
+(B[m[32m+        );
+(B[m     }
+     r.finish();
+ }
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m04/rrect.rs:149:
+[31m-
+(B[m 
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m04/scale_to_sides.rs:4:
+ #[test]
+ fn ScaleToSides() {
+     let interesting_values: [f64; 27] = [
+[31m-// From sample app - PathFuzzer
+(B[m[32m+        // From sample app - PathFuzzer
+(B[m         260.01662826538085938,
+         63.61007690429687500,
+         795.98901367187500000,
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m04/scale_to_sides.rs:33:
+         340282569745034499980078846904281071616.0,
+         170141284872517249990039423452140535808.0,
+         170141244307698042686698575557637963776.0,
+[31m-];
+(B[m[32m+    ];
+(B[m     let n = interesting_values.len();
+     for s in 0..=n {
+         for i in 0..n {
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m04/scale_to_sides.rs:40:
+             for j in 0..n {
+                 for k in 0..n {
+[31m-                    if interesting_values[i] > f32::MAX as f64 || interesting_values[j] > f32::MAX as f64 {
+(B[m[32m+                    if interesting_values[i] > f32::MAX as f64
+(B[m[32m+                        || interesting_values[j] > f32::MAX as f64
+(B[m[32m+                    {
+(B[m                         continue;
+                     }
+                     let mut radius1 = interesting_values[i] as f32;
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m04/scale_to_sides.rs:47:
+                     let width = interesting_values[k];
+                     let mut scale = width / (radius1 as f64 + radius2 as f64);
+                     if width > 0.0 {
+[31m-                        if s != 0 { scale = scale.min(interesting_values[s - 1]); }
+(B[m[32m+                        if s != 0 {
+(B[m[32m+                            scale = scale.min(interesting_values[s - 1]);
+(B[m[32m+                        }
+(B[m                         if scale < 1.0 && scale > 0.0 {
+                             ScaleToSides::adjust_radii(width, scale, &mut radius1, &mut radius2);
+                         }
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m04/size.rs:5:
+     let mut r = Reporter::default();
+     let mut a = ISize::default();
+     let mut b = ISize::default();
+[31m-    a.set(0,0);
+(B[m[32m+    a.set(0, 0);
+(B[m     check!(r, a.is_empty());
+[31m-    a.set(5,-5);
+(B[m[32m+    a.set(5, -5);
+(B[m     check!(r, a.is_empty());
+[31m-    a = ISize::new(5,0);
+(B[m[32m+    a = ISize::new(5, 0);
+(B[m     check!(r, a.is_empty());
+[31m-    b.set(5,0);
+(B[m[32m+    b.set(5, 0);
+(B[m     check!(r, a == b);
+[31m-    a.set(3,5);
+(B[m[32m+    a.set(3, 5);
+(B[m     check!(r, !a.is_empty());
+     b = a;
+     check!(r, !b.is_empty());
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m04/size.rs:31:
+     let iy = 3;
+     let x = rust_skia::scalar::int_to_scalar(ix);
+     let y = rust_skia::scalar::int_to_scalar(iy);
+[31m-    a.set(0.0,0.0);
+(B[m[32m+    a.set(0.0, 0.0);
+(B[m     check!(r, a.is_empty());
+[31m-    a.set(x,-x);
+(B[m[32m+    a.set(x, -x);
+(B[m     check!(r, a.is_empty());
+[31m-    a = Size::new(x,0.0);
+(B[m[32m+    a = Size::new(x, 0.0);
+(B[m     check!(r, a.is_empty());
+[31m-    b.set(x,0.0);
+(B[m[32m+    b.set(x, 0.0);
+(B[m     check!(r, a == b);
+[31m-    a.set(y,x);
+(B[m[32m+    a.set(y, x);
+(B[m     check!(r, !a.is_empty());
+     b = a;
+     check!(r, !b.is_empty());
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m04/size.rs:47:
+     check!(r, !(a != b));
+     check!(r, a.width == b.width && a.height == b.height);
+     let mut ia = ISize::default();
+[31m-    ia.set(ix,iy);
+(B[m[31m-    a.set(x,y);
+(B[m[32m+    ia.set(ix, iy);
+(B[m[32m+    a.set(x, y);
+(B[m     check!(r, a.to_round() == ia);
+     r.finish();
+ }
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m04/supplemental.rs:3:
+ 
+ #[test]
+ fn supplemental_boundaries_overflow_and_layout() {
+[31m-    assert_eq!(core::mem::size_of::<IRect>(),16);
+(B[m[31m-    assert_eq!(core::mem::size_of::<Rect>(),16);
+(B[m[31m-    assert_eq!(core::mem::size_of::<Point3>(),12);
+(B[m[31m-    assert_eq!(core::mem::size_of::<ISize>(),8);
+(B[m[31m-    assert_eq!(core::mem::size_of::<Size>(),8);
+(B[m[31m-    assert_eq!(core::mem::size_of::<IPoint16>(),4);
+(B[m[31m-    assert_eq!(core::mem::offset_of!(IPoint16,y),2);
+(B[m[31m-    for (x,y) in [(i16::MIN as i32,i16::MAX as i32),(0,-1),(1,0)] {
+(B[m[31m-        let mut p = IPoint16::make(x,y);
+(B[m[31m-        assert_eq!((p.x(),p.y()),(x as i16,y as i16));
+(B[m[31m-        p.set(y,x);
+(B[m[31m-        assert_eq!((p.x(),p.y()),(y as i16,x as i16));
+(B[m[32m+    assert_eq!(core::mem::size_of::<IRect>(), 16);
+(B[m[32m+    assert_eq!(core::mem::size_of::<Rect>(), 16);
+(B[m[32m+    assert_eq!(core::mem::size_of::<Point3>(), 12);
+(B[m[32m+    assert_eq!(core::mem::size_of::<ISize>(), 8);
+(B[m[32m+    assert_eq!(core::mem::size_of::<Size>(), 8);
+(B[m[32m+    assert_eq!(core::mem::size_of::<IPoint16>(), 4);
+(B[m[32m+    assert_eq!(core::mem::offset_of!(IPoint16, y), 2);
+(B[m[32m+    for (x, y) in [(i16::MIN as i32, i16::MAX as i32), (0, -1), (1, 0)] {
+(B[m[32m+        let mut p = IPoint16::make(x, y);
+(B[m[32m+        assert_eq!((p.x(), p.y()), (x as i16, y as i16));
+(B[m[32m+        p.set(y, x);
+(B[m[32m+        assert_eq!((p.x(), p.y()), (y as i16, x as i16));
+(B[m     }
+[31m-    let huge = IRect::new(i32::MIN,i32::MIN,i32::MAX,i32::MAX);
+(B[m[31m-    assert_eq!(huge.width64(),4294967295);
+(B[m[31m-    assert_eq!(huge.height64(),4294967295);
+(B[m[31m-    assert_eq!(huge.width(),-1);
+(B[m[31m-    assert_eq!(huge.height(),-1);
+(B[m[32m+    let huge = IRect::new(i32::MIN, i32::MIN, i32::MAX, i32::MAX);
+(B[m[32m+    assert_eq!(huge.width64(), 4294967295);
+(B[m[32m+    assert_eq!(huge.height64(), 4294967295);
+(B[m[32m+    assert_eq!(huge.width(), -1);
+(B[m[32m+    assert_eq!(huge.height(), -1);
+(B[m     assert!(huge.is_empty());
+     assert!(!huge.is_empty64());
+[31m-    assert_eq!(ISize::new(i32::MAX,i32::MAX).area(),4611686014132420609);
+(B[m[31m-    assert_eq!(ISize::new(i32::MIN,i32::MIN).area(),4611686018427387904);
+(B[m[31m-    let r = IRect::new(-2,-3,4,5);
+(B[m[31m-    assert!(r.contains(-2,-3));
+(B[m[31m-    assert!(r.contains(3,4));
+(B[m[31m-    assert!(!r.contains(4,0));
+(B[m[31m-    assert!(!r.contains(0,5));
+(B[m[32m+    assert_eq!(ISize::new(i32::MAX, i32::MAX).area(), 4611686014132420609);
+(B[m[32m+    assert_eq!(ISize::new(i32::MIN, i32::MIN).area(), 4611686018427387904);
+(B[m[32m+    let r = IRect::new(-2, -3, 4, 5);
+(B[m[32m+    assert!(r.contains(-2, -3));
+(B[m[32m+    assert!(r.contains(3, 4));
+(B[m[32m+    assert!(!r.contains(4, 0));
+(B[m[32m+    assert!(!r.contains(0, 5));
+(B[m     let rf = Rect::from(r);
+[31m-    assert!(rf.contains(-2.0,-3.0));
+(B[m[31m-    assert!(!rf.contains(4.0,0.0));
+(B[m[31m-    assert!(!Rect::new(4.0,5.0,-2.0,-3.0).is_sorted());
+(B[m[31m-    assert!(Rect::new(4.0,5.0,-2.0,-3.0).is_empty());
+(B[m[31m-    assert_eq!(Rect::new(4.0,5.0,-2.0,-3.0).make_sorted(),rf);
+(B[m[31m-    assert_eq!(Rect::from(RectPriv::make_i_large()).round_out(),RectPriv::make_i_large());
+(B[m[31m-    let r = Rect::new(-1.5,-2.25,3.5,4.25);
+(B[m[31m-    assert_eq!(r.round(),IRect::new(-1,-2,4,4));
+(B[m[31m-    assert_eq!(r.round_out(),IRect::new(-2,-3,4,5));
+(B[m[31m-    assert_eq!(r.round_in(),IRect::new(-1,-2,3,4));
+(B[m[31m-    let s = Size::new(-1.5,2.5);
+(B[m[31m-    assert_eq!(s.to_round(),ISize::new(-1,3));
+(B[m[31m-    assert_eq!(s.to_floor(),ISize::new(-2,2));
+(B[m[31m-    assert_eq!(s.to_ceil(),ISize::new(-1,3));
+(B[m[31m-    let mut bounds = Rect::make_wh(10.0,10.0);
+(B[m[32m+    assert!(rf.contains(-2.0, -3.0));
+(B[m[32m+    assert!(!rf.contains(4.0, 0.0));
+(B[m[32m+    assert!(!Rect::new(4.0, 5.0, -2.0, -3.0).is_sorted());
+(B[m[32m+    assert!(Rect::new(4.0, 5.0, -2.0, -3.0).is_empty());
+(B[m[32m+    assert_eq!(Rect::new(4.0, 5.0, -2.0, -3.0).make_sorted(), rf);
+(B[m[32m+    assert_eq!(
+(B[m[32m+        Rect::from(RectPriv::make_i_large()).round_out(),
+(B[m[32m+        RectPriv::make_i_large()
+(B[m[32m+    );
+(B[m[32m+    let r = Rect::new(-1.5, -2.25, 3.5, 4.25);
+(B[m[32m+    assert_eq!(r.round(), IRect::new(-1, -2, 4, 4));
+(B[m[32m+    assert_eq!(r.round_out(), IRect::new(-2, -3, 4, 5));
+(B[m[32m+    assert_eq!(r.round_in(), IRect::new(-1, -2, 3, 4));
+(B[m[32m+    let s = Size::new(-1.5, 2.5);
+(B[m[32m+    assert_eq!(s.to_round(), ISize::new(-1, 3));
+(B[m[32m+    assert_eq!(s.to_floor(), ISize::new(-2, 2));
+(B[m[32m+    assert_eq!(s.to_ceil(), ISize::new(-1, 3));
+(B[m[32m+    let mut bounds = Rect::make_wh(10.0, 10.0);
+(B[m     assert!(bounds.set_bounds_check(&[]));
+[31m-    assert_eq!(bounds,Rect::make_empty());
+(B[m[31m-    assert!(bounds.set_bounds_check(&[Point::new(2.0,3.0)]));
+(B[m[31m-    assert_eq!(bounds,Rect::new(2.0,3.0,2.0,3.0));
+(B[m[31m-    for bad in [f32::INFINITY,f32::NEG_INFINITY,f32::NAN] {
+(B[m[31m-        assert!(!bounds.set_bounds_check(&[Point::new(1.0,2.0),Point::new(bad,3.0)]));
+(B[m[31m-        assert_eq!(bounds,Rect::make_empty());
+(B[m[32m+    assert_eq!(bounds, Rect::make_empty());
+(B[m[32m+    assert!(bounds.set_bounds_check(&[Point::new(2.0, 3.0)]));
+(B[m[32m+    assert_eq!(bounds, Rect::new(2.0, 3.0, 2.0, 3.0));
+(B[m[32m+    for bad in [f32::INFINITY, f32::NEG_INFINITY, f32::NAN] {
+(B[m[32m+        assert!(!bounds.set_bounds_check(&[Point::new(1.0, 2.0), Point::new(bad, 3.0)]));
+(B[m[32m+        assert_eq!(bounds, Rect::make_empty());
+(B[m     }
+ }
+ 
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m04/supplemental.rs:59:
+ #[test]
+ fn supplemental_point3_nonfinite_cross_and_value_ownership() {
+[31m-    let x = Point3::new(1.0,0.0,0.0);
+(B[m[31m-    let y = Point3::new(0.0,1.0,0.0);
+(B[m[31m-    let z = Point3::new(0.0,0.0,1.0);
+(B[m[31m-    assert_eq!(x.cross(&y),z);
+(B[m[31m-    assert_eq!(y.cross(&x),-z);
+(B[m[31m-    assert_eq!(Point3::cross_product(&x,&y),z);
+(B[m[31m-    assert_eq!(Point3::dot_product(&x,&y),0.0);
+(B[m[31m-    for bad in [f32::NAN,f32::INFINITY,f32::NEG_INFINITY] {
+(B[m[31m-        for mut p in [Point3::new(bad,1.0,2.0),Point3::new(1.0,bad,2.0),Point3::new(1.0,2.0,bad)] {
+(B[m[32m+    let x = Point3::new(1.0, 0.0, 0.0);
+(B[m[32m+    let y = Point3::new(0.0, 1.0, 0.0);
+(B[m[32m+    let z = Point3::new(0.0, 0.0, 1.0);
+(B[m[32m+    assert_eq!(x.cross(&y), z);
+(B[m[32m+    assert_eq!(y.cross(&x), -z);
+(B[m[32m+    assert_eq!(Point3::cross_product(&x, &y), z);
+(B[m[32m+    assert_eq!(Point3::dot_product(&x, &y), 0.0);
+(B[m[32m+    for bad in [f32::NAN, f32::INFINITY, f32::NEG_INFINITY] {
+(B[m[32m+        for mut p in [
+(B[m[32m+            Point3::new(bad, 1.0, 2.0),
+(B[m[32m+            Point3::new(1.0, bad, 2.0),
+(B[m[32m+            Point3::new(1.0, 2.0, bad),
+(B[m[32m+        ] {
+(B[m             assert!(!p.is_finite());
+             assert!(!p.normalize());
+[31m-            assert_eq!(p,Point3::new(0.0,0.0,0.0));
+(B[m[32m+            assert_eq!(p, Point3::new(0.0, 0.0, 0.0));
+(B[m         }
+     }
+[31m-    let original = Point3::new(2.0,3.0,4.0);
+(B[m[32m+    let original = Point3::new(2.0, 3.0, 4.0);
+(B[m     let mut copy = original;
+     copy += x;
+     copy -= y;
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m04/supplemental.rs:79:
+[31m-    assert_eq!(copy,Point3::new(3.0,2.0,4.0));
+(B[m[31m-    assert_eq!(original,Point3::new(2.0,3.0,4.0));
+(B[m[31m-    assert_eq!(original*2.0,2.0*original);
+(B[m[32m+    assert_eq!(copy, Point3::new(3.0, 2.0, 4.0));
+(B[m[32m+    assert_eq!(original, Point3::new(2.0, 3.0, 4.0));
+(B[m[32m+    assert_eq!(original * 2.0, 2.0 * original);
+(B[m }
+ 
+ #[test]
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m04/supplemental.rs:85:
+ fn supplemental_rrect_native_byte_order_truncation_and_lifetime() {
+     // All twelve serialized scalars are explicit independent expected bytes;
+     // no type tag or Rust object padding is serialized.
+[31m-    let values: [f32;12] = [1.0,2.0,101.0,202.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0,10.0];
+(B[m[31m-    let mut expected = [0u8;48];
+(B[m[31m-    for (i,value) in values.into_iter().enumerate() {
+(B[m[31m-        expected[i*4..i*4+4].copy_from_slice(&value.to_ne_bytes());
+(B[m[32m+    let values: [f32; 12] = [
+(B[m[32m+        1.0, 2.0, 101.0, 202.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0,
+(B[m[32m+    ];
+(B[m[32m+    let mut expected = [0u8; 48];
+(B[m[32m+    for (i, value) in values.into_iter().enumerate() {
+(B[m[32m+        expected[i * 4..i * 4 + 4].copy_from_slice(&value.to_ne_bytes());
+(B[m     }
+     let rr = {
+[31m-        let bounds = Rect::new(1.0,2.0,101.0,202.0);
+(B[m[31m-        let mut radii = [Point::new(3.0,4.0),Point::new(5.0,6.0),Point::new(7.0,8.0),Point::new(9.0,10.0)];
+(B[m[31m-        let owned = RRect::make_rect_radii(&bounds,&radii);
+(B[m[31m-        radii.fill(Point::new(0.0,0.0));
+(B[m[31m-        assert_eq!(owned.radii_at(Corner::UpperLeft),Point::new(3.0,4.0));
+(B[m[32m+        let bounds = Rect::new(1.0, 2.0, 101.0, 202.0);
+(B[m[32m+        let mut radii = [
+(B[m[32m+            Point::new(3.0, 4.0),
+(B[m[32m+            Point::new(5.0, 6.0),
+(B[m[32m+            Point::new(7.0, 8.0),
+(B[m[32m+            Point::new(9.0, 10.0),
+(B[m[32m+        ];
+(B[m[32m+        let owned = RRect::make_rect_radii(&bounds, &radii);
+(B[m[32m+        radii.fill(Point::new(0.0, 0.0));
+(B[m[32m+        assert_eq!(owned.radii_at(Corner::UpperLeft), Point::new(3.0, 4.0));
+(B[m         owned
+     }; // constructor inputs die here; rr must retain its own geometry.
+     assert!(rr.is_valid());
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m04/supplemental.rs:102:
+[31m-    assert_eq!(RRect::K_SIZE_IN_MEMORY,48);
+(B[m[31m-    let mut guarded = [0xa5u8;52];
+(B[m[31m-    assert_eq!(rr.write_to_memory(&mut guarded[1..51]),48);
+(B[m[31m-    assert_eq!(&guarded[1..49],&expected);
+(B[m[31m-    assert_eq!(guarded[0],0xa5);
+(B[m[31m-    assert_eq!(&guarded[49..],[0xa5;3]);
+(B[m[32m+    assert_eq!(RRect::K_SIZE_IN_MEMORY, 48);
+(B[m[32m+    let mut guarded = [0xa5u8; 52];
+(B[m[32m+    assert_eq!(rr.write_to_memory(&mut guarded[1..51]), 48);
+(B[m[32m+    assert_eq!(&guarded[1..49], &expected);
+(B[m[32m+    assert_eq!(guarded[0], 0xa5);
+(B[m[32m+    assert_eq!(&guarded[49..], [0xa5; 3]);
+(B[m     let decoded = {
+         let mut bytes = expected;
+         let mut value = RRect::new();
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m04/supplemental.rs:111:
+[31m-        assert_eq!(value.read_from_memory(&bytes),48);
+(B[m[32m+        assert_eq!(value.read_from_memory(&bytes), 48);
+(B[m         bytes.fill(0);
+         value
+     }; // serialized buffer dies here; decoded geometry must remain owned.
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m04/supplemental.rs:115:
+[31m-    assert_eq!(decoded,rr);
+(B[m[32m+    assert_eq!(decoded, rr);
+(B[m     let mut copy = rr;
+[31m-    copy.offset(20.0,30.0);
+(B[m[31m-    assert_ne!(copy,rr);
+(B[m[31m-    assert_eq!(*rr.rect(),Rect::new(1.0,2.0,101.0,202.0));
+(B[m[32m+    copy.offset(20.0, 30.0);
+(B[m[32m+    assert_ne!(copy, rr);
+(B[m[32m+    assert_eq!(*rr.rect(), Rect::new(1.0, 2.0, 101.0, 202.0));
+(B[m     for n in 0..48 {
+[31m-        let mut short = [0x5au8;48];
+(B[m[31m-        assert_eq!(rr.write_to_memory(&mut short[..n]),0);
+(B[m[31m-        assert_eq!(short,[0x5a;48]);
+(B[m[32m+        let mut short = [0x5au8; 48];
+(B[m[32m+        assert_eq!(rr.write_to_memory(&mut short[..n]), 0);
+(B[m[32m+        assert_eq!(short, [0x5a; 48]);
+(B[m         let mut destination = rr;
+[31m-        assert_eq!(destination.read_from_memory(&expected[..n]),0);
+(B[m[31m-        assert_eq!(destination,rr);
+(B[m[32m+        assert_eq!(destination.read_from_memory(&expected[..n]), 0);
+(B[m[32m+        assert_eq!(destination, rr);
+(B[m     }
+ }
+ 
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m04/supplemental.rs:130:
+ #[test]
+ fn supplemental_rrect_normalization_and_radius_boundaries() {
+[31m-    let bounds = Rect::make_wh(100.0,80.0);
+(B[m[31m-    for (x,y,kind) in [(0.0,0.0,Type::Rect),(10.0,20.0,Type::Simple),(50.0,40.0,Type::Oval),(100.0,80.0,Type::Oval),(-1.0,10.0,Type::Rect)] {
+(B[m[31m-        let rr = RRect::make_rect_xy(&bounds,x,y);
+(B[m[32m+    let bounds = Rect::make_wh(100.0, 80.0);
+(B[m[32m+    for (x, y, kind) in [
+(B[m[32m+        (0.0, 0.0, Type::Rect),
+(B[m[32m+        (10.0, 20.0, Type::Simple),
+(B[m[32m+        (50.0, 40.0, Type::Oval),
+(B[m[32m+        (100.0, 80.0, Type::Oval),
+(B[m[32m+        (-1.0, 10.0, Type::Rect),
+(B[m[32m+    ] {
+(B[m[32m+        let rr = RRect::make_rect_xy(&bounds, x, y);
+(B[m         assert!(rr.is_valid());
+[31m-        assert_eq!(rr.get_type(),kind);
+(B[m[32m+        assert_eq!(rr.get_type(), kind);
+(B[m     }
+[31m-    for rect in [Rect::make_empty(),Rect::new(0.0,0.0,f32::INFINITY,80.0),Rect::new(0.0,f32::NAN,100.0,80.0)] {
+(B[m[32m+    for rect in [
+(B[m[32m+        Rect::make_empty(),
+(B[m[32m+        Rect::new(0.0, 0.0, f32::INFINITY, 80.0),
+(B[m[32m+        Rect::new(0.0, f32::NAN, 100.0, 80.0),
+(B[m[32m+    ] {
+(B[m         let rr = RRect::make_oval(&rect);
+         assert!(rr.is_empty());
+         assert!(rr.is_valid());
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m04/supplemental.rs:142:
+     }
+[31m-    let exact = [Point::new(50.0,40.0);4];
+(B[m[31m-    assert!(RRectPriv::are_rect_and_radii_valid(&bounds,&exact));
+(B[m[32m+    let exact = [Point::new(50.0, 40.0); 4];
+(B[m[32m+    assert!(RRectPriv::are_rect_and_radii_valid(&bounds, &exact));
+(B[m     let mut excess = exact;
+[31m-    excess[0].x = f32::from_bits(50.0f32.to_bits()+1);
+(B[m[32m+    excess[0].x = f32::from_bits(50.0f32.to_bits() + 1);
+(B[m     // SkRRect.cpp:760-789 accepts near-equal sums and corner positions.
+[31m-    assert!(RRectPriv::are_rect_and_radii_valid(&bounds,&excess));
+(B[m[31m-    let rr = RRect::make_rect_radii(&bounds,&excess);
+(B[m[32m+    assert!(RRectPriv::are_rect_and_radii_valid(&bounds, &excess));
+(B[m[32m+    let rr = RRect::make_rect_radii(&bounds, &excess);
+(B[m     assert!(rr.is_valid());
+     // A clear overlap exceeds both the absolute and ULP tolerances.
+     excess[0].x = 51.0;
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m04/supplemental.rs:153:
+[31m-    assert!(!RRectPriv::are_rect_and_radii_valid(&bounds,&excess));
+(B[m[31m-    for bad in [f32::NAN,f32::INFINITY,-1.0] {
+(B[m[32m+    assert!(!RRectPriv::are_rect_and_radii_valid(&bounds, &excess));
+(B[m[32m+    for bad in [f32::NAN, f32::INFINITY, -1.0] {
+(B[m         let mut radii = exact;
+         radii[0].y = bad;
+[31m-        assert!(!RRectPriv::are_rect_and_radii_valid(&bounds,&radii));
+(B[m[32m+        assert!(!RRectPriv::are_rect_and_radii_valid(&bounds, &radii));
+(B[m     }
+ }
+ 
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m04/supplemental.rs:161:
+ #[test]
+ fn supplemental_rect_memcpy_strides_guards_and_source_lifetime() {
+[31m-    for (dst_rb,src_rb,trim,rows) in [(4,4,4,3),(7,9,4,3),(7,9,0,3),(7,9,4,0),(7,9,4,1)] {
+(B[m[31m-        let mut destination = vec![0xa5u8;dst_rb*rows+2];
+(B[m[32m+    for (dst_rb, src_rb, trim, rows) in [
+(B[m[32m+        (4, 4, 4, 3),
+(B[m[32m+        (7, 9, 4, 3),
+(B[m[32m+        (7, 9, 0, 3),
+(B[m[32m+        (7, 9, 4, 0),
+(B[m[32m+        (7, 9, 4, 1),
+(B[m[32m+    ] {
+(B[m[32m+        let mut destination = vec![0xa5u8; dst_rb * rows + 2];
+(B[m         let expected;
+         {
+[31m-            let source: Vec<u8> = (0..src_rb*rows+2).map(|i| i as u8).collect();
+(B[m[32m+            let source: Vec<u8> = (0..src_rb * rows + 2).map(|i| i as u8).collect();
+(B[m             let source_before = source.clone();
+             let mut wanted = destination.clone();
+             for row in 0..rows {
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m04/supplemental.rs:171:
+[31m-                wanted[1+row*dst_rb..1+row*dst_rb+trim].copy_from_slice(&source[1+row*src_rb..1+row*src_rb+trim]);
+(B[m[32m+                wanted[1 + row * dst_rb..1 + row * dst_rb + trim]
+(B[m[32m+                    .copy_from_slice(&source[1 + row * src_rb..1 + row * src_rb + trim]);
+(B[m             }
+             // Separate allocations, full strides allocated (including the final
+             // padding), and valid non-null pointers even for zero copies.
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m04/supplemental.rs:175:
+[31m-            unsafe { sk_rect_memcpy(destination.as_mut_ptr().add(1),dst_rb,source.as_ptr().add(1),src_rb,trim,rows); }
+(B[m[31m-            assert_eq!(source,source_before);
+(B[m[32m+            unsafe {
+(B[m[32m+                sk_rect_memcpy(
+(B[m[32m+                    destination.as_mut_ptr().add(1),
+(B[m[32m+                    dst_rb,
+(B[m[32m+                    source.as_ptr().add(1),
+(B[m[32m+                    src_rb,
+(B[m[32m+                    trim,
+(B[m[32m+                    rows,
+(B[m[32m+                );
+(B[m[32m+            }
+(B[m[32m+            assert_eq!(source, source_before);
+(B[m             expected = wanted;
+         }
+         // Output remains valid after the source allocation is released.
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m04/supplemental.rs:180:
+[31m-        assert_eq!(destination,expected);
+(B[m[32m+        assert_eq!(destination, expected);
+(B[m     }
+ }
+ 
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m04/supplemental.rs:184:
+ #[test]
+ fn supplemental_scale_to_sides_fit_and_symmetry() {
+[31m-    for (limit,scale,a,b) in [(10.0,0.5,10.0f32,10.0f32),(1.0,0.5,0.0,2.0),(100.0,0.1,100.0,200.0),(1.0,0.5,f32::MIN_POSITIVE,1.0),(33554431.0,0.5,33554430.0,33554430.0)] {
+(B[m[31m-        let (mut x,mut y) = (a,b);
+(B[m[31m-        adjust_radii(limit,scale,&mut x,&mut y);
+(B[m[32m+    for (limit, scale, a, b) in [
+(B[m[32m+        (10.0, 0.5, 10.0f32, 10.0f32),
+(B[m[32m+        (1.0, 0.5, 0.0, 2.0),
+(B[m[32m+        (100.0, 0.1, 100.0, 200.0),
+(B[m[32m+        (1.0, 0.5, f32::MIN_POSITIVE, 1.0),
+(B[m[32m+        (33554431.0, 0.5, 33554430.0, 33554430.0),
+(B[m[32m+    ] {
+(B[m[32m+        let (mut x, mut y) = (a, b);
+(B[m[32m+        adjust_radii(limit, scale, &mut x, &mut y);
+(B[m         assert!(x >= 0.0 && y >= 0.0);
+[31m-        assert!((x+y) as f64 <= limit);
+(B[m[32m+        assert!((x + y) as f64 <= limit);
+(B[m         assert!(x <= a && y <= b);
+[31m-        let (mut reverse_x,mut reverse_y) = (b,a);
+(B[m[31m-        adjust_radii(limit,scale,&mut reverse_x,&mut reverse_y);
+(B[m[31m-        assert_eq!((x,y),(reverse_y,reverse_x));
+(B[m[32m+        let (mut reverse_x, mut reverse_y) = (b, a);
+(B[m[32m+        adjust_radii(limit, scale, &mut reverse_x, &mut reverse_y);
+(B[m[32m+        assert_eq!((x, y), (reverse_y, reverse_x));
+(B[m     }
+ }
+ 

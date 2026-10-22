@@ -1,0 +1,17 @@
+--- plan/acceptance/M04-evidence/tests-before-format.sha256	2026-10-22 12:13:15
++++ plan/acceptance/M04-evidence/tests-after-format.sha256	2026-10-22 12:13:15
+@@ -1,8 +1,8 @@
+ 6880b82576711b107ba9bfdef1545fa9a3ac6114ff31e8725a83d2f2b99c04d6  tests/m04_test.rs
+-b65317c9535ea77f7b274e7626a4fdaba5c731c06eb2b524a6de6fff71116afd  tests/m04/point3.rs
+-1b534e6ef420c7286e29a7e0205a5cd44c5c612c991e5c34f819d2d784766e6e  tests/m04/rect.rs
+-a1d6d725c9fbc2e2f075fd2057930cabe3275c012a5346c03f29b7831cbe1dbf  tests/m04/rrect.rs
+-98d92cb6ec0f51e785f4ee623e70c46bf33d1908aa110fb73d65414257297f6e  tests/m04/scale_to_sides.rs
+-31842a402e745cde839ff7e099e6f7f3c25f5f0a8f11e92a7fef7404007cdf38  tests/m04/size.rs
+-06444858aa2b186aeaf875bf1e2bb1c1aff6a577f295ac42fdf54e85e1e660bd  tests/m04/supplemental.rs
++01d82cf565b7739cf6470c58d6e55c478269df5795028d5b4f6513d61805c0ba  tests/m04/point3.rs
++553b380695d5977073206bca0522a0268fda24cdd9f07303bfbccee8a457a5be  tests/m04/rect.rs
++ce488ca8efda412c4ef46a8e5810fe4ff4c2263282c9cd3129f9036e5e750fac  tests/m04/rrect.rs
++d24aad4cf0f9367fe66c6d2fcc42624c1e071e4ebd2a88ef15b1db2364371cd6  tests/m04/scale_to_sides.rs
++0be26d8f20aed11a1b3347f9deae48da7942189052381c2fb63bc03588e6fff1  tests/m04/size.rs
++b43c1b359d5f77f010997875b2024a018d91bfb30f24cde274576acba8c2e98e  tests/m04/supplemental.rs
+ 81dfe300979d17a767b9a65f849dfcef1fcef7859ad1d7f44e0805fef5c77d66  tests/support/mod.rs

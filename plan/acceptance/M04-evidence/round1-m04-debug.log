@@ -1,0 +1,255 @@
+   Compiling rust-skia v0.1.0 (/Volumes/Data/Users/paul/development/src/github/rust-skia)
+error: literal out of range for `u8`
+ --> tests/m04/rrect.rs:9:79
+  |
+9 |             0x0a, 0x00, 0x00, 0xff, 0x00, 0x30, 0x00, 0x00, 0x00, 0x00, 0x00, 0x7f32,
+  |                                                                               ^^^^^^
+  |
+  = note: the literal `0x7f32` (decimal `32562`) does not fit into the type `u8` and will become `50u8`
+  = help: consider using the type `u16` instead
+  = note: `#[deny(overflowing_literals)]` on by default
+
+error: literal out of range for `u8`
+  --> tests/m04/rrect.rs:10:13
+   |
+10 |             0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32,
+   |             ^^^^^^
+   |
+   = note: the literal `0x7f32` (decimal `32562`) does not fit into the type `u8` and will become `50u8`
+   = help: consider using the type `u16` instead
+
+error: literal out of range for `u8`
+  --> tests/m04/rrect.rs:10:21
+   |
+10 |             0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32,
+   |                     ^^^^^^
+   |
+   = note: the literal `0x7f32` (decimal `32562`) does not fit into the type `u8` and will become `50u8`
+   = help: consider using the type `u16` instead
+
+error: literal out of range for `u8`
+  --> tests/m04/rrect.rs:10:29
+   |
+10 |             0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32,
+   |                             ^^^^^^
+   |
+   = note: the literal `0x7f32` (decimal `32562`) does not fit into the type `u8` and will become `50u8`
+   = help: consider using the type `u16` instead
+
+error: literal out of range for `u8`
+  --> tests/m04/rrect.rs:10:37
+   |
+10 |             0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32,
+   |                                     ^^^^^^
+   |
+   = note: the literal `0x7f32` (decimal `32562`) does not fit into the type `u8` and will become `50u8`
+   = help: consider using the type `u16` instead
+
+error: literal out of range for `u8`
+  --> tests/m04/rrect.rs:10:45
+   |
+10 |             0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32,
+   |                                             ^^^^^^
+   |
+   = note: the literal `0x7f32` (decimal `32562`) does not fit into the type `u8` and will become `50u8`
+   = help: consider using the type `u16` instead
+
+error: literal out of range for `u8`
+  --> tests/m04/rrect.rs:10:53
+   |
+10 |             0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32,
+   |                                                     ^^^^^^
+   |
+   = note: the literal `0x7f32` (decimal `32562`) does not fit into the type `u8` and will become `50u8`
+   = help: consider using the type `u16` instead
+
+error: literal out of range for `u8`
+  --> tests/m04/rrect.rs:10:61
+   |
+10 |             0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32,
+   |                                                             ^^^^^^
+   |
+   = note: the literal `0x7f32` (decimal `32562`) does not fit into the type `u8` and will become `50u8`
+   = help: consider using the type `u16` instead
+
+error: literal out of range for `u8`
+  --> tests/m04/rrect.rs:10:69
+   |
+10 |             0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32,
+   |                                                                     ^^^^^^
+   |
+   = note: the literal `0x7f32` (decimal `32562`) does not fit into the type `u8` and will become `50u8`
+   = help: consider using the type `u16` instead
+
+error: literal out of range for `u8`
+  --> tests/m04/rrect.rs:10:77
+   |
+10 |             0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32,
+   |                                                                             ^^^^^^
+   |
+   = note: the literal `0x7f32` (decimal `32562`) does not fit into the type `u8` and will become `50u8`
+   = help: consider using the type `u16` instead
+
+error: literal out of range for `u8`
+  --> tests/m04/rrect.rs:10:85
+   |
+10 |             0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32,
+   |                                                                                     ^^^^^^
+   |
+   = note: the literal `0x7f32` (decimal `32562`) does not fit into the type `u8` and will become `50u8`
+   = help: consider using the type `u16` instead
+
+error: literal out of range for `u8`
+  --> tests/m04/rrect.rs:10:93
+   |
+10 |             0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32,
+   |                                                                                             ^^^^^^
+   |
+   = note: the literal `0x7f32` (decimal `32562`) does not fit into the type `u8` and will become `50u8`
+   = help: consider using the type `u16` instead
+
+error: literal out of range for `u8`
+  --> tests/m04/rrect.rs:10:101
+   |
+10 |             0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32,
+   |                                                                                                     ^^^^^^
+   |
+   = note: the literal `0x7f32` (decimal `32562`) does not fit into the type `u8` and will become `50u8`
+   = help: consider using the type `u16` instead
+
+error: literal out of range for `u8`
+  --> tests/m04/rrect.rs:11:13
+   |
+11 |             0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32,
+   |             ^^^^^^
+   |
+   = note: the literal `0x7f32` (decimal `32562`) does not fit into the type `u8` and will become `50u8`
+   = help: consider using the type `u16` instead
+
+error: literal out of range for `u8`
+  --> tests/m04/rrect.rs:11:21
+   |
+11 |             0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32,
+   |                     ^^^^^^
+   |
+   = note: the literal `0x7f32` (decimal `32562`) does not fit into the type `u8` and will become `50u8`
+   = help: consider using the type `u16` instead
+
+error: literal out of range for `u8`
+  --> tests/m04/rrect.rs:11:29
+   |
+11 |             0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32,
+   |                             ^^^^^^
+   |
+   = note: the literal `0x7f32` (decimal `32562`) does not fit into the type `u8` and will become `50u8`
+   = help: consider using the type `u16` instead
+
+error: literal out of range for `u8`
+  --> tests/m04/rrect.rs:11:37
+   |
+11 |             0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32,
+   |                                     ^^^^^^
+   |
+   = note: the literal `0x7f32` (decimal `32562`) does not fit into the type `u8` and will become `50u8`
+   = help: consider using the type `u16` instead
+
+error: literal out of range for `u8`
+  --> tests/m04/rrect.rs:11:45
+   |
+11 |             0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32,
+   |                                             ^^^^^^
+   |
+   = note: the literal `0x7f32` (decimal `32562`) does not fit into the type `u8` and will become `50u8`
+   = help: consider using the type `u16` instead
+
+error: literal out of range for `u8`
+  --> tests/m04/rrect.rs:11:53
+   |
+11 |             0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32,
+   |                                                     ^^^^^^
+   |
+   = note: the literal `0x7f32` (decimal `32562`) does not fit into the type `u8` and will become `50u8`
+   = help: consider using the type `u16` instead
+
+error: literal out of range for `u8`
+  --> tests/m04/rrect.rs:11:61
+   |
+11 |             0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32,
+   |                                                             ^^^^^^
+   |
+   = note: the literal `0x7f32` (decimal `32562`) does not fit into the type `u8` and will become `50u8`
+   = help: consider using the type `u16` instead
+
+error: literal out of range for `u8`
+  --> tests/m04/rrect.rs:11:69
+   |
+11 |             0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32,
+   |                                                                     ^^^^^^
+   |
+   = note: the literal `0x7f32` (decimal `32562`) does not fit into the type `u8` and will become `50u8`
+   = help: consider using the type `u16` instead
+
+error: literal out of range for `u8`
+  --> tests/m04/rrect.rs:11:77
+   |
+11 |             0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32,
+   |                                                                             ^^^^^^
+   |
+   = note: the literal `0x7f32` (decimal `32562`) does not fit into the type `u8` and will become `50u8`
+   = help: consider using the type `u16` instead
+
+error: literal out of range for `u8`
+  --> tests/m04/rrect.rs:11:85
+   |
+11 |             0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32,
+   |                                                                                     ^^^^^^
+   |
+   = note: the literal `0x7f32` (decimal `32562`) does not fit into the type `u8` and will become `50u8`
+   = help: consider using the type `u16` instead
+
+error: literal out of range for `u8`
+  --> tests/m04/rrect.rs:11:93
+   |
+11 |             0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32,
+   |                                                                                             ^^^^^^
+   |
+   = note: the literal `0x7f32` (decimal `32562`) does not fit into the type `u8` and will become `50u8`
+   = help: consider using the type `u16` instead
+
+error: literal out of range for `u8`
+  --> tests/m04/rrect.rs:11:101
+   |
+11 |             0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32, 0x7f32,
+   |                                                                                                     ^^^^^^
+   |
+   = note: the literal `0x7f32` (decimal `32562`) does not fit into the type `u8` and will become `50u8`
+   = help: consider using the type `u16` instead
+
+error: literal out of range for `u8`
+  --> tests/m04/rrect.rs:12:13
+   |
+12 |             0x7f32, 0x7f32, 0x7f32, 0x02, 0x00, 0x00, 0x00, 0x00, 0x20, 0x00, 0x02, 0x00
+   |             ^^^^^^
+   |
+   = note: the literal `0x7f32` (decimal `32562`) does not fit into the type `u8` and will become `50u8`
+   = help: consider using the type `u16` instead
+
+error: literal out of range for `u8`
+  --> tests/m04/rrect.rs:12:21
+   |
+12 |             0x7f32, 0x7f32, 0x7f32, 0x02, 0x00, 0x00, 0x00, 0x00, 0x20, 0x00, 0x02, 0x00
+   |                     ^^^^^^
+   |
+   = note: the literal `0x7f32` (decimal `32562`) does not fit into the type `u8` and will become `50u8`
+   = help: consider using the type `u16` instead
+
+error: literal out of range for `u8`
+  --> tests/m04/rrect.rs:12:29
+   |
+12 |             0x7f32, 0x7f32, 0x7f32, 0x02, 0x00, 0x00, 0x00, 0x00, 0x20, 0x00, 0x02, 0x00
+   |                             ^^^^^^
+   |
+   = note: the literal `0x7f32` (decimal `32562`) does not fit into the type `u8` and will become `50u8`
+   = help: consider using the type `u16` instead
+
+error: could not compile `rust-skia` (test "m04_test") due to 28 previous errors

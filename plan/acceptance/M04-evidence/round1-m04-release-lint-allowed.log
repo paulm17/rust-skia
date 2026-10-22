@@ -1,0 +1,45 @@
+   Compiling libc v0.2.191
+   Compiling rust-skia v0.1.0 (/Volumes/Data/Users/paul/development/src/github/rust-skia)
+    Finished `release` profile [optimized] target(s) in 2.05s
+     Running tests/m04_test.rs (target/release/deps/m04_test-c0867c18ba3840d2)
+
+running 21 tests
+test rect::Rect_ClosestDisjointEdge ... ok
+test rect::Rect_largest ... ok
+test rect::Rect_subtract_overflow ... ok
+test rect::Rect_subtract ... ok
+test rect::Rect_setbounds ... ok
+test rect::Rect_whOverflow ... ok
+test rrect::RRect_b511391129 ... ok
+test rrect::RRect_b527765132 ... ok
+test rrect::RRect_b547198215 ... ok
+test rrect::RRect_fuzzer_regressions ... ok
+test size::ISize ... ok
+test size::Size ... ok
+test supplemental::supplemental_boundaries_overflow_and_layout ... ok
+test supplemental::supplemental_point3_nonfinite_cross_and_value_ownership ... ok
+test supplemental::supplemental_rect_memcpy_strides_guards_and_source_lifetime ... ok
+test supplemental::supplemental_rrect_native_byte_order_truncation_and_lifetime ... ok
+test supplemental::supplemental_scale_to_sides_fit_and_symmetry ... ok
+test supplemental::supplemental_rrect_normalization_and_radius_boundaries ... FAILED
+test support::tests::reporter_collects_failures_and_evaluates_once ... ok
+test point3::Point3 ... ok
+test scale_to_sides::ScaleToSides ... ok
+
+failures:
+
+---- supplemental::supplemental_rrect_normalization_and_radius_boundaries stdout ----
+
+thread 'supplemental::supplemental_rrect_normalization_and_radius_boundaries' (16266590) panicked at tests/m04/supplemental.rs:147:5:
+assertion failed: !RRectPriv::are_rect_and_radii_valid(&bounds, &excess)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    supplemental::supplemental_rrect_normalization_and_radius_boundaries
+
+test result: FAILED. 20 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `--test m04_test`
+error: 1 target failed:
+    `--test m04_test`

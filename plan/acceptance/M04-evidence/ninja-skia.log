@@ -1,0 +1,2 @@
+ninja: Entering directory `out/M04Ref'
+ninja: error: '../../third_party/externals/expat/expat/lib/xmlparse.c', needed by 'obj/third_party/externals/expat/expat/lib/libexpat.xmlparse.o', missing and no known rule to make it

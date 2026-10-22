@@ -1,0 +1,2 @@
+ninja: Entering directory `out/M04Ref'
+ninja: error: '../../third_party/externals/zlib/adler32_simd.c', needed by 'obj/third_party/externals/zlib/zlib_adler32_simd.adler32_simd.o', missing and no known rule to make it

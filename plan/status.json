@@ -23,8 +23,8 @@
     {
       "id": "M04",
       "title": "Rectangles, rounded rectangles, sizes and 3D points",
-      "state": "NOT_STARTED",
-      "acceptance_report": null
+      "state": "ACCEPTED",
+      "acceptance_report": "acceptance/M04.md"
     },
     {
       "id": "M05",
