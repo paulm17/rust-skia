@@ -165,10 +165,10 @@ tests/BackendSurfaceMutableStateTest.cpp,45,DEF_GANESH_TEST_FOR_VULKAN_CONTEXT,V
 tests/BadIcoTest.cpp,33,DEF_TEST,BadImage,16,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/BadIcoTest.cpp,115,DEF_SERIAL_TEST,Ico_malformedPngWithRustDecoderDoesNotFallback,16,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/BadIcoTest.cpp,121,DEF_SERIAL_TEST,Ico_malformedPngWithLibpngNoRedundantFallback,16,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/BezierCurveTest.cpp,52,DEF_TEST,BezierCubicEvalAt,6,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/BezierCurveTest.cpp,107,DEF_TEST,BezierCubicToPolynomials,6,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/BezierCurveTest.cpp,121,DEF_TEST,QuadRoots_CheckTRange,6,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/BezierCurveTest.cpp,201,DEF_TEST,SkBezierCubic_CheckTRange,6,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
+tests/BezierCurveTest.cpp,52,DEF_TEST,BezierCubicEvalAt,6,CPU,PASS,M06 execution: original registration passes debug+release; all M06 original and supplemental tests pass; milestone ACCEPTED; see plan/acceptance/M06.md
+tests/BezierCurveTest.cpp,107,DEF_TEST,BezierCubicToPolynomials,6,CPU,PASS,M06 execution: original registration passes debug+release; all M06 original and supplemental tests pass; milestone ACCEPTED; see plan/acceptance/M06.md
+tests/BezierCurveTest.cpp,121,DEF_TEST,QuadRoots_CheckTRange,6,CPU,PASS,M06 execution: original registration passes debug+release; all M06 original and supplemental tests pass; milestone ACCEPTED; see plan/acceptance/M06.md
+tests/BezierCurveTest.cpp,201,DEF_TEST,SkBezierCubic_CheckTRange,6,CPU,PASS,M06 execution: original registration passes debug+release; all M06 original and supplemental tests pass; milestone ACCEPTED; see plan/acceptance/M06.md
 tests/BigImageTest.cpp,578,DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS,BigImageTest_Ganesh,38,Ganesh,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/BigImageTest.cpp,588,DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS,TiledDrawCacheTest_Ganesh,38,Ganesh,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/BigImageTest.cpp,602,DEF_GRAPHITE_TEST_FOR_RENDERING_CONTEXTS,BigImageTest_Graphite,38,Graphite,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
@@ -371,7 +371,7 @@ tests/CubicChopTest.cpp,173,DEF_TEST,ChopCubicAtT_ArbitraryCubic,23,CPU,pending-
 tests/CubicChopTest.cpp,268,DEF_TEST,CubicExtrema_FindsLocalMinAndMaxInRangeZeroToOneInclusive,23,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/CubicChopTest.cpp,390,DEF_TEST,CubicInflectionPoints_FindsConvexityChangesInRangeZeroToOneInclusive,23,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/CubicChopTest.cpp,479,DEF_TEST,BezierCurveHorizontalIntersectBinarySearch,23,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/CubicMapTest.cpp,63,DEF_TEST,CubicMap,6,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
+tests/CubicMapTest.cpp,63,DEF_TEST,CubicMap,6,CPU,PASS,M06 execution: original registration passes debug+release; all M06 original and supplemental tests pass; milestone ACCEPTED; see plan/acceptance/M06.md
 tests/CubicRootsTest.cpp,96,DEF_TEST,CubicRootsReal_ActualCubics,23,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/CubicRootsTest.cpp,202,DEF_TEST,CubicRootsReal_Quadratics,23,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/CubicRootsTest.cpp,230,DEF_TEST,CubicRootsReal_Linear,23,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
@@ -618,12 +618,12 @@ tests/GaneshContextRecorderTest.cpp,48,DEF_GANESH_TEST_FOR_ALL_CONTEXTS,ImageMak
 tests/GaneshContextRecorderTest.cpp,69,DEF_GANESH_TEST_FOR_ALL_CONTEXTS,ImageMakeColorSpace_GaneshImageWithRecorder_Success,38,Ganesh,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/GaneshContextRecorderTest.cpp,92,DEF_GANESH_TEST_FOR_ALL_CONTEXTS,ImageMakeScaled_GaneshImageWithRecorder_Success,38,Ganesh,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/GaneshContextRecorderTest.cpp,126,DEF_GANESH_TEST_FOR_ALL_CONTEXTS,CanvasBaseRecorder_GaneshBasedCanvas_IsLinkedToDirectContext,38,Ganesh,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/GeometryTest.cpp,632,DEF_TEST,Geometry,6,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/GeometryTest.cpp,692,DEF_TEST,GeometryChopMonoCubicAtY_Successful,6,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/GeometryTest.cpp,818,DEF_TEST,GeometryChopMonoCubicAtY_OutOfRangeReturnFalse,6,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/GeometryTest.cpp,851,DEF_TEST,GeometryChopMonoCubicAtX_Successful,6,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/GeometryTest.cpp,968,DEF_TEST,GeometryChopMonoCubicAtX_OutOfRangeReturnFalse,6,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/GeometryTest.cpp,978,DEF_TEST,ConicsWithCrazyW,6,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
+tests/GeometryTest.cpp,632,DEF_TEST,Geometry,6,CPU,PASS,M06 execution: original registration passes debug+release; all M06 original and supplemental tests pass; milestone ACCEPTED; see plan/acceptance/M06.md
+tests/GeometryTest.cpp,692,DEF_TEST,GeometryChopMonoCubicAtY_Successful,6,CPU,PASS,M06 execution: original registration passes debug+release; all M06 original and supplemental tests pass; milestone ACCEPTED; see plan/acceptance/M06.md
+tests/GeometryTest.cpp,818,DEF_TEST,GeometryChopMonoCubicAtY_OutOfRangeReturnFalse,6,CPU,PASS,M06 execution: original registration passes debug+release; all M06 original and supplemental tests pass; milestone ACCEPTED; see plan/acceptance/M06.md
+tests/GeometryTest.cpp,851,DEF_TEST,GeometryChopMonoCubicAtX_Successful,6,CPU,PASS,M06 execution: original registration passes debug+release; all M06 original and supplemental tests pass; milestone ACCEPTED; see plan/acceptance/M06.md
+tests/GeometryTest.cpp,968,DEF_TEST,GeometryChopMonoCubicAtX_OutOfRangeReturnFalse,6,CPU,PASS,M06 execution: original registration passes debug+release; all M06 original and supplemental tests pass; milestone ACCEPTED; see plan/acceptance/M06.md
+tests/GeometryTest.cpp,978,DEF_TEST,ConicsWithCrazyW,6,CPU,PASS,M06 execution: original registration passes debug+release; all M06 original and supplemental tests pass; milestone ACCEPTED; see plan/acceptance/M06.md
 tests/GifTest.cpp,165,DEF_TEST,Gif,16,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/GifTest.cpp,213,DEF_TEST,Codec_GifInterlacedTruncated,16,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/GifTest.cpp,261,DEF_TEST,Gif_Sampled,16,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
@@ -910,7 +910,7 @@ tests/ImageTest.cpp,1687,DEF_TEST,image_subset_encode_skbug_7752,32,CPU,pending-
 tests/IncrTopoSortTest.cpp,493,DEF_TEST,IncrTopoSort,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
 tests/IndexedPngOverflowTest.cpp,32,DEF_TEST,IndexedPngOverflow,16,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/InfRectTest.cpp,26,DEF_TEST,InfRect,14,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/InsetConvexPolyTest.cpp,14,DEF_TEST,InsetConvexPoly,6,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
+tests/InsetConvexPolyTest.cpp,14,DEF_TEST,InsetConvexPoly,6,CPU,PASS,M06 execution: original registration passes debug+release; all M06 original and supplemental tests pass; milestone ACCEPTED; see plan/acceptance/M06.md
 tests/InvalidIndexedPngTest.cpp,30,DEF_TEST,InvalidIndexedPng,16,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/IsClosedSingleContourTest.cpp,11,DEF_TEST,IsClosedSingleContourTest,7,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/JSONTest.cpp,23,DEF_TEST,JSON_Parse,42,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
@@ -1049,7 +1049,7 @@ tests/NdkEncodeTest.cpp,295,DEF_TEST,NdkEncode_ColorSpace,0,CPU,excluded-platfor
 tests/NdkEncodeTest.cpp,339,DEF_TEST,NdkEncode_unsupportedColorSpace,0,CPU,excluded-platform,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/NonlinearBlendingTest.cpp,18,DEF_TEST,SkColorSpaceXformSteps_vs_skcms,13,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/OSPathTest.cpp,69,DEF_TEST,OSPath,7,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/OffsetSimplePolyTest.cpp,15,DEF_TEST,OffsetSimplePoly,6,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
+tests/OffsetSimplePolyTest.cpp,15,DEF_TEST,OffsetSimplePoly,6,CPU,PASS,M06 execution: original registration passes debug+release; all M06 original and supplemental tests pass; milestone ACCEPTED; see plan/acceptance/M06.md
 tests/OnceTest.cpp,18,DEF_TEST,SkOnce_Singlethreaded,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
 tests/OnceTest.cpp,32,DEF_TEST,SkOnce_Multithreaded,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
 tests/OnceTest.cpp,52,DEF_TEST,SkOnce_NoArg,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
@@ -1342,7 +1342,7 @@ tests/PngGainmapTest.cpp,140,DEF_TEST,AndroidCodec_pngGainmapEncodeAndDecode,17,
 tests/Point3Test.cpp,126,DEF_TEST,Point3,4,CPU,PASS,M04 accepted: original registration passes in debug+release; see plan/acceptance/M04.md
 tests/PointTest.cpp,133,DEF_TEST,Point,1,CPU,PASS,M01 CPU debug/release compiled reference registry reconciled; see plan/acceptance/M01.md. Original body and helper closure translated; C++ and Rust pass.
 tests/PointTest.cpp,154,DEF_TEST,Point_setLengthFast,1,CPU,PASS,M01 CPU debug/release compiled reference registry reconciled; see plan/acceptance/M01.md. Original body and helper closure translated; C++ and Rust pass.
-tests/PolyUtilsTest.cpp,17,DEF_TEST,PolyUtils,6,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
+tests/PolyUtilsTest.cpp,17,DEF_TEST,PolyUtils,6,CPU,PASS,M06 execution: original registration passes debug+release; all M06 original and supplemental tests pass; milestone ACCEPTED; see plan/acceptance/M06.md
 tests/PreChopPathCurvesTest.cpp,16,DEF_TEST,PreChopPathCurves,31,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/PremulAlphaRoundTripTest.cpp,112,DEF_TEST,PremulAlphaRoundTrip,32,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/PremulAlphaRoundTripTest.cpp,121,DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS,PremulAlphaRoundTrip_Gpu,38,Ganesh,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery

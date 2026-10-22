@@ -35,8 +35,8 @@
     {
       "id": "M06",
       "title": "Bezier geometry, roots and clipping primitives",
-      "state": "NOT_STARTED",
-      "acceptance_report": null
+      "state": "ACCEPTED",
+      "acceptance_report": "acceptance/M06.md"
     },
     {
       "id": "M07",

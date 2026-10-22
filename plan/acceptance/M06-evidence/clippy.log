@@ -1,0 +1,129 @@
+    Checking rust-skia v0.1.0 (/Volumes/Data/Users/paul/development/src/github/rust-skia)
+error: unused import: `rust_skia::sk_geometry::*`
+  --> tests/m06_test.rs:20:5
+   |
+20 | use rust_skia::sk_geometry::*;
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = note: `-D unused-imports` implied by `-D warnings`
+   = help: to override `-D warnings` add `#[allow(unused_imports)]`
+
+error: unused import: `rust_skia::sk_poly_utils::*`
+  --> tests/m06_test.rs:21:5
+   |
+21 | use rust_skia::sk_poly_utils::*;
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error: unnecessary parentheses around `if` condition
+  --> tests/m06/insetconvexpoly.rs:43:8
+   |
+43 |     if (insetPoly.len() == 4) {
+   |        ^                    ^
+   |
+   = note: `-D unused-parens` implied by `-D warnings`
+   = help: to override `-D warnings` add `#[allow(unused_parens)]`
+help: remove these parentheses
+   |
+43 -     if (insetPoly.len() == 4) {
+43 +     if insetPoly.len() == 4 {
+   |
+
+error: unnecessary parentheses around `if` condition
+  --> tests/m06/insetconvexpoly.rs:56:8
+   |
+56 |     if (insetPoly.len() == 2) {
+   |        ^                    ^
+   |
+help: remove these parentheses
+   |
+56 -     if (insetPoly.len() == 2) {
+56 +     if insetPoly.len() == 2 {
+   |
+
+error: unnecessary parentheses around `if` condition
+  --> tests/m06/offsetsimplepoly.rs:49:8
+   |
+49 |     if (offsetPoly.len() == 4) {
+   |        ^                     ^
+   |
+help: remove these parentheses
+   |
+49 -     if (offsetPoly.len() == 4) {
+49 +     if offsetPoly.len() == 4 {
+   |
+
+error: unnecessary parentheses around `if` condition
+  --> tests/m06/offsetsimplepoly.rs:62:8
+   |
+62 |     if (offsetPoly.len() == 2) {
+   |        ^                     ^
+   |
+help: remove these parentheses
+   |
+62 -     if (offsetPoly.len() == 2) {
+62 +     if offsetPoly.len() == 2 {
+   |
+
+error: constant `kSerpentines` should have an upper case name
+ --> tests/m06/geometry_fixtures.rs:2:7
+  |
+2 | const kSerpentines: &[[Point;4]] = &[
+  |       ^^^^^^^^^^^^
+  |
+  = note: `-D non-upper-case-globals` implied by `-D warnings`
+  = help: to override `-D warnings` add `#[allow(non_upper_case_globals)]`
+help: convert the identifier to upper case
+  |
+2 - const kSerpentines: &[[Point;4]] = &[
+2 + const K_SERPENTINES: &[[Point;4]] = &[
+  |
+
+error: constant `kLoops` should have an upper case name
+ --> tests/m06/geometry_fixtures.rs:8:7
+  |
+8 | const kLoops: &[[Point;4]] = &[
+  |       ^^^^^^
+  |
+help: convert the identifier to upper case
+  |
+8 - const kLoops: &[[Point;4]] = &[
+8 + const K_LOOPS: &[[Point;4]] = &[
+  |
+
+error: constant `kLinearCubics` should have an upper case name
+  --> tests/m06/geometry_fixtures.rs:14:7
+   |
+14 | const kLinearCubics: &[[Point;4]] = &[
+   |       ^^^^^^^^^^^^^
+   |
+help: convert the identifier to upper case
+   |
+14 - const kLinearCubics: &[[Point;4]] = &[
+14 + const K_LINEAR_CUBICS: &[[Point;4]] = &[
+   |
+
+error: constant `kCusps` should have an upper case name
+  --> tests/m06/geometry_fixtures.rs:22:7
+   |
+22 | const kCusps: &[[Point;4]] = &[
+   |       ^^^^^^
+   |
+help: convert the identifier to upper case
+   |
+22 - const kCusps: &[[Point;4]] = &[
+22 + const K_CUSPS: &[[Point;4]] = &[
+   |
+
+error: constant `kQuads` should have an upper case name
+  --> tests/m06/geometry_fixtures.rs:28:7
+   |
+28 | const kQuads: &[[Point;3]] = &[
+   |       ^^^^^^
+   |
+help: convert the identifier to upper case
+   |
+28 - const kQuads: &[[Point;3]] = &[
+28 + const K_QUADS: &[[Point;3]] = &[
+   |
+
+error: could not compile `rust-skia` (test "m06_test") due to 11 previous errors

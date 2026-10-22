@@ -1,0 +1,230 @@
+warning: unused import: `rust_skia::sk_geometry::*`
+  --> tests/m06_test.rs:20:5
+   |
+20 | use rust_skia::sk_geometry::*;
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused import: `rust_skia::sk_poly_utils::*`
+  --> tests/m06_test.rs:21:5
+   |
+21 | use rust_skia::sk_poly_utils::*;
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: unnecessary parentheses around `if` condition
+  --> tests/m06/insetconvexpoly.rs:43:8
+   |
+43 |     if (insetPoly.len() == 4) {
+   |        ^                    ^
+   |
+   = note: `#[warn(unused_parens)]` (part of `#[warn(unused)]`) on by default
+help: remove these parentheses
+   |
+43 -     if (insetPoly.len() == 4) {
+43 +     if insetPoly.len() == 4 {
+   |
+
+warning: unnecessary parentheses around `if` condition
+  --> tests/m06/insetconvexpoly.rs:56:8
+   |
+56 |     if (insetPoly.len() == 2) {
+   |        ^                    ^
+   |
+help: remove these parentheses
+   |
+56 -     if (insetPoly.len() == 2) {
+56 +     if insetPoly.len() == 2 {
+   |
+
+warning: unnecessary parentheses around `if` condition
+  --> tests/m06/offsetsimplepoly.rs:49:8
+   |
+49 |     if (offsetPoly.len() == 4) {
+   |        ^                     ^
+   |
+help: remove these parentheses
+   |
+49 -     if (offsetPoly.len() == 4) {
+49 +     if offsetPoly.len() == 4 {
+   |
+
+warning: unnecessary parentheses around `if` condition
+  --> tests/m06/offsetsimplepoly.rs:62:8
+   |
+62 |     if (offsetPoly.len() == 2) {
+   |        ^                     ^
+   |
+help: remove these parentheses
+   |
+62 -     if (offsetPoly.len() == 2) {
+62 +     if offsetPoly.len() == 2 {
+   |
+
+warning: constant `kSerpentines` should have an upper case name
+ --> tests/m06/geometry_fixtures.rs:2:7
+  |
+2 | const kSerpentines: &[[Point;4]] = &[
+  |       ^^^^^^^^^^^^
+  |
+  = note: `#[warn(non_upper_case_globals)]` (part of `#[warn(nonstandard_style)]`) on by default
+help: convert the identifier to upper case
+  |
+2 - const kSerpentines: &[[Point;4]] = &[
+2 + const K_SERPENTINES: &[[Point;4]] = &[
+  |
+
+warning: constant `kLoops` should have an upper case name
+ --> tests/m06/geometry_fixtures.rs:8:7
+  |
+8 | const kLoops: &[[Point;4]] = &[
+  |       ^^^^^^
+  |
+help: convert the identifier to upper case
+  |
+8 - const kLoops: &[[Point;4]] = &[
+8 + const K_LOOPS: &[[Point;4]] = &[
+  |
+
+warning: constant `kLinearCubics` should have an upper case name
+  --> tests/m06/geometry_fixtures.rs:14:7
+   |
+14 | const kLinearCubics: &[[Point;4]] = &[
+   |       ^^^^^^^^^^^^^
+   |
+help: convert the identifier to upper case
+   |
+14 - const kLinearCubics: &[[Point;4]] = &[
+14 + const K_LINEAR_CUBICS: &[[Point;4]] = &[
+   |
+
+warning: constant `kCusps` should have an upper case name
+  --> tests/m06/geometry_fixtures.rs:22:7
+   |
+22 | const kCusps: &[[Point;4]] = &[
+   |       ^^^^^^
+   |
+help: convert the identifier to upper case
+   |
+22 - const kCusps: &[[Point;4]] = &[
+22 + const K_CUSPS: &[[Point;4]] = &[
+   |
+
+warning: constant `kQuads` should have an upper case name
+  --> tests/m06/geometry_fixtures.rs:28:7
+   |
+28 | const kQuads: &[[Point;3]] = &[
+   |       ^^^^^^
+   |
+help: convert the identifier to upper case
+   |
+28 - const kQuads: &[[Point;3]] = &[
+28 + const K_QUADS: &[[Point;3]] = &[
+   |
+
+warning: `rust-skia` (test "m06_test") generated 11 warnings (run `cargo fix --test "m06_test" -p rust-skia` to apply 11 suggestions)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.01s
+     Running tests/m06_test.rs (target/debug/deps/m06_test-d1434e11cb882a9f)
+
+running 21 tests
+test bezier::BezierCubicEvalAt ... linear curve @0.1234
+linear curve @0.2345
+Arbitrary Cubic, t=0.0
+Arbitrary Cubic, t=0.3456
+Arbitrary Cubic, t=0.5
+Arbitrary Cubic, t=0.7891
+Arbitrary Cubic, t=1.0
+reporter assertions=28 failures=0
+ok
+test bezier::BezierCubicToPolynomials ... Arbitrary control points X direction: SkBezierCurve Implementation
+Arbitrary control points Y direction: SkBezierCurve Implementation
+reporter assertions=10 failures=0
+ok
+test bezier::QuadRoots_CheckTRange ... reporter assertions=4316 failures=0
+ok
+test bezier::SkBezierCubic_CheckTRange ... reporter assertions=10000 failures=0
+ok
+test cubic_map::CubicMap ... reporter assertions=319375 failures=0
+ok
+test geometry::ConicsWithCrazyW ... reporter assertions=840 failures=0
+ok
+test geometry::Geometry ... small box
+biggest box
+large quadrant
+smallest box
+slightly negative box
+infinite box
+one sided infinite box
+nan box
+partial nan box
+reporter assertions=1379 failures=0
+ok
+test insetconvexpoly::InsetConvexPoly ... reporter assertions=20 failures=0
+ok
+test mono_x::GeometryChopMonoCubicAtX_OutOfRangeReturnFalse ... reporter assertions=2 failures=0
+ok
+test mono_x::GeometryChopMonoCubicAtX_Successful ... straight, positive slope @ 2.5
+straight, positive slope @ 5.0
+straight, positive slope @ 9.0
+straight, positive slope @ 10.0
+curve, positive slope @ 2.0
+curve, positive slope @ 5.0
+curve, negative slope @ 5.0
+curve, negative slope @ 3.0
+curve, negative slope @ 2.5
+inverted curve, negative slope @ 5.0
+inverted curve, negative slope @ 3.0
+inverted curve, negative slope @ 2.5
+big curve, negative slope @ 90
+big curve, negative slope @ 10
+big curve, negative slope @ 0
+reporter assertions=165 failures=0
+ok
+test mono_y::GeometryChopMonoCubicAtY_OutOfRangeReturnFalse ... reporter assertions=2 failures=0
+ok
+test mono_y::GeometryChopMonoCubicAtY_Successful ... straight, positive slope @ 2.5
+straight, positive slope @ 5.0
+straight, positive slope @ 9.0
+straight, positive slope @ 10.0
+curve, positive slope @ 2.0
+curve, positive slope @ 5.0
+curve, negative slope @ 5.0
+curve, negative slope @ 3.0
+curve, negative slope @ 2.5
+inverted curve, negative slope @ 5.0
+inverted curve, negative slope @ 3.0
+inverted curve, negative slope @ 2.5
+big curve, negative slope @ 90
+big curve, negative slope @ 10
+big curve, negative slope @ 0
+ossfuzz:55680 curve barely crosses Y axis
+reporter assertions=144 failures=0
+ok
+test offsetsimplepoly::OffsetSimplePoly ... reporter assertions=37 failures=0
+ok
+test polyutils::PolyUtils ... reporter assertions=64 failures=0
+ok
+test supplemental::supplemental_clipping_counts_bounds_and_output_ownership ... reporter assertions=25 failures=0
+ok
+test supplemental::supplemental_conic_storage_ownership_and_lifetime ... reporter assertions=13 failures=0
+ok
+test supplemental::supplemental_polygon_size_overflow_and_index_bytes ... reporter assertions=23 failures=0
+ok
+test supplemental::supplemental_roots_boundaries_and_degenerate_curves ... reporter assertions=21 failures=0
+ok
+test supplemental::supplemental_unit_arc_and_perspective_weight ... reporter assertions=9 failures=0
+ok
+test supplemental::supplemental_verb_discriminants_and_coregraphics_layout_byte_order ... reporter assertions=16 failures=0
+ok
+test support::tests::reporter_collects_failures_and_evaluates_once ... reporter assertions=3 failures=2
+
+thread 'support::tests::reporter_collects_failures_and_evaluates_once' (16464697) panicked at tests/support/mod.rs:25:9:
+2 assertion(s) failed:
+tests/support/mod.rs:49: { evaluations += 1; false }
+tests/support/mod.rs:53: false
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+reporter assertions=0 failures=0
+ok
+
+test result: ok. 21 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.39s
+

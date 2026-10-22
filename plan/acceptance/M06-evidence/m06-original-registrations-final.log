@@ -1,0 +1,105 @@
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.00s
+     Running tests/m06_test.rs (target/debug/deps/m06_test-d1434e11cb882a9f)
+
+running 21 tests
+test bezier::BezierCubicEvalAt ... linear curve @0.1234
+linear curve @0.2345
+Arbitrary Cubic, t=0.0
+Arbitrary Cubic, t=0.3456
+Arbitrary Cubic, t=0.5
+Arbitrary Cubic, t=0.7891
+Arbitrary Cubic, t=1.0
+reporter assertions=28 failures=0
+ok
+test bezier::BezierCubicToPolynomials ... Arbitrary control points X direction: SkBezierCurve Implementation
+Arbitrary control points Y direction: SkBezierCurve Implementation
+reporter assertions=10 failures=0
+ok
+test bezier::QuadRoots_CheckTRange ... reporter assertions=4316 failures=0
+ok
+test bezier::SkBezierCubic_CheckTRange ... reporter assertions=10000 failures=0
+ok
+test cubic_map::CubicMap ... reporter assertions=319375 failures=0
+ok
+test geometry::ConicsWithCrazyW ... reporter assertions=840 failures=0
+ok
+test geometry::Geometry ... small box
+biggest box
+large quadrant
+smallest box
+slightly negative box
+infinite box
+one sided infinite box
+nan box
+partial nan box
+reporter assertions=1379 failures=0
+ok
+test insetconvexpoly::InsetConvexPoly ... reporter assertions=20 failures=0
+ok
+test mono_x::GeometryChopMonoCubicAtX_OutOfRangeReturnFalse ... reporter assertions=2 failures=0
+ok
+test mono_x::GeometryChopMonoCubicAtX_Successful ... straight, positive slope @ 2.5
+straight, positive slope @ 5.0
+straight, positive slope @ 9.0
+straight, positive slope @ 10.0
+curve, positive slope @ 2.0
+curve, positive slope @ 5.0
+curve, negative slope @ 5.0
+curve, negative slope @ 3.0
+curve, negative slope @ 2.5
+inverted curve, negative slope @ 5.0
+inverted curve, negative slope @ 3.0
+inverted curve, negative slope @ 2.5
+big curve, negative slope @ 90
+big curve, negative slope @ 10
+big curve, negative slope @ 0
+reporter assertions=165 failures=0
+ok
+test mono_y::GeometryChopMonoCubicAtY_OutOfRangeReturnFalse ... reporter assertions=2 failures=0
+ok
+test mono_y::GeometryChopMonoCubicAtY_Successful ... straight, positive slope @ 2.5
+straight, positive slope @ 5.0
+straight, positive slope @ 9.0
+straight, positive slope @ 10.0
+curve, positive slope @ 2.0
+curve, positive slope @ 5.0
+curve, negative slope @ 5.0
+curve, negative slope @ 3.0
+curve, negative slope @ 2.5
+inverted curve, negative slope @ 5.0
+inverted curve, negative slope @ 3.0
+inverted curve, negative slope @ 2.5
+big curve, negative slope @ 90
+big curve, negative slope @ 10
+big curve, negative slope @ 0
+ossfuzz:55680 curve barely crosses Y axis
+reporter assertions=144 failures=0
+ok
+test offsetsimplepoly::OffsetSimplePoly ... reporter assertions=37 failures=0
+ok
+test polyutils::PolyUtils ... reporter assertions=64 failures=0
+ok
+test supplemental::supplemental_clipping_counts_bounds_and_output_ownership ... reporter assertions=25 failures=0
+ok
+test supplemental::supplemental_conic_storage_ownership_and_lifetime ... reporter assertions=13 failures=0
+ok
+test supplemental::supplemental_polygon_size_overflow_and_index_bytes ... reporter assertions=23 failures=0
+ok
+test supplemental::supplemental_roots_boundaries_and_degenerate_curves ... reporter assertions=21 failures=0
+ok
+test supplemental::supplemental_unit_arc_and_perspective_weight ... reporter assertions=9 failures=0
+ok
+test supplemental::supplemental_verb_discriminants_and_coregraphics_layout_byte_order ... reporter assertions=16 failures=0
+ok
+test support::tests::reporter_collects_failures_and_evaluates_once ... reporter assertions=3 failures=2
+
+thread 'support::tests::reporter_collects_failures_and_evaluates_once' (16469203) panicked at tests/support/mod.rs:25:9:
+2 assertion(s) failed:
+tests/support/mod.rs:49: { evaluations += 1; false }
+tests/support/mod.rs:53: false
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+reporter assertions=0 failures=0
+ok
+
+test result: ok. 21 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.37s
+

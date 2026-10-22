@@ -1,0 +1,2723 @@
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m06/bezier.rs:1:
+ // BezierCurveTest.cpp:52,107,121,201. BSD license: tests/LICENSE.skia.
+ use super::*;
+[31m-use rust_skia::floating_point::{double_nearly_zero,doubles_nearly_equal_ulps_with};
+(B[m[31m-fn nearly_equal(expected:f64,actual:f64)->bool {
+(B[m[31m- if double_nearly_zero(expected) {double_nearly_zero(actual)} else {doubles_nearly_equal_ulps_with(expected,actual,64)}
+(B[m[32m+use rust_skia::floating_point::{double_nearly_zero, doubles_nearly_equal_ulps_with};
+(B[m[32m+fn nearly_equal(expected: f64, actual: f64) -> bool {
+(B[m[32m+    if double_nearly_zero(expected) {
+(B[m[32m+        double_nearly_zero(actual)
+(B[m[32m+    } else {
+(B[m[32m+        doubles_nearly_equal_ulps_with(expected, actual, 64)
+(B[m[32m+    }
+(B[m }
+[31m-fn testCubicEvalAtT(r:&mut Reporter,name:&str,input:&[f64;8],t:f64,expected:[f64;2]) {
+(B[m[31m- eprintln!("{name}");
+(B[m[31m- check!(r,input.len()/2==4);check!(r,t>=0.0&&t<=1.0);
+(B[m[31m- let [x,y]=SkBezierCubic::eval_at(input,t);
+(B[m[31m- check!(r,nearly_equal(expected[0],x));check!(r,nearly_equal(expected[1],y));
+(B[m[32m+fn testCubicEvalAtT(r: &mut Reporter, name: &str, input: &[f64; 8], t: f64, expected: [f64; 2]) {
+(B[m[32m+    eprintln!("{name}");
+(B[m[32m+    check!(r, input.len() / 2 == 4);
+(B[m[32m+    check!(r, t >= 0.0 && t <= 1.0);
+(B[m[32m+    let [x, y] = SkBezierCubic::eval_at(input, t);
+(B[m[32m+    check!(r, nearly_equal(expected[0], x));
+(B[m[32m+    check!(r, nearly_equal(expected[1], y));
+(B[m }
+ #[test]
+ fn BezierCubicEvalAt() {
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m06/bezier.rs:15:
+[31m- let mut r=Reporter::default();
+(B[m[31m- testCubicEvalAtT(&mut r,"linear curve @0.1234",&[0.,0.,0.,0.,10.,10.,10.,10.],0.1234,[0.4192451819200000,0.4192451819200000]);
+(B[m[31m- testCubicEvalAtT(&mut r,"linear curve @0.2345",&[0.,0.,5.,5.,5.,5.,10.,10.],0.2345,[2.8215983862500000,2.8215983862500000]);
+(B[m[31m- let input=[-10.,-20.,-7.,5.,14.,-2.,3.,13.];
+(B[m[31m- testCubicEvalAtT(&mut r,"Arbitrary Cubic, t=0.0",&input,0.,[-10.,-20.]);
+(B[m[31m- testCubicEvalAtT(&mut r,"Arbitrary Cubic, t=0.3456",&input,0.3456,[-2.503786700800000,-3.31715344793600]);
+(B[m[31m- testCubicEvalAtT(&mut r,"Arbitrary Cubic, t=0.5",&input,0.5,[1.75,0.25]);
+(B[m[31m- testCubicEvalAtT(&mut r,"Arbitrary Cubic, t=0.7891",&input,0.7891,[6.158763291450000,5.938550084434000]);
+(B[m[31m- testCubicEvalAtT(&mut r,"Arbitrary Cubic, t=1.0",&input,1.,[3.,13.]);
+(B[m[31m- r.finish();
+(B[m[32m+    let mut r = Reporter::default();
+(B[m[32m+    testCubicEvalAtT(
+(B[m[32m+        &mut r,
+(B[m[32m+        "linear curve @0.1234",
+(B[m[32m+        &[0., 0., 0., 0., 10., 10., 10., 10.],
+(B[m[32m+        0.1234,
+(B[m[32m+        [0.4192451819200000, 0.4192451819200000],
+(B[m[32m+    );
+(B[m[32m+    testCubicEvalAtT(
+(B[m[32m+        &mut r,
+(B[m[32m+        "linear curve @0.2345",
+(B[m[32m+        &[0., 0., 5., 5., 5., 5., 10., 10.],
+(B[m[32m+        0.2345,
+(B[m[32m+        [2.8215983862500000, 2.8215983862500000],
+(B[m[32m+    );
+(B[m[32m+    let input = [-10., -20., -7., 5., 14., -2., 3., 13.];
+(B[m[32m+    testCubicEvalAtT(&mut r, "Arbitrary Cubic, t=0.0", &input, 0., [-10., -20.]);
+(B[m[32m+    testCubicEvalAtT(
+(B[m[32m+        &mut r,
+(B[m[32m+        "Arbitrary Cubic, t=0.3456",
+(B[m[32m+        &input,
+(B[m[32m+        0.3456,
+(B[m[32m+        [-2.503786700800000, -3.31715344793600],
+(B[m[32m+    );
+(B[m[32m+    testCubicEvalAtT(&mut r, "Arbitrary Cubic, t=0.5", &input, 0.5, [1.75, 0.25]);
+(B[m[32m+    testCubicEvalAtT(
+(B[m[32m+        &mut r,
+(B[m[32m+        "Arbitrary Cubic, t=0.7891",
+(B[m[32m+        &input,
+(B[m[32m+        0.7891,
+(B[m[32m+        [6.158763291450000, 5.938550084434000],
+(B[m[32m+    );
+(B[m[32m+    testCubicEvalAtT(&mut r, "Arbitrary Cubic, t=1.0", &input, 1., [3., 13.]);
+(B[m[32m+    r.finish();
+(B[m }
+[31m-fn testCubicConvertToPolynomial(r:&mut Reporter,name:&str,input:&[f64;8],y:bool,expected:[f64;4]) {
+(B[m[31m- eprintln!("{name}: SkBezierCurve Implementation");check!(r,input.len()/2==4);
+(B[m[31m- let actual=SkBezierCubic::convert_to_polynomial(input,y);
+(B[m[31m- for i in 0..4 {check!(r,nearly_equal(expected[i],actual[i]));}
+(B[m[32m+fn testCubicConvertToPolynomial(
+(B[m[32m+    r: &mut Reporter,
+(B[m[32m+    name: &str,
+(B[m[32m+    input: &[f64; 8],
+(B[m[32m+    y: bool,
+(B[m[32m+    expected: [f64; 4],
+(B[m[32m+) {
+(B[m[32m+    eprintln!("{name}: SkBezierCurve Implementation");
+(B[m[32m+    check!(r, input.len() / 2 == 4);
+(B[m[32m+    let actual = SkBezierCubic::convert_to_polynomial(input, y);
+(B[m[32m+    for i in 0..4 {
+(B[m[32m+        check!(r, nearly_equal(expected[i], actual[i]));
+(B[m[32m+    }
+(B[m }
+ #[test]
+ fn BezierCubicToPolynomials() {
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m06/bezier.rs:33:
+[31m- let mut r=Reporter::default();let input=[1.,2.,-3.,4.,5.,-6.,7.,8.];
+(B[m[31m- testCubicConvertToPolynomial(&mut r,"Arbitrary control points X direction",&input,false,[-18.,36.,-12.,1.]);
+(B[m[31m- testCubicConvertToPolynomial(&mut r,"Arbitrary control points Y direction",&input,true,[36.,-36.,6.,2.]);r.finish();
+(B[m[32m+    let mut r = Reporter::default();
+(B[m[32m+    let input = [1., 2., -3., 4., 5., -6., 7., 8.];
+(B[m[32m+    testCubicConvertToPolynomial(
+(B[m[32m+        &mut r,
+(B[m[32m+        "Arbitrary control points X direction",
+(B[m[32m+        &input,
+(B[m[32m+        false,
+(B[m[32m+        [-18., 36., -12., 1.],
+(B[m[32m+    );
+(B[m[32m+    testCubicConvertToPolynomial(
+(B[m[32m+        &mut r,
+(B[m[32m+        "Arbitrary control points Y direction",
+(B[m[32m+        &input,
+(B[m[32m+        true,
+(B[m[32m+        [36., -36., 6., 2.],
+(B[m[32m+    );
+(B[m[32m+    r.finish();
+(B[m }
+ #[test]
+ fn QuadRoots_CheckTRange() {
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m06/bezier.rs:39:
+[31m- let mut r=Reporter::default();
+(B[m[31m- let roots=[-1000.,-10.,-1.,-0.1,-0.0001,0.,0.0001,0.1,0.9,0.9999,1.,1.0001,1.1,10.,1000.];
+(B[m[31m- let scales=[-1000.,-10.,-1.,-0.1,-0.0001,0.0001,0.1,1.,10.,1000.];
+(B[m[31m- let outside=|x:f64| x<0.||1.<x;
+(B[m[31m- let inside=|x:f64|!outside(x);
+(B[m[31m- let equal=|a:f64,b:f64| a as f32==b as f32;
+(B[m[31m- for r1 in roots {for r0 in roots {for s in scales {
+(B[m[31m-  let a=s;let b=s*0.5*(r0+r1);let c=s*r0*r1;
+(B[m[31m-  let intersections=SkBezierQuad::intersect(0.,-0.5,0.,a,b,c,0.);
+(B[m[31m-  if intersections.is_empty() {check!(r,SkQuads::discriminant(a,b,c)<0.||(outside(r0)&&outside(r1)));}
+(B[m[31m-  else if intersections.len()==1 {
+(B[m[31m-   check!(r,inside(r0)||inside(r1));let root=if inside(r0){r0}else{r1};
+(B[m[31m-   check!(r,equal(root,intersections[0] as f64));
+(B[m[31m-  } else {
+(B[m[31m-   check!(r,intersections.len()==2);check!(r,inside(r0)&&inside(r1));
+(B[m[31m-   let smaller=intersections[0].min(intersections[1]);let bigger=intersections[0].max(intersections[1]);
+(B[m[31m-   check!(r,equal(smaller as f64,r0.min(r1)));check!(r,equal(bigger as f64,r0.max(r1)));
+(B[m[31m-  }
+(B[m[31m- }}}
+(B[m[31m- {let a=0.;let b=-2.;let c=-1.;let intersections=SkBezierQuad::intersect(0.,-0.5,0.,a,b,c,0.);
+(B[m[31m- check!(r,intersections.len()==1);check!(r,intersections[0]==0.25);}
+(B[m[31m- r.finish();
+(B[m[32m+    let mut r = Reporter::default();
+(B[m[32m+    let roots = [
+(B[m[32m+        -1000., -10., -1., -0.1, -0.0001, 0., 0.0001, 0.1, 0.9, 0.9999, 1., 1.0001, 1.1, 10., 1000.,
+(B[m[32m+    ];
+(B[m[32m+    let scales = [
+(B[m[32m+        -1000., -10., -1., -0.1, -0.0001, 0.0001, 0.1, 1., 10., 1000.,
+(B[m[32m+    ];
+(B[m[32m+    let outside = |x: f64| x < 0. || 1. < x;
+(B[m[32m+    let inside = |x: f64| !outside(x);
+(B[m[32m+    let equal = |a: f64, b: f64| a as f32 == b as f32;
+(B[m[32m+    for r1 in roots {
+(B[m[32m+        for r0 in roots {
+(B[m[32m+            for s in scales {
+(B[m[32m+                let a = s;
+(B[m[32m+                let b = s * 0.5 * (r0 + r1);
+(B[m[32m+                let c = s * r0 * r1;
+(B[m[32m+                let intersections = SkBezierQuad::intersect(0., -0.5, 0., a, b, c, 0.);
+(B[m[32m+                if intersections.is_empty() {
+(B[m[32m+                    check!(
+(B[m[32m+                        r,
+(B[m[32m+                        SkQuads::discriminant(a, b, c) < 0. || (outside(r0) && outside(r1))
+(B[m[32m+                    );
+(B[m[32m+                } else if intersections.len() == 1 {
+(B[m[32m+                    check!(r, inside(r0) || inside(r1));
+(B[m[32m+                    let root = if inside(r0) { r0 } else { r1 };
+(B[m[32m+                    check!(r, equal(root, intersections[0] as f64));
+(B[m[32m+                } else {
+(B[m[32m+                    check!(r, intersections.len() == 2);
+(B[m[32m+                    check!(r, inside(r0) && inside(r1));
+(B[m[32m+                    let smaller = intersections[0].min(intersections[1]);
+(B[m[32m+                    let bigger = intersections[0].max(intersections[1]);
+(B[m[32m+                    check!(r, equal(smaller as f64, r0.min(r1)));
+(B[m[32m+                    check!(r, equal(bigger as f64, r0.max(r1)));
+(B[m[32m+                }
+(B[m[32m+            }
+(B[m[32m+        }
+(B[m[32m+    }
+(B[m[32m+    {
+(B[m[32m+        let a = 0.;
+(B[m[32m+        let b = -2.;
+(B[m[32m+        let c = -1.;
+(B[m[32m+        let intersections = SkBezierQuad::intersect(0., -0.5, 0., a, b, c, 0.);
+(B[m[32m+        check!(r, intersections.len() == 1);
+(B[m[32m+        check!(r, intersections[0] == 0.25);
+(B[m[32m+    }
+(B[m[32m+    r.finish();
+(B[m }
+ #[test]
+ fn SkBezierCubic_CheckTRange() {
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m06/bezier.rs:64:
+[31m- let mut r=Reporter::default();
+(B[m[31m- let roots=[-10.,-5.,-2.,-1.,0.,0.5,1.,2.,5.,10.];
+(B[m[31m- let scales=[-1000.,-10.,-1.,-0.1,-0.0001,0.0001,0.1,1.,10.,1000.];
+(B[m[31m- let outside=|x:f64|x<0.||1.<x;let inside=|x:f64|!outside(x);
+(B[m[31m- let specialEqual=|actual:f64,test:f64|(test-actual).abs()<=f32::EPSILON as f64*test.abs().max(actual.abs());
+(B[m[31m- for r2 in roots {for r1 in roots {for r0 in roots {for s in scales {
+(B[m[31m-  let a=s;let b=-s*(r0+r1+r2);let c=s*(r0*r1+r1*r2+r0*r2);let d=-s*r0*r1*r2;
+(B[m[31m-  // Sorted unique values preserve std::set<double>'s iteration order.
+(B[m[31m-  let mut inRangeRoots=Vec::new();for v in [r0,r1,r2] {if inside(v) {inRangeRoots.push(v);}}
+(B[m[31m-  inRangeRoots.sort_by(f64::total_cmp);inRangeRoots.dedup();
+(B[m[31m-  let intersections=SkBezierCubic::intersect(0.,0.,1.,0.,a,b,c,d,0.);
+(B[m[31m-  let mut correct=0;for candidate in &intersections {for answer in &inRangeRoots {if specialEqual(*candidate as f64,*answer) {correct+=1;break;}}}
+(B[m[31m-  check!(r,correct==intersections.len());
+(B[m[31m- }}}}
+(B[m[31m- r.finish();
+(B[m[32m+    let mut r = Reporter::default();
+(B[m[32m+    let roots = [-10., -5., -2., -1., 0., 0.5, 1., 2., 5., 10.];
+(B[m[32m+    let scales = [
+(B[m[32m+        -1000., -10., -1., -0.1, -0.0001, 0.0001, 0.1, 1., 10., 1000.,
+(B[m[32m+    ];
+(B[m[32m+    let outside = |x: f64| x < 0. || 1. < x;
+(B[m[32m+    let inside = |x: f64| !outside(x);
+(B[m[32m+    let specialEqual = |actual: f64, test: f64| {
+(B[m[32m+        (test - actual).abs() <= f32::EPSILON as f64 * test.abs().max(actual.abs())
+(B[m[32m+    };
+(B[m[32m+    for r2 in roots {
+(B[m[32m+        for r1 in roots {
+(B[m[32m+            for r0 in roots {
+(B[m[32m+                for s in scales {
+(B[m[32m+                    let a = s;
+(B[m[32m+                    let b = -s * (r0 + r1 + r2);
+(B[m[32m+                    let c = s * (r0 * r1 + r1 * r2 + r0 * r2);
+(B[m[32m+                    let d = -s * r0 * r1 * r2;
+(B[m[32m+                    // Sorted unique values preserve std::set<double>'s iteration order.
+(B[m[32m+                    let mut inRangeRoots = Vec::new();
+(B[m[32m+                    for v in [r0, r1, r2] {
+(B[m[32m+                        if inside(v) {
+(B[m[32m+                            inRangeRoots.push(v);
+(B[m[32m+                        }
+(B[m[32m+                    }
+(B[m[32m+                    inRangeRoots.sort_by(f64::total_cmp);
+(B[m[32m+                    inRangeRoots.dedup();
+(B[m[32m+                    let intersections = SkBezierCubic::intersect(0., 0., 1., 0., a, b, c, d, 0.);
+(B[m[32m+                    let mut correct = 0;
+(B[m[32m+                    for candidate in &intersections {
+(B[m[32m+                        for answer in &inRangeRoots {
+(B[m[32m+                            if specialEqual(*candidate as f64, *answer) {
+(B[m[32m+                                correct += 1;
+(B[m[32m+                                break;
+(B[m[32m+                            }
+(B[m[32m+                        }
+(B[m[32m+                    }
+(B[m[32m+                    check!(r, correct == intersections.len());
+(B[m[32m+                }
+(B[m[32m+            }
+(B[m[32m+        }
+(B[m[32m+    }
+(B[m[32m+    r.finish();
+(B[m }
+ 
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m06/cubic_map.rs:1:
+ // CubicMapTest.cpp:63 and complete helper closure. BSD license: tests/LICENSE.skia.
+ use super::*;
+[31m-fn accurate_t(a:f32,b:f32,c:f32,d:f32)->f32 {
+(B[m[31m- let mut roots=[0.;3];let count=SkCubics::roots_valid_t(a as f64,b as f64,c as f64,d as f64,&mut roots);
+(B[m[31m- debug_assert_eq!(count,1);roots[0] as f32
+(B[m[32m+fn accurate_t(a: f32, b: f32, c: f32, d: f32) -> f32 {
+(B[m[32m+    let mut roots = [0.; 3];
+(B[m[32m+    let count = SkCubics::roots_valid_t(a as f64, b as f64, c as f64, d as f64, &mut roots);
+(B[m[32m+    debug_assert_eq!(count, 1);
+(B[m[32m+    roots[0] as f32
+(B[m }
+[31m-fn accurate_solve(p1:Point,p2:Point,x:f32)->f32 {
+(B[m[31m- let array=[p(0.,0.),p1,p2,p(1.,1.)];let coeff=SkCubicCoeff::new(&array);
+(B[m[31m- let t=accurate_t(coeff.a.x,coeff.b.x,coeff.c.x,coeff.d.x-x);
+(B[m[31m- debug_assert!(t>=0.&&t<=1.);let y=coeff.eval(t).y;debug_assert!(y>=0.&&y<=1.0001);y
+(B[m[32m+fn accurate_solve(p1: Point, p2: Point, x: f32) -> f32 {
+(B[m[32m+    let array = [p(0., 0.), p1, p2, p(1., 1.)];
+(B[m[32m+    let coeff = SkCubicCoeff::new(&array);
+(B[m[32m+    let t = accurate_t(coeff.a.x, coeff.b.x, coeff.c.x, coeff.d.x - x);
+(B[m[32m+    debug_assert!(t >= 0. && t <= 1.);
+(B[m[32m+    let y = coeff.eval(t).y;
+(B[m[32m+    debug_assert!(y >= 0. && y <= 1.0001);
+(B[m[32m+    y
+(B[m }
+[31m-fn nearly_le(a:f32,b:f32)->bool {a<=b||near(a-b,0.)}
+(B[m[31m-fn exercise_cubicmap(p1:Point,p2:Point,r:&mut Reporter) {
+(B[m[31m- let cmap=SkCubicMap::new(p1,p2);let mut prev_y=0.;let dx=1.0f32/512.;let mut x=dx;
+(B[m[31m- while x<1. {
+(B[m[31m-  let y=cmap.compute_y_from_x(x);
+(B[m[31m-  if !nearly_le(prev_y,y) {cmap.compute_y_from_x(x);check!(r,false);}
+(B[m[31m-  prev_y=y;let yy=accurate_solve(p1,p2,x);let diff=(yy-y).abs();check!(r,diff<0.008);x+=dx;
+(B[m[31m- }
+(B[m[32m+fn nearly_le(a: f32, b: f32) -> bool {
+(B[m[32m+    a <= b || near(a - b, 0.)
+(B[m }
+[32m+fn exercise_cubicmap(p1: Point, p2: Point, r: &mut Reporter) {
+(B[m[32m+    let cmap = SkCubicMap::new(p1, p2);
+(B[m[32m+    let mut prev_y = 0.;
+(B[m[32m+    let dx = 1.0f32 / 512.;
+(B[m[32m+    let mut x = dx;
+(B[m[32m+    while x < 1. {
+(B[m[32m+        let y = cmap.compute_y_from_x(x);
+(B[m[32m+        if !nearly_le(prev_y, y) {
+(B[m[32m+            cmap.compute_y_from_x(x);
+(B[m[32m+            check!(r, false);
+(B[m[32m+        }
+(B[m[32m+        prev_y = y;
+(B[m[32m+        let yy = accurate_solve(p1, p2, x);
+(B[m[32m+        let diff = (yy - y).abs();
+(B[m[32m+        check!(r, diff < 0.008);
+(B[m[32m+        x += dx;
+(B[m[32m+    }
+(B[m[32m+}
+(B[m #[test]
+ fn CubicMap() {
+[31m- let mut r=Reporter::default();let values=[0.,1.,0.5,0.0000001,0.999999];
+(B[m[31m- for x0 in values {for y0 in values {for x1 in values {for y1 in values {exercise_cubicmap(p(x0,y0),p(x1,y1),&mut r);}}}}
+(B[m[31m- r.finish();
+(B[m[32m+    let mut r = Reporter::default();
+(B[m[32m+    let values = [0., 1., 0.5, 0.0000001, 0.999999];
+(B[m[32m+    for x0 in values {
+(B[m[32m+        for y0 in values {
+(B[m[32m+            for x1 in values {
+(B[m[32m+                for y1 in values {
+(B[m[32m+                    exercise_cubicmap(p(x0, y0), p(x1, y1), &mut r);
+(B[m[32m+                }
+(B[m[32m+            }
+(B[m[32m+        }
+(B[m[32m+    }
+(B[m[32m+    r.finish();
+(B[m }
+ 
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m06/geometry.rs:2:
+ use super::*;
+ use SkCubicType::*;
+ include!("geometry_fixtures.rs");
+[31m-fn check_pairs(r:&mut Reporter,index:usize,t:f32,name:&str,x0:f32,y0:f32,x1:f32,y1:f32) {
+(B[m[31m- let eq=near(x0,x1)&&near(y0,y1);
+(B[m[31m- if !eq {eprintln!("{name} [{index} {t}] p0 [{x0:10.8} {y0:10.8}] p1 [{x1:10.8} {y1:10.8}]");check!(r,eq);}
+(B[m[32m+fn check_pairs(
+(B[m[32m+    r: &mut Reporter,
+(B[m[32m+    index: usize,
+(B[m[32m+    t: f32,
+(B[m[32m+    name: &str,
+(B[m[32m+    x0: f32,
+(B[m[32m+    y0: f32,
+(B[m[32m+    x1: f32,
+(B[m[32m+    y1: f32,
+(B[m[32m+) {
+(B[m[32m+    let eq = near(x0, x1) && near(y0, y1);
+(B[m[32m+    if !eq {
+(B[m[32m+        eprintln!("{name} [{index} {t}] p0 [{x0:10.8} {y0:10.8}] p1 [{x1:10.8} {y1:10.8}]");
+(B[m[32m+        check!(r, eq);
+(B[m[32m+    }
+(B[m }
+[31m-fn testChopCubic(r:&mut Reporter) {
+(B[m[31m- let src=[p(2190.,5130.),p(2190.,5070.),p(2220.,5010.),p(2205.,4980.)];
+(B[m[31m- let mut dst=[Point::default();13];let mut ts=[0.;3];
+(B[m[31m- let count=sk_chop_cubic_at_max_curvature(&src,Some(&mut dst),Some(&mut ts));
+(B[m[31m- if false {check!(r,count!=0);}
+(B[m[31m- {let mut pts=[Point::default();7];for i in 0..7 {pts[i].set(i as f32,i as f32);}
+(B[m[31m- sk_chop_cubic_at_in_place(&mut pts,0.5);
+(B[m[31m- for i in 0..7 {check!(r,pts[i].x==pts[i].y);check!(r,pts[i].x==i as f32*0.5);}}
+(B[m[31m- let chopTs=[0.,3./83.,3./79.,3./73.,3./71.,3./67.,3./61.,3./59.,3./53.,3./47.,3./43.,3./41.,3./37.,3./31.,3./29.,3./23.,3./19.,3./17.,3./13.,3./11.,3./7.,3./5.,1.];
+(B[m[31m- let ones=[1.;5];const {assert!(23%2==1);assert!(5%2==1);}
+(B[m[31m- let mut rand=SkRandom::default();
+(B[m[31m- for _ in 0..5 {
+(B[m[31m-  let pts=[p(rand.next_f(),rand.next_f()),p(rand.next_f(),rand.next_f()),p(rand.next_f(),rand.next_f()),p(rand.next_f(),rand.next_f())];
+(B[m[31m-  let mut allChops=[Point::default();4+23*3];sk_chop_cubic_at_ts(&pts,&mut allChops,&chopTs);
+(B[m[31m-  let mut i=3;
+(B[m[31m-  for chopT in chopTs {
+(B[m[31m-   let mut expected=Point::default();sk_eval_cubic_at(&pts,chopT,Some(&mut expected),None,None);
+(B[m[31m-   check!(r,near(allChops[i].x,expected.x));check!(r,near(allChops[i].y,expected.y));
+(B[m[31m-   if chopT==0. {check!(r,allChops[i]==pts[0]);}if chopT==1. {check!(r,allChops[i]==pts[3]);}i+=3;
+(B[m[31m-   let mut local=[Point::default();10];sk_chop_cubic_at_two(&pts,&mut local,chopT,chopT);
+(B[m[31m-   check!(r,local[3]==local[4]);check!(r,local[3]==local[5]);check!(r,local[3]==local[6]);
+(B[m[31m-   if chopT==0. {for j in 0..4 {check!(r,local[j]==pts[0]);}}
+(B[m[31m-   if chopT==1. {for j in 6..10 {check!(r,local[j]==pts[3]);}}
+(B[m[31m-  }
+(B[m[31m-  let mut oneChops=[Point::default();4+5*3];sk_chop_cubic_at_ts(&pts,&mut oneChops,&ones);
+(B[m[31m-  check!(r,oneChops[0]==pts[0]);check!(r,oneChops[1]==pts[1]);check!(r,oneChops[2]==pts[2]);
+(B[m[31m-  for index in 3..oneChops.len() {check!(r,oneChops[index]==pts[3]);}
+(B[m[31m- }
+(B[m[32m+fn testChopCubic(r: &mut Reporter) {
+(B[m[32m+    let src = [
+(B[m[32m+        p(2190., 5130.),
+(B[m[32m+        p(2190., 5070.),
+(B[m[32m+        p(2220., 5010.),
+(B[m[32m+        p(2205., 4980.),
+(B[m[32m+    ];
+(B[m[32m+    let mut dst = [Point::default(); 13];
+(B[m[32m+    let mut ts = [0.; 3];
+(B[m[32m+    let count = sk_chop_cubic_at_max_curvature(&src, Some(&mut dst), Some(&mut ts));
+(B[m[32m+    if false {
+(B[m[32m+        check!(r, count != 0);
+(B[m[32m+    }
+(B[m[32m+    {
+(B[m[32m+        let mut pts = [Point::default(); 7];
+(B[m[32m+        for i in 0..7 {
+(B[m[32m+            pts[i].set(i as f32, i as f32);
+(B[m[32m+        }
+(B[m[32m+        sk_chop_cubic_at_in_place(&mut pts, 0.5);
+(B[m[32m+        for i in 0..7 {
+(B[m[32m+            check!(r, pts[i].x == pts[i].y);
+(B[m[32m+            check!(r, pts[i].x == i as f32 * 0.5);
+(B[m[32m+        }
+(B[m[32m+    }
+(B[m[32m+    let chopTs = [
+(B[m[32m+        0.,
+(B[m[32m+        3. / 83.,
+(B[m[32m+        3. / 79.,
+(B[m[32m+        3. / 73.,
+(B[m[32m+        3. / 71.,
+(B[m[32m+        3. / 67.,
+(B[m[32m+        3. / 61.,
+(B[m[32m+        3. / 59.,
+(B[m[32m+        3. / 53.,
+(B[m[32m+        3. / 47.,
+(B[m[32m+        3. / 43.,
+(B[m[32m+        3. / 41.,
+(B[m[32m+        3. / 37.,
+(B[m[32m+        3. / 31.,
+(B[m[32m+        3. / 29.,
+(B[m[32m+        3. / 23.,
+(B[m[32m+        3. / 19.,
+(B[m[32m+        3. / 17.,
+(B[m[32m+        3. / 13.,
+(B[m[32m+        3. / 11.,
+(B[m[32m+        3. / 7.,
+(B[m[32m+        3. / 5.,
+(B[m[32m+        1.,
+(B[m[32m+    ];
+(B[m[32m+    let ones = [1.; 5];
+(B[m[32m+    const {
+(B[m[32m+        assert!(23 % 2 == 1);
+(B[m[32m+        assert!(5 % 2 == 1);
+(B[m[32m+    }
+(B[m[32m+    let mut rand = SkRandom::default();
+(B[m[32m+    for _ in 0..5 {
+(B[m[32m+        let pts = [
+(B[m[32m+            p(rand.next_f(), rand.next_f()),
+(B[m[32m+            p(rand.next_f(), rand.next_f()),
+(B[m[32m+            p(rand.next_f(), rand.next_f()),
+(B[m[32m+            p(rand.next_f(), rand.next_f()),
+(B[m[32m+        ];
+(B[m[32m+        let mut allChops = [Point::default(); 4 + 23 * 3];
+(B[m[32m+        sk_chop_cubic_at_ts(&pts, &mut allChops, &chopTs);
+(B[m[32m+        let mut i = 3;
+(B[m[32m+        for chopT in chopTs {
+(B[m[32m+            let mut expected = Point::default();
+(B[m[32m+            sk_eval_cubic_at(&pts, chopT, Some(&mut expected), None, None);
+(B[m[32m+            check!(r, near(allChops[i].x, expected.x));
+(B[m[32m+            check!(r, near(allChops[i].y, expected.y));
+(B[m[32m+            if chopT == 0. {
+(B[m[32m+                check!(r, allChops[i] == pts[0]);
+(B[m[32m+            }
+(B[m[32m+            if chopT == 1. {
+(B[m[32m+                check!(r, allChops[i] == pts[3]);
+(B[m[32m+            }
+(B[m[32m+            i += 3;
+(B[m[32m+            let mut local = [Point::default(); 10];
+(B[m[32m+            sk_chop_cubic_at_two(&pts, &mut local, chopT, chopT);
+(B[m[32m+            check!(r, local[3] == local[4]);
+(B[m[32m+            check!(r, local[3] == local[5]);
+(B[m[32m+            check!(r, local[3] == local[6]);
+(B[m[32m+            if chopT == 0. {
+(B[m[32m+                for j in 0..4 {
+(B[m[32m+                    check!(r, local[j] == pts[0]);
+(B[m[32m+                }
+(B[m[32m+            }
+(B[m[32m+            if chopT == 1. {
+(B[m[32m+                for j in 6..10 {
+(B[m[32m+                    check!(r, local[j] == pts[3]);
+(B[m[32m+                }
+(B[m[32m+            }
+(B[m[32m+        }
+(B[m[32m+        let mut oneChops = [Point::default(); 4 + 5 * 3];
+(B[m[32m+        sk_chop_cubic_at_ts(&pts, &mut oneChops, &ones);
+(B[m[32m+        check!(r, oneChops[0] == pts[0]);
+(B[m[32m+        check!(r, oneChops[1] == pts[1]);
+(B[m[32m+        check!(r, oneChops[2] == pts[2]);
+(B[m[32m+        for index in 3..oneChops.len() {
+(B[m[32m+            check!(r, oneChops[index] == pts[3]);
+(B[m[32m+        }
+(B[m[32m+    }
+(B[m }
+[31m-fn test_evalquadat(r:&mut Reporter) {
+(B[m[31m- let mut rand=SkRandom::default();
+(B[m[31m- for i in 0..1000 {
+(B[m[31m-  let mut pts=[Point::default();3];for j in 0..3 {pts[j].set(rand.next_s_scalar1()*100.,rand.next_s_scalar1()*100.);}
+(B[m[31m-  let dt=1./128.;let mut t=dt;
+(B[m[31m-  for _j in 1..128 {
+(B[m[31m-   let mut r0=Point::default();sk_eval_quad_at_with(&pts,t,Some(&mut r0),None);
+(B[m[31m-   let r1=sk_eval_quad_at(&pts,t);check_pairs(r,i,t,"quad-pos",r0.x,r0.y,r1.x,r1.y);
+(B[m[31m-   let mut v0=Point::default();sk_eval_quad_at_with(&pts,t,None,Some(&mut v0));
+(B[m[31m-   let v1=sk_eval_quad_tangent_at(&pts,t);check_pairs(r,i,t,"quad-tan",v0.x,v0.y,v1.x,v1.y);t+=dt;
+(B[m[31m-  }
+(B[m[31m- }
+(B[m[32m+fn test_evalquadat(r: &mut Reporter) {
+(B[m[32m+    let mut rand = SkRandom::default();
+(B[m[32m+    for i in 0..1000 {
+(B[m[32m+        let mut pts = [Point::default(); 3];
+(B[m[32m+        for j in 0..3 {
+(B[m[32m+            pts[j].set(rand.next_s_scalar1() * 100., rand.next_s_scalar1() * 100.);
+(B[m[32m+        }
+(B[m[32m+        let dt = 1. / 128.;
+(B[m[32m+        let mut t = dt;
+(B[m[32m+        for _j in 1..128 {
+(B[m[32m+            let mut r0 = Point::default();
+(B[m[32m+            sk_eval_quad_at_with(&pts, t, Some(&mut r0), None);
+(B[m[32m+            let r1 = sk_eval_quad_at(&pts, t);
+(B[m[32m+            check_pairs(r, i, t, "quad-pos", r0.x, r0.y, r1.x, r1.y);
+(B[m[32m+            let mut v0 = Point::default();
+(B[m[32m+            sk_eval_quad_at_with(&pts, t, None, Some(&mut v0));
+(B[m[32m+            let v1 = sk_eval_quad_tangent_at(&pts, t);
+(B[m[32m+            check_pairs(r, i, t, "quad-tan", v0.x, v0.y, v1.x, v1.y);
+(B[m[32m+            t += dt;
+(B[m[32m+        }
+(B[m[32m+    }
+(B[m }
+[31m-fn test_conic_eval_pos(r:&mut Reporter,c:&SkConic,t:f32) {
+(B[m[31m- let mut p0=Point::default();c.eval_at_with(t,Some(&mut p0),None);let p1=c.eval_at(t);
+(B[m[31m- check_pairs(r,0,t,"conic-pos",p0.x,p0.y,p1.x,p1.y);
+(B[m[32m+fn test_conic_eval_pos(r: &mut Reporter, c: &SkConic, t: f32) {
+(B[m[32m+    let mut p0 = Point::default();
+(B[m[32m+    c.eval_at_with(t, Some(&mut p0), None);
+(B[m[32m+    let p1 = c.eval_at(t);
+(B[m[32m+    check_pairs(r, 0, t, "conic-pos", p0.x, p0.y, p1.x, p1.y);
+(B[m }
+[31m-fn test_conic_eval_tan(r:&mut Reporter,c:&SkConic,t:f32) {
+(B[m[31m- let mut v0=Point::default();c.eval_at_with(t,None,Some(&mut v0));let v1=c.eval_tangent_at(t);
+(B[m[31m- check_pairs(r,0,t,"conic-tan",v0.x,v0.y,v1.x,v1.y);
+(B[m[32m+fn test_conic_eval_tan(r: &mut Reporter, c: &SkConic, t: f32) {
+(B[m[32m+    let mut v0 = Point::default();
+(B[m[32m+    c.eval_at_with(t, None, Some(&mut v0));
+(B[m[32m+    let v1 = c.eval_tangent_at(t);
+(B[m[32m+    check_pairs(r, 0, t, "conic-tan", v0.x, v0.y, v1.x, v1.y);
+(B[m }
+[31m-fn test_conic(r:&mut Reporter) {
+(B[m[31m- let mut rand=SkRandom::default();
+(B[m[31m- for _i in 0..1000 {
+(B[m[31m-  let mut pts=[Point::default();3];for j in 0..3 {pts[j].set(rand.next_s_scalar1()*100.,rand.next_s_scalar1()*100.);}
+(B[m[31m-  for _k in 0..10 {
+(B[m[31m-   let w=rand.next_u_scalar1()*2.;let conic=SkConic::from_pts(&pts,w);
+(B[m[31m-   let dt=1./128.;let mut t=dt;
+(B[m[31m-   for _j in 1..128 {test_conic_eval_pos(r,&conic,t);test_conic_eval_tan(r,&conic,t);t+=dt;}
+(B[m[31m-  }
+(B[m[31m- }
+(B[m[32m+fn test_conic(r: &mut Reporter) {
+(B[m[32m+    let mut rand = SkRandom::default();
+(B[m[32m+    for _i in 0..1000 {
+(B[m[32m+        let mut pts = [Point::default(); 3];
+(B[m[32m+        for j in 0..3 {
+(B[m[32m+            pts[j].set(rand.next_s_scalar1() * 100., rand.next_s_scalar1() * 100.);
+(B[m[32m+        }
+(B[m[32m+        for _k in 0..10 {
+(B[m[32m+            let w = rand.next_u_scalar1() * 2.;
+(B[m[32m+            let conic = SkConic::from_pts(&pts, w);
+(B[m[32m+            let dt = 1. / 128.;
+(B[m[32m+            let mut t = dt;
+(B[m[32m+            for _j in 1..128 {
+(B[m[32m+                test_conic_eval_pos(r, &conic, t);
+(B[m[32m+                test_conic_eval_tan(r, &conic, t);
+(B[m[32m+                t += dt;
+(B[m[32m+            }
+(B[m[32m+        }
+(B[m[32m+    }
+(B[m }
+[31m-fn tangent_checks(r:&mut Reporter,start:Point,mid:Point,end:Point) {
+(B[m[31m- check!(r,start.x!=0.&&start.y!=0.);check!(r,mid.x!=0.&&mid.y!=0.);check!(r,end.x!=0.&&end.y!=0.);
+(B[m[31m- check!(r,near(start.cross(&mid),0.));check!(r,near(mid.cross(&end),0.));
+(B[m[32m+fn tangent_checks(r: &mut Reporter, start: Point, mid: Point, end: Point) {
+(B[m[32m+    check!(r, start.x != 0. && start.y != 0.);
+(B[m[32m+    check!(r, mid.x != 0. && mid.y != 0.);
+(B[m[32m+    check!(r, end.x != 0. && end.y != 0.);
+(B[m[32m+    check!(r, near(start.cross(&mid), 0.));
+(B[m[32m+    check!(r, near(mid.cross(&end), 0.));
+(B[m }
+[31m-fn test_quad_tangents(r:&mut Reporter) {
+(B[m[31m- let pts=[p(10.,20.),p(10.,20.),p(20.,30.),p(10.,20.),p(15.,25.),p(20.,30.),p(10.,20.),p(20.,30.),p(20.,30.)];
+(B[m[31m- for index in 0..pts.len()/3 {
+(B[m[31m-  let _conic=SkConic::from_pts(&pts[index*3..],0.707);
+(B[m[31m-  let start=sk_eval_quad_tangent_at(&pts[index*3..],0.);let mid=sk_eval_quad_tangent_at(&pts[index*3..],0.5);let end=sk_eval_quad_tangent_at(&pts[index*3..],1.);
+(B[m[31m-  tangent_checks(r,start,mid,end);
+(B[m[31m- }
+(B[m[32m+fn test_quad_tangents(r: &mut Reporter) {
+(B[m[32m+    let pts = [
+(B[m[32m+        p(10., 20.),
+(B[m[32m+        p(10., 20.),
+(B[m[32m+        p(20., 30.),
+(B[m[32m+        p(10., 20.),
+(B[m[32m+        p(15., 25.),
+(B[m[32m+        p(20., 30.),
+(B[m[32m+        p(10., 20.),
+(B[m[32m+        p(20., 30.),
+(B[m[32m+        p(20., 30.),
+(B[m[32m+    ];
+(B[m[32m+    for index in 0..pts.len() / 3 {
+(B[m[32m+        let _conic = SkConic::from_pts(&pts[index * 3..], 0.707);
+(B[m[32m+        let start = sk_eval_quad_tangent_at(&pts[index * 3..], 0.);
+(B[m[32m+        let mid = sk_eval_quad_tangent_at(&pts[index * 3..], 0.5);
+(B[m[32m+        let end = sk_eval_quad_tangent_at(&pts[index * 3..], 1.);
+(B[m[32m+        tangent_checks(r, start, mid, end);
+(B[m[32m+    }
+(B[m }
+[31m-fn test_conic_tangents(r:&mut Reporter) {
+(B[m[31m- let pts=[p(10.,20.),p(10.,20.),p(20.,30.),p(10.,20.),p(15.,25.),p(20.,30.),p(10.,20.),p(20.,30.),p(20.,30.)];
+(B[m[31m- for index in 0..pts.len()/3 {let c=SkConic::from_pts(&pts[index*3..],0.707);tangent_checks(r,c.eval_tangent_at(0.),c.eval_tangent_at(0.5),c.eval_tangent_at(1.));}
+(B[m[32m+fn test_conic_tangents(r: &mut Reporter) {
+(B[m[32m+    let pts = [
+(B[m[32m+        p(10., 20.),
+(B[m[32m+        p(10., 20.),
+(B[m[32m+        p(20., 30.),
+(B[m[32m+        p(10., 20.),
+(B[m[32m+        p(15., 25.),
+(B[m[32m+        p(20., 30.),
+(B[m[32m+        p(10., 20.),
+(B[m[32m+        p(20., 30.),
+(B[m[32m+        p(20., 30.),
+(B[m[32m+    ];
+(B[m[32m+    for index in 0..pts.len() / 3 {
+(B[m[32m+        let c = SkConic::from_pts(&pts[index * 3..], 0.707);
+(B[m[32m+        tangent_checks(
+(B[m[32m+            r,
+(B[m[32m+            c.eval_tangent_at(0.),
+(B[m[32m+            c.eval_tangent_at(0.5),
+(B[m[32m+            c.eval_tangent_at(1.),
+(B[m[32m+        );
+(B[m[32m+    }
+(B[m }
+[31m-fn test_this_conic_to_quad(r:&mut Reporter,pts:&[Point],w:f32) {
+(B[m[31m- let mut quadder=SkAutoConicToQuads::new();
+(B[m[31m- // Copy only to release the storage borrow before querying count_quads; values/order unchanged.
+(B[m[31m- let qpts=quadder.compute_quads_pts(pts,w,0.25).to_vec();let qcount=quadder.count_quads();let pcount=qcount*2+1;
+(B[m[31m- check!(r,rust_skia::point_priv::PointPriv::are_finite(&qpts[..pcount as usize]));
+(B[m[32m+fn test_this_conic_to_quad(r: &mut Reporter, pts: &[Point], w: f32) {
+(B[m[32m+    let mut quadder = SkAutoConicToQuads::new();
+(B[m[32m+    // Copy only to release the storage borrow before querying count_quads; values/order unchanged.
+(B[m[32m+    let qpts = quadder.compute_quads_pts(pts, w, 0.25).to_vec();
+(B[m[32m+    let qcount = quadder.count_quads();
+(B[m[32m+    let pcount = qcount * 2 + 1;
+(B[m[32m+    check!(
+(B[m[32m+        r,
+(B[m[32m+        rust_skia::point_priv::PointPriv::are_finite(&qpts[..pcount as usize])
+(B[m[32m+    );
+(B[m }
+[31m-fn test_conic_to_quads(r:&mut Reporter) {
+(B[m[31m- let triples=[p(0.,0.),p(1.,0.),p(1.,1.),p(0.,0.),p(3.58732e-43,2.72084),p(3.00392,3.00392),p(0.,0.),p(100000.,0.),p(100000.,100000.),p(0.,0.),p(1e30,0.),p(1e30,1e30)];
+(B[m[31m- for pts in triples.chunks_exact(3) {
+(B[m[31m-  let mut w=1e30f32;loop {w*=2.;test_this_conic_to_quad(r,pts,w);if !w.is_finite(){break;}}
+(B[m[31m-  test_this_conic_to_quad(r,pts,f32::NAN);
+(B[m[31m- }
+(B[m[32m+fn test_conic_to_quads(r: &mut Reporter) {
+(B[m[32m+    let triples = [
+(B[m[32m+        p(0., 0.),
+(B[m[32m+        p(1., 0.),
+(B[m[32m+        p(1., 1.),
+(B[m[32m+        p(0., 0.),
+(B[m[32m+        p(3.58732e-43, 2.72084),
+(B[m[32m+        p(3.00392, 3.00392),
+(B[m[32m+        p(0., 0.),
+(B[m[32m+        p(100000., 0.),
+(B[m[32m+        p(100000., 100000.),
+(B[m[32m+        p(0., 0.),
+(B[m[32m+        p(1e30, 0.),
+(B[m[32m+        p(1e30, 1e30),
+(B[m[32m+    ];
+(B[m[32m+    for pts in triples.chunks_exact(3) {
+(B[m[32m+        let mut w = 1e30f32;
+(B[m[32m+        loop {
+(B[m[32m+            w *= 2.;
+(B[m[32m+            test_this_conic_to_quad(r, pts, w);
+(B[m[32m+            if !w.is_finite() {
+(B[m[32m+                break;
+(B[m[32m+            }
+(B[m[32m+        }
+(B[m[32m+        test_this_conic_to_quad(r, pts, f32::NAN);
+(B[m[32m+    }
+(B[m }
+[31m-fn test_cubic_tangents(r:&mut Reporter) {
+(B[m[31m- let pts=[p(10.,20.),p(10.,20.),p(20.,30.),p(30.,40.),p(10.,20.),p(15.,25.),p(20.,30.),p(30.,40.),p(10.,20.),p(20.,30.),p(30.,40.),p(30.,40.)];
+(B[m[31m- for index in 0..pts.len()/4 {
+(B[m[31m-  // Preserve the original, otherwise unused conic construction and its index * 3.
+(B[m[31m-  let _conic=SkConic::from_pts(&pts[index*3..],0.707);
+(B[m[31m-  let mut start=Point::default();let mut mid=Point::default();let mut end=Point::default();
+(B[m[31m-  sk_eval_cubic_at(&pts[index*4..],0.,None,Some(&mut start),None);
+(B[m[31m-  sk_eval_cubic_at(&pts[index*4..],0.5,None,Some(&mut mid),None);
+(B[m[31m-  sk_eval_cubic_at(&pts[index*4..],1.,None,Some(&mut end),None);tangent_checks(r,start,mid,end);
+(B[m[31m- }
+(B[m[32m+fn test_cubic_tangents(r: &mut Reporter) {
+(B[m[32m+    let pts = [
+(B[m[32m+        p(10., 20.),
+(B[m[32m+        p(10., 20.),
+(B[m[32m+        p(20., 30.),
+(B[m[32m+        p(30., 40.),
+(B[m[32m+        p(10., 20.),
+(B[m[32m+        p(15., 25.),
+(B[m[32m+        p(20., 30.),
+(B[m[32m+        p(30., 40.),
+(B[m[32m+        p(10., 20.),
+(B[m[32m+        p(20., 30.),
+(B[m[32m+        p(30., 40.),
+(B[m[32m+        p(30., 40.),
+(B[m[32m+    ];
+(B[m[32m+    for index in 0..pts.len() / 4 {
+(B[m[32m+        // Preserve the original, otherwise unused conic construction and its index * 3.
+(B[m[32m+        let _conic = SkConic::from_pts(&pts[index * 3..], 0.707);
+(B[m[32m+        let mut start = Point::default();
+(B[m[32m+        let mut mid = Point::default();
+(B[m[32m+        let mut end = Point::default();
+(B[m[32m+        sk_eval_cubic_at(&pts[index * 4..], 0., None, Some(&mut start), None);
+(B[m[32m+        sk_eval_cubic_at(&pts[index * 4..], 0.5, None, Some(&mut mid), None);
+(B[m[32m+        sk_eval_cubic_at(&pts[index * 4..], 1., None, Some(&mut end), None);
+(B[m[32m+        tangent_checks(r, start, mid, end);
+(B[m[32m+    }
+(B[m }
+[31m-fn check_cubic_type(r:&mut Reporter,pts:&[Point],expected:SkCubicType,undefined:bool) {
+(B[m[31m- let actual=classify_cubic(pts);if !undefined {check!(r,actual==expected);}
+(B[m[32m+fn check_cubic_type(r: &mut Reporter, pts: &[Point], expected: SkCubicType, undefined: bool) {
+(B[m[32m+    let actual = classify_cubic(pts);
+(B[m[32m+    if !undefined {
+(B[m[32m+        check!(r, actual == expected);
+(B[m[32m+    }
+(B[m }
+[31m-fn check_cubic_around_rect(name:&str,r:&mut Reporter,x1:f32,y1:f32,x2:f32,y2:f32,undefined:bool) {
+(B[m[31m- eprintln!("{name}");
+(B[m[31m- let expectations=[Loop,CuspAtInfinity,LocalCusp,LocalCusp,CuspAtInfinity,Loop,CuspAtInfinity,Loop,CuspAtInfinity,Loop,LocalCusp,LocalCusp,LocalCusp,LocalCusp,Loop,CuspAtInfinity,Loop,CuspAtInfinity,Loop,CuspAtInfinity,LocalCusp,LocalCusp,CuspAtInfinity,Loop];
+(B[m[31m- let points=[p(x1,y1),p(x2,y1),p(x2,y2),p(x1,y2)];let mut bezier=[Point::default();4];
+(B[m[31m- for i in 0..4 {bezier[0]=points[i];for j in 0..3 {
+(B[m[31m-  let jidx=if j<i{j}else{j+1};bezier[1]=points[jidx];let mut kidx=0;
+(B[m[31m-  for k in 0..2 {
+(B[m[31m-   for _n in 0..2 {kidx=if kidx==i||kidx==jidx{kidx+1}else{kidx};}
+(B[m[31m-   bezier[2]=points[kidx];for l in 0..4 {if l!=i&&l!=jidx&&l!=kidx {bezier[3]=points[l];break;}}
+(B[m[31m-   check_cubic_type(r,&bezier,expectations[i*6+j*2+k],undefined);kidx+=1;
+(B[m[31m-  }
+(B[m[31m- }}
+(B[m[31m- for i in 0..4 {bezier[0]=points[i];for j in 0..3 {
+(B[m[31m-  let jidx=if j<i{j}else{j+1};bezier[1]=points[jidx];bezier[2]=points[jidx];let mut kidx=0;
+(B[m[31m-  for _k in 0..2 {
+(B[m[31m-   for _n in 0..2 {kidx=if kidx==i||kidx==jidx{kidx+1}else{kidx};}
+(B[m[31m-   bezier[3]=points[kidx];check_cubic_type(r,&bezier,Serpentine,undefined);kidx+=1;
+(B[m[31m-  }
+(B[m[31m- }}
+(B[m[32m+fn check_cubic_around_rect(
+(B[m[32m+    name: &str,
+(B[m[32m+    r: &mut Reporter,
+(B[m[32m+    x1: f32,
+(B[m[32m+    y1: f32,
+(B[m[32m+    x2: f32,
+(B[m[32m+    y2: f32,
+(B[m[32m+    undefined: bool,
+(B[m[32m+) {
+(B[m[32m+    eprintln!("{name}");
+(B[m[32m+    let expectations = [
+(B[m[32m+        Loop,
+(B[m[32m+        CuspAtInfinity,
+(B[m[32m+        LocalCusp,
+(B[m[32m+        LocalCusp,
+(B[m[32m+        CuspAtInfinity,
+(B[m[32m+        Loop,
+(B[m[32m+        CuspAtInfinity,
+(B[m[32m+        Loop,
+(B[m[32m+        CuspAtInfinity,
+(B[m[32m+        Loop,
+(B[m[32m+        LocalCusp,
+(B[m[32m+        LocalCusp,
+(B[m[32m+        LocalCusp,
+(B[m[32m+        LocalCusp,
+(B[m[32m+        Loop,
+(B[m[32m+        CuspAtInfinity,
+(B[m[32m+        Loop,
+(B[m[32m+        CuspAtInfinity,
+(B[m[32m+        Loop,
+(B[m[32m+        CuspAtInfinity,
+(B[m[32m+        LocalCusp,
+(B[m[32m+        LocalCusp,
+(B[m[32m+        CuspAtInfinity,
+(B[m[32m+        Loop,
+(B[m[32m+    ];
+(B[m[32m+    let points = [p(x1, y1), p(x2, y1), p(x2, y2), p(x1, y2)];
+(B[m[32m+    let mut bezier = [Point::default(); 4];
+(B[m[32m+    for i in 0..4 {
+(B[m[32m+        bezier[0] = points[i];
+(B[m[32m+        for j in 0..3 {
+(B[m[32m+            let jidx = if j < i { j } else { j + 1 };
+(B[m[32m+            bezier[1] = points[jidx];
+(B[m[32m+            let mut kidx = 0;
+(B[m[32m+            for k in 0..2 {
+(B[m[32m+                for _n in 0..2 {
+(B[m[32m+                    kidx = if kidx == i || kidx == jidx {
+(B[m[32m+                        kidx + 1
+(B[m[32m+                    } else {
+(B[m[32m+                        kidx
+(B[m[32m+                    };
+(B[m[32m+                }
+(B[m[32m+                bezier[2] = points[kidx];
+(B[m[32m+                for l in 0..4 {
+(B[m[32m+                    if l != i && l != jidx && l != kidx {
+(B[m[32m+                        bezier[3] = points[l];
+(B[m[32m+                        break;
+(B[m[32m+                    }
+(B[m[32m+                }
+(B[m[32m+                check_cubic_type(r, &bezier, expectations[i * 6 + j * 2 + k], undefined);
+(B[m[32m+                kidx += 1;
+(B[m[32m+            }
+(B[m[32m+        }
+(B[m[32m+    }
+(B[m[32m+    for i in 0..4 {
+(B[m[32m+        bezier[0] = points[i];
+(B[m[32m+        for j in 0..3 {
+(B[m[32m+            let jidx = if j < i { j } else { j + 1 };
+(B[m[32m+            bezier[1] = points[jidx];
+(B[m[32m+            bezier[2] = points[jidx];
+(B[m[32m+            let mut kidx = 0;
+(B[m[32m+            for _k in 0..2 {
+(B[m[32m+                for _n in 0..2 {
+(B[m[32m+                    kidx = if kidx == i || kidx == jidx {
+(B[m[32m+                        kidx + 1
+(B[m[32m+                    } else {
+(B[m[32m+                        kidx
+(B[m[32m+                    };
+(B[m[32m+                }
+(B[m[32m+                bezier[3] = points[kidx];
+(B[m[32m+                check_cubic_type(r, &bezier, Serpentine, undefined);
+(B[m[32m+                kidx += 1;
+(B[m[32m+            }
+(B[m[32m+        }
+(B[m[32m+    }
+(B[m }
+[31m-fn test_classify_cubic(r:&mut Reporter) {
+(B[m[31m- for serp in kSerpentines {check_cubic_type(r,serp,Serpentine,false);}
+(B[m[31m- for curve in kLoops {check_cubic_type(r,curve,Loop,false);}
+(B[m[31m- for line in kLinearCubics {check_cubic_type(r,line,LineOrPoint,false);}
+(B[m[31m- check_cubic_around_rect("small box",r,0.,0.,1.,1.,false);
+(B[m[31m- check_cubic_around_rect("biggest box",r,-f32::MAX,-f32::MAX,f32::MAX,f32::MAX,false);
+(B[m[31m- check_cubic_around_rect("large quadrant",r,1.,1.,f32::MIN_POSITIVE,f32::MAX,false);
+(B[m[31m- check_cubic_around_rect("smallest box",r,-f32::MIN_POSITIVE,-f32::MIN_POSITIVE,f32::MIN_POSITIVE,f32::MIN_POSITIVE,false);
+(B[m[31m- check_cubic_around_rect("slightly negative box",r,1.,-f32::MIN_POSITIVE,-1.,-1.,false);
+(B[m[31m- check_cubic_around_rect("infinite box",r,-f32::INFINITY,-f32::INFINITY,f32::INFINITY,f32::INFINITY,true);
+(B[m[31m- check_cubic_around_rect("one sided infinite box",r,0.,0.,1.,f32::INFINITY,true);
+(B[m[31m- check_cubic_around_rect("nan box",r,-f32::NAN,-f32::NAN,f32::NAN,f32::NAN,true);
+(B[m[31m- check_cubic_around_rect("partial nan box",r,0.,0.,1.,f32::NAN,true);
+(B[m[32m+fn test_classify_cubic(r: &mut Reporter) {
+(B[m[32m+    for serp in kSerpentines {
+(B[m[32m+        check_cubic_type(r, serp, Serpentine, false);
+(B[m[32m+    }
+(B[m[32m+    for curve in kLoops {
+(B[m[32m+        check_cubic_type(r, curve, Loop, false);
+(B[m[32m+    }
+(B[m[32m+    for line in kLinearCubics {
+(B[m[32m+        check_cubic_type(r, line, LineOrPoint, false);
+(B[m[32m+    }
+(B[m[32m+    check_cubic_around_rect("small box", r, 0., 0., 1., 1., false);
+(B[m[32m+    check_cubic_around_rect(
+(B[m[32m+        "biggest box",
+(B[m[32m+        r,
+(B[m[32m+        -f32::MAX,
+(B[m[32m+        -f32::MAX,
+(B[m[32m+        f32::MAX,
+(B[m[32m+        f32::MAX,
+(B[m[32m+        false,
+(B[m[32m+    );
+(B[m[32m+    check_cubic_around_rect(
+(B[m[32m+        "large quadrant",
+(B[m[32m+        r,
+(B[m[32m+        1.,
+(B[m[32m+        1.,
+(B[m[32m+        f32::MIN_POSITIVE,
+(B[m[32m+        f32::MAX,
+(B[m[32m+        false,
+(B[m[32m+    );
+(B[m[32m+    check_cubic_around_rect(
+(B[m[32m+        "smallest box",
+(B[m[32m+        r,
+(B[m[32m+        -f32::MIN_POSITIVE,
+(B[m[32m+        -f32::MIN_POSITIVE,
+(B[m[32m+        f32::MIN_POSITIVE,
+(B[m[32m+        f32::MIN_POSITIVE,
+(B[m[32m+        false,
+(B[m[32m+    );
+(B[m[32m+    check_cubic_around_rect(
+(B[m[32m+        "slightly negative box",
+(B[m[32m+        r,
+(B[m[32m+        1.,
+(B[m[32m+        -f32::MIN_POSITIVE,
+(B[m[32m+        -1.,
+(B[m[32m+        -1.,
+(B[m[32m+        false,
+(B[m[32m+    );
+(B[m[32m+    check_cubic_around_rect(
+(B[m[32m+        "infinite box",
+(B[m[32m+        r,
+(B[m[32m+        -f32::INFINITY,
+(B[m[32m+        -f32::INFINITY,
+(B[m[32m+        f32::INFINITY,
+(B[m[32m+        f32::INFINITY,
+(B[m[32m+        true,
+(B[m[32m+    );
+(B[m[32m+    check_cubic_around_rect("one sided infinite box", r, 0., 0., 1., f32::INFINITY, true);
+(B[m[32m+    check_cubic_around_rect("nan box", r, -f32::NAN, -f32::NAN, f32::NAN, f32::NAN, true);
+(B[m[32m+    check_cubic_around_rect("partial nan box", r, 0., 0., 1., f32::NAN, true);
+(B[m }
+[31m-fn test_cubic_cusps(r:&mut Reporter) {
+(B[m[31m- let noCusps=[[p(0.,0.),p(1.,1.),p(2.,2.),p(3.,3.)],[p(0.,0.),p(1.,0.),p(1.,1.),p(0.,1.)],[p(0.,0.),p(1.,0.),p(2.,1.),p(2.,2.)],[p(0.,0.),p(1.,0.),p(1.,1.),p(2.,1.)]];
+(B[m[31m- for curve in noCusps {check!(r,sk_find_cubic_cusp(&curve)<0.);}
+(B[m[31m- for cusp in kCusps {check!(r,sk_find_cubic_cusp(cusp)>0.);}
+(B[m[32m+fn test_cubic_cusps(r: &mut Reporter) {
+(B[m[32m+    let noCusps = [
+(B[m[32m+        [p(0., 0.), p(1., 1.), p(2., 2.), p(3., 3.)],
+(B[m[32m+        [p(0., 0.), p(1., 0.), p(1., 1.), p(0., 1.)],
+(B[m[32m+        [p(0., 0.), p(1., 0.), p(2., 1.), p(2., 2.)],
+(B[m[32m+        [p(0., 0.), p(1., 0.), p(1., 1.), p(2., 1.)],
+(B[m[32m+    ];
+(B[m[32m+    for curve in noCusps {
+(B[m[32m+        check!(r, sk_find_cubic_cusp(&curve) < 0.);
+(B[m[32m+    }
+(B[m[32m+    for cusp in kCusps {
+(B[m[32m+        check!(r, sk_find_cubic_cusp(cusp) > 0.);
+(B[m[32m+    }
+(B[m }
+[31m-fn skew_matrices()->[Matrix;3] {
+(B[m[31m- [Matrix::make_all(1.,0.,0.,0.,1.,0.,0.,0.,1.),Matrix::make_all(1.,-1.,0.,1.,1.,0.,0.,0.,1.),Matrix::make_all(0.889,0.553,0.,-0.443,0.123,0.,0.,0.,1.)]
+(B[m[32m+fn skew_matrices() -> [Matrix; 3] {
+(B[m[32m+    [
+(B[m[32m+        Matrix::make_all(1., 0., 0., 0., 1., 0., 0., 0., 1.),
+(B[m[32m+        Matrix::make_all(1., -1., 0., 1., 1., 0., 0., 0., 1.),
+(B[m[32m+        Matrix::make_all(0.889, 0.553, 0., -0.443, 0.123, 0., 0., 0., 1.),
+(B[m[32m+    ]
+(B[m }
+[31m-fn test_chop_quad_at_midtangent(r:&mut Reporter,pts:&[Point]) {
+(B[m[31m- let tolerance=1e-3;
+(B[m[31m- for m in skew_matrices() {
+(B[m[31m-  let mut mapped=[Point::default();3];m.map_points(&mut mapped,pts);
+(B[m[31m-  // Upstream intentionally evaluates pts, not mapped, in this helper.
+(B[m[31m-  let full=sk_measure_quad_rotation(pts);let mut chopped=[Point::default();5];sk_chop_quad_at_mid_tangent(pts,&mut chopped);
+(B[m[31m-  let left=sk_measure_quad_rotation(&chopped);let right=sk_measure_quad_rotation(&chopped[2..]);
+(B[m[31m-  check!(r,(left-full/2.).abs()<=tolerance);check!(r,(right-full/2.).abs()<=tolerance);
+(B[m[31m- }
+(B[m[32m+fn test_chop_quad_at_midtangent(r: &mut Reporter, pts: &[Point]) {
+(B[m[32m+    let tolerance = 1e-3;
+(B[m[32m+    for m in skew_matrices() {
+(B[m[32m+        let mut mapped = [Point::default(); 3];
+(B[m[32m+        m.map_points(&mut mapped, pts);
+(B[m[32m+        // Upstream intentionally evaluates pts, not mapped, in this helper.
+(B[m[32m+        let full = sk_measure_quad_rotation(pts);
+(B[m[32m+        let mut chopped = [Point::default(); 5];
+(B[m[32m+        sk_chop_quad_at_mid_tangent(pts, &mut chopped);
+(B[m[32m+        let left = sk_measure_quad_rotation(&chopped);
+(B[m[32m+        let right = sk_measure_quad_rotation(&chopped[2..]);
+(B[m[32m+        check!(r, (left - full / 2.).abs() <= tolerance);
+(B[m[32m+        check!(r, (right - full / 2.).abs() <= tolerance);
+(B[m[32m+    }
+(B[m }
+[31m-fn test_chop_cubic_at_midtangent(r:&mut Reporter,pts:&[Point],kind:SkCubicType) {
+(B[m[31m- let tolerance=1e-3;let pi=std::f32::consts::PI;
+(B[m[31m- let n=if kind==LocalCusp||kind==LineOrPoint{2}else{3};
+(B[m[31m- for m in &skew_matrices()[..n] {
+(B[m[31m-  let mut mapped=[Point::default();4];m.map_points(&mut mapped,pts);
+(B[m[31m-  let full=sk_measure_non_inflect_cubic_rotation(&mapped);let mut chopped=[Point::default();7];sk_chop_cubic_at_mid_tangent(&mapped,&mut chopped);
+(B[m[31m-  let left=sk_measure_non_inflect_cubic_rotation(&chopped);let right=sk_measure_non_inflect_cubic_rotation(&chopped[3..]);
+(B[m[31m-  if kind==LineOrPoint&&((full-2.*pi).abs()<=tolerance||full.abs()<=tolerance) {
+(B[m[31m-   check!(r,left.abs()-tolerance<=pi);check!(r,right.abs()-tolerance<=pi);continue;
+(B[m[31m-  }
+(B[m[31m-  let mut expected=full/2.;
+(B[m[31m-  if kind==LocalCusp||(kind==LineOrPoint&&(full-pi).abs()<=tolerance) {expected=(full-pi)/2.;}
+(B[m[31m-  check!(r,(left-expected).abs()<=tolerance);check!(r,(right-expected).abs()<=tolerance);
+(B[m[31m- }
+(B[m[32m+fn test_chop_cubic_at_midtangent(r: &mut Reporter, pts: &[Point], kind: SkCubicType) {
+(B[m[32m+    let tolerance = 1e-3;
+(B[m[32m+    let pi = std::f32::consts::PI;
+(B[m[32m+    let n = if kind == LocalCusp || kind == LineOrPoint {
+(B[m[32m+        2
+(B[m[32m+    } else {
+(B[m[32m+        3
+(B[m[32m+    };
+(B[m[32m+    for m in &skew_matrices()[..n] {
+(B[m[32m+        let mut mapped = [Point::default(); 4];
+(B[m[32m+        m.map_points(&mut mapped, pts);
+(B[m[32m+        let full = sk_measure_non_inflect_cubic_rotation(&mapped);
+(B[m[32m+        let mut chopped = [Point::default(); 7];
+(B[m[32m+        sk_chop_cubic_at_mid_tangent(&mapped, &mut chopped);
+(B[m[32m+        let left = sk_measure_non_inflect_cubic_rotation(&chopped);
+(B[m[32m+        let right = sk_measure_non_inflect_cubic_rotation(&chopped[3..]);
+(B[m[32m+        if kind == LineOrPoint && ((full - 2. * pi).abs() <= tolerance || full.abs() <= tolerance) {
+(B[m[32m+            check!(r, left.abs() - tolerance <= pi);
+(B[m[32m+            check!(r, right.abs() - tolerance <= pi);
+(B[m[32m+            continue;
+(B[m[32m+        }
+(B[m[32m+        let mut expected = full / 2.;
+(B[m[32m+        if kind == LocalCusp || (kind == LineOrPoint && (full - pi).abs() <= tolerance) {
+(B[m[32m+            expected = (full - pi) / 2.;
+(B[m[32m+        }
+(B[m[32m+        check!(r, (left - expected).abs() <= tolerance);
+(B[m[32m+        check!(r, (right - expected).abs() <= tolerance);
+(B[m[32m+    }
+(B[m }
+[31m-fn lerp(a:Point,b:Point,t:f32)->Point {a*(1.-t)+b*t}
+(B[m[31m-fn test_measure_rotation(r:&mut Reporter) {
+(B[m[31m- let pi=std::f32::consts::PI;
+(B[m[31m- let flat=[p(0.,0.),p(0.,1.),p(0.,2.),p(0.,3.)];check!(r,near(sk_measure_non_inflect_cubic_rotation(&flat),0.));
+(B[m[31m- let flat180_1=[p(0.,0.),p(1.,0.),p(3.,0.),p(2.,0.)];check!(r,near(sk_measure_non_inflect_cubic_rotation(&flat180_1),pi));
+(B[m[31m- let flat180_2=[p(0.,1.),p(0.,0.),p(0.,2.),p(0.,3.)];check!(r,near(sk_measure_non_inflect_cubic_rotation(&flat180_2),pi));
+(B[m[31m- let flat360=[p(0.,1.),p(0.,0.),p(0.,3.),p(0.,2.)];check!(r,near(sk_measure_non_inflect_cubic_rotation(&flat360),2.*pi));
+(B[m[31m- let square180=[p(0.,0.),p(0.,1.),p(1.,1.),p(1.,0.)];check!(r,near(sk_measure_non_inflect_cubic_rotation(&square180),pi));
+(B[m[31m- let mut checkQuadRotation=|pts:&[Point],expected:f32| {
+(B[m[31m-  let rotation=sk_measure_quad_rotation(pts);check!(r,near(rotation,expected));
+(B[m[31m-  let cubic1=[pts[0],pts[0],pts[1],pts[2]];check!(r,near(sk_measure_non_inflect_cubic_rotation(&cubic1),expected));
+(B[m[31m-  let cubic2=[pts[0],pts[1],pts[1],pts[2]];check!(r,near(sk_measure_non_inflect_cubic_rotation(&cubic2),expected));
+(B[m[31m-  let cubic3=[pts[0],pts[1],pts[2],pts[2]];check!(r,near(sk_measure_non_inflect_cubic_rotation(&cubic3),expected));
+(B[m[31m- };
+(B[m[31m- checkQuadRotation(&[p(0.,0.),p(0.,1.),p(0.,2.),Point::default()],0.);
+(B[m[31m- checkQuadRotation(&[p(1.,0.),p(0.,0.),p(2.,0.),Point::default()],pi);
+(B[m[31m- checkQuadRotation(&[p(0.,0.),p(0.,2.),p(0.,1.),Point::default()],pi);
+(B[m[31m- checkQuadRotation(&[p(0.,0.),p(0.5,3.0f32.sqrt()/2.),p(1.,0.)],2.*pi/3.);
+(B[m[32m+fn lerp(a: Point, b: Point, t: f32) -> Point {
+(B[m[32m+    a * (1. - t) + b * t
+(B[m }
+[31m-fn test_chop_at_midtangent(r:&mut Reporter) {
+(B[m[31m- let mut chops=[Point::default();10];
+(B[m[31m- for serp in kSerpentines {
+(B[m[31m-  check!(r,classify_cubic(serp)==Serpentine);let n=sk_chop_cubic_at_inflections(serp,&mut chops);
+(B[m[31m-  for i in 0..n as usize {test_chop_cubic_at_midtangent(r,&chops[i*3..i*3+4],Serpentine);}
+(B[m[31m- }
+(B[m[31m- for curve in kLoops {check!(r,classify_cubic(curve)==Loop);test_chop_cubic_at_midtangent(r,curve,Loop);}
+(B[m[31m- for line in kLinearCubics {check!(r,classify_cubic(line)==LineOrPoint);test_chop_cubic_at_midtangent(r,line,LineOrPoint);}
+(B[m[31m- for cusp in kCusps {check!(r,classify_cubic(cusp)==LocalCusp);test_chop_cubic_at_midtangent(r,cusp,LocalCusp);}
+(B[m[31m- for quad in kQuads {
+(B[m[31m-  test_chop_quad_at_midtangent(r,quad);
+(B[m[31m-  let asCubic=[quad[0],lerp(quad[0],quad[1],2./3.),lerp(quad[1],quad[2],1./3.),quad[2]];
+(B[m[31m-  test_chop_cubic_at_midtangent(r,&asCubic,Quadratic);
+(B[m[31m- }
+(B[m[31m- let exactQuad=[p(0.,0.),p(6.,2.),p(10.,2.),p(12.,0.)];check!(r,classify_cubic(&exactQuad)==Quadratic);test_chop_cubic_at_midtangent(r,&exactQuad,Quadratic);
+(B[m[31m- let exactCuspAtInf=[p(0.,0.),p(1.,0.),p(0.,1.),p(1.,1.)];check!(r,classify_cubic(&exactCuspAtInf)==CuspAtInfinity);
+(B[m[31m- let n=sk_chop_cubic_at_inflections(&exactCuspAtInf,&mut chops);
+(B[m[31m- for i in 0..n as usize {test_chop_cubic_at_midtangent(r,&chops[i*3..i*3+4],CuspAtInfinity);}
+(B[m[32m+fn test_measure_rotation(r: &mut Reporter) {
+(B[m[32m+    let pi = std::f32::consts::PI;
+(B[m[32m+    let flat = [p(0., 0.), p(0., 1.), p(0., 2.), p(0., 3.)];
+(B[m[32m+    check!(r, near(sk_measure_non_inflect_cubic_rotation(&flat), 0.));
+(B[m[32m+    let flat180_1 = [p(0., 0.), p(1., 0.), p(3., 0.), p(2., 0.)];
+(B[m[32m+    check!(
+(B[m[32m+        r,
+(B[m[32m+        near(sk_measure_non_inflect_cubic_rotation(&flat180_1), pi)
+(B[m[32m+    );
+(B[m[32m+    let flat180_2 = [p(0., 1.), p(0., 0.), p(0., 2.), p(0., 3.)];
+(B[m[32m+    check!(
+(B[m[32m+        r,
+(B[m[32m+        near(sk_measure_non_inflect_cubic_rotation(&flat180_2), pi)
+(B[m[32m+    );
+(B[m[32m+    let flat360 = [p(0., 1.), p(0., 0.), p(0., 3.), p(0., 2.)];
+(B[m[32m+    check!(
+(B[m[32m+        r,
+(B[m[32m+        near(sk_measure_non_inflect_cubic_rotation(&flat360), 2. * pi)
+(B[m[32m+    );
+(B[m[32m+    let square180 = [p(0., 0.), p(0., 1.), p(1., 1.), p(1., 0.)];
+(B[m[32m+    check!(
+(B[m[32m+        r,
+(B[m[32m+        near(sk_measure_non_inflect_cubic_rotation(&square180), pi)
+(B[m[32m+    );
+(B[m[32m+    let mut checkQuadRotation = |pts: &[Point], expected: f32| {
+(B[m[32m+        let rotation = sk_measure_quad_rotation(pts);
+(B[m[32m+        check!(r, near(rotation, expected));
+(B[m[32m+        let cubic1 = [pts[0], pts[0], pts[1], pts[2]];
+(B[m[32m+        check!(
+(B[m[32m+            r,
+(B[m[32m+            near(sk_measure_non_inflect_cubic_rotation(&cubic1), expected)
+(B[m[32m+        );
+(B[m[32m+        let cubic2 = [pts[0], pts[1], pts[1], pts[2]];
+(B[m[32m+        check!(
+(B[m[32m+            r,
+(B[m[32m+            near(sk_measure_non_inflect_cubic_rotation(&cubic2), expected)
+(B[m[32m+        );
+(B[m[32m+        let cubic3 = [pts[0], pts[1], pts[2], pts[2]];
+(B[m[32m+        check!(
+(B[m[32m+            r,
+(B[m[32m+            near(sk_measure_non_inflect_cubic_rotation(&cubic3), expected)
+(B[m[32m+        );
+(B[m[32m+    };
+(B[m[32m+    checkQuadRotation(&[p(0., 0.), p(0., 1.), p(0., 2.), Point::default()], 0.);
+(B[m[32m+    checkQuadRotation(&[p(1., 0.), p(0., 0.), p(2., 0.), Point::default()], pi);
+(B[m[32m+    checkQuadRotation(&[p(0., 0.), p(0., 2.), p(0., 1.), Point::default()], pi);
+(B[m[32m+    checkQuadRotation(
+(B[m[32m+        &[p(0., 0.), p(0.5, 3.0f32.sqrt() / 2.), p(1., 0.)],
+(B[m[32m+        2. * pi / 3.,
+(B[m[32m+    );
+(B[m }
+[32m+fn test_chop_at_midtangent(r: &mut Reporter) {
+(B[m[32m+    let mut chops = [Point::default(); 10];
+(B[m[32m+    for serp in kSerpentines {
+(B[m[32m+        check!(r, classify_cubic(serp) == Serpentine);
+(B[m[32m+        let n = sk_chop_cubic_at_inflections(serp, &mut chops);
+(B[m[32m+        for i in 0..n as usize {
+(B[m[32m+            test_chop_cubic_at_midtangent(r, &chops[i * 3..i * 3 + 4], Serpentine);
+(B[m[32m+        }
+(B[m[32m+    }
+(B[m[32m+    for curve in kLoops {
+(B[m[32m+        check!(r, classify_cubic(curve) == Loop);
+(B[m[32m+        test_chop_cubic_at_midtangent(r, curve, Loop);
+(B[m[32m+    }
+(B[m[32m+    for line in kLinearCubics {
+(B[m[32m+        check!(r, classify_cubic(line) == LineOrPoint);
+(B[m[32m+        test_chop_cubic_at_midtangent(r, line, LineOrPoint);
+(B[m[32m+    }
+(B[m[32m+    for cusp in kCusps {
+(B[m[32m+        check!(r, classify_cubic(cusp) == LocalCusp);
+(B[m[32m+        test_chop_cubic_at_midtangent(r, cusp, LocalCusp);
+(B[m[32m+    }
+(B[m[32m+    for quad in kQuads {
+(B[m[32m+        test_chop_quad_at_midtangent(r, quad);
+(B[m[32m+        let asCubic = [
+(B[m[32m+            quad[0],
+(B[m[32m+            lerp(quad[0], quad[1], 2. / 3.),
+(B[m[32m+            lerp(quad[1], quad[2], 1. / 3.),
+(B[m[32m+            quad[2],
+(B[m[32m+        ];
+(B[m[32m+        test_chop_cubic_at_midtangent(r, &asCubic, Quadratic);
+(B[m[32m+    }
+(B[m[32m+    let exactQuad = [p(0., 0.), p(6., 2.), p(10., 2.), p(12., 0.)];
+(B[m[32m+    check!(r, classify_cubic(&exactQuad) == Quadratic);
+(B[m[32m+    test_chop_cubic_at_midtangent(r, &exactQuad, Quadratic);
+(B[m[32m+    let exactCuspAtInf = [p(0., 0.), p(1., 0.), p(0., 1.), p(1., 1.)];
+(B[m[32m+    check!(r, classify_cubic(&exactCuspAtInf) == CuspAtInfinity);
+(B[m[32m+    let n = sk_chop_cubic_at_inflections(&exactCuspAtInf, &mut chops);
+(B[m[32m+    for i in 0..n as usize {
+(B[m[32m+        test_chop_cubic_at_midtangent(r, &chops[i * 3..i * 3 + 4], CuspAtInfinity);
+(B[m[32m+    }
+(B[m[32m+}
+(B[m #[test]
+ fn Geometry() {
+[31m- let mut r=Reporter::default();let mut pts=[Point::default();5];
+(B[m[31m- pts[0].set(0.,0.);pts[1].set(100.,50.);pts[2].set(0.,100.);
+(B[m[31m- let mut count=sk_chop_quad_at_max_curvature_in_place(&mut pts);check!(r,count==1||count==2);
+(B[m[31m- pts[0].set(15.1213,7.77647);pts[1].set(6.2168e19,1.51338e20);pts[2].set(1.4579e19,1.55558e21);
+(B[m[31m- count=sk_chop_quad_at_max_curvature_in_place(&mut pts);
+(B[m[31m- pts[0].set(0.,0.);pts[1].set(3.,0.);pts[2].set(3.,3.);
+(B[m[31m- // Rust shared/exclusive borrows cannot alias: snapshot source of this in-place conversion.
+(B[m[31m- let src=[pts[0],pts[1],pts[2]];sk_convert_quad_to_cubic(&src,&mut pts);
+(B[m[31m- let cubic=[p(0.,0.),p(2.,0.),p(3.,1.),p(3.,3.)];for i in 0..4 {check!(r,point_near(cubic[i],pts[i]));}
+(B[m[31m- testChopCubic(&mut r);test_evalquadat(&mut r);test_conic(&mut r);test_cubic_tangents(&mut r);test_quad_tangents(&mut r);test_conic_tangents(&mut r);test_conic_to_quads(&mut r);test_classify_cubic(&mut r);test_cubic_cusps(&mut r);test_measure_rotation(&mut r);test_chop_at_midtangent(&mut r);
+(B[m[31m- r.finish();
+(B[m[32m+    let mut r = Reporter::default();
+(B[m[32m+    let mut pts = [Point::default(); 5];
+(B[m[32m+    pts[0].set(0., 0.);
+(B[m[32m+    pts[1].set(100., 50.);
+(B[m[32m+    pts[2].set(0., 100.);
+(B[m[32m+    let mut count = sk_chop_quad_at_max_curvature_in_place(&mut pts);
+(B[m[32m+    check!(r, count == 1 || count == 2);
+(B[m[32m+    pts[0].set(15.1213, 7.77647);
+(B[m[32m+    pts[1].set(6.2168e19, 1.51338e20);
+(B[m[32m+    pts[2].set(1.4579e19, 1.55558e21);
+(B[m[32m+    count = sk_chop_quad_at_max_curvature_in_place(&mut pts);
+(B[m[32m+    pts[0].set(0., 0.);
+(B[m[32m+    pts[1].set(3., 0.);
+(B[m[32m+    pts[2].set(3., 3.);
+(B[m[32m+    // Rust shared/exclusive borrows cannot alias: snapshot source of this in-place conversion.
+(B[m[32m+    let src = [pts[0], pts[1], pts[2]];
+(B[m[32m+    sk_convert_quad_to_cubic(&src, &mut pts);
+(B[m[32m+    let cubic = [p(0., 0.), p(2., 0.), p(3., 1.), p(3., 3.)];
+(B[m[32m+    for i in 0..4 {
+(B[m[32m+        check!(r, point_near(cubic[i], pts[i]));
+(B[m[32m+    }
+(B[m[32m+    testChopCubic(&mut r);
+(B[m[32m+    test_evalquadat(&mut r);
+(B[m[32m+    test_conic(&mut r);
+(B[m[32m+    test_cubic_tangents(&mut r);
+(B[m[32m+    test_quad_tangents(&mut r);
+(B[m[32m+    test_conic_tangents(&mut r);
+(B[m[32m+    test_conic_to_quads(&mut r);
+(B[m[32m+    test_classify_cubic(&mut r);
+(B[m[32m+    test_cubic_cusps(&mut r);
+(B[m[32m+    test_measure_rotation(&mut r);
+(B[m[32m+    test_chop_at_midtangent(&mut r);
+(B[m[32m+    r.finish();
+(B[m }
+ #[test]
+ fn ConicsWithCrazyW() {
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m06/geometry.rs:234:
+[31m- let mut r=Reporter::default();let max=f32::MAX;let inf=f32::INFINITY;let nanq=f32::NAN;let nans=f32::from_bits(0x7f800001);
+(B[m[31m- let weights=[0.,1./65535.,1.,65535.,max/4.,max/2.,max,inf,nanq,nans];
+(B[m[31m- let length=100.;let mut conic=SkConic::new(p(0.,length),p(0.,0.),p(length,0.),1.);
+(B[m[31m- let is_in_convex_hull=|p:Point| {let sum=p.x+p.y;let tinySlop=1./32768.;p.x>=0.&&p.y>=0.&&sum<=length+tinySlop};
+(B[m[31m- let tol=0.;for sign in [1.,-1.] {for w in weights {
+(B[m[31m-  conic.w=w*sign;let pow2=conic.compute_quad_pow2(tol);check!(r,pow2>=0&&pow2<=30);
+(B[m[31m-  let numQuads=1i32<<pow2;check!(r,numQuads>0);let numPoints=numQuads*2+1;check!(r,numPoints>=3);
+(B[m[31m-  let mut pts=vec![Point::default();numPoints as usize];let numQuads2=conic.chop_into_quads_pow2(&mut pts,pow2);
+(B[m[31m-  check!(r,numQuads2<=numQuads);let numPoints2=numQuads2*2+1;check!(r,numPoints2<=numPoints);
+(B[m[31m-  for i in 0..numPoints2 as usize {let pt=pts[i];check!(r,pt.x.is_finite()&&pt.y.is_finite());check!(r,is_in_convex_hull(pt));}
+(B[m[31m- }}r.finish();
+(B[m[32m+    let mut r = Reporter::default();
+(B[m[32m+    let max = f32::MAX;
+(B[m[32m+    let inf = f32::INFINITY;
+(B[m[32m+    let nanq = f32::NAN;
+(B[m[32m+    let nans = f32::from_bits(0x7f800001);
+(B[m[32m+    let weights = [
+(B[m[32m+        0.,
+(B[m[32m+        1. / 65535.,
+(B[m[32m+        1.,
+(B[m[32m+        65535.,
+(B[m[32m+        max / 4.,
+(B[m[32m+        max / 2.,
+(B[m[32m+        max,
+(B[m[32m+        inf,
+(B[m[32m+        nanq,
+(B[m[32m+        nans,
+(B[m[32m+    ];
+(B[m[32m+    let length = 100.;
+(B[m[32m+    let mut conic = SkConic::new(p(0., length), p(0., 0.), p(length, 0.), 1.);
+(B[m[32m+    let is_in_convex_hull = |p: Point| {
+(B[m[32m+        let sum = p.x + p.y;
+(B[m[32m+        let tinySlop = 1. / 32768.;
+(B[m[32m+        p.x >= 0. && p.y >= 0. && sum <= length + tinySlop
+(B[m[32m+    };
+(B[m[32m+    let tol = 0.;
+(B[m[32m+    for sign in [1., -1.] {
+(B[m[32m+        for w in weights {
+(B[m[32m+            conic.w = w * sign;
+(B[m[32m+            let pow2 = conic.compute_quad_pow2(tol);
+(B[m[32m+            check!(r, pow2 >= 0 && pow2 <= 30);
+(B[m[32m+            let numQuads = 1i32 << pow2;
+(B[m[32m+            check!(r, numQuads > 0);
+(B[m[32m+            let numPoints = numQuads * 2 + 1;
+(B[m[32m+            check!(r, numPoints >= 3);
+(B[m[32m+            let mut pts = vec![Point::default(); numPoints as usize];
+(B[m[32m+            let numQuads2 = conic.chop_into_quads_pow2(&mut pts, pow2);
+(B[m[32m+            check!(r, numQuads2 <= numQuads);
+(B[m[32m+            let numPoints2 = numQuads2 * 2 + 1;
+(B[m[32m+            check!(r, numPoints2 <= numPoints);
+(B[m[32m+            for i in 0..numPoints2 as usize {
+(B[m[32m+                let pt = pts[i];
+(B[m[32m+                check!(r, pt.x.is_finite() && pt.y.is_finite());
+(B[m[32m+                check!(r, is_in_convex_hull(pt));
+(B[m[32m+            }
+(B[m[32m+        }
+(B[m[32m+    }
+(B[m[32m+    r.finish();
+(B[m }
+ 
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m06/insetconvexpoly.rs:3:
+ // Upstream guard: !SK_ENABLE_OPTIMIZE_SIZE; normal CPU build includes these APIs.
+ #[test]
+ fn InsetConvexPoly() {
+[31m- let mut reporter = Reporter::default();
+(B[m[32m+    let mut reporter = Reporter::default();
+(B[m     let mut rrectPoly: Vec<Point> = Vec::new();
+ 
+     // round rect
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m06/insetconvexpoly.rs:97:
+     result = sk_inset_convex_polygon(&clippedRRectPoly, 32.3699417, &mut insetPoly);
+     check!(reporter, result);
+     check!(reporter, sk_is_convex_polygon(&insetPoly));
+[31m-reporter.finish();
+(B[m[32m+    reporter.finish();
+(B[m }
+ 
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m06/mono_x.rs:3:
+ // GeometryTest.cpp: GeometryChopMonoCubicAtX_Successful; complete original fixture sequence.
+ #[test]
+ fn GeometryChopMonoCubicAtX_Successful() {
+[31m- let mut r = Reporter::default();
+(B[m[31m- mono(&mut r, "straight, positive slope @ 2.5", &[Point::new(0.0, 0.0), Point::new(0.0, 0.0), Point::new(10.0, 10.0), Point::new(10.0, 10.0)], 2.5, &[Point::new(0.000000,  0.000000), Point::new(0.000000,  0.000000), Point::new(1.065055,  1.065055), Point::new(2.500000,  2.500000), Point::new(5.461981,  5.461981), Point::new(10.000000, 10.000000), Point::new(10.000000, 10.000000)], true);
+(B[m[31m- mono(&mut r, "straight, positive slope @ 5.0", &[Point::new(0.0, 0.0), Point::new(0.0, 0.0), Point::new(10.0, 10.0), Point::new(10.0, 10.0)], 5.0, &[Point::new(0.000000,  0.000000), Point::new(0.000000,  0.000000), Point::new(2.500000,  2.500000), Point::new(5.000000,  5.000000), Point::new(7.500000,  7.500000), Point::new(10.000000, 10.000000), Point::new(10.000000, 10.000000)], true);
+(B[m[31m- mono(&mut r, "straight, positive slope @ 9.0", &[Point::new(0.0, 0.0), Point::new(0.0, 0.0), Point::new(10.0, 10.0), Point::new(10.0, 10.0)], 9.0, &[Point::new(0.000000,  0.000000), Point::new(0.000000,  0.000000), Point::new(6.467375,  6.467375), Point::new(9.000000,  9.000000), Point::new(9.616623,  9.616623), Point::new(10.000000, 10.000000), Point::new(10.000000, 10.000000)], true);
+(B[m[31m- mono(&mut r, "straight, positive slope @ 10.0", &[Point::new(0.0, 0.0), Point::new(0.0, 0.0), Point::new(10.0, 10.0), Point::new(10.0, 10.0)], 10.0, &[Point::new(0.000000,  0.000000), Point::new(0.000000,  0.000000), Point::new(10.000000, 10.000000), Point::new(10.000000, 10.000000), Point::new(10.000000, 10.000000), Point::new(10.000000, 10.000000), Point::new(10.000000, 10.000000)], true);
+(B[m[31m- mono(&mut r, "curve, positive slope @ 2.0", &[Point::new(1.0, 1.0), Point::new(5.0, 2.0), Point::new(7.0, 4.0), Point::new(8.0, 7.0)], 2.0, &[Point::new(1.000000,  1.000000), Point::new(1.348275,  1.087069), Point::new(1.681389,  1.181719), Point::new(2.000000,  1.283949), Point::new(5.340694,  2.355856), Point::new(7.087069,  4.261207), Point::new(8.000000,  7.000000)], true);
+(B[m[31m- mono(&mut r, "curve, positive slope @ 5.0", &[Point::new(1.0, 1.0), Point::new(5.0, 2.0), Point::new(7.0, 4.0), Point::new(8.0, 7.0)], 5.0, &[Point::new(1.000000,  1.000000), Point::new(2.650396,  1.412599), Point::new(3.960316,  1.995436), Point::new(5.000000,  2.748511), Point::new(6.480158,  3.820634), Point::new(7.412599,  5.237797), Point::new(8.000000,  7.000000)], true);
+(B[m[31m- mono(&mut r, "curve, negative slope @ 5.0", &[Point::new(2.0, 7.0), Point::new(3.0, 2.0), Point::new(6.0, 3.0), Point::new(11.0, 2.0)], 5.0, &[Point::new(2.000000,  7.000000), Point::new(2.500000,  4.500000), Point::new(3.500000,  3.500000), Point::new(5.000000,  3.000000), Point::new(6.500000,  2.500000), Point::new(8.500000,  2.500000), Point::new(11.000000,  2.000000)], true);
+(B[m[31m- mono(&mut r, "curve, negative slope @ 3.0", &[Point::new(2.0, 7.0), Point::new(3.0, 2.0), Point::new(6.0, 3.0), Point::new(11.0, 2.0)], 3.0, &[Point::new(2.000000,  7.000000), Point::new(2.228714,  5.856432), Point::new(2.562047,  5.026724), Point::new(3.000000,  4.415163), Point::new(4.476901,  2.352807), Point::new(7.143568,  2.771286), Point::new(11.000000,  2.000000)], true);
+(B[m[31m- mono(&mut r, "curve, negative slope @ 2.5", &[Point::new(2.0, 7.0), Point::new(3.0, 2.0), Point::new(6.0, 3.0), Point::new(11.0, 2.0)], 2.5, &[Point::new(2.000000,  7.000000), Point::new(2.131881,  6.340593), Point::new(2.298548,  5.785543), Point::new(2.500000,  5.316498), Point::new(3.826073,  2.228977), Point::new(6.659407,  2.868119), Point::new(11.000000,  2.000000)], true);
+(B[m[31m- mono(&mut r, "inverted curve, negative slope @ 5.0", &[Point::new(11.0, 2.0), Point::new(6.0, 3.0), Point::new(3.0, 2.0), Point::new(2.0, 7.0)], 5.0, &[Point::new(11.000000,  2.000000), Point::new(8.500000,  2.500000), Point::new(6.500000,  2.500000), Point::new(5.000000,  3.000000), Point::new(3.500000,  3.500000), Point::new(2.500000,  4.500000), Point::new(2.000000,  7.000000)], true);
+(B[m[31m- mono(&mut r, "inverted curve, negative slope @ 3.0", &[Point::new(11.0, 2.0), Point::new(6.0, 3.0), Point::new(3.0, 2.0), Point::new(2.0, 7.0)], 3.0, &[Point::new(11.000000,  2.000000), Point::new(7.143568,  2.771286), Point::new(4.476901,  2.352807), Point::new(3.000000,  4.415163), Point::new(2.562047,  5.026724), Point::new(2.228714,  5.856432), Point::new(2.000000,  7.000000)], true);
+(B[m[31m- mono(&mut r, "inverted curve, negative slope @ 2.5", &[Point::new(11.0, 2.0), Point::new(6.0, 3.0), Point::new(3.0, 2.0), Point::new(2.0, 7.0)], 2.5, &[Point::new(11.000000,  2.000000), Point::new(6.659407,  2.868119), Point::new(3.826073,  2.228977), Point::new(2.500000,  5.316498), Point::new(2.298548,  5.785543), Point::new(2.131881,  6.340593), Point::new(2.000000,  7.000000)], true);
+(B[m[31m- mono(&mut r, "big curve, negative slope @ 90", &[Point::new(-2.0, 100.0), Point::new(0.0, 0.0), Point::new(0.0, 0.0), Point::new(100.0, -2.0)], 90., &[Point::new(-2.000000,100.000000), Point::new(-0.069021,  3.451032), Point::new(-0.002382,  0.119096), Point::new(90.000000, -1.795892), Point::new(93.217033, -1.864341), Point::new(96.548965, -1.930979), Point::new(100.000000, -2.000000)], true);
+(B[m[31m- mono(&mut r, "big curve, negative slope @ 10", &[Point::new(-2.0, 100.0), Point::new(0.0, 0.0), Point::new(0.0, 0.0), Point::new(100.0, -2.0)], 10., &[Point::new(-2.000000,100.000000), Point::new(-1.062495, 53.124729), Point::new(-0.564447, 28.222368), Point::new(10.000000, 14.787060), Point::new(21.972910, -0.439458), Point::new(46.875271, -0.937505), Point::new(100.000000, -2.000000)], true);
+(B[m[31m- mono(&mut r, "big curve, negative slope @ 0", &[Point::new(-2.0, 100.0), Point::new(0.0, 0.0), Point::new(0.0, 0.0), Point::new(100.0, -2.0)], 0., &[Point::new(-2.000000,100.000000), Point::new(-1.573017, 78.650871), Point::new(-1.237192, 61.859592), Point::new(0.000000, 48.633648), Point::new(4.557854, -0.091157), Point::new(21.349131, -0.426983), Point::new(100.000000, -2.000000)], true);
+(B[m[31m- r.finish();
+(B[m[32m+    let mut r = Reporter::default();
+(B[m[32m+    mono(
+(B[m[32m+        &mut r,
+(B[m[32m+        "straight, positive slope @ 2.5",
+(B[m[32m+        &[
+(B[m[32m+            Point::new(0.0, 0.0),
+(B[m[32m+            Point::new(0.0, 0.0),
+(B[m[32m+            Point::new(10.0, 10.0),
+(B[m[32m+            Point::new(10.0, 10.0),
+(B[m[32m+        ],
+(B[m[32m+        2.5,
+(B[m[32m+        &[
+(B[m[32m+            Point::new(0.000000, 0.000000),
+(B[m[32m+            Point::new(0.000000, 0.000000),
+(B[m[32m+            Point::new(1.065055, 1.065055),
+(B[m[32m+            Point::new(2.500000, 2.500000),
+(B[m[32m+            Point::new(5.461981, 5.461981),
+(B[m[32m+            Point::new(10.000000, 10.000000),
+(B[m[32m+            Point::new(10.000000, 10.000000),
+(B[m[32m+        ],
+(B[m[32m+        true,
+(B[m[32m+    );
+(B[m[32m+    mono(
+(B[m[32m+        &mut r,
+(B[m[32m+        "straight, positive slope @ 5.0",
+(B[m[32m+        &[
+(B[m[32m+            Point::new(0.0, 0.0),
+(B[m[32m+            Point::new(0.0, 0.0),
+(B[m[32m+            Point::new(10.0, 10.0),
+(B[m[32m+            Point::new(10.0, 10.0),
+(B[m[32m+        ],
+(B[m[32m+        5.0,
+(B[m[32m+        &[
+(B[m[32m+            Point::new(0.000000, 0.000000),
+(B[m[32m+            Point::new(0.000000, 0.000000),
+(B[m[32m+            Point::new(2.500000, 2.500000),
+(B[m[32m+            Point::new(5.000000, 5.000000),
+(B[m[32m+            Point::new(7.500000, 7.500000),
+(B[m[32m+            Point::new(10.000000, 10.000000),
+(B[m[32m+            Point::new(10.000000, 10.000000),
+(B[m[32m+        ],
+(B[m[32m+        true,
+(B[m[32m+    );
+(B[m[32m+    mono(
+(B[m[32m+        &mut r,
+(B[m[32m+        "straight, positive slope @ 9.0",
+(B[m[32m+        &[
+(B[m[32m+            Point::new(0.0, 0.0),
+(B[m[32m+            Point::new(0.0, 0.0),
+(B[m[32m+            Point::new(10.0, 10.0),
+(B[m[32m+            Point::new(10.0, 10.0),
+(B[m[32m+        ],
+(B[m[32m+        9.0,
+(B[m[32m+        &[
+(B[m[32m+            Point::new(0.000000, 0.000000),
+(B[m[32m+            Point::new(0.000000, 0.000000),
+(B[m[32m+            Point::new(6.467375, 6.467375),
+(B[m[32m+            Point::new(9.000000, 9.000000),
+(B[m[32m+            Point::new(9.616623, 9.616623),
+(B[m[32m+            Point::new(10.000000, 10.000000),
+(B[m[32m+            Point::new(10.000000, 10.000000),
+(B[m[32m+        ],
+(B[m[32m+        true,
+(B[m[32m+    );
+(B[m[32m+    mono(
+(B[m[32m+        &mut r,
+(B[m[32m+        "straight, positive slope @ 10.0",
+(B[m[32m+        &[
+(B[m[32m+            Point::new(0.0, 0.0),
+(B[m[32m+            Point::new(0.0, 0.0),
+(B[m[32m+            Point::new(10.0, 10.0),
+(B[m[32m+            Point::new(10.0, 10.0),
+(B[m[32m+        ],
+(B[m[32m+        10.0,
+(B[m[32m+        &[
+(B[m[32m+            Point::new(0.000000, 0.000000),
+(B[m[32m+            Point::new(0.000000, 0.000000),
+(B[m[32m+            Point::new(10.000000, 10.000000),
+(B[m[32m+            Point::new(10.000000, 10.000000),
+(B[m[32m+            Point::new(10.000000, 10.000000),
+(B[m[32m+            Point::new(10.000000, 10.000000),
+(B[m[32m+            Point::new(10.000000, 10.000000),
+(B[m[32m+        ],
+(B[m[32m+        true,
+(B[m[32m+    );
+(B[m[32m+    mono(
+(B[m[32m+        &mut r,
+(B[m[32m+        "curve, positive slope @ 2.0",
+(B[m[32m+        &[
+(B[m[32m+            Point::new(1.0, 1.0),
+(B[m[32m+            Point::new(5.0, 2.0),
+(B[m[32m+            Point::new(7.0, 4.0),
+(B[m[32m+            Point::new(8.0, 7.0),
+(B[m[32m+        ],
+(B[m[32m+        2.0,
+(B[m[32m+        &[
+(B[m[32m+            Point::new(1.000000, 1.000000),
+(B[m[32m+            Point::new(1.348275, 1.087069),
+(B[m[32m+            Point::new(1.681389, 1.181719),
+(B[m[32m+            Point::new(2.000000, 1.283949),
+(B[m[32m+            Point::new(5.340694, 2.355856),
+(B[m[32m+            Point::new(7.087069, 4.261207),
+(B[m[32m+            Point::new(8.000000, 7.000000),
+(B[m[32m+        ],
+(B[m[32m+        true,
+(B[m[32m+    );
+(B[m[32m+    mono(
+(B[m[32m+        &mut r,
+(B[m[32m+        "curve, positive slope @ 5.0",
+(B[m[32m+        &[
+(B[m[32m+            Point::new(1.0, 1.0),
+(B[m[32m+            Point::new(5.0, 2.0),
+(B[m[32m+            Point::new(7.0, 4.0),
+(B[m[32m+            Point::new(8.0, 7.0),
+(B[m[32m+        ],
+(B[m[32m+        5.0,
+(B[m[32m+        &[
+(B[m[32m+            Point::new(1.000000, 1.000000),
+(B[m[32m+            Point::new(2.650396, 1.412599),
+(B[m[32m+            Point::new(3.960316, 1.995436),
+(B[m[32m+            Point::new(5.000000, 2.748511),
+(B[m[32m+            Point::new(6.480158, 3.820634),
+(B[m[32m+            Point::new(7.412599, 5.237797),
+(B[m[32m+            Point::new(8.000000, 7.000000),
+(B[m[32m+        ],
+(B[m[32m+        true,
+(B[m[32m+    );
+(B[m[32m+    mono(
+(B[m[32m+        &mut r,
+(B[m[32m+        "curve, negative slope @ 5.0",
+(B[m[32m+        &[
+(B[m[32m+            Point::new(2.0, 7.0),
+(B[m[32m+            Point::new(3.0, 2.0),
+(B[m[32m+            Point::new(6.0, 3.0),
+(B[m[32m+            Point::new(11.0, 2.0),
+(B[m[32m+        ],
+(B[m[32m+        5.0,
+(B[m[32m+        &[
+(B[m[32m+            Point::new(2.000000, 7.000000),
+(B[m[32m+            Point::new(2.500000, 4.500000),
+(B[m[32m+            Point::new(3.500000, 3.500000),
+(B[m[32m+            Point::new(5.000000, 3.000000),
+(B[m[32m+            Point::new(6.500000, 2.500000),
+(B[m[32m+            Point::new(8.500000, 2.500000),
+(B[m[32m+            Point::new(11.000000, 2.000000),
+(B[m[32m+        ],
+(B[m[32m+        true,
+(B[m[32m+    );
+(B[m[32m+    mono(
+(B[m[32m+        &mut r,
+(B[m[32m+        "curve, negative slope @ 3.0",
+(B[m[32m+        &[
+(B[m[32m+            Point::new(2.0, 7.0),
+(B[m[32m+            Point::new(3.0, 2.0),
+(B[m[32m+            Point::new(6.0, 3.0),
+(B[m[32m+            Point::new(11.0, 2.0),
+(B[m[32m+        ],
+(B[m[32m+        3.0,
+(B[m[32m+        &[
+(B[m[32m+            Point::new(2.000000, 7.000000),
+(B[m[32m+            Point::new(2.228714, 5.856432),
+(B[m[32m+            Point::new(2.562047, 5.026724),
+(B[m[32m+            Point::new(3.000000, 4.415163),
+(B[m[32m+            Point::new(4.476901, 2.352807),
+(B[m[32m+            Point::new(7.143568, 2.771286),
+(B[m[32m+            Point::new(11.000000, 2.000000),
+(B[m[32m+        ],
+(B[m[32m+        true,
+(B[m[32m+    );
+(B[m[32m+    mono(
+(B[m[32m+        &mut r,
+(B[m[32m+        "curve, negative slope @ 2.5",
+(B[m[32m+        &[
+(B[m[32m+            Point::new(2.0, 7.0),
+(B[m[32m+            Point::new(3.0, 2.0),
+(B[m[32m+            Point::new(6.0, 3.0),
+(B[m[32m+            Point::new(11.0, 2.0),
+(B[m[32m+        ],
+(B[m[32m+        2.5,
+(B[m[32m+        &[
+(B[m[32m+            Point::new(2.000000, 7.000000),
+(B[m[32m+            Point::new(2.131881, 6.340593),
+(B[m[32m+            Point::new(2.298548, 5.785543),
+(B[m[32m+            Point::new(2.500000, 5.316498),
+(B[m[32m+            Point::new(3.826073, 2.228977),
+(B[m[32m+            Point::new(6.659407, 2.868119),
+(B[m[32m+            Point::new(11.000000, 2.000000),
+(B[m[32m+        ],
+(B[m[32m+        true,
+(B[m[32m+    );
+(B[m[32m+    mono(
+(B[m[32m+        &mut r,
+(B[m[32m+        "inverted curve, negative slope @ 5.0",
+(B[m[32m+        &[
+(B[m[32m+            Point::new(11.0, 2.0),
+(B[m[32m+            Point::new(6.0, 3.0),
+(B[m[32m+            Point::new(3.0, 2.0),
+(B[m[32m+            Point::new(2.0, 7.0),
+(B[m[32m+        ],
+(B[m[32m+        5.0,
+(B[m[32m+        &[
+(B[m[32m+            Point::new(11.000000, 2.000000),
+(B[m[32m+            Point::new(8.500000, 2.500000),
+(B[m[32m+            Point::new(6.500000, 2.500000),
+(B[m[32m+            Point::new(5.000000, 3.000000),
+(B[m[32m+            Point::new(3.500000, 3.500000),
+(B[m[32m+            Point::new(2.500000, 4.500000),
+(B[m[32m+            Point::new(2.000000, 7.000000),
+(B[m[32m+        ],
+(B[m[32m+        true,
+(B[m[32m+    );
+(B[m[32m+    mono(
+(B[m[32m+        &mut r,
+(B[m[32m+        "inverted curve, negative slope @ 3.0",
+(B[m[32m+        &[
+(B[m[32m+            Point::new(11.0, 2.0),
+(B[m[32m+            Point::new(6.0, 3.0),
+(B[m[32m+            Point::new(3.0, 2.0),
+(B[m[32m+            Point::new(2.0, 7.0),
+(B[m[32m+        ],
+(B[m[32m+        3.0,
+(B[m[32m+        &[
+(B[m[32m+            Point::new(11.000000, 2.000000),
+(B[m[32m+            Point::new(7.143568, 2.771286),
+(B[m[32m+            Point::new(4.476901, 2.352807),
+(B[m[32m+            Point::new(3.000000, 4.415163),
+(B[m[32m+            Point::new(2.562047, 5.026724),
+(B[m[32m+            Point::new(2.228714, 5.856432),
+(B[m[32m+            Point::new(2.000000, 7.000000),
+(B[m[32m+        ],
+(B[m[32m+        true,
+(B[m[32m+    );
+(B[m[32m+    mono(
+(B[m[32m+        &mut r,
+(B[m[32m+        "inverted curve, negative slope @ 2.5",
+(B[m[32m+        &[
+(B[m[32m+            Point::new(11.0, 2.0),
+(B[m[32m+            Point::new(6.0, 3.0),
+(B[m[32m+            Point::new(3.0, 2.0),
+(B[m[32m+            Point::new(2.0, 7.0),
+(B[m[32m+        ],
+(B[m[32m+        2.5,
+(B[m[32m+        &[
+(B[m[32m+            Point::new(11.000000, 2.000000),
+(B[m[32m+            Point::new(6.659407, 2.868119),
+(B[m[32m+            Point::new(3.826073, 2.228977),
+(B[m[32m+            Point::new(2.500000, 5.316498),
+(B[m[32m+            Point::new(2.298548, 5.785543),
+(B[m[32m+            Point::new(2.131881, 6.340593),
+(B[m[32m+            Point::new(2.000000, 7.000000),
+(B[m[32m+        ],
+(B[m[32m+        true,
+(B[m[32m+    );
+(B[m[32m+    mono(
+(B[m[32m+        &mut r,
+(B[m[32m+        "big curve, negative slope @ 90",
+(B[m[32m+        &[
+(B[m[32m+            Point::new(-2.0, 100.0),
+(B[m[32m+            Point::new(0.0, 0.0),
+(B[m[32m+            Point::new(0.0, 0.0),
+(B[m[32m+            Point::new(100.0, -2.0),
+(B[m[32m+        ],
+(B[m[32m+        90.,
+(B[m[32m+        &[
+(B[m[32m+            Point::new(-2.000000, 100.000000),
+(B[m[32m+            Point::new(-0.069021, 3.451032),
+(B[m[32m+            Point::new(-0.002382, 0.119096),
+(B[m[32m+            Point::new(90.000000, -1.795892),
+(B[m[32m+            Point::new(93.217033, -1.864341),
+(B[m[32m+            Point::new(96.548965, -1.930979),
+(B[m[32m+            Point::new(100.000000, -2.000000),
+(B[m[32m+        ],
+(B[m[32m+        true,
+(B[m[32m+    );
+(B[m[32m+    mono(
+(B[m[32m+        &mut r,
+(B[m[32m+        "big curve, negative slope @ 10",
+(B[m[32m+        &[
+(B[m[32m+            Point::new(-2.0, 100.0),
+(B[m[32m+            Point::new(0.0, 0.0),
+(B[m[32m+            Point::new(0.0, 0.0),
+(B[m[32m+            Point::new(100.0, -2.0),
+(B[m[32m+        ],
+(B[m[32m+        10.,
+(B[m[32m+        &[
+(B[m[32m+            Point::new(-2.000000, 100.000000),
+(B[m[32m+            Point::new(-1.062495, 53.124729),
+(B[m[32m+            Point::new(-0.564447, 28.222368),
+(B[m[32m+            Point::new(10.000000, 14.787060),
+(B[m[32m+            Point::new(21.972910, -0.439458),
+(B[m[32m+            Point::new(46.875271, -0.937505),
+(B[m[32m+            Point::new(100.000000, -2.000000),
+(B[m[32m+        ],
+(B[m[32m+        true,
+(B[m[32m+    );
+(B[m[32m+    mono(
+(B[m[32m+        &mut r,
+(B[m[32m+        "big curve, negative slope @ 0",
+(B[m[32m+        &[
+(B[m[32m+            Point::new(-2.0, 100.0),
+(B[m[32m+            Point::new(0.0, 0.0),
+(B[m[32m+            Point::new(0.0, 0.0),
+(B[m[32m+            Point::new(100.0, -2.0),
+(B[m[32m+        ],
+(B[m[32m+        0.,
+(B[m[32m+        &[
+(B[m[32m+            Point::new(-2.000000, 100.000000),
+(B[m[32m+            Point::new(-1.573017, 78.650871),
+(B[m[32m+            Point::new(-1.237192, 61.859592),
+(B[m[32m+            Point::new(0.000000, 48.633648),
+(B[m[32m+            Point::new(4.557854, -0.091157),
+(B[m[32m+            Point::new(21.349131, -0.426983),
+(B[m[32m+            Point::new(100.000000, -2.000000),
+(B[m[32m+        ],
+(B[m[32m+        true,
+(B[m[32m+    );
+(B[m[32m+    r.finish();
+(B[m }
+ #[test]
+ fn GeometryChopMonoCubicAtX_OutOfRangeReturnFalse() {
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m06/mono_x.rs:26:
+[31m- let mut r = Reporter::default();
+(B[m[31m- let inputs = [p(0.,0.),p(0.,0.),p(10.,10.),p(10.,10.)];
+(B[m[31m- let mut outputs = [Point::default();7];
+(B[m[31m- check!(r, !sk_chop_mono_cubic_at_x(&inputs,-10.,&mut outputs));
+(B[m[31m- check!(r, !sk_chop_mono_cubic_at_x(&inputs,20.,&mut outputs));
+(B[m[31m- r.finish();
+(B[m[32m+    let mut r = Reporter::default();
+(B[m[32m+    let inputs = [p(0., 0.), p(0., 0.), p(10., 10.), p(10., 10.)];
+(B[m[32m+    let mut outputs = [Point::default(); 7];
+(B[m[32m+    check!(r, !sk_chop_mono_cubic_at_x(&inputs, -10., &mut outputs));
+(B[m[32m+    check!(r, !sk_chop_mono_cubic_at_x(&inputs, 20., &mut outputs));
+(B[m[32m+    r.finish();
+(B[m }
+ 
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m06/mono_y.rs:3:
+ // GeometryTest.cpp: GeometryChopMonoCubicAtY_Successful; complete original fixture sequence.
+ #[test]
+ fn GeometryChopMonoCubicAtY_Successful() {
+[31m- let mut r = Reporter::default();
+(B[m[31m- mono(&mut r, "straight, positive slope @ 2.5", &[Point::new(0.0, 0.0), Point::new(0.0, 0.0), Point::new(10.0, 10.0), Point::new(10.0, 10.0)], 2.5, &[Point::new(0.000000,  0.000000), Point::new(0.000000,  0.000000), Point::new(1.065055,  1.065055), Point::new(2.500000,  2.500000), Point::new(5.461981,  5.461981), Point::new(10.000000, 10.000000), Point::new(10.000000, 10.000000)], false);
+(B[m[31m- mono(&mut r, "straight, positive slope @ 5.0", &[Point::new(0.0, 0.0), Point::new(0.0, 0.0), Point::new(10.0, 10.0), Point::new(10.0, 10.0)], 5.0, &[Point::new(0.000000,  0.000000), Point::new(0.000000,  0.000000), Point::new(2.500000,  2.500000), Point::new(5.000000,  5.000000), Point::new(7.500000,  7.500000), Point::new(10.000000, 10.000000), Point::new(10.000000, 10.000000)], false);
+(B[m[31m- mono(&mut r, "straight, positive slope @ 9.0", &[Point::new(0.0, 0.0), Point::new(0.0, 0.0), Point::new(10.0, 10.0), Point::new(10.0, 10.0)], 9.0, &[Point::new(0.000000,  0.000000), Point::new(0.000000,  0.000000), Point::new(6.467375,  6.467375), Point::new(9.000000,  9.000000), Point::new(9.616623,  9.616623), Point::new(10.000000, 10.000000), Point::new(10.000000, 10.000000)], false);
+(B[m[31m- mono(&mut r, "straight, positive slope @ 10.0", &[Point::new(0.0, 0.0), Point::new(0.0, 0.0), Point::new(10.0, 10.0), Point::new(10.0, 10.0)], 10.0, &[Point::new(0.000000,  0.000000), Point::new(0.000000,  0.000000), Point::new(10.000000, 10.000000), Point::new(10.000000, 10.000000), Point::new(10.000000, 10.000000), Point::new(10.000000, 10.000000), Point::new(10.000000, 10.000000)], false);
+(B[m[31m- mono(&mut r, "curve, positive slope @ 2.0", &[Point::new(1.0, 1.0), Point::new(5.0, 2.0), Point::new(7.0, 4.0), Point::new(8.0, 7.0)], 2.0, &[Point::new(1.000000,  1.000000), Point::new(2.055050,  1.263763), Point::new(2.970959,  1.597096), Point::new(3.766077,  2.000000), Point::new(5.985480,  3.124621), Point::new(7.263762,  4.791288), Point::new(8.000000,  7.000000)], false);
+(B[m[31m- mono(&mut r, "curve, positive slope @ 5.0", &[Point::new(1.0, 1.0), Point::new(5.0, 2.0), Point::new(7.0, 4.0), Point::new(8.0, 7.0)], 5.0, &[Point::new(1.000000,  1.000000), Point::new(4.033223,  1.758306), Point::new(5.916391,  3.091639), Point::new(7.085550,  5.000000), Point::new(7.458195,  5.608251), Point::new(7.758306,  6.274917), Point::new(8.000000,  7.000000)], false);
+(B[m[31m- mono(&mut r, "curve, negative slope @ 5.0", &[Point::new(2.0, 7.0), Point::new(3.0, 2.0), Point::new(6.0, 3.0), Point::new(11.0, 2.0)], 5.0, &[Point::new(2.000000,  7.000000), Point::new(2.162856,  6.185719), Point::new(2.378757,  5.530570), Point::new(2.647702,  5.000000), Point::new(4.030182,  2.272668), Point::new(6.814281,  2.837144), Point::new(11.000000,  2.000000)], false);
+(B[m[31m- mono(&mut r, "curve, negative slope @ 3.0", &[Point::new(2.0, 7.0), Point::new(3.0, 2.0), Point::new(6.0, 3.0), Point::new(11.0, 2.0)], 3.0, &[Point::new(2.000000,  7.000000), Point::new(2.500000,  4.500000), Point::new(3.500000,  3.500000), Point::new(5.000000,  3.000000), Point::new(6.500000,  2.500000), Point::new(8.500000,  2.500000), Point::new(11.000000,  2.000000)], false);
+(B[m[31m- mono(&mut r, "curve, negative slope @ 2.5", &[Point::new(2.0, 7.0), Point::new(3.0, 2.0), Point::new(6.0, 3.0), Point::new(11.0, 2.0)], 2.5, &[Point::new(2.000000,  7.000000), Point::new(2.750000,  3.250000), Point::new(4.625000,  2.875000), Point::new(7.625000,  2.500000), Point::new(8.625000,  2.375000), Point::new(9.750000,  2.250000), Point::new(11.000000,  2.000000)], false);
+(B[m[31m- mono(&mut r, "inverted curve, negative slope @ 5.0", &[Point::new(11.0, 2.0), Point::new(6.0, 3.0), Point::new(3.0, 2.0), Point::new(2.0, 7.0)], 5.0, &[Point::new(11.000000,  2.000000), Point::new(6.814281,  2.837144), Point::new(4.030182,  2.272668), Point::new(2.647702,  5.000000), Point::new(2.378757,  5.530570), Point::new(2.162856,  6.185719), Point::new(2.000000,  7.000000)], false);
+(B[m[31m- mono(&mut r, "inverted curve, negative slope @ 3.0", &[Point::new(11.0, 2.0), Point::new(6.0, 3.0), Point::new(3.0, 2.0), Point::new(2.0, 7.0)], 3.0, &[Point::new(11.000000,  2.000000), Point::new(8.500000,  2.500000), Point::new(6.500000,  2.500000), Point::new(5.000000,  3.000000), Point::new(3.500000,  3.500000), Point::new(2.500000,  4.500000), Point::new(2.000000,  7.000000)], false);
+(B[m[31m- mono(&mut r, "inverted curve, negative slope @ 2.5", &[Point::new(11.0, 2.0), Point::new(6.0, 3.0), Point::new(3.0, 2.0), Point::new(2.0, 7.0)], 2.5, &[Point::new(11.000000,  2.000000), Point::new(9.750000,  2.250000), Point::new(8.625000,  2.375000), Point::new(7.625000,  2.500000), Point::new(4.625000,  2.875000), Point::new(2.750000,  3.250000), Point::new(2.000000,  7.000000)], false);
+(B[m[31m- mono(&mut r, "big curve, negative slope @ 90", &[Point::new(-2.0, 100.0), Point::new(0.0, 0.0), Point::new(0.0, 0.0), Point::new(100.0, -2.0)], 90., &[Point::new(-2.000000,100.000000), Point::new(-1.930979, 96.548965), Point::new(-1.864341, 93.217033), Point::new(-1.795892, 90.000000), Point::new(0.119096, -0.002382), Point::new(3.451032, -0.069021), Point::new(100.000000, -2.000000)], false);
+(B[m[31m- mono(&mut r, "big curve, negative slope @ 10", &[Point::new(-2.0, 100.0), Point::new(0.0, 0.0), Point::new(0.0, 0.0), Point::new(100.0, -2.0)], 10., &[Point::new(-2.000000,100.000000), Point::new(-0.937505, 46.875271), Point::new(-0.439458, 21.972910), Point::new(14.787060, 10.000000), Point::new(28.222368, -0.564447), Point::new(53.124729, -1.062495), Point::new(100.000000, -2.000000)], false);
+(B[m[31m- mono(&mut r, "big curve, negative slope @ 0", &[Point::new(-2.0, 100.0), Point::new(0.0, 0.0), Point::new(0.0, 0.0), Point::new(100.0, -2.0)], 0., &[Point::new(-2.000000,100.000000), Point::new(-0.426983, 21.349131), Point::new(-0.091157,  4.557854), Point::new(48.633648, 0.000000), Point::new(61.859592, -1.237192), Point::new(78.650871, -1.573017), Point::new(100.000000, -2.000000)], false);
+(B[m[31m- mono(&mut r, "ossfuzz:55680 curve barely crosses Y axis", &[Point::new(-250.121582, -1180.09509), Point::new(10.007843, -1180.09509), Point::new(20.015685, -786.041259), Point::new(40.0313721, 2.0664072)], 0., &[Point::new(-250.121582, -1180.095093), Point::new(9.780392, -1180.095093), Point::new(19.997992, -786.730042), Point::new(39.978889, 0.000000), Point::new(39.996376, 0.688501), Point::new(40.013870, 1.377304), Point::new(40.031372, 2.066407)], false);
+(B[m[31m- r.finish();
+(B[m[32m+    let mut r = Reporter::default();
+(B[m[32m+    mono(
+(B[m[32m+        &mut r,
+(B[m[32m+        "straight, positive slope @ 2.5",
+(B[m[32m+        &[
+(B[m[32m+            Point::new(0.0, 0.0),
+(B[m[32m+            Point::new(0.0, 0.0),
+(B[m[32m+            Point::new(10.0, 10.0),
+(B[m[32m+            Point::new(10.0, 10.0),
+(B[m[32m+        ],
+(B[m[32m+        2.5,
+(B[m[32m+        &[
+(B[m[32m+            Point::new(0.000000, 0.000000),
+(B[m[32m+            Point::new(0.000000, 0.000000),
+(B[m[32m+            Point::new(1.065055, 1.065055),
+(B[m[32m+            Point::new(2.500000, 2.500000),
+(B[m[32m+            Point::new(5.461981, 5.461981),
+(B[m[32m+            Point::new(10.000000, 10.000000),
+(B[m[32m+            Point::new(10.000000, 10.000000),
+(B[m[32m+        ],
+(B[m[32m+        false,
+(B[m[32m+    );
+(B[m[32m+    mono(
+(B[m[32m+        &mut r,
+(B[m[32m+        "straight, positive slope @ 5.0",
+(B[m[32m+        &[
+(B[m[32m+            Point::new(0.0, 0.0),
+(B[m[32m+            Point::new(0.0, 0.0),
+(B[m[32m+            Point::new(10.0, 10.0),
+(B[m[32m+            Point::new(10.0, 10.0),
+(B[m[32m+        ],
+(B[m[32m+        5.0,
+(B[m[32m+        &[
+(B[m[32m+            Point::new(0.000000, 0.000000),
+(B[m[32m+            Point::new(0.000000, 0.000000),
+(B[m[32m+            Point::new(2.500000, 2.500000),
+(B[m[32m+            Point::new(5.000000, 5.000000),
+(B[m[32m+            Point::new(7.500000, 7.500000),
+(B[m[32m+            Point::new(10.000000, 10.000000),
+(B[m[32m+            Point::new(10.000000, 10.000000),
+(B[m[32m+        ],
+(B[m[32m+        false,
+(B[m[32m+    );
+(B[m[32m+    mono(
+(B[m[32m+        &mut r,
+(B[m[32m+        "straight, positive slope @ 9.0",
+(B[m[32m+        &[
+(B[m[32m+            Point::new(0.0, 0.0),
+(B[m[32m+            Point::new(0.0, 0.0),
+(B[m[32m+            Point::new(10.0, 10.0),
+(B[m[32m+            Point::new(10.0, 10.0),
+(B[m[32m+        ],
+(B[m[32m+        9.0,
+(B[m[32m+        &[
+(B[m[32m+            Point::new(0.000000, 0.000000),
+(B[m[32m+            Point::new(0.000000, 0.000000),
+(B[m[32m+            Point::new(6.467375, 6.467375),
+(B[m[32m+            Point::new(9.000000, 9.000000),
+(B[m[32m+            Point::new(9.616623, 9.616623),
+(B[m[32m+            Point::new(10.000000, 10.000000),
+(B[m[32m+            Point::new(10.000000, 10.000000),
+(B[m[32m+        ],
+(B[m[32m+        false,
+(B[m[32m+    );
+(B[m[32m+    mono(
+(B[m[32m+        &mut r,
+(B[m[32m+        "straight, positive slope @ 10.0",
+(B[m[32m+        &[
+(B[m[32m+            Point::new(0.0, 0.0),
+(B[m[32m+            Point::new(0.0, 0.0),
+(B[m[32m+            Point::new(10.0, 10.0),
+(B[m[32m+            Point::new(10.0, 10.0),
+(B[m[32m+        ],
+(B[m[32m+        10.0,
+(B[m[32m+        &[
+(B[m[32m+            Point::new(0.000000, 0.000000),
+(B[m[32m+            Point::new(0.000000, 0.000000),
+(B[m[32m+            Point::new(10.000000, 10.000000),
+(B[m[32m+            Point::new(10.000000, 10.000000),
+(B[m[32m+            Point::new(10.000000, 10.000000),
+(B[m[32m+            Point::new(10.000000, 10.000000),
+(B[m[32m+            Point::new(10.000000, 10.000000),
+(B[m[32m+        ],
+(B[m[32m+        false,
+(B[m[32m+    );
+(B[m[32m+    mono(
+(B[m[32m+        &mut r,
+(B[m[32m+        "curve, positive slope @ 2.0",
+(B[m[32m+        &[
+(B[m[32m+            Point::new(1.0, 1.0),
+(B[m[32m+            Point::new(5.0, 2.0),
+(B[m[32m+            Point::new(7.0, 4.0),
+(B[m[32m+            Point::new(8.0, 7.0),
+(B[m[32m+        ],
+(B[m[32m+        2.0,
+(B[m[32m+        &[
+(B[m[32m+            Point::new(1.000000, 1.000000),
+(B[m[32m+            Point::new(2.055050, 1.263763),
+(B[m[32m+            Point::new(2.970959, 1.597096),
+(B[m[32m+            Point::new(3.766077, 2.000000),
+(B[m[32m+            Point::new(5.985480, 3.124621),
+(B[m[32m+            Point::new(7.263762, 4.791288),
+(B[m[32m+            Point::new(8.000000, 7.000000),
+(B[m[32m+        ],
+(B[m[32m+        false,
+(B[m[32m+    );
+(B[m[32m+    mono(
+(B[m[32m+        &mut r,
+(B[m[32m+        "curve, positive slope @ 5.0",
+(B[m[32m+        &[
+(B[m[32m+            Point::new(1.0, 1.0),
+(B[m[32m+            Point::new(5.0, 2.0),
+(B[m[32m+            Point::new(7.0, 4.0),
+(B[m[32m+            Point::new(8.0, 7.0),
+(B[m[32m+        ],
+(B[m[32m+        5.0,
+(B[m[32m+        &[
+(B[m[32m+            Point::new(1.000000, 1.000000),
+(B[m[32m+            Point::new(4.033223, 1.758306),
+(B[m[32m+            Point::new(5.916391, 3.091639),
+(B[m[32m+            Point::new(7.085550, 5.000000),
+(B[m[32m+            Point::new(7.458195, 5.608251),
+(B[m[32m+            Point::new(7.758306, 6.274917),
+(B[m[32m+            Point::new(8.000000, 7.000000),
+(B[m[32m+        ],
+(B[m[32m+        false,
+(B[m[32m+    );
+(B[m[32m+    mono(
+(B[m[32m+        &mut r,
+(B[m[32m+        "curve, negative slope @ 5.0",
+(B[m[32m+        &[
+(B[m[32m+            Point::new(2.0, 7.0),
+(B[m[32m+            Point::new(3.0, 2.0),
+(B[m[32m+            Point::new(6.0, 3.0),
+(B[m[32m+            Point::new(11.0, 2.0),
+(B[m[32m+        ],
+(B[m[32m+        5.0,
+(B[m[32m+        &[
+(B[m[32m+            Point::new(2.000000, 7.000000),
+(B[m[32m+            Point::new(2.162856, 6.185719),
+(B[m[32m+            Point::new(2.378757, 5.530570),
+(B[m[32m+            Point::new(2.647702, 5.000000),
+(B[m[32m+            Point::new(4.030182, 2.272668),
+(B[m[32m+            Point::new(6.814281, 2.837144),
+(B[m[32m+            Point::new(11.000000, 2.000000),
+(B[m[32m+        ],
+(B[m[32m+        false,
+(B[m[32m+    );
+(B[m[32m+    mono(
+(B[m[32m+        &mut r,
+(B[m[32m+        "curve, negative slope @ 3.0",
+(B[m[32m+        &[
+(B[m[32m+            Point::new(2.0, 7.0),
+(B[m[32m+            Point::new(3.0, 2.0),
+(B[m[32m+            Point::new(6.0, 3.0),
+(B[m[32m+            Point::new(11.0, 2.0),
+(B[m[32m+        ],
+(B[m[32m+        3.0,
+(B[m[32m+        &[
+(B[m[32m+            Point::new(2.000000, 7.000000),
+(B[m[32m+            Point::new(2.500000, 4.500000),
+(B[m[32m+            Point::new(3.500000, 3.500000),
+(B[m[32m+            Point::new(5.000000, 3.000000),
+(B[m[32m+            Point::new(6.500000, 2.500000),
+(B[m[32m+            Point::new(8.500000, 2.500000),
+(B[m[32m+            Point::new(11.000000, 2.000000),
+(B[m[32m+        ],
+(B[m[32m+        false,
+(B[m[32m+    );
+(B[m[32m+    mono(
+(B[m[32m+        &mut r,
+(B[m[32m+        "curve, negative slope @ 2.5",
+(B[m[32m+        &[
+(B[m[32m+            Point::new(2.0, 7.0),
+(B[m[32m+            Point::new(3.0, 2.0),
+(B[m[32m+            Point::new(6.0, 3.0),
+(B[m[32m+            Point::new(11.0, 2.0),
+(B[m[32m+        ],
+(B[m[32m+        2.5,
+(B[m[32m+        &[
+(B[m[32m+            Point::new(2.000000, 7.000000),
+(B[m[32m+            Point::new(2.750000, 3.250000),
+(B[m[32m+            Point::new(4.625000, 2.875000),
+(B[m[32m+            Point::new(7.625000, 2.500000),
+(B[m[32m+            Point::new(8.625000, 2.375000),
+(B[m[32m+            Point::new(9.750000, 2.250000),
+(B[m[32m+            Point::new(11.000000, 2.000000),
+(B[m[32m+        ],
+(B[m[32m+        false,
+(B[m[32m+    );
+(B[m[32m+    mono(
+(B[m[32m+        &mut r,
+(B[m[32m+        "inverted curve, negative slope @ 5.0",
+(B[m[32m+        &[
+(B[m[32m+            Point::new(11.0, 2.0),
+(B[m[32m+            Point::new(6.0, 3.0),
+(B[m[32m+            Point::new(3.0, 2.0),
+(B[m[32m+            Point::new(2.0, 7.0),
+(B[m[32m+        ],
+(B[m[32m+        5.0,
+(B[m[32m+        &[
+(B[m[32m+            Point::new(11.000000, 2.000000),
+(B[m[32m+            Point::new(6.814281, 2.837144),
+(B[m[32m+            Point::new(4.030182, 2.272668),
+(B[m[32m+            Point::new(2.647702, 5.000000),
+(B[m[32m+            Point::new(2.378757, 5.530570),
+(B[m[32m+            Point::new(2.162856, 6.185719),
+(B[m[32m+            Point::new(2.000000, 7.000000),
+(B[m[32m+        ],
+(B[m[32m+        false,
+(B[m[32m+    );
+(B[m[32m+    mono(
+(B[m[32m+        &mut r,
+(B[m[32m+        "inverted curve, negative slope @ 3.0",
+(B[m[32m+        &[
+(B[m[32m+            Point::new(11.0, 2.0),
+(B[m[32m+            Point::new(6.0, 3.0),
+(B[m[32m+            Point::new(3.0, 2.0),
+(B[m[32m+            Point::new(2.0, 7.0),
+(B[m[32m+        ],
+(B[m[32m+        3.0,
+(B[m[32m+        &[
+(B[m[32m+            Point::new(11.000000, 2.000000),
+(B[m[32m+            Point::new(8.500000, 2.500000),
+(B[m[32m+            Point::new(6.500000, 2.500000),
+(B[m[32m+            Point::new(5.000000, 3.000000),
+(B[m[32m+            Point::new(3.500000, 3.500000),
+(B[m[32m+            Point::new(2.500000, 4.500000),
+(B[m[32m+            Point::new(2.000000, 7.000000),
+(B[m[32m+        ],
+(B[m[32m+        false,
+(B[m[32m+    );
+(B[m[32m+    mono(
+(B[m[32m+        &mut r,
+(B[m[32m+        "inverted curve, negative slope @ 2.5",
+(B[m[32m+        &[
+(B[m[32m+            Point::new(11.0, 2.0),
+(B[m[32m+            Point::new(6.0, 3.0),
+(B[m[32m+            Point::new(3.0, 2.0),
+(B[m[32m+            Point::new(2.0, 7.0),
+(B[m[32m+        ],
+(B[m[32m+        2.5,
+(B[m[32m+        &[
+(B[m[32m+            Point::new(11.000000, 2.000000),
+(B[m[32m+            Point::new(9.750000, 2.250000),
+(B[m[32m+            Point::new(8.625000, 2.375000),
+(B[m[32m+            Point::new(7.625000, 2.500000),
+(B[m[32m+            Point::new(4.625000, 2.875000),
+(B[m[32m+            Point::new(2.750000, 3.250000),
+(B[m[32m+            Point::new(2.000000, 7.000000),
+(B[m[32m+        ],
+(B[m[32m+        false,
+(B[m[32m+    );
+(B[m[32m+    mono(
+(B[m[32m+        &mut r,
+(B[m[32m+        "big curve, negative slope @ 90",
+(B[m[32m+        &[
+(B[m[32m+            Point::new(-2.0, 100.0),
+(B[m[32m+            Point::new(0.0, 0.0),
+(B[m[32m+            Point::new(0.0, 0.0),
+(B[m[32m+            Point::new(100.0, -2.0),
+(B[m[32m+        ],
+(B[m[32m+        90.,
+(B[m[32m+        &[
+(B[m[32m+            Point::new(-2.000000, 100.000000),
+(B[m[32m+            Point::new(-1.930979, 96.548965),
+(B[m[32m+            Point::new(-1.864341, 93.217033),
+(B[m[32m+            Point::new(-1.795892, 90.000000),
+(B[m[32m+            Point::new(0.119096, -0.002382),
+(B[m[32m+            Point::new(3.451032, -0.069021),
+(B[m[32m+            Point::new(100.000000, -2.000000),
+(B[m[32m+        ],
+(B[m[32m+        false,
+(B[m[32m+    );
+(B[m[32m+    mono(
+(B[m[32m+        &mut r,
+(B[m[32m+        "big curve, negative slope @ 10",
+(B[m[32m+        &[
+(B[m[32m+            Point::new(-2.0, 100.0),
+(B[m[32m+            Point::new(0.0, 0.0),
+(B[m[32m+            Point::new(0.0, 0.0),
+(B[m[32m+            Point::new(100.0, -2.0),
+(B[m[32m+        ],
+(B[m[32m+        10.,
+(B[m[32m+        &[
+(B[m[32m+            Point::new(-2.000000, 100.000000),
+(B[m[32m+            Point::new(-0.937505, 46.875271),
+(B[m[32m+            Point::new(-0.439458, 21.972910),
+(B[m[32m+            Point::new(14.787060, 10.000000),
+(B[m[32m+            Point::new(28.222368, -0.564447),
+(B[m[32m+            Point::new(53.124729, -1.062495),
+(B[m[32m+            Point::new(100.000000, -2.000000),
+(B[m[32m+        ],
+(B[m[32m+        false,
+(B[m[32m+    );
+(B[m[32m+    mono(
+(B[m[32m+        &mut r,
+(B[m[32m+        "big curve, negative slope @ 0",
+(B[m[32m+        &[
+(B[m[32m+            Point::new(-2.0, 100.0),
+(B[m[32m+            Point::new(0.0, 0.0),
+(B[m[32m+            Point::new(0.0, 0.0),
+(B[m[32m+            Point::new(100.0, -2.0),
+(B[m[32m+        ],
+(B[m[32m+        0.,
+(B[m[32m+        &[
+(B[m[32m+            Point::new(-2.000000, 100.000000),
+(B[m[32m+            Point::new(-0.426983, 21.349131),
+(B[m[32m+            Point::new(-0.091157, 4.557854),
+(B[m[32m+            Point::new(48.633648, 0.000000),
+(B[m[32m+            Point::new(61.859592, -1.237192),
+(B[m[32m+            Point::new(78.650871, -1.573017),
+(B[m[32m+            Point::new(100.000000, -2.000000),
+(B[m[32m+        ],
+(B[m[32m+        false,
+(B[m[32m+    );
+(B[m[32m+    mono(
+(B[m[32m+        &mut r,
+(B[m[32m+        "ossfuzz:55680 curve barely crosses Y axis",
+(B[m[32m+        &[
+(B[m[32m+            Point::new(-250.121582, -1180.09509),
+(B[m[32m+            Point::new(10.007843, -1180.09509),
+(B[m[32m+            Point::new(20.015685, -786.041259),
+(B[m[32m+            Point::new(40.0313721, 2.0664072),
+(B[m[32m+        ],
+(B[m[32m+        0.,
+(B[m[32m+        &[
+(B[m[32m+            Point::new(-250.121582, -1180.095093),
+(B[m[32m+            Point::new(9.780392, -1180.095093),
+(B[m[32m+            Point::new(19.997992, -786.730042),
+(B[m[32m+            Point::new(39.978889, 0.000000),
+(B[m[32m+            Point::new(39.996376, 0.688501),
+(B[m[32m+            Point::new(40.013870, 1.377304),
+(B[m[32m+            Point::new(40.031372, 2.066407),
+(B[m[32m+        ],
+(B[m[32m+        false,
+(B[m[32m+    );
+(B[m[32m+    r.finish();
+(B[m }
+ #[test]
+ fn GeometryChopMonoCubicAtY_OutOfRangeReturnFalse() {
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m06/mono_y.rs:27:
+[31m- let mut r = Reporter::default();
+(B[m[31m- let inputs = [p(0.,0.),p(0.,0.),p(10.,10.),p(10.,10.)];
+(B[m[31m- let mut outputs = [Point::default();7];
+(B[m[31m- check!(r, !sk_chop_mono_cubic_at_y(&inputs,-10.,&mut outputs));
+(B[m[31m- check!(r, !sk_chop_mono_cubic_at_y(&inputs,20.,&mut outputs));
+(B[m[31m- r.finish();
+(B[m[32m+    let mut r = Reporter::default();
+(B[m[32m+    let inputs = [p(0., 0.), p(0., 0.), p(10., 10.), p(10., 10.)];
+(B[m[32m+    let mut outputs = [Point::default(); 7];
+(B[m[32m+    check!(r, !sk_chop_mono_cubic_at_y(&inputs, -10., &mut outputs));
+(B[m[32m+    check!(r, !sk_chop_mono_cubic_at_y(&inputs, 20., &mut outputs));
+(B[m[32m+    r.finish();
+(B[m }
+ 
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m06/offsetsimplepoly.rs:3:
+ // Upstream guard: !SK_ENABLE_OPTIMIZE_SIZE; normal CPU build includes these APIs.
+ #[test]
+ fn OffsetSimplePoly() {
+[31m- let mut reporter = Reporter::default();
+(B[m[32m+    let mut reporter = Reporter::default();
+(B[m     let mut rrectPoly: Vec<Point> = Vec::new();
+ 
+     ///////////////////////////////////////////////////////////////////////
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m06/offsetsimplepoly.rs:101:
+ 
+     check!(reporter, sk_is_convex_polygon(&clippedRRectPoly));
+ 
+[31m-    result = sk_offset_simple_polygon(&clippedRRectPoly, &bounds, 32.3699417, &mut offsetPoly, None);
+(B[m[32m+    result = sk_offset_simple_polygon(
+(B[m[32m+        &clippedRRectPoly,
+(B[m[32m+        &bounds,
+(B[m[32m+        32.3699417,
+(B[m[32m+        &mut offsetPoly,
+(B[m[32m+        None,
+(B[m[32m+    );
+(B[m     check!(reporter, result);
+     check!(reporter, sk_is_convex_polygon(&offsetPoly));
+ 
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m06/offsetsimplepoly.rs:180:
+     // SkOffsetSimplePolygon now assumes that the input is simple, so we'll just check for that
+     result = sk_is_simple_polygon(&intersectingPoly);
+     check!(reporter, !result);
+[31m-reporter.finish();
+(B[m[32m+    reporter.finish();
+(B[m }
+ 
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m06/polyutils.rs:3:
+ // Upstream guard: !SK_ENABLE_OPTIMIZE_SIZE; normal CPU build includes these APIs.
+ #[test]
+ fn PolyUtils() {
+[31m- let mut reporter = Reporter::default();
+(B[m[32m+    let mut reporter = Reporter::default();
+(B[m 
+     let mut poly: Vec<Point> = Vec::new();
+     // init simple index map
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m06/polyutils.rs:20:
+     check!(reporter, sk_get_polygon_winding(&poly) < 0);
+     check!(reporter, sk_is_convex_polygon(&poly));
+     check!(reporter, sk_is_simple_polygon(&poly));
+[31m-    check!(reporter, sk_triangulate_simple_polygon(&poly, &indexMap, &mut triangleIndices));
+(B[m[32m+    check!(
+(B[m[32m+        reporter,
+(B[m[32m+        sk_triangulate_simple_polygon(&poly, &indexMap, &mut triangleIndices)
+(B[m[32m+    );
+(B[m 
+     // switch winding
+     poly[2].set(102.5, 55.330127);
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m06/polyutils.rs:28:
+     check!(reporter, sk_is_convex_polygon(&poly));
+     check!(reporter, sk_is_simple_polygon(&poly));
+     triangleIndices.clear();
+[31m-    check!(reporter, sk_triangulate_simple_polygon(&poly, &indexMap, &mut triangleIndices));
+(B[m[32m+    check!(
+(B[m[32m+        reporter,
+(B[m[32m+        sk_triangulate_simple_polygon(&poly, &indexMap, &mut triangleIndices)
+(B[m[32m+    );
+(B[m 
+     // make degenerate
+     poly[2].set(100.0 + 2.5, 55.0);
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m06/polyutils.rs:37:
+     check!(reporter, sk_is_convex_polygon(&poly));
+     check!(reporter, sk_is_simple_polygon(&poly));
+     triangleIndices.clear();
+[31m-    check!(reporter, !sk_triangulate_simple_polygon(&poly, &indexMap, &mut triangleIndices));
+(B[m[32m+    check!(
+(B[m[32m+        reporter,
+(B[m[32m+        !sk_triangulate_simple_polygon(&poly, &indexMap, &mut triangleIndices)
+(B[m[32m+    );
+(B[m 
+     // giant triangle
+     poly[0].set(-1.0e+37, 1.0e+37);
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m06/polyutils.rs:47:
+     check!(reporter, sk_is_convex_polygon(&poly));
+     check!(reporter, sk_is_simple_polygon(&poly));
+     triangleIndices.clear();
+[31m-    check!(reporter, sk_triangulate_simple_polygon(&poly, &indexMap, &mut triangleIndices));
+(B[m[32m+    check!(
+(B[m[32m+        reporter,
+(B[m[32m+        sk_triangulate_simple_polygon(&poly, &indexMap, &mut triangleIndices)
+(B[m[32m+    );
+(B[m 
+     // teeny triangle
+     poly[0].set(-1.0e-38, 1.0e-38);
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m06/polyutils.rs:58:
+     check!(reporter, sk_is_convex_polygon(&poly));
+     check!(reporter, sk_is_simple_polygon(&poly));
+     triangleIndices.clear();
+[31m-    check!(reporter, !sk_triangulate_simple_polygon(&poly, &indexMap, &mut triangleIndices));
+(B[m[32m+    check!(
+(B[m[32m+        reporter,
+(B[m[32m+        !sk_triangulate_simple_polygon(&poly, &indexMap, &mut triangleIndices)
+(B[m[32m+    );
+(B[m 
+     // triangle way off in space (relative to size so we don't completely obliterate values)
+     poly[0].set(-100.0 + 1.0e+9, 55.0 - 1.0e+9);
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m06/polyutils.rs:68:
+     check!(reporter, sk_is_convex_polygon(&poly));
+     check!(reporter, sk_is_simple_polygon(&poly));
+     triangleIndices.clear();
+[31m-    check!(reporter, sk_triangulate_simple_polygon(&poly, &indexMap, &mut triangleIndices));
+(B[m[32m+    check!(
+(B[m[32m+        reporter,
+(B[m[32m+        sk_triangulate_simple_polygon(&poly, &indexMap, &mut triangleIndices)
+(B[m[32m+    );
+(B[m 
+     ///////////////////////////////////////////////////////////////////////
+     // round rect
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m06/polyutils.rs:97:
+     check!(reporter, sk_is_convex_polygon(&poly));
+     check!(reporter, sk_is_simple_polygon(&poly));
+     triangleIndices.clear();
+[31m-    check!(reporter, sk_triangulate_simple_polygon(&poly, &indexMap, &mut triangleIndices));
+(B[m[32m+    check!(
+(B[m[32m+        reporter,
+(B[m[32m+        sk_triangulate_simple_polygon(&poly, &indexMap, &mut triangleIndices)
+(B[m[32m+    );
+(B[m 
+     // translate far enough to obliterate some low bits
+     for i in 0..poly.len() {
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m06/polyutils.rs:108:
+     check!(reporter, !sk_is_convex_polygon(&poly));
+     check!(reporter, sk_is_simple_polygon(&poly));
+     triangleIndices.clear();
+[31m-    check!(reporter, sk_triangulate_simple_polygon(&poly, &indexMap, &mut triangleIndices));
+(B[m[32m+    check!(
+(B[m[32m+        reporter,
+(B[m[32m+        sk_triangulate_simple_polygon(&poly, &indexMap, &mut triangleIndices)
+(B[m[32m+    );
+(B[m 
+     // translate a little farther to create some coincident vertices
+     for i in 0..poly.len() {
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m06/polyutils.rs:119:
+     check!(reporter, sk_is_simple_polygon(&poly));
+     // This can't handle coincident vertices
+     triangleIndices.clear();
+[31m-    check!(reporter, !sk_triangulate_simple_polygon(&poly, &indexMap, &mut triangleIndices));
+(B[m[32m+    check!(
+(B[m[32m+        reporter,
+(B[m[32m+        !sk_triangulate_simple_polygon(&poly, &indexMap, &mut triangleIndices)
+(B[m[32m+    );
+(B[m 
+     // troublesome case -- clipped roundrect
+     poly.clear();
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m06/polyutils.rs:154:
+     check!(reporter, sk_is_convex_polygon(&poly));
+     check!(reporter, sk_is_simple_polygon(&poly));
+     triangleIndices.clear();
+[31m-    check!(reporter, sk_triangulate_simple_polygon(&poly, &indexMap, &mut triangleIndices));
+(B[m[32m+    check!(
+(B[m[32m+        reporter,
+(B[m[32m+        sk_triangulate_simple_polygon(&poly, &indexMap, &mut triangleIndices)
+(B[m[32m+    );
+(B[m 
+     // a star is born
+     poly.clear();
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m06/polyutils.rs:174:
+     check!(reporter, !sk_is_convex_polygon(&poly));
+     check!(reporter, sk_is_simple_polygon(&poly));
+     triangleIndices.clear();
+[31m-    check!(reporter, sk_triangulate_simple_polygon(&poly, &indexMap, &mut triangleIndices));
+(B[m[32m+    check!(
+(B[m[32m+        reporter,
+(B[m[32m+        sk_triangulate_simple_polygon(&poly, &indexMap, &mut triangleIndices)
+(B[m[32m+    );
+(B[m 
+     // many spiked star
+     {
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m06/polyutils.rs:195:
+         check!(reporter, !sk_is_convex_polygon(&poly));
+         check!(reporter, sk_is_simple_polygon(&poly));
+         triangleIndices.clear();
+[31m-        check!(reporter, sk_triangulate_simple_polygon(&poly, &indexMap, &mut triangleIndices));
+(B[m[32m+        check!(
+(B[m[32m+            reporter,
+(B[m[32m+            sk_triangulate_simple_polygon(&poly, &indexMap, &mut triangleIndices)
+(B[m[32m+        );
+(B[m     }
+ 
+     // self-intersecting polygon
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m06/polyutils.rs:218:
+     triangleIndices.clear();
+     // running this just to make sure it doesn't crash
+     // the fact that it succeeds doesn't mean anything since the input is not simple
+[31m-    check!(reporter, sk_triangulate_simple_polygon(&poly, &indexMap, &mut triangleIndices));
+(B[m[32m+    check!(
+(B[m[32m+        reporter,
+(B[m[32m+        sk_triangulate_simple_polygon(&poly, &indexMap, &mut triangleIndices)
+(B[m[32m+    );
+(B[m 
+     // self-intersecting polygon with coincident point
+     poly.clear();
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m06/polyutils.rs:233:
+     check!(reporter, !sk_is_simple_polygon(&poly));
+     triangleIndices.clear();
+     // running this just to make sure it doesn't crash
+[31m-    check!(reporter, !sk_triangulate_simple_polygon(&poly, &indexMap, &mut triangleIndices));
+(B[m[32m+    check!(
+(B[m[32m+        reporter,
+(B[m[32m+        !sk_triangulate_simple_polygon(&poly, &indexMap, &mut triangleIndices)
+(B[m[32m+    );
+(B[m 
+     // self-intersecting polygon with two equal edges
+     poly.clear();
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m06/polyutils.rs:248:
+     check!(reporter, !sk_is_simple_polygon(&poly));
+     triangleIndices.clear();
+     // running this just to make sure it doesn't crash
+[31m-    check!(reporter, !sk_triangulate_simple_polygon(&poly, &indexMap, &mut triangleIndices));
+(B[m[32m+    check!(
+(B[m[32m+        reporter,
+(B[m[32m+        !sk_triangulate_simple_polygon(&poly, &indexMap, &mut triangleIndices)
+(B[m[32m+    );
+(B[m 
+     // absurd self-intersecting polygon
+     poly.clear();
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m06/polyutils.rs:255:
+     poly.push(Point::new(0.0000, 0.0000));
+     poly.push(Point::new(-32768.0625, 0.0000));
+     poly.push(Point::new(0.0000, 138.0000));
+[31m-    poly.push(Point::new(3284.8125, -10411310938997512334153865557442560.0000));
+(B[m[32m+    poly.push(Point::new(
+(B[m[32m+        3284.8125,
+(B[m[32m+        -10411310938997512334153865557442560.0000,
+(B[m[32m+    ));
+(B[m     poly.push(Point::new(-32768.7500, 0.0000));
+     poly.push(Point::new(138.0000, 3172.8125));
+     poly.push(Point::new(0.0000, -2147485952.0000));
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m06/polyutils.rs:318:
+     poly.push(Point::new(3220.8125, 0.0000));
+     poly.push(Point::new(-35840.0625, 0.0000));
+     poly.push(Point::new(0.0000, 3284.8125));
+[31m-    poly.push(Point::new(0.0000, -41625560509365411790244566154608640.0000));
+(B[m[32m+    poly.push(Point::new(
+(B[m[32m+        0.0000,
+(B[m[32m+        -41625560509365411790244566154608640.0000,
+(B[m[32m+    ));
+(B[m     poly.push(Point::new(0.0000, 215282736.0000));
+     poly.push(Point::new(0.0000, 0.0000));
+[31m-    poly.push(Point::new(-41625560509365411790244566154608640.0000, 0.0000));
+(B[m[32m+    poly.push(Point::new(
+(B[m[32m+        -41625560509365411790244566154608640.0000,
+(B[m[32m+        0.0000,
+(B[m[32m+    ));
+(B[m     poly.push(Point::new(215282736.0000, 0.0000));
+     poly.push(Point::new(0.0000, -32768.0625));
+     poly.push(Point::new(0.0000, 138.0000));
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m06/polyutils.rs:354:
+     poly.push(Point::new(0.0000, 0.0000));
+     poly.push(Point::new(138.0000, 3284.5625));
+     poly.push(Point::new(0.0000, 0.0000));
+[31m-    poly.push(Point::new(-44882437151680690189392273689542656.0000, 134217728.0000));
+(B[m[32m+    poly.push(Point::new(
+(B[m[32m+        -44882437151680690189392273689542656.0000,
+(B[m[32m+        134217728.0000,
+(B[m[32m+    ));
+(B[m     poly.push(Point::new(0.0000, 0.0000));
+     poly.push(Point::new(0.0000, -32768.0625));
+     poly.push(Point::new(0.0000, 217055232.0000));
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m06/polyutils.rs:390:
+     check!(reporter, !sk_is_simple_polygon(&poly));
+     triangleIndices.clear();
+     // running this just to make sure it doesn't crash
+[31m-    check!(reporter, sk_triangulate_simple_polygon(&poly, &indexMap, &mut triangleIndices));
+(B[m[31m-reporter.finish();
+(B[m[32m+    check!(
+(B[m[32m+        reporter,
+(B[m[32m+        sk_triangulate_simple_polygon(&poly, &indexMap, &mut triangleIndices)
+(B[m[32m+    );
+(B[m[32m+    reporter.finish();
+(B[m }
+ 
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m06/supplemental.rs:1:
+ // Supplemental M06 contract checks, separate from original registrations.
+ use super::*;
+[31m-use rust_skia::sk_line_clipper::{clip_line,intersect_line};
+(B[m[32m+use rust_skia::sk_line_clipper::{clip_line, intersect_line};
+(B[m #[test]
+ fn supplemental_roots_boundaries_and_degenerate_curves() {
+[31m- let mut r=Reporter::default();let mut roots=[-7.;2];
+(B[m[31m- let n=sk_find_unit_quad_roots(1.,-1.,0.,&mut roots);check!(r,n==0); // open unit interval
+(B[m[31m- let n=sk_find_unit_quad_roots(0.,2.,-1.,&mut roots);check!(r,n==1);check!(r,roots[0]==0.5);
+(B[m[31m- let n=sk_find_unit_quad_roots(1.,0.,1.,&mut roots);check!(r,n==0);
+(B[m[31m- let src=[p(3.,-4.);4];
+(B[m[31m- for t in [0.,f32::MIN_POSITIVE,0.5,1.-f32::EPSILON,1.] {
+(B[m[31m-  check!(r,sk_eval_quad_at(&src,t)==src[0]);
+(B[m[31m-  let mut point=Point::default();sk_eval_cubic_at(&src,t,Some(&mut point),None,None);check!(r,point_near(point,src[0]));
+(B[m[31m-  let mut dst=[p(99.,99.);7];sk_chop_cubic_at(&src,&mut dst,t);check!(r,dst.iter().all(|v|point_near(*v,src[0])));
+(B[m[31m- }
+(B[m[31m- let mut q=[Point::default();5];sk_chop_quad_at_half(&src,&mut q);check!(r,q.iter().all(|v|*v==src[0]));
+(B[m[31m- let mut c=[Point::default();7];sk_chop_cubic_at_half(&src,&mut c);check!(r,c.iter().all(|v|*v==src[0]));
+(B[m[31m- r.finish();
+(B[m[32m+    let mut r = Reporter::default();
+(B[m[32m+    let mut roots = [-7.; 2];
+(B[m[32m+    let n = sk_find_unit_quad_roots(1., -1., 0., &mut roots);
+(B[m[32m+    check!(r, n == 0); // open unit interval
+(B[m[32m+    let n = sk_find_unit_quad_roots(0., 2., -1., &mut roots);
+(B[m[32m+    check!(r, n == 1);
+(B[m[32m+    check!(r, roots[0] == 0.5);
+(B[m[32m+    let n = sk_find_unit_quad_roots(1., 0., 1., &mut roots);
+(B[m[32m+    check!(r, n == 0);
+(B[m[32m+    let src = [p(3., -4.); 4];
+(B[m[32m+    for t in [0., f32::MIN_POSITIVE, 0.5, 1. - f32::EPSILON, 1.] {
+(B[m[32m+        check!(r, sk_eval_quad_at(&src, t) == src[0]);
+(B[m[32m+        let mut point = Point::default();
+(B[m[32m+        sk_eval_cubic_at(&src, t, Some(&mut point), None, None);
+(B[m[32m+        check!(r, point_near(point, src[0]));
+(B[m[32m+        let mut dst = [p(99., 99.); 7];
+(B[m[32m+        sk_chop_cubic_at(&src, &mut dst, t);
+(B[m[32m+        check!(r, dst.iter().all(|v| point_near(*v, src[0])));
+(B[m[32m+    }
+(B[m[32m+    let mut q = [Point::default(); 5];
+(B[m[32m+    sk_chop_quad_at_half(&src, &mut q);
+(B[m[32m+    check!(r, q.iter().all(|v| *v == src[0]));
+(B[m[32m+    let mut c = [Point::default(); 7];
+(B[m[32m+    sk_chop_cubic_at_half(&src, &mut c);
+(B[m[32m+    check!(r, c.iter().all(|v| *v == src[0]));
+(B[m[32m+    r.finish();
+(B[m }
+ #[test]
+ fn supplemental_clipping_counts_bounds_and_output_ownership() {
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m06/supplemental.rs:22:
+[31m- let mut r=Reporter::default();let clip=Rect::new(0.,0.,10.,10.);
+(B[m[31m- let line=[p(-5.,5.),p(15.,5.)];let mut dst=[p(99.,99.);2];
+(B[m[31m- check!(r,intersect_line(&line,&clip,&mut dst));check!(r,dst==[p(0.,5.),p(10.,5.)]);
+(B[m[31m- let reversed=[line[1],line[0]];check!(r,intersect_line(&reversed,&clip,&mut dst));check!(r,dst==[p(10.,5.),p(0.,5.)]);
+(B[m[31m- check!(r,!intersect_line(&[p(-5.,-2.),p(15.,-2.)],&clip,&mut dst));
+(B[m[31m- let mut output=[Point::default();4];let n=clip_line(&[p(2.,2.),p(8.,8.)],&clip,&mut output,false);
+(B[m[31m- check!(r,n==1);check!(r,output[..2]==[p(2.,2.),p(8.,8.)]);
+(B[m[31m- let mut edge=SkEdgeClipper::new(false);check!(r,!edge.can_cull_to_the_right());
+(B[m[31m- check!(r,edge.clip_line(p(2.,2.),p(8.,8.),&clip));
+(B[m[31m- let mut points=[Point::default();4];check!(r,edge.next(&mut points)==Some(SkPathVerb::Line));
+(B[m[31m- let retained=points;check!(r,retained[..2]==[p(2.,2.),p(8.,8.)]);
+(B[m[31m- check!(r,edge.next(&mut points).is_none());check!(r,edge.next(&mut points).is_none());
+(B[m[31m- check!(r,edge.clip_line(p(3.,3.),p(7.,7.),&clip));check!(r,edge.next(&mut points)==Some(SkPathVerb::Line));
+(B[m[31m- check!(r,retained[..2]==[p(2.,2.),p(8.,8.)]);
+(B[m[31m- let mut qc=SkQuadClipper::new();qc.set_clip(&IRect::new(0,0,10,10));
+(B[m[31m- let quad=[p(2.,2.),p(5.,5.),p(8.,8.)];let mut qout=[Point::default();3];check!(r,qc.clip_quad(&quad,&mut qout));check!(r,qout==quad);
+(B[m[31m- let mut cc=SkCubicClipper::new();cc.set_clip(&IRect::new(0,0,10,10));
+(B[m[31m- let cubic=[p(2.,2.),p(4.,4.),p(6.,6.),p(8.,8.)];let mut cout=[Point::default();4];check!(r,cc.clip_cubic(&cubic,&mut cout));check!(r,cout==cubic);
+(B[m[31m- check!(r,SkCubicClipper::chop_mono_at_y(&cubic,-1.).is_none());
+(B[m[31m- let t=SkCubicClipper::chop_mono_at_y(&cubic,5.);check!(r,t.is_some());if let Some(t)=t {check!(r,near(t,0.5));}
+(B[m[31m- // Double intermediates must keep intersections finite for extreme finite endpoints.
+(B[m[31m- check!(r,intersect_line(&[p(-f32::MAX,5.),p(f32::MAX,5.)],&clip,&mut dst));
+(B[m[31m- check!(r,dst==[p(0.,5.),p(10.,5.)]);r.finish();
+(B[m[32m+    let mut r = Reporter::default();
+(B[m[32m+    let clip = Rect::new(0., 0., 10., 10.);
+(B[m[32m+    let line = [p(-5., 5.), p(15., 5.)];
+(B[m[32m+    let mut dst = [p(99., 99.); 2];
+(B[m[32m+    check!(r, intersect_line(&line, &clip, &mut dst));
+(B[m[32m+    check!(r, dst == [p(0., 5.), p(10., 5.)]);
+(B[m[32m+    let reversed = [line[1], line[0]];
+(B[m[32m+    check!(r, intersect_line(&reversed, &clip, &mut dst));
+(B[m[32m+    check!(r, dst == [p(10., 5.), p(0., 5.)]);
+(B[m[32m+    check!(
+(B[m[32m+        r,
+(B[m[32m+        !intersect_line(&[p(-5., -2.), p(15., -2.)], &clip, &mut dst)
+(B[m[32m+    );
+(B[m[32m+    let mut output = [Point::default(); 4];
+(B[m[32m+    let n = clip_line(&[p(2., 2.), p(8., 8.)], &clip, &mut output, false);
+(B[m[32m+    check!(r, n == 1);
+(B[m[32m+    check!(r, output[..2] == [p(2., 2.), p(8., 8.)]);
+(B[m[32m+    let mut edge = SkEdgeClipper::new(false);
+(B[m[32m+    check!(r, !edge.can_cull_to_the_right());
+(B[m[32m+    check!(r, edge.clip_line(p(2., 2.), p(8., 8.), &clip));
+(B[m[32m+    let mut points = [Point::default(); 4];
+(B[m[32m+    check!(r, edge.next(&mut points) == Some(SkPathVerb::Line));
+(B[m[32m+    let retained = points;
+(B[m[32m+    check!(r, retained[..2] == [p(2., 2.), p(8., 8.)]);
+(B[m[32m+    check!(r, edge.next(&mut points).is_none());
+(B[m[32m+    check!(r, edge.next(&mut points).is_none());
+(B[m[32m+    check!(r, edge.clip_line(p(3., 3.), p(7., 7.), &clip));
+(B[m[32m+    check!(r, edge.next(&mut points) == Some(SkPathVerb::Line));
+(B[m[32m+    check!(r, retained[..2] == [p(2., 2.), p(8., 8.)]);
+(B[m[32m+    let mut qc = SkQuadClipper::new();
+(B[m[32m+    qc.set_clip(&IRect::new(0, 0, 10, 10));
+(B[m[32m+    let quad = [p(2., 2.), p(5., 5.), p(8., 8.)];
+(B[m[32m+    let mut qout = [Point::default(); 3];
+(B[m[32m+    check!(r, qc.clip_quad(&quad, &mut qout));
+(B[m[32m+    check!(r, qout == quad);
+(B[m[32m+    let mut cc = SkCubicClipper::new();
+(B[m[32m+    cc.set_clip(&IRect::new(0, 0, 10, 10));
+(B[m[32m+    let cubic = [p(2., 2.), p(4., 4.), p(6., 6.), p(8., 8.)];
+(B[m[32m+    let mut cout = [Point::default(); 4];
+(B[m[32m+    check!(r, cc.clip_cubic(&cubic, &mut cout));
+(B[m[32m+    check!(r, cout == cubic);
+(B[m[32m+    check!(r, SkCubicClipper::chop_mono_at_y(&cubic, -1.).is_none());
+(B[m[32m+    let t = SkCubicClipper::chop_mono_at_y(&cubic, 5.);
+(B[m[32m+    check!(r, t.is_some());
+(B[m[32m+    if let Some(t) = t {
+(B[m[32m+        check!(r, near(t, 0.5));
+(B[m[32m+    }
+(B[m[32m+    // Double intermediates must keep intersections finite for extreme finite endpoints.
+(B[m[32m+    check!(
+(B[m[32m+        r,
+(B[m[32m+        intersect_line(&[p(-f32::MAX, 5.), p(f32::MAX, 5.)], &clip, &mut dst)
+(B[m[32m+    );
+(B[m[32m+    check!(r, dst == [p(0., 5.), p(10., 5.)]);
+(B[m[32m+    r.finish();
+(B[m }
+ #[test]
+ fn supplemental_polygon_size_overflow_and_index_bytes() {
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m06/supplemental.rs:48:
+[31m- let mut r=Reporter::default();let mut output=Vec::new();let mut indices=Vec::new();
+(B[m[31m- for pts in [&[][..],&[p(0.,0.)][..],&[p(0.,0.),p(1.,1.)][..]] {
+(B[m[31m-  check!(r,!sk_is_convex_polygon(pts));check!(r,!sk_inset_convex_polygon(pts,1.,&mut output));
+(B[m[31m-  check!(r,!sk_triangulate_simple_polygon(pts,&[],&mut indices));
+(B[m[31m- }
+(B[m[31m- let huge=vec![p(0.,0.);65536];check!(r,!sk_inset_convex_polygon(&huge,1.,&mut output));
+(B[m[31m- for len in [65535,65536] {
+(B[m[31m-  check!(r,!sk_offset_simple_polygon(&huge[..len],&Rect::new(0.,0.,1.,1.),1.,&mut output,None));
+(B[m[31m-  check!(r,!sk_triangulate_simple_polygon(&huge[..len],&[],&mut indices));
+(B[m[31m- }
+(B[m[31m- check!(r,sk_compute_radial_steps(p(1.,0.),p(0.,1.),f32::MAX).is_none());
+(B[m[31m- check!(r,sk_compute_radial_steps(p(f32::INFINITY,0.),p(0.,1.),1.).is_none());
+(B[m[31m- let tri=[p(0.,0.),p(10.,0.),p(0.,10.)];let map=[0x0102u16,0x0304,0x0506];
+(B[m[31m- check!(r,sk_triangulate_simple_polygon(&tri,&map,&mut indices));check!(r,indices.len()==3);
+(B[m[31m- indices.sort_unstable();check!(r,indices==map);
+(B[m[31m- // Observe the returned u16 storage, including native byte order on Apple Silicon.
+(B[m[31m- #[cfg(target_endian="little")]
+(B[m[31m- {let bytes=unsafe {std::slice::from_raw_parts(indices.as_ptr().cast::<u8>(),indices.len()*2)};
+(B[m[31m- check!(r,bytes==[2,1,4,3,6,5]);}
+(B[m[31m- for inset in [-1.,f32::INFINITY,f32::NAN] {check!(r,!sk_inset_convex_polygon(&tri,inset,&mut output));}
+(B[m[31m- r.finish();
+(B[m[32m+    let mut r = Reporter::default();
+(B[m[32m+    let mut output = Vec::new();
+(B[m[32m+    let mut indices = Vec::new();
+(B[m[32m+    for pts in [&[][..], &[p(0., 0.)][..], &[p(0., 0.), p(1., 1.)][..]] {
+(B[m[32m+        check!(r, !sk_is_convex_polygon(pts));
+(B[m[32m+        check!(r, !sk_inset_convex_polygon(pts, 1., &mut output));
+(B[m[32m+        check!(r, !sk_triangulate_simple_polygon(pts, &[], &mut indices));
+(B[m[32m+    }
+(B[m[32m+    let huge = vec![p(0., 0.); 65536];
+(B[m[32m+    check!(r, !sk_inset_convex_polygon(&huge, 1., &mut output));
+(B[m[32m+    for len in [65535, 65536] {
+(B[m[32m+        check!(
+(B[m[32m+            r,
+(B[m[32m+            !sk_offset_simple_polygon(
+(B[m[32m+                &huge[..len],
+(B[m[32m+                &Rect::new(0., 0., 1., 1.),
+(B[m[32m+                1.,
+(B[m[32m+                &mut output,
+(B[m[32m+                None
+(B[m[32m+            )
+(B[m[32m+        );
+(B[m[32m+        check!(
+(B[m[32m+            r,
+(B[m[32m+            !sk_triangulate_simple_polygon(&huge[..len], &[], &mut indices)
+(B[m[32m+        );
+(B[m[32m+    }
+(B[m[32m+    check!(
+(B[m[32m+        r,
+(B[m[32m+        sk_compute_radial_steps(p(1., 0.), p(0., 1.), f32::MAX).is_none()
+(B[m[32m+    );
+(B[m[32m+    check!(
+(B[m[32m+        r,
+(B[m[32m+        sk_compute_radial_steps(p(f32::INFINITY, 0.), p(0., 1.), 1.).is_none()
+(B[m[32m+    );
+(B[m[32m+    let tri = [p(0., 0.), p(10., 0.), p(0., 10.)];
+(B[m[32m+    let map = [0x0102u16, 0x0304, 0x0506];
+(B[m[32m+    check!(r, sk_triangulate_simple_polygon(&tri, &map, &mut indices));
+(B[m[32m+    check!(r, indices.len() == 3);
+(B[m[32m+    indices.sort_unstable();
+(B[m[32m+    check!(r, indices == map);
+(B[m[32m+    // Observe the returned u16 storage, including native byte order on Apple Silicon.
+(B[m[32m+    #[cfg(target_endian = "little")]
+(B[m[32m+    {
+(B[m[32m+        let bytes =
+(B[m[32m+            unsafe { std::slice::from_raw_parts(indices.as_ptr().cast::<u8>(), indices.len() * 2) };
+(B[m[32m+        check!(r, bytes == [2, 1, 4, 3, 6, 5]);
+(B[m[32m+    }
+(B[m[32m+    for inset in [-1., f32::INFINITY, f32::NAN] {
+(B[m[32m+        check!(r, !sk_inset_convex_polygon(&tri, inset, &mut output));
+(B[m[32m+    }
+(B[m[32m+    r.finish();
+(B[m }
+ #[test]
+ fn supplemental_conic_storage_ownership_and_lifetime() {
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m06/supplemental.rs:72:
+[31m- let mut r=Reporter::default();let saved;
+(B[m[31m- {
+(B[m[31m-  let mut input=[p(0.,1.),p(0.,0.),p(1.,0.)];let conic=SkConic::from_pts(&input,0.70710678);
+(B[m[31m-  input.fill(p(99.,99.));check!(r,conic.pts==[p(0.,1.),p(0.,0.),p(1.,0.)]);
+(B[m[31m-  let mut quadder=SkAutoConicToQuads::new();
+(B[m[31m-  {let borrowed=quadder.compute_quads(&conic,0.001);check!(r,borrowed[0]==conic.pts[0]);check!(r,*borrowed.last().unwrap()==conic.pts[2]);saved=borrowed.to_vec();}
+(B[m[31m-  // The borrow has ended before reuse; the owned snapshot survives reallocation and drop.
+(B[m[31m-  let other=SkConic::new(p(10.,10.),p(20.,20.),p(30.,30.),1.);
+(B[m[31m-  let next=quadder.compute_quads(&other,1.);check!(r,next==[p(10.,10.),p(20.,20.),p(30.,30.)]);
+(B[m[31m-  check!(r,quadder.count_quads()==1);
+(B[m[31m- }
+(B[m[31m- check!(r,saved.first()==Some(&p(0.,1.)));check!(r,saved.last()==Some(&p(1.,0.)));
+(B[m[31m- let owned={let input=[p(0.,0.),p(0.5,1.),p(1.,0.)];SkBezierQuad::intersect_with_horizontal_line(&input,0.5)};
+(B[m[31m- check!(r,owned==[0.5]);
+(B[m[31m- let mut c=SkConic::default();for w in [0.,-1.,f32::NAN,f32::INFINITY] {c.set_w(w);check!(r,c.w==1.);}
+(B[m[31m- c.set_w(0.5);check!(r,c.w==0.5);r.finish();
+(B[m[32m+    let mut r = Reporter::default();
+(B[m[32m+    let saved;
+(B[m[32m+    {
+(B[m[32m+        let mut input = [p(0., 1.), p(0., 0.), p(1., 0.)];
+(B[m[32m+        let conic = SkConic::from_pts(&input, 0.70710678);
+(B[m[32m+        input.fill(p(99., 99.));
+(B[m[32m+        check!(r, conic.pts == [p(0., 1.), p(0., 0.), p(1., 0.)]);
+(B[m[32m+        let mut quadder = SkAutoConicToQuads::new();
+(B[m[32m+        {
+(B[m[32m+            let borrowed = quadder.compute_quads(&conic, 0.001);
+(B[m[32m+            check!(r, borrowed[0] == conic.pts[0]);
+(B[m[32m+            check!(r, *borrowed.last().unwrap() == conic.pts[2]);
+(B[m[32m+            saved = borrowed.to_vec();
+(B[m[32m+        }
+(B[m[32m+        // The borrow has ended before reuse; the owned snapshot survives reallocation and drop.
+(B[m[32m+        let other = SkConic::new(p(10., 10.), p(20., 20.), p(30., 30.), 1.);
+(B[m[32m+        let next = quadder.compute_quads(&other, 1.);
+(B[m[32m+        check!(r, next == [p(10., 10.), p(20., 20.), p(30., 30.)]);
+(B[m[32m+        check!(r, quadder.count_quads() == 1);
+(B[m[32m+    }
+(B[m[32m+    check!(r, saved.first() == Some(&p(0., 1.)));
+(B[m[32m+    check!(r, saved.last() == Some(&p(1., 0.)));
+(B[m[32m+    let owned = {
+(B[m[32m+        let input = [p(0., 0.), p(0.5, 1.), p(1., 0.)];
+(B[m[32m+        SkBezierQuad::intersect_with_horizontal_line(&input, 0.5)
+(B[m[32m+    };
+(B[m[32m+    check!(r, owned == [0.5]);
+(B[m[32m+    let mut c = SkConic::default();
+(B[m[32m+    for w in [0., -1., f32::NAN, f32::INFINITY] {
+(B[m[32m+        c.set_w(w);
+(B[m[32m+        check!(r, c.w == 1.);
+(B[m[32m+    }
+(B[m[32m+    c.set_w(0.5);
+(B[m[32m+    check!(r, c.w == 0.5);
+(B[m[32m+    r.finish();
+(B[m }
+ #[test]
+ fn supplemental_unit_arc_and_perspective_weight() {
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m06/supplemental.rs:91:
+[31m- let mut r=Reporter::default();let mut arcs=[SkConic::default();SkConic::K_MAX_CONICS_FOR_ARC];
+(B[m[31m- let n=SkConic::build_unit_arc(p(1.,0.),p(0.,1.),SkPathDirection::Cw,None,&mut arcs);
+(B[m[31m- check!(r,n==1);check!(r,point_near(arcs[0].pts[0],p(1.,0.)));check!(r,point_near(arcs[0].pts[2],p(0.,1.)));
+(B[m[31m- check!(r,near(arcs[0].w,std::f32::consts::FRAC_1_SQRT_2));
+(B[m[31m- let affine=Matrix::make_all(2.,0.,3.,0.,4.,5.,0.,0.,1.);
+(B[m[31m- let n=SkConic::build_unit_arc(p(1.,0.),p(0.,1.),SkPathDirection::Cw,Some(&affine),&mut arcs);
+(B[m[31m- check!(r,n==1);check!(r,point_near(arcs[0].pts[0],p(5.,5.)));check!(r,point_near(arcs[0].pts[2],p(3.,9.)));
+(B[m[31m- let pts=[p(0.,0.),p(1.,1.),p(2.,0.)];check!(r,SkConic::transform_w(&pts,0.5,&affine)==0.5);
+(B[m[31m- let perspective=Matrix::make_all(1.,0.,0.,0.,1.,0.,1.,0.,1.);
+(B[m[31m- check!(r,near(SkConic::transform_w(&pts,0.5,&perspective),1./3.0f32.sqrt()));r.finish();
+(B[m[32m+    let mut r = Reporter::default();
+(B[m[32m+    let mut arcs = [SkConic::default(); SkConic::K_MAX_CONICS_FOR_ARC];
+(B[m[32m+    let n = SkConic::build_unit_arc(p(1., 0.), p(0., 1.), SkPathDirection::Cw, None, &mut arcs);
+(B[m[32m+    check!(r, n == 1);
+(B[m[32m+    check!(r, point_near(arcs[0].pts[0], p(1., 0.)));
+(B[m[32m+    check!(r, point_near(arcs[0].pts[2], p(0., 1.)));
+(B[m[32m+    check!(r, near(arcs[0].w, std::f32::consts::FRAC_1_SQRT_2));
+(B[m[32m+    let affine = Matrix::make_all(2., 0., 3., 0., 4., 5., 0., 0., 1.);
+(B[m[32m+    let n = SkConic::build_unit_arc(
+(B[m[32m+        p(1., 0.),
+(B[m[32m+        p(0., 1.),
+(B[m[32m+        SkPathDirection::Cw,
+(B[m[32m+        Some(&affine),
+(B[m[32m+        &mut arcs,
+(B[m[32m+    );
+(B[m[32m+    check!(r, n == 1);
+(B[m[32m+    check!(r, point_near(arcs[0].pts[0], p(5., 5.)));
+(B[m[32m+    check!(r, point_near(arcs[0].pts[2], p(3., 9.)));
+(B[m[32m+    let pts = [p(0., 0.), p(1., 1.), p(2., 0.)];
+(B[m[32m+    check!(r, SkConic::transform_w(&pts, 0.5, &affine) == 0.5);
+(B[m[32m+    let perspective = Matrix::make_all(1., 0., 0., 0., 1., 0., 1., 0., 1.);
+(B[m[32m+    check!(
+(B[m[32m+        r,
+(B[m[32m+        near(
+(B[m[32m+            SkConic::transform_w(&pts, 0.5, &perspective),
+(B[m[32m+            1. / 3.0f32.sqrt()
+(B[m[32m+        )
+(B[m[32m+    );
+(B[m[32m+    r.finish();
+(B[m }
+ #[test]
+ fn supplemental_verb_discriminants_and_coregraphics_layout_byte_order() {
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m06/supplemental.rs:104:
+[31m- let mut r=Reporter::default();
+(B[m[31m- let verbs=[SkPathVerb::Move,SkPathVerb::Line,SkPathVerb::Quad,SkPathVerb::Conic,SkPathVerb::Cubic,SkPathVerb::Close,SkPathVerb::Done];
+(B[m[31m- check!(r,std::mem::size_of::<SkPathVerb>()==1);
+(B[m[31m- let bytes=unsafe {std::slice::from_raw_parts(verbs.as_ptr().cast::<u8>(),verbs.len())};check!(r,bytes==[0,1,2,3,4,5,6]);
+(B[m[31m- #[cfg(target_os="macos")]
+(B[m[31m- {
+(B[m[31m-  use rust_skia::sk_cg_geometry::*;
+(B[m[31m-  check!(r,std::mem::size_of::<CGRect>()==32);check!(r,std::mem::align_of::<CGRect>()==8);
+(B[m[31m-  check!(r,std::mem::offset_of!(CGRect,size)==16);
+(B[m[31m-  let rect=CGRect{origin:CGPoint{x:1.,y:-2.},size:CGSize{width:3.,height:4.}};
+(B[m[31m-  check!(r,!sk_cg_rect_is_empty(&rect));check!(r,sk_cg_rect_get_min_x(&rect)==1.);check!(r,sk_cg_rect_get_max_x(&rect)==4.);
+(B[m[31m-  check!(r,sk_cg_rect_get_min_y(&rect)==-2.);check!(r,sk_cg_rect_get_max_y(&rect)==2.);check!(r,sk_cg_rect_get_width(&rect)==3.);
+(B[m[31m-  // repr(C), four initialized f64s and no padding: inspect actual object bytes.
+(B[m[31m-  let bytes=unsafe {std::slice::from_raw_parts((&rect as *const CGRect).cast::<u8>(),32)};
+(B[m[31m-  #[cfg(target_endian="little")]
+(B[m[31m-  check!(r,bytes==[0,0,0,0,0,0,240,63,0,0,0,0,0,0,0,192,0,0,0,0,0,0,8,64,0,0,0,0,0,0,16,64]);
+(B[m[31m-  for width in [0.,-1.] {let empty=CGRect{size:CGSize{width,height:4.},..rect};check!(r,sk_cg_rect_is_empty(&empty));}
+(B[m[31m-  for height in [0.,-1.] {let empty=CGRect{size:CGSize{width:3.,height},..rect};check!(r,sk_cg_rect_is_empty(&empty));}
+(B[m[31m- }
+(B[m[31m- r.finish();
+(B[m[32m+    let mut r = Reporter::default();
+(B[m[32m+    let verbs = [
+(B[m[32m+        SkPathVerb::Move,
+(B[m[32m+        SkPathVerb::Line,
+(B[m[32m+        SkPathVerb::Quad,
+(B[m[32m+        SkPathVerb::Conic,
+(B[m[32m+        SkPathVerb::Cubic,
+(B[m[32m+        SkPathVerb::Close,
+(B[m[32m+        SkPathVerb::Done,
+(B[m[32m+    ];
+(B[m[32m+    check!(r, std::mem::size_of::<SkPathVerb>() == 1);
+(B[m[32m+    let bytes = unsafe { std::slice::from_raw_parts(verbs.as_ptr().cast::<u8>(), verbs.len()) };
+(B[m[32m+    check!(r, bytes == [0, 1, 2, 3, 4, 5, 6]);
+(B[m[32m+    #[cfg(target_os = "macos")]
+(B[m[32m+    {
+(B[m[32m+        use rust_skia::sk_cg_geometry::*;
+(B[m[32m+        check!(r, std::mem::size_of::<CGRect>() == 32);
+(B[m[32m+        check!(r, std::mem::align_of::<CGRect>() == 8);
+(B[m[32m+        check!(r, std::mem::offset_of!(CGRect, size) == 16);
+(B[m[32m+        let rect = CGRect {
+(B[m[32m+            origin: CGPoint { x: 1., y: -2. },
+(B[m[32m+            size: CGSize {
+(B[m[32m+                width: 3.,
+(B[m[32m+                height: 4.,
+(B[m[32m+            },
+(B[m[32m+        };
+(B[m[32m+        check!(r, !sk_cg_rect_is_empty(&rect));
+(B[m[32m+        check!(r, sk_cg_rect_get_min_x(&rect) == 1.);
+(B[m[32m+        check!(r, sk_cg_rect_get_max_x(&rect) == 4.);
+(B[m[32m+        check!(r, sk_cg_rect_get_min_y(&rect) == -2.);
+(B[m[32m+        check!(r, sk_cg_rect_get_max_y(&rect) == 2.);
+(B[m[32m+        check!(r, sk_cg_rect_get_width(&rect) == 3.);
+(B[m[32m+        // repr(C), four initialized f64s and no padding: inspect actual object bytes.
+(B[m[32m+        let bytes =
+(B[m[32m+            unsafe { std::slice::from_raw_parts((&rect as *const CGRect).cast::<u8>(), 32) };
+(B[m[32m+        #[cfg(target_endian = "little")]
+(B[m[32m+        check!(
+(B[m[32m+            r,
+(B[m[32m+            bytes
+(B[m[32m+                == [
+(B[m[32m+                    0, 0, 0, 0, 0, 0, 240, 63, 0, 0, 0, 0, 0, 0, 0, 192, 0, 0, 0, 0, 0, 0, 8, 64,
+(B[m[32m+                    0, 0, 0, 0, 0, 0, 16, 64
+(B[m[32m+                ]
+(B[m[32m+        );
+(B[m[32m+        for width in [0., -1.] {
+(B[m[32m+            let empty = CGRect {
+(B[m[32m+                size: CGSize { width, height: 4. },
+(B[m[32m+                ..rect
+(B[m[32m+            };
+(B[m[32m+            check!(r, sk_cg_rect_is_empty(&empty));
+(B[m[32m+        }
+(B[m[32m+        for height in [0., -1.] {
+(B[m[32m+            let empty = CGRect {
+(B[m[32m+                size: CGSize { width: 3., height },
+(B[m[32m+                ..rect
+(B[m[32m+            };
+(B[m[32m+            check!(r, sk_cg_rect_is_empty(&empty));
+(B[m[32m+        }
+(B[m[32m+    }
+(B[m[32m+    r.finish();
+(B[m }
+ 
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m06_test.rs:16:
+ // Supplemental checks are confined to supplemental.rs. No execution performed.
+ #![allow(non_snake_case, unused_mut, unused_assignments, dead_code, clippy::all)]
+ mod support;
+[31m-use rust_skia::*;
+(B[m[32m+use rust_skia::random::SkRandom;
+(B[m use rust_skia::sk_geometry::*;
+ use rust_skia::sk_poly_utils::*;
+[31m-use rust_skia::random::SkRandom;
+(B[m[32m+use rust_skia::*;
+(B[m use support::{Reporter, reporter_assert as check};
+ const NZ: f32 = 1.0 / 4096.0;
+[31m-const fn p(x:f32,y:f32)->Point { Point::new(x,y) }
+(B[m[31m-fn near(a:f32,b:f32)->bool {(a-b).abs() <= NZ}
+(B[m[31m-fn point_near(a:Point,b:Point)->bool {near(a.x,b.x)&&near(a.y,b.y)}
+(B[m[31m-fn mono(r:&mut Reporter, name:&str, input:&[Point], t:f32, expected:&[Point], x:bool) {
+(B[m[32m+const fn p(x: f32, y: f32) -> Point {
+(B[m[32m+    Point::new(x, y)
+(B[m[32m+}
+(B[m[32m+fn near(a: f32, b: f32) -> bool {
+(B[m[32m+    (a - b).abs() <= NZ
+(B[m[32m+}
+(B[m[32m+fn point_near(a: Point, b: Point) -> bool {
+(B[m[32m+    near(a.x, b.x) && near(a.y, b.y)
+(B[m[32m+}
+(B[m[32m+fn mono(r: &mut Reporter, name: &str, input: &[Point], t: f32, expected: &[Point], x: bool) {
+(B[m     eprintln!("{name}");
+[31m-    if x {check!(r,input.len()==4);check!(r,expected.len()==7);}
+(B[m[31m-    check!(r,near(if x {expected[3].x}else{expected[3].y},t));
+(B[m[31m-    let mut output=[Point::default();7];
+(B[m[31m-    check!(r,if x {sk_chop_mono_cubic_at_x(input,t,&mut output)} else {sk_chop_mono_cubic_at_y(input,t,&mut output)});
+(B[m[31m-    for i in 0..7 {check!(r,point_near(expected[i],output[i]));}
+(B[m[32m+    if x {
+(B[m[32m+        check!(r, input.len() == 4);
+(B[m[32m+        check!(r, expected.len() == 7);
+(B[m[32m+    }
+(B[m[32m+    check!(r, near(if x { expected[3].x } else { expected[3].y }, t));
+(B[m[32m+    let mut output = [Point::default(); 7];
+(B[m[32m+    check!(
+(B[m[32m+        r,
+(B[m[32m+        if x {
+(B[m[32m+            sk_chop_mono_cubic_at_x(input, t, &mut output)
+(B[m[32m+        } else {
+(B[m[32m+            sk_chop_mono_cubic_at_y(input, t, &mut output)
+(B[m[32m+        }
+(B[m[32m+    );
+(B[m[32m+    for i in 0..7 {
+(B[m[32m+        check!(r, point_near(expected[i], output[i]));
+(B[m[32m+    }
+(B[m }
+[31m-#[path="m06/bezier.rs"] mod bezier;
+(B[m[31m-#[path="m06/cubic_map.rs"] mod cubic_map;
+(B[m[31m-#[path="m06/geometry.rs"] mod geometry;
+(B[m[31m-#[path="m06/mono_x.rs"] mod mono_x;
+(B[m[31m-#[path="m06/mono_y.rs"] mod mono_y;
+(B[m[31m-#[path="m06/insetconvexpoly.rs"] mod insetconvexpoly;
+(B[m[31m-#[path="m06/offsetsimplepoly.rs"] mod offsetsimplepoly;
+(B[m[31m-#[path="m06/polyutils.rs"] mod polyutils;
+(B[m[31m-#[path="m06/supplemental.rs"] mod supplemental;
+(B[m[32m+#[path = "m06/bezier.rs"]
+(B[m[32m+mod bezier;
+(B[m[32m+#[path = "m06/cubic_map.rs"]
+(B[m[32m+mod cubic_map;
+(B[m[32m+#[path = "m06/geometry.rs"]
+(B[m[32m+mod geometry;
+(B[m[32m+#[path = "m06/insetconvexpoly.rs"]
+(B[m[32m+mod insetconvexpoly;
+(B[m[32m+#[path = "m06/mono_x.rs"]
+(B[m[32m+mod mono_x;
+(B[m[32m+#[path = "m06/mono_y.rs"]
+(B[m[32m+mod mono_y;
+(B[m[32m+#[path = "m06/offsetsimplepoly.rs"]
+(B[m[32m+mod offsetsimplepoly;
+(B[m[32m+#[path = "m06/polyutils.rs"]
+(B[m[32m+mod polyutils;
+(B[m[32m+#[path = "m06/supplemental.rs"]
+(B[m[32m+mod supplemental;
+(B[m 

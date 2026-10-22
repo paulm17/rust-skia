@@ -71,6 +71,17 @@ pub mod safe_math;
 pub mod scalar;
 pub mod scale_to_sides;
 pub mod size;
+pub mod sk_bezier_curves;
+pub mod sk_cg_geometry;
+pub mod sk_cubic_clipper;
+pub mod sk_cubic_map;
+pub mod sk_cubics;
+pub mod sk_edge_clipper;
+pub mod sk_geometry;
+pub mod sk_line_clipper;
+pub mod sk_poly_utils;
+pub mod sk_quad_clipper;
+pub mod sk_quads;
 pub mod sk_to;
 pub mod stream;
 pub mod string;
@@ -257,6 +268,40 @@ pub use scalar::{
 };
 pub use scale_to_sides::{ScaleToSides, adjust_radii};
 pub use size::{ISize, Size};
+pub use sk_bezier_curves::{SkBezierCubic, SkBezierQuad};
+pub use sk_cg_geometry::{
+    CGFloat, CGPoint, CGRect, CGSize, sk_cg_rect_get_max_x, sk_cg_rect_get_max_y,
+    sk_cg_rect_get_min_x, sk_cg_rect_get_min_y, sk_cg_rect_get_width, sk_cg_rect_is_empty,
+};
+pub use sk_cubic_clipper::SkCubicClipper;
+pub use sk_cubic_map::{CubicMap, SkCubicMap};
+pub use sk_cubics::SkCubics;
+pub use sk_edge_clipper::{SkEdgeClipper, SkPathVerb};
+pub use sk_geometry::{
+    AutoConicToQuads, Conic, CubicCoeff, SkAutoConicToQuads, SkConic, SkCubicCoeff, SkCubicType,
+    SkPathDirection, classify_cubic, sk_chop_cubic_at, sk_chop_cubic_at_half,
+    sk_chop_cubic_at_in_place, sk_chop_cubic_at_inflections, sk_chop_cubic_at_max_curvature,
+    sk_chop_cubic_at_mid_tangent, sk_chop_cubic_at_ts, sk_chop_cubic_at_two,
+    sk_chop_cubic_at_x_extrema, sk_chop_cubic_at_y_extrema, sk_chop_mono_cubic_at_x,
+    sk_chop_mono_cubic_at_y, sk_chop_quad_at, sk_chop_quad_at_half, sk_chop_quad_at_in_place,
+    sk_chop_quad_at_max_curvature, sk_chop_quad_at_max_curvature_in_place,
+    sk_chop_quad_at_mid_tangent, sk_chop_quad_at_x_extrema, sk_chop_quad_at_y_extrema,
+    sk_classify_cubic, sk_convert_quad_to_cubic, sk_cubic_is_degenerate, sk_cubic_type_name,
+    sk_eval_cubic_at, sk_eval_quad_at, sk_eval_quad_at_with, sk_eval_quad_tangent_at,
+    sk_find_bisector, sk_find_cubic_cusp, sk_find_cubic_extrema, sk_find_cubic_inflections,
+    sk_find_cubic_max_curvature, sk_find_cubic_mid_tangent, sk_find_quad_extrema,
+    sk_find_quad_max_curvature, sk_find_quad_mid_tangent, sk_find_unit_quad_roots,
+    sk_measure_angle_between_vectors, sk_measure_non_inflect_cubic_rotation,
+    sk_measure_quad_rotation,
+};
+pub use sk_line_clipper::{K_MAX_CLIPPED_LINE_SEGMENTS, K_MAX_POINTS, clip_line, intersect_line};
+pub use sk_poly_utils::{
+    K_CROSS_TOLERANCE, OffsetSegment, compute_offset_vector, sk_compute_radial_steps,
+    sk_get_polygon_winding, sk_inset_convex_polygon, sk_is_convex_polygon, sk_is_simple_polygon,
+    sk_offset_simple_polygon, sk_triangulate_simple_polygon,
+};
+pub use sk_quad_clipper::SkQuadClipper;
+pub use sk_quads::{RootResult, SkQuads};
 pub use sk_to::{
     checked_to_i8, checked_to_i16, checked_to_i32, checked_to_i64, checked_to_u8, checked_to_u16,
     checked_to_u32, checked_to_u64, checked_to_usize, sk_to_bool, sk_to_int, sk_to_s8, sk_to_s16,
