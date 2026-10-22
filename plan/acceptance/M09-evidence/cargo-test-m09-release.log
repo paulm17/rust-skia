@@ -1,0 +1,26 @@
+   Compiling rust-skia v0.1.0 (/Volumes/Data/Users/paul/development/src/github/rust-skia)
+    Finished `release` profile [optimized] target(s) in 0.68s
+     Running tests/m09_test.rs (target/release/deps/m09_test-3487e540f7fb858a)
+
+running 8 tests
+test clip_stack::ClipStack ... reporter assertions=178 failures=0
+ok
+test rtree::RTree ... reporter assertions=5300 failures=0
+ok
+test supplemental::supplemental_clip_stack_geometry_and_shader_lifetime ... ok
+test supplemental::supplemental_region_and_aa_copy_ownership ... ok
+test supplemental::supplemental_region_boundaries_overflow_and_all_ops ... ok
+test supplemental::supplemental_region_byte_order_and_transactional_decode ... ok
+test supplemental::supplemental_rtree_capacity_boundaries_and_input_lifetime ... ok
+test support::tests::reporter_collects_failures_and_evaluates_once ... reporter assertions=3 failures=2
+
+thread 'support::tests::reporter_collects_failures_and_evaluates_once' (16852310) panicked at tests/support/mod.rs:25:9:
+2 assertion(s) failed:
+tests/support/mod.rs:49: { evaluations += 1; false }
+tests/support/mod.rs:53: false
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+reporter assertions=0 failures=0
+ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+

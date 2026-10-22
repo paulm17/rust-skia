@@ -1,0 +1,5 @@
+REGISTERED RTree CPU
+PASS RTree
+REGISTERED ClipStack CPU
+PASS ClipStack
+enabled=2 failures=0 clipstack=1 rtree=1

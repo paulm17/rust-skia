@@ -73,8 +73,14 @@ pub mod scale_to_sides;
 pub mod size;
 pub mod sk_1d_path_effect;
 pub mod sk_2d_path_effect;
+pub mod sk_aa_clip;
+pub mod sk_bbh_factory;
 pub mod sk_bezier_curves;
 pub mod sk_cg_geometry;
+pub mod sk_clip_op;
+pub mod sk_clip_stack;
+pub mod sk_clip_stack_device;
+pub mod sk_clip_stack_utils;
 pub mod sk_contour_measure;
 pub mod sk_corner_path_effect;
 pub mod sk_cubic_clipper;
@@ -83,6 +89,8 @@ pub mod sk_cubics;
 pub mod sk_dash_path;
 pub mod sk_dash_path_effect;
 pub mod sk_discrete_path_effect;
+pub mod sk_edge;
+pub mod sk_edge_builder;
 pub mod sk_edge_clipper;
 pub mod sk_geometry;
 pub mod sk_get_executable_path;
@@ -104,6 +112,12 @@ pub mod sk_path_types;
 pub mod sk_poly_utils;
 pub mod sk_quad_clipper;
 pub mod sk_quads;
+pub mod sk_raster_clip;
+pub mod sk_raster_clip_stack;
+pub mod sk_region;
+pub mod sk_region_path;
+pub mod sk_region_priv;
+pub mod sk_rtree;
 pub mod sk_stroke;
 pub mod sk_stroke_rec;
 pub mod sk_stroker_priv;
@@ -300,11 +314,21 @@ pub use sk_1d_path_effect::{
 pub use sk_2d_path_effect::{
     SkLine2DPathEffect, SkPath2DPathEffect, make_line_2d_path_effect, make_path_2d_path_effect,
 };
+pub use sk_aa_clip::SkAAClip;
+pub use sk_bbh_factory::{Metadata, SkBBHFactory, SkBBoxHierarchy, SkRTreeFactory};
 pub use sk_bezier_curves::{SkBezierCubic, SkBezierQuad};
 pub use sk_cg_geometry::{
     CGFloat, CGPoint, CGRect, CGSize, sk_cg_rect_get_max_x, sk_cg_rect_get_max_y,
     sk_cg_rect_get_min_x, sk_cg_rect_get_min_y, sk_cg_rect_get_width, sk_cg_rect_is_empty,
 };
+pub use sk_clip_op::SkClipOp;
+pub use sk_clip_stack::{
+    B2TIter, ClipShader, DeviceSpaceType, Element, FillCombo, Iter as ClipStackIter, IterStart,
+    K_EMPTY_GEN_ID, K_INVALID_GEN_ID, K_WIDE_OPEN_GEN_ID, SkClipStack, SkShaderHandle,
+    get_next_gen_id,
+};
+pub use sk_clip_stack_device::SkClipStackDevice;
+pub use sk_clip_stack_utils::sk_clip_stack_as_path;
 pub use sk_contour_measure::{
     ForwardVerbIterator, K_MAX_T_VALUE, MatrixFlags, Segment, SkContourMeasure,
     SkContourMeasureIter, SkPathMeasurePriv, SkSegType, VerbMeasure, sk_contour_measure_seg_to,
@@ -384,6 +408,12 @@ pub use sk_poly_utils::{
 };
 pub use sk_quad_clipper::SkQuadClipper;
 pub use sk_quads::{RootResult, SkQuads};
+pub use sk_raster_clip::SkRasterClip;
+pub use sk_raster_clip_stack::SkRasterClipStack;
+pub use sk_region::{
+    BoundsType, Cliperator, Iterator as RegionIterator, SkRegion, SkRegionOp, Spanerator,
+};
+pub use sk_rtree::{K_MAX_CHILDREN, K_MIN_CHILDREN, SkRTree};
 pub use sk_stroke::{
     IntersectRayType, K_CONIC_RECURSIVE_LIMIT, K_CUBIC_RECURSIVE_LIMIT, K_QUAD_RECURSIVE_LIMIT,
     K_RECURSIVE_LIMITS, K_TANGENT_RECURSIVE_LIMIT, ReductionType, SkPathStroker, SkQuadConstruct,

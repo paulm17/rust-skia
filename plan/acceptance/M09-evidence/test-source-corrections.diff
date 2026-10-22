@@ -1,0 +1,8 @@
+--- a/tests/m09/clip_stack.rs
++++ b/tests/m09/clip_stack.rs
+@@ -54,7 +54,7 @@
+-    cp(&mut s, &builder.snapshot(), Intersect, doAA);
++    cp(&mut s, &builder.snapshot(None), Intersect, doAA);
+@@ -109,7 +109,7 @@
+-    cp(&mut s, &builder.detach(), Intersect, doAA);
++    cp(&mut s, &builder.detach(None), Intersect, doAA);

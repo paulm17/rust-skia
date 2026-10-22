@@ -1,0 +1,12 @@
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.03s
+     Running tests/m09_test.rs (target/debug/deps/m09_test-005c331e6adc1804)
+clip_stack::ClipStack: test
+rtree::RTree: test
+supplemental::supplemental_clip_stack_geometry_and_shader_lifetime: test
+supplemental::supplemental_region_and_aa_copy_ownership: test
+supplemental::supplemental_region_boundaries_overflow_and_all_ops: test
+supplemental::supplemental_region_byte_order_and_transactional_decode: test
+supplemental::supplemental_rtree_capacity_boundaries_and_input_lifetime: test
+support::tests::reporter_collects_failures_and_evaluates_once: test
+
+8 tests, 0 benchmarks

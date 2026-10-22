@@ -53,8 +53,8 @@
     {
       "id": "M09",
       "title": "Regions, clip storage and spatial indexes",
-      "state": "NOT_STARTED",
-      "acceptance_report": null
+      "state": "ACCEPTED",
+      "acceptance_report": "acceptance/M09.md"
     },
     {
       "id": "M10",

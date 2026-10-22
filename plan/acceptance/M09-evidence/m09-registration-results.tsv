@@ -1,0 +1,9 @@
+# kind	rust_test	original_registration	result	assertions	detail
+original	clip_stack::ClipStack	tests/ClipStackTest.cpp:828	PASS	178	0 failures (debug and release)
+original	rtree::RTree	tests/RTreeTest.cpp:65	PASS	5300	0 failures (debug and release)
+supplemental	supplemental::supplemental_region_byte_order_and_transactional_decode	-	PASS	-	debug and release
+supplemental	supplemental::supplemental_region_boundaries_overflow_and_all_ops	-	PASS	-	corrected to pinned SK_MinS32 saturation; debug and release
+supplemental	supplemental::supplemental_region_and_aa_copy_ownership	-	PASS	-	corrected to pinned quickContains inclusive-lastY rule; debug and release
+supplemental	supplemental::supplemental_rtree_capacity_boundaries_and_input_lifetime	-	PASS	-	debug and release
+supplemental	supplemental::supplemental_clip_stack_geometry_and_shader_lifetime	-	PASS	-	debug and release
+support	support::tests::reporter_collects_failures_and_evaluates_once	-	PASS	3	2 failures are the self-test's deliberate catch_unwind cases
