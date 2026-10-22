@@ -1,0 +1,299 @@
+--- pre-format/m10_test.rs
++++ tests/m10_test.rs
+@@ -1,10 +1,10 @@
+ // Copyright Google LLC. BSD: tests/LICENSE.skia.
+ // Pinned Skia b81c69985fd14bb7bfbd356b7618633ce07dc1a4.
+ #![allow(non_snake_case)]
+-mod support;
+ #[path = "m10/colors.rs"]
+ mod colors;
+ #[path = "m10/parse.rs"]
+ mod parse;
+ #[path = "m10/supplemental.rs"]
+ mod supplemental;
++mod support;
+--- pre-format/m10/colors.rs
++++ tests/m10/colors.rs
+@@ -3,7 +3,9 @@
+ use crate::support::{Reporter, reporter_assert};
+ use rust_skia::sk_color::*;
+ use rust_skia::sk_color_data::*;
+-use rust_skia::sk_color_priv::{sk_get_packed_a32, sk_get_packed_r32, sk_get_packed_g32, sk_get_packed_b32, SK_R32_SHIFT};
++use rust_skia::sk_color_priv::{
++    SK_R32_SHIFT, sk_get_packed_a32, sk_get_packed_b32, sk_get_packed_g32, sk_get_packed_r32,
++};
+ use rust_skia::sk_un_pre_multiply::SkUnPreMultiply;
+ use rust_skia::{SkRandom, sk_mul_div255_ceiling};
+ 
+@@ -28,7 +30,11 @@
+     let mut r = Reporter::default();
+     let (src, dst) = (0xAB998877, 0x66334455);
+     for scale in 0..=256 {
+-        reporter_assert!(r, sk_four_byte_interp256(src, dst, scale as i32) == sk_fast_four_byte_interp256(src, dst, scale));
++        reporter_assert!(
++            r,
++            sk_four_byte_interp256(src, dst, scale as i32)
++                == sk_fast_four_byte_interp256(src, dst, scale)
++        );
+     }
+     for scale in 0..256 {
+         let slow = sk_four_byte_interp(src, dst, scale as u8);
+@@ -49,17 +55,37 @@
+ #[test]
+ fn SkBlendARGB32_SameOpaqueSrcAndDstWithAnyAlpha_ProducesSameColor() {
+     let mut r = Reporter::default();
+-    let colors = [SK_COLOR_WHITE, SK_COLOR_BLACK, SK_COLOR_GRAY,
+-        SK_COLOR_RED, SK_COLOR_GREEN, SK_COLOR_BLUE, SK_COLOR_YELLOW,
+-        SK_COLOR_CYAN, SK_COLOR_MAGENTA,
+-        sk_color_set_argb(255, 255 / 4, 255 / 3, 255 / 2), 0xFF2E3338];
++    let colors = [
++        SK_COLOR_WHITE,
++        SK_COLOR_BLACK,
++        SK_COLOR_GRAY,
++        SK_COLOR_RED,
++        SK_COLOR_GREEN,
++        SK_COLOR_BLUE,
++        SK_COLOR_YELLOW,
++        SK_COLOR_CYAN,
++        SK_COLOR_MAGENTA,
++        sk_color_set_argb(255, 255 / 4, 255 / 3, 255 / 2),
++        0xFF2E3338,
++    ];
+     for c in colors {
+-        assert_eq!(sk_color_get_a(c), 0xFF, "this is only true for opaque colors");
++        assert_eq!(
++            sk_color_get_a(c),
++            0xFF,
++            "this is only true for opaque colors"
++        );
+         let srcAndDst = sk_pre_multiply_color(c);
+         for scale in 0..256 {
+             let alpha = scale as u8;
+             let output = sk_blend_argb32(srcAndDst, srcAndDst, alpha);
+-            r.record(srcAndDst == output, &format!("SkBlendARGB32({srcAndDst:08x}, {srcAndDst:08x}, {alpha:02x}) = {output:08x}"), file!(), line!());
++            r.record(
++                srcAndDst == output,
++                &format!(
++                    "SkBlendARGB32({srcAndDst:08x}, {srcAndDst:08x}, {alpha:02x}) = {output:08x}"
++                ),
++                file!(),
++                line!(),
++            );
+         }
+     }
+     r.finish();
+@@ -159,12 +185,14 @@
+ #[test]
+ fn SkColor4f_FromColor() {
+     let mut reporter = Reporter::default();
+-    let recs = [(SK_COLOR_BLACK, SkColor4f::new(0.0, 0.0, 0.0, 1.0)),
++    let recs = [
++        (SK_COLOR_BLACK, SkColor4f::new(0.0, 0.0, 0.0, 1.0)),
+         (SK_COLOR_WHITE, SkColor4f::new(1.0, 1.0, 1.0, 1.0)),
+         (SK_COLOR_RED, SkColor4f::new(1.0, 0.0, 0.0, 1.0)),
+         (SK_COLOR_GREEN, SkColor4f::new(0.0, 1.0, 0.0, 1.0)),
+         (SK_COLOR_BLUE, SkColor4f::new(0.0, 0.0, 1.0, 1.0)),
+-        (0, SkColor4f::new(0.0, 0.0, 0.0, 0.0))];
++        (0, SkColor4f::new(0.0, 0.0, 0.0, 0.0)),
++    ];
+     for (c, expected) in recs {
+         let c4 = SkColor4f::from_color(c);
+         reporter_assert!(reporter, c4 == expected);
+--- pre-format/m10/parse.rs
++++ tests/m10/parse.rs
+@@ -157,26 +157,42 @@
+     let mut color = 0;
+     for &(name, expected) in NAMED {
+         let found = sk_parse_find_named_color_n(name.as_bytes());
+-        if let Some(value) = found { color = value; }
++        if let Some(value) = found {
++            color = value;
++        }
+         reporter_assert!(reporter, found.is_some());
+         reporter_assert!(reporter, color == expected);
+         for l in (0..name.len()).rev() {
+             let s = name[..l].to_owned();
+             if is_valid_name(&s) {
+                 let found = sk_parse_find_named_color_n(&name.as_bytes()[..l]);
+-                if let Some(value) = found { color = value; }
++                if let Some(value) = found {
++                    color = value;
++                }
+                 reporter_assert!(reporter, found.is_some());
+                 continue;
+             }
+-            reporter_assert!(reporter, sk_parse_find_named_color_n(s.as_bytes()).is_none());
+-            reporter_assert!(reporter, sk_parse_find_named_color_n(&name.as_bytes()[..l]).is_none());
++            reporter_assert!(
++                reporter,
++                sk_parse_find_named_color_n(s.as_bytes()).is_none()
++            );
++            reporter_assert!(
++                reporter,
++                sk_parse_find_named_color_n(&name.as_bytes()[..l]).is_none()
++            );
+         }
+         let mut s = name.to_owned();
+         s.push('A');
+-        reporter_assert!(reporter, sk_parse_find_named_color_n(s.as_bytes()).is_none());
++        reporter_assert!(
++            reporter,
++            sk_parse_find_named_color_n(s.as_bytes()).is_none()
++        );
+     }
+     for name in ["", "aaa", "zzz", "aaaaaaaaaaaa", "zzzzzzzzzzzz"] {
+-        reporter_assert!(reporter, sk_parse_find_named_color_n(name.as_bytes()).is_none());
++        reporter_assert!(
++            reporter,
++            sk_parse_find_named_color_n(name.as_bytes()).is_none()
++        );
+     }
+     // Keep the output variable alive across calls, as in the C++ body.
+     let _ = color;
+--- pre-format/m10/supplemental.rs
++++ tests/m10/supplemental.rs
+@@ -1,9 +1,9 @@
+ // Supplemental M10 contracts; these do not replace upstream registrations.
++use rust_skia::sk_codecs_icc_profile_chromium::IccProfileChromium;
+ use rust_skia::sk_color::*;
+ use rust_skia::sk_color_data::*;
+ use rust_skia::sk_color_space::SkColorSpace;
+ use rust_skia::sk_color_table::SkColorTable;
+-use rust_skia::sk_codecs_icc_profile_chromium::IccProfileChromium;
+ use rust_skia::skcms::*;
+ use rust_skia::skcms_transform::skcms_transform;
+ 
+@@ -20,7 +20,8 @@
+                 for shift in [0, 8, 16, 24] {
+                     let s = ((src >> shift) & 255) as u64;
+                     let d = ((dst >> shift) & 255) as u64;
+-                    expected |= (((s * scale as u64 + d * (256 - scale) as u64) / 256) as u32) << shift;
++                    expected |=
++                        (((s * scale as u64 + d * (256 - scale) as u64) / 256) as u32) << shift;
+                 }
+                 assert_eq!(sk_four_byte_interp256(src, dst, scale as i32), expected);
+                 assert_eq!(sk_fast_four_byte_interp256_32(src, dst, scale), expected);
+@@ -32,13 +33,22 @@
+         for x in 0..=255u8 {
+             let packed = sk_pre_multiply_argb(a, x, 255 - x, 255);
+             assert_eq!(sk_pm_color_get_a(packed), a);
+-            assert_eq!(sk_pm_color_get_r(packed) as u32, (a as u32 * x as u32 + 127) / 255);
+-            assert_eq!(sk_pm_color_get_g(packed) as u32, (a as u32 * (255 - x) as u32 + 127) / 255);
++            assert_eq!(
++                sk_pm_color_get_r(packed) as u32,
++                (a as u32 * x as u32 + 127) / 255
++            );
++            assert_eq!(
++                sk_pm_color_get_g(packed) as u32,
++                (a as u32 * (255 - x) as u32 + 127) / 255
++            );
+             assert_eq!(sk_pm_color_get_b(packed), a);
+         }
+     }
+     // Apple Silicon's native PMColor is RGBA in little-endian memory.
+-    assert_eq!(sk_pm_color_set_argb(0xfe, 0xdc, 0xba, 0x98).to_le_bytes(), [0xdc, 0xba, 0x98, 0xfe]);
++    assert_eq!(
++        sk_pm_color_set_argb(0xfe, 0xdc, 0xba, 0x98).to_le_bytes(),
++        [0xdc, 0xba, 0x98, 0xfe]
++    );
+ }
+ 
+ #[test]
+@@ -48,19 +58,62 @@
+     let profile = skcms_srgb_profile();
+     let src = [0x12, 0x34, 0x56, 0x78, 0x9a, 0xbc, 0xde, 0xf0];
+     let mut dst = [0xa5; 10];
+-    assert!(skcms_transform(&src, Rgba16161616Be, Unpremul, Some(profile), &mut dst[1..9], Rgba16161616Le, Unpremul, Some(profile), 1));
+-    assert_eq!(dst, [0xa5, 0x34, 0x12, 0x78, 0x56, 0xbc, 0x9a, 0xf0, 0xde, 0xa5]);
++    assert!(skcms_transform(
++        &src,
++        Rgba16161616Be,
++        Unpremul,
++        Some(profile),
++        &mut dst[1..9],
++        Rgba16161616Le,
++        Unpremul,
++        Some(profile),
++        1
++    ));
++    assert_eq!(
++        dst,
++        [0xa5, 0x34, 0x12, 0x78, 0x56, 0xbc, 0x9a, 0xf0, 0xde, 0xa5]
++    );
+     let mut restored = [0; 8];
+-    assert!(skcms_transform(&dst[1..9], Rgba16161616Le, Unpremul, Some(profile), &mut restored, Rgba16161616Be, Unpremul, Some(profile), 1));
++    assert!(skcms_transform(
++        &dst[1..9],
++        Rgba16161616Le,
++        Unpremul,
++        Some(profile),
++        &mut restored,
++        Rgba16161616Be,
++        Unpremul,
++        Some(profile),
++        1
++    ));
+     assert_eq!(restored, src);
+     for count in [usize::MAX, usize::MAX / 4 + 1, i32::MAX as usize] {
+         let mut output = [0xa5; 4];
+-        assert!(!skcms_transform(&[], Rgba8888, Unpremul, Some(profile), &mut output, Rgba8888, Unpremul, Some(profile), count));
++        assert!(!skcms_transform(
++            &[],
++            Rgba8888,
++            Unpremul,
++            Some(profile),
++            &mut output,
++            Rgba8888,
++            Unpremul,
++            Some(profile),
++            count
++        ));
+         assert_eq!(output, [0xa5; 4]);
+     }
+     for (src, len) in [(&[][..], 4), (&[0; 4][..], 3)] {
+         let mut output = [0xa5; 4];
+-        assert!(!skcms_transform(src, Rgba8888, Unpremul, Some(profile), &mut output[..len], Rgba8888, Unpremul, Some(profile), 1));
++        assert!(!skcms_transform(
++            src,
++            Rgba8888,
++            Unpremul,
++            Some(profile),
++            &mut output[..len],
++            Rgba8888,
++            Unpremul,
++            Some(profile),
++            1
++        ));
+         assert_eq!(output, [0xa5; 4]);
+     }
+ }
+@@ -98,7 +151,10 @@
+     let restored = SkColorSpace::deserialize(serialized.bytes()).unwrap();
+     drop(serialized);
+     drop(space);
+-    assert!(SkColorSpace::equals(Some(&restored), Some(&SkColorSpace::make_srgb())));
++    assert!(SkColorSpace::equals(
++        Some(&restored),
++        Some(&SkColorSpace::make_srgb())
++    ));
+     let bytes = restored.serialize();
+     for len in 0..bytes.bytes().len() {
+         assert!(SkColorSpace::deserialize(&bytes.bytes()[..len]).is_none());
+@@ -135,6 +191,16 @@
+     assert_eq!(&profile.buffer[..fixture.len()], fixture);
+     let src = [0, 0, 0, 255, 255, 255, 255, 255];
+     let mut output = [0; 8];
+-    assert!(skcms_transform(&src, SkcmsPixelFormat::Rgba8888, SkcmsAlphaFormat::Unpremul, Some(profile), &mut output, SkcmsPixelFormat::Rgba8888, SkcmsAlphaFormat::Unpremul, Some(skcms_srgb_profile()), 2));
++    assert!(skcms_transform(
++        &src,
++        SkcmsPixelFormat::Rgba8888,
++        SkcmsAlphaFormat::Unpremul,
++        Some(profile),
++        &mut output,
++        SkcmsPixelFormat::Rgba8888,
++        SkcmsAlphaFormat::Unpremul,
++        Some(skcms_srgb_profile()),
++        2
++    ));
+     assert_eq!(output, src);
+ }

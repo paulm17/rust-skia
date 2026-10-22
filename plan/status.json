@@ -59,8 +59,8 @@
     {
       "id": "M10",
       "title": "Colors, profiles and skcms",
-      "state": "NOT_STARTED",
-      "acceptance_report": null
+      "state": "ACCEPTED",
+      "acceptance_report": "acceptance/M10.md"
     },
     {
       "id": "M11",

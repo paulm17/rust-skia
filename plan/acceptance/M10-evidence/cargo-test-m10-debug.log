@@ -1,0 +1,41 @@
+   Compiling rust-skia v0.1.0 (/Volumes/Data/Users/paul/development/src/github/rust-skia)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.25s
+     Running tests/m10_test.rs (target/debug/deps/m10_test-99def32d8ecc0fbe)
+
+running 15 tests
+test colors::ColorFastIterp ... reporter assertions=400 failures=0
+ok
+test colors::ColorInterp ... reporter assertions=0 failures=0
+ok
+test colors::ColorPremul ... reporter assertions=131072 failures=0
+ok
+test colors::ColorToHSVRoundTrip ... reporter assertions=0 failures=0
+ok
+test colors::FourByteInterp ... reporter assertions=1281 failures=0
+ok
+test colors::SkBlendARGB32_SameOpaqueSrcAndDstWithAnyAlpha_ProducesSameColor ... reporter assertions=2816 failures=0
+ok
+test colors::SkColor4f_FromColor ... reporter assertions=6 failures=0
+ok
+test colors::SkPMColor_SetAndRetrieveChannels ... reporter assertions=5 failures=0
+ok
+test colors::Splay ... reporter assertions=5 failures=0
+ok
+test parse::ParseNamedColor ... reporter assertions=2905 failures=0
+ok
+test supplemental::supplemental_icc_malformed_offsets_and_owned_profile_lifetime ... ok
+test supplemental::supplemental_packed_boundaries_and_widened_interpolation ... ok
+test supplemental::supplemental_table_ownership_lifetime_and_serialization_boundaries ... ok
+test supplemental::supplemental_transform_byte_order_and_size_overflow ... ok
+test support::tests::reporter_collects_failures_and_evaluates_once ... reporter assertions=3 failures=2
+
+thread 'support::tests::reporter_collects_failures_and_evaluates_once' (16942145) panicked at tests/support/mod.rs:25:9:
+2 assertion(s) failed:
+tests/support/mod.rs:49: { evaluations += 1; false }
+tests/support/mod.rs:53: false
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+reporter assertions=0 failures=0
+ok
+
+test result: ok. 15 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.30s
+

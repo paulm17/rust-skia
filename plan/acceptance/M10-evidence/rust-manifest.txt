@@ -1,0 +1,21 @@
+--- rust working-tree blobs
+f066a8124e4f566a796dd5f226420f91c33099a2  src/lib.rs
+a0e77d34ec22305ed174df148191743b14cde532  src/sk_alpha_type.rs
+1ba4272e802f28fa75005414810798be8815f76f  src/sk_codecs_icc_profile_chromium.rs
+bf1c354eb7487d6b148dd5a4e807d578ec284c25  src/sk_color.rs
+54a55da745b86f5789284e8413cc61ca3700f682  src/sk_color_data.rs
+142ff991aa83e70ddbf85f50cb1e81234b90bea8  src/sk_color_priv.rs
+2eb1b557a9fc80a98163bbaca2fd2ae25df71f6c  src/sk_color_space.rs
+edf28d6120204c8ecf949dc38ea993d8ea74f69e  src/sk_color_space_xform_steps.rs
+8dc133a37907ffd6650458a3696f3767357cb4c6  src/sk_color_table.rs
+bfabc28531ae1f217c6d5b65ae33544f15b689df  src/sk_parse_color.rs
+1ef9c2dccc772283dfa464fbe7240a8461850780  src/sk_pm_color.rs
+457a970e109914bcade235b844282af6de26c067  src/sk_un_pre_multiply.rs
+81968ae22ce737986ff1053a4ea5af4733f9fc77  src/skcms.rs
+30fdbfbcf44a9c3e94ea8c233895b1826ef56fb6  src/skcms_transform.rs
+6e0fff5d76ac64635359956184bf600ea31fceb9  tests/m10_test.rs
+683e8c75e2a6d9a7dfcb921c4cf24eb1077e3e6e  tests/m10/colors.rs
+b4f37962326035bd114b4fb8376be17045c18fc6  tests/m10/parse.rs
+f3b3fcdd79e6f31e85a63e58103b97943addd658  tests/m10/supplemental.rs
+--- aggregate
+6d41821472930c48e4cb35fad343a9e90cc08b32de525269f0c37bb337814d65  -

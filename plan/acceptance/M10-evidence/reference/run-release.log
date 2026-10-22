@@ -1,0 +1,21 @@
+REGISTERED SkColor4f_FromColor CPU
+PASS SkColor4f_FromColor
+REGISTERED ParseNamedColor CPU
+PASS ParseNamedColor
+REGISTERED ColorToHSVRoundTrip CPU
+PASS ColorToHSVRoundTrip
+REGISTERED ColorFastIterp CPU
+PASS ColorFastIterp
+REGISTERED ColorInterp CPU
+PASS ColorInterp
+REGISTERED SkPMColor_SetAndRetrieveChannels CPU
+PASS SkPMColor_SetAndRetrieveChannels
+REGISTERED ColorPremul CPU
+PASS ColorPremul
+REGISTERED SkBlendARGB32_SameOpaqueSrcAndDstWithAnyAlpha_ProducesSameColor CPU
+PASS SkBlendARGB32_SameOpaqueSrcAndDstWithAnyAlpha_ProducesSameColor
+REGISTERED FourByteInterp CPU
+PASS FourByteInterp
+REGISTERED Splay CPU
+PASS Splay
+enabled=10 expected=10 failures=0
