@@ -1,0 +1,22 @@
+/Volumes/Data/Users/paul/development/src/github/skia/src/core/SkMatrix.cpp:1312:48: error: no template named 'to_array' in namespace 'std'; did you mean 'is_array'?
+ 1312 |     static constexpr auto gPolyMapProcs = std::to_array<PolyMapProc>({
+      |                                           ~~~~~^~~~~~~~
+      |                                                is_array
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/__type_traits/is_array.h:36:29: note: 'is_array' declared here
+   36 | struct _LIBCPP_TEMPLATE_VIS is_array : public false_type {};
+      |                             ^
+/Volumes/Data/Users/paul/development/src/github/skia/src/core/SkMatrix.cpp:1312:43: error: no matching constructor for initialization of 'std::is_array<PolyMapProc>' (aka 'is_array<bool (*)(const SkPoint *, SkMatrix *)>')
+ 1312 |     static constexpr auto gPolyMapProcs = std::to_array<PolyMapProc>({
+      |                                           ^                          ~
+ 1313 |         SkMatrix::Poly2Proc, SkMatrix::Poly3Proc, SkMatrix::Poly4Proc
+      |         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 1314 |     });
+      |     ~
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/__type_traits/is_array.h:36:29: note: candidate constructor (the implicit copy constructor) not viable: cannot convert initializer list argument to 'const is_array<bool (*)(const SkPoint *, SkMatrix *)>'
+   36 | struct _LIBCPP_TEMPLATE_VIS is_array : public false_type {};
+      |                             ^~~~~~~~
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/__type_traits/is_array.h:36:29: note: candidate constructor (the implicit move constructor) not viable: cannot convert initializer list argument to 'is_array<bool (*)(const SkPoint *, SkMatrix *)>'
+   36 | struct _LIBCPP_TEMPLATE_VIS is_array : public false_type {};
+      |                             ^~~~~~~~
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/__type_traits/is_array.h:36:29: note: candidate constructor (the implicit default constructor) not viable: requires 0 arguments, but 1 was provided
+2 errors generated.

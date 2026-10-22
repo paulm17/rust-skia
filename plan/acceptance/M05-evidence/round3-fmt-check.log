@@ -1,0 +1,14 @@
+error: unexpected closing delimiter: `}`
+   --> /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m05/matrix.rs:101:1
+    |
+ 63 |     for _ in 1..360 {
+    |                     - this opening brace...
+ 64 |         mat.post_rotate(1.0);
+ 65 |     }
+    |     - ...matches this closing brace
+...
+101 | }
+    | ^ unexpected closing delimiter
+
+Error writing files: failed to resolve mod `matrix_tests`: cannot parse /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m05/matrix.rs
+EXIT=1

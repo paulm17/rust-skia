@@ -1,0 +1,433 @@
+   Compiling rust-skia v0.1.0 (/Volumes/Data/Users/paul/development/src/github/rust-skia)
+warning: unnecessary parentheses around method argument
+   --> tests/m05/matrix.rs:234:23
+    |
+234 |             check!(r, (perpdot.abs() <= NZ));
+    |                       ^                   ^
+    |
+    = note: `#[warn(unused_parens)]` (part of `#[warn(unused)]`) on by default
+help: remove these parentheses
+    |
+234 -             check!(r, (perpdot.abs() <= NZ));
+234 +             check!(r, perpdot.abs() <= NZ);
+    |
+
+warning: `rust-skia` (test "m05_test") generated 1 warning (run `cargo fix --test "m05_test" -p rust-skia` to apply 1 suggestion)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.85s
+     Running unittests src/lib.rs (target/debug/deps/rust_skia-67d18095a4f2d23f)
+
+running 88 tests
+test bitmap_proc_state_matrix_procs::tests::dev_pack_and_decal ... ok
+test bitmap_proc_state_matrix_procs::tests::dev_tile_helpers ... ok
+test bitmask_enum::tests::wrapper_preserves_arbitrary_bits ... ok
+test arena::tests::dev_fib_block_sizes ... ok
+test block_allocator::tests::dev_block_allocator_allocate_resize_release ... ok
+test arena::tests::dev_arena_runs_destructors_in_reverse_order ... ok
+test block_allocator::tests::dev_block_allocator_growth_and_reset ... ok
+test camera::tests::dev_camera_defaults_and_view_stack ... ok
+test codec::tests::dev_base64_round_trip ... ok
+test codec::tests::dev_md5_rfc1321 ... ok
+test config::tests::dev_core_contracts_and_tags ... ok
+test containers::tests::dev_deque_configured_blocks ... ok
+test containers::tests::dev_deque_retains_boundary_block ... ok
+test containers::tests::dev_hash_capacity_sequence ... ok
+test containers::tests::dev_hashset_capacity_bytes_and_hysteresis ... ok
+test containers::tests::dev_internal_list_iterators_and_handles ... ok
+test containers::tests::dev_lru_recency ... ok
+test containers::tests::dev_message_bus_inboxes_and_filtering ... ok
+test extras::tests::dev_extras_safe_range_heap_and_next_id ... ok
+test float_bits::tests::dev_sign_bit_conversions_match_reference_cases ... ok
+test float_bits::tests::dev_sign_bit_conversions_round_trip ... ok
+test float_to_decimal::tests::special_values_and_round_trip ... ok
+test float_utils::tests::ulp_distance_matches_ieee_edges ... ok
+test floating_point::tests::dev_floating_point_classification_and_ulps ... ok
+test floating_point::tests::dev_floating_point_rounding_and_saturation ... ok
+test half::tests::constants_match_skia ... ok
+test ipoint::tests::dev_ipoint_arithmetic_is_saturating ... ok
+test ipoint::tests::dev_ipoint_layout_and_accessors ... ok
+test m44::tests::dev_m44_identity_and_row_major ... ok
+test m44::tests::dev_m44_rotate_translate_and_map ... ok
+test math::tests::dev_sk_math_limits_and_left_shift ... ok
+test math_priv::tests::dev_math_priv_logs_and_power_of_two ... ok
+test matrix22::tests::dev_givens_rotation_axes ... ok
+test matrix::tests::dev_matrix_identity_and_scale_translate ... ok
+test matrix::tests::dev_matrix_rect_mapping ... ok
+test matrix_invert::tests::invert_3x3_and_4x4_identity ... ok
+test matrix_invert::tests::invert_identity_and_singular ... ok
+test matrix_priv::tests::dev_inverse_map_rect_scale_translate ... ok
+test matrix_utils::tests::dev_decompose_identity ... ok
+test matrix_utils::tests::dev_degeneracy ... ok
+test memory::tests::dev_container_capacity_rounding ... ok
+test memory::tests::dev_malloc_and_calloc_contract ... ok
+test memory::tests::dev_raw_ptr_arithmetic_and_comparisons ... ok
+test point3::tests::dev_point3_length_normalize_and_cross ... ok
+test point::tests::dev_point_accessors_and_conversions ... ok
+test point::tests::dev_point_arithmetic_and_products ... ok
+test point::tests::dev_point_scale_offset_and_normalize ... ok
+test point_priv::tests::dev_point_priv_finite_and_distances ... ok
+test point_priv::tests::dev_point_priv_rotation_and_rect_helpers ... ok
+test random::tests::sequence_is_deterministic ... ok
+test rect::tests::dev_irect_empty_and_overflow ... ok
+test rect::tests::dev_rect_intersect_join_round ... ok
+test rect_priv::tests::dev_closest_disjoint_edge_reference_cases ... ok
+test rect_priv::tests::dev_rect_priv_subtract_and_closest_edge ... ok
+test rect_priv::tests::dev_rect_subtract_reference_cases ... ok
+test ref_cnt::tests::dev_refcnt_adopts_clones_and_disposes_once ... ok
+test ref_cnt::tests::dev_sk_sp_casts_existing_handle_without_ref_changes ... ok
+test ref_cnt::tests::dev_sk_sp_is_one_pointer_and_erases_unsized ... ok
+test ref_cnt::tests::dev_sk_sp_null_and_take ... ok
+test rrect::tests::dev_rrect_fuzzer_regressions ... ok
+test rrect::tests::dev_rrect_inner_bounds_and_validation ... ok
+test rrect::tests::dev_rrect_rect_oval_and_radii ... ok
+test rrect::tests::dev_rrect_regressions ... ok
+test rrect::tests::dev_rrect_serialization_round_trip ... ok
+test rsxform::tests::dev_rsxform_quad ... ok
+test safe32::tests::dev_safe32_saturates_at_sk_limits ... ok
+test safe_math::tests::dev_safe_math_detects_overflow_and_aligns ... ok
+test scalar::tests::dev_float_interp_func_matches_table_walk ... ok
+test scalar::tests::dev_scalar_rounding_and_sign_helpers ... ok
+test scalar::tests::dev_scalars_equal_and_interp ... ok
+test scale_to_sides::tests::dev_adjust_radii_fits_limit ... ok
+test size::tests::dev_isize_and_size_empty_semantics ... ok
+test sk_to::tests::dev_sk_to_checks_boundaries ... ok
+test string::tests::dev_string_format_and_split ... ok
+test string::tests::dev_string_scalar_and_resize ... ok
+test string_utf::tests::dev_utf8_and_utf16 ... ok
+test tblocklist::tests::dev_tblocklist_pointer_stability_and_concat ... ok
+test tblocklist::tests::dev_tblocklist_reserve_accounting ... ok
+test tblocklist::tests::dev_tblocklist_runtime_block_size_and_iterators ... ok
+test templates::tests::dev_auto_arrays_expose_null_storage_when_empty ... ok
+test tfits_in::tests::dev_sk_tfits_in_matches_checked_conversion ... ok
+test vx::tests::conversions_and_half ... ok
+test vx::tests::dot_cross_length ... ok
+test vx::tests::layout_and_masks ... ok
+test vx::tests::scaled_divider_matches_rounding ... ok
+test yuv_math::tests::identity_and_known_jpeg_rows ... ok
+test executor::tests::dev_functional_pools_run_background_priority_work ... ok
+test executor::tests::dev_callback_pools_run_background_priority_work ... ok
+
+test result: ok. 88 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.10s
+
+     Running unittests src/main.rs (target/debug/deps/rust_skia-5b5c0156c859aa4e)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/harness_test.rs (target/debug/deps/harness_test-e8a7a3b41c6a7907)
+
+running 5 tests
+test TestTrueCondition ... ok
+test TestCtsEnforcement ... ok
+test TestNormal ... ok
+test support::tests::reporter_collects_failures_and_evaluates_once ... ok
+test supplemental_registry_excludes_false_condition_and_preserves_head_order ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/m02_test.rs (target/debug/deps/m02_test-a997dd6914494635)
+
+running 122 tests
+test arena::ArenaAllocReset ... ok
+test arena::ArenaAllocUnusualAlignment ... ok
+test arena::ArenaAllocDestructionOrder ... ok
+test arena::ArenaAlloc ... ok
+test arena::ArenaAllocWithMultipleBlocks ... ok
+test arena::SkFibBlockSizes ... ok
+test block::SkBlockAllocatorAllocatorMetadata ... ok
+test block::SkBlockAllocatorAlloc ... ok
+test block::SkBlockAllocatorGrowthPolicy ... ok
+test block::SkBlockAllocatorIterateAndRelease ... ok
+test block::SkBlockAllocatorMetadata ... ok
+test block::SkBlockAllocatorPreallocSize ... ok
+test block::SkBlockAllocatorOwningBlock ... ok
+test block::SkBlockAllocatorRelease ... ok
+test block::SkBlockAllocatorReleaseBlock ... ok
+test block::SkBlockAllocatorResize ... ok
+test block::SkBlockAllocatorReset ... ok
+test block::SkBlockAllocatorRewind ... ok
+test block::SkBlockAllocatorScratchBlockReserve ... ok
+test block::SkBlockAllocatorStealBlocks ... ok
+test containers::LRUCacheRandom ... ok
+test containers::MessageBusSp ... ok
+test containers::MessageBus ... ok
+test containers::MessageBus_SkShouldPostMessageToBus ... ok
+test containers::SkSpanBasicTemplateGuide ... ok
+test containers::SkSpanDeduceParam ... ok
+test containers::SkSpanDeduceSize ... ok
+test arena::ArenaAllocIsEmpty ... ok
+test cow::TCopyOnFirstWrite_copy ... ok
+test containers::LRUCacheSequential ... ok
+test data::Data_empty ... ok
+test data::DataTable ... ok
+test deque::Deque ... ok
+test data::Data ... ok
+test graph::IncrTopoSort ... ok
+test hash::HashFindOrNull ... ok
+test hash::HashMap ... ok
+test hash::HashMapCtor ... ok
+test hash::HashSetCopyCounter ... ok
+test full_string::String ... ok
+test hash::HashMapCtorOneElem ... ok
+test hash::HashMapSwap ... ok
+test hash::HashSetSwap ... ok
+test hash::HashSetCtor ... ok
+test hash::HashSetCtorOneElem ... ok
+test hash::HashSetWithStdStringView ... ok
+test hash::HashSetWithStdString ... ok
+test hash::HashSetWithSkString ... ok
+test more_templates::TemplateContainerAPIsTrim ... ok
+test llist::InternalLList ... ok
+test metadata::MetaData ... ok
+test hash::HashTableGrowsAndShrinks ... ok
+test raw::RawPtr_DefaultConstructor ... ok
+test raw::RawPtr_DereferenceAndMemberAccess ... ok
+test raw::RawPtr_Assignment ... ok
+test polymorphic::sk_make_sp ... ok
+test raw::RawPtr_DisableDanglingPtrDetection ... ok
+test more_templates::TemplateContainerAPIs ... ok
+test raw::RawPtr_EqualityComparisons ... ok
+test raw::RawPtr_NullptrConstructor ... ok
+test raw::RawPtr_CopyAndMove ... ok
+test raw::RawPtr_PointerArithmetic ... ok
+test raw::RawPtr_RawPointerConstructor ... ok
+test raw::RawPtr_RelationalComparisons ... ok
+test raw::RawPtr_SelfAssignment ... ok
+test raw::RawPtr_Stl ... ok
+test raw::RawPtr_Upcasting ... ok
+test raw::RawPtr_Void ... ok
+test refcount::sk_sp_ref ... ok
+test refcount::sk_sp_reset ... ok
+test smart_pointer::sk_sp ... ok
+test strings::String_SkStrSplit_All ... ok
+test strings::String_SkStrSplit ... ok
+test strings::String_VAList ... ok
+test strings::String_resize_after_assignment ... ok
+test strings::String_VAList_overflow ... ok
+test strings::String_resize_after_copy_construction ... ok
+test strings::String_fromUTF16 ... ok
+test strings::String_huge ... ok
+test strings::String_Threaded ... ok
+test strings::String_overflow ... ok
+test strings::String_resize_grow ... ok
+test strings::String_resize_shrink ... ok
+test strings::String_resize_to_nothing ... ok
+test supplemental::supplemental_arena_external_storage ... ok
+test supplemental::supplemental_checksum_reference_vectors ... ok
+test supplemental::supplemental_data_overflow_rejection ... ok
+test supplemental::supplemental_empty_data_release ... ok
+test supplemental::supplemental_fake_streams ... ok
+test supplemental::supplemental_packed_truncation ... ok
+test supplemental::supplemental_smart_pointer_projected_base ... ok
+test supplemental::supplemental_smart_pointer_size ... ok
+test supplemental::supplemental_stream_boundaries_and_byte_order ... ok
+test supplemental::supplemental_without_copy_identity ... ok
+test templates::AutoReallocToZero ... ok
+test templates::AutoTMallocSelfMove ... ok
+test templates::Templates ... ok
+test support::tests::reporter_collects_failures_and_evaluates_once ... ok
+test utf::SkUTF_CountUTF8 ... ok
+test tblocklist::SkTBlockList ... ok
+test utf::SkUTF_UTF16 ... ok
+test utilities::SkContainerAllocatorBasic ... ok
+test utilities::MD5 ... ok
+test utf::SkUTF_NextUTF8_ToUTF8 ... ok
+test utf::SkUTF_UTF8 ... ok
+test utilities::SkCalloc_DataIsZeroInitializedAndWriteable ... ok
+test utilities::SkFree_SafeToPassNull ... ok
+test utilities::SkMalloc_DataIsWriteable ... ok
+test utilities::SkOnce_NoArg ... ok
+test utilities::SkOnce_Singlethreaded ... ok
+test utilities::SkOnce_Multithreaded ... ok
+test utilities::SkRealloc_DataIsWriteableAndEventuallyFreed ... ok
+test utilities::SkSharedMutexBasic ... ok
+test utilities::SkStringViewContains ... ok
+test supplemental::supplemental_executor_background_workers ... ok
+test utilities::SkStringViewStartsAndEnds ... ok
+test utilities::TLazy_copy ... ok
+test utilities::memory_calloc ... ok
+test refcount::RefCnt ... ok
+test executor::ExecutorTest_StdFunction ... ok
+test executor::ExecutorTest_Callback ... ok
+test utilities::SkSharedMutexMultiThreaded ... ok
+
+test result: ok. 122 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.18s
+
+     Running tests/m03_test.rs (target/debug/deps/m03_test-a60876d4e62ee200)
+
+running 97 tests
+test bit_set::BitSetComparisonSizeMatching ... ok
+test checksum::ChecksumCollisions ... ok
+test checksum::Checksum ... ok
+test checksum::ChecksumConsistent ... ok
+test checksum::GoodHash ... ok
+test checksum::ChecksumStrings ... ok
+test fits_in::FitsIn ... ok
+test float16::FloatToHalf_Constants ... ok
+test base64::SkBase64 ... ok
+test floating_point::BitCastDoubleRoundTrip ... ok
+test floating_point::DoubleNearlyEqualUlps ... ok
+test floating_point::FMA ... ok
+test floating_point::DoubleNearlyZero ... ok
+test floating_point::Midpoint ... ok
+test math::DoubleSaturate32 ... ok
+test math::FloatSaturate32 ... ok
+test math::FloatSaturate64 ... ok
+test math::SkNextSizePow2 ... ok
+test math::TestEndian ... ok
+test math::PopCount ... ok
+test bit_set::BitSet ... ok
+test math::divmod_s32 ... ok
+test math::divmod_s16 ... ok
+test math::divmod_s64 ... ok
+test math::NeonU16Div255 ... ok
+test math::divmod_s8 ... ok
+test math::divmod_u32 ... ok
+test math::divmod_u16 ... ok
+test over_aligned::OverAligned ... ok
+test math::divmod_u8 ... ok
+test safe_math::SafeMath_Int_Failure ... ok
+test safe_math::SafeMath_Int_Success ... ok
+test math::divmod_u64 ... ok
+test safe_math::SafeMath_SizeT_Failure ... ok
+test safe_math::SafeMath_SizeT_Success ... ok
+test math::SkNextPow2 ... ok
+test stream::FILEStreamWithOffset ... ok
+test stream::RemainingLengthIsBelow_MemoryStream ... ok
+test stream::RBuffer ... ok
+test math::Math ... ok
+test stream::StreamCopy ... ok
+test stream::StreamEmptyStreamMemoryBase ... ok
+test stream::DynamicMemoryWStream_detachAsVector ... ok
+test stream::Stream ... ok
+test supplemental::supplemental_container_ownership_and_data_lifetime ... ok
+test supplemental::supplemental_bitmask_and_fixed_capacity ... ok
+test stream::DynamicMemoryWStream_detachAsData ... ok
+test supplemental::supplemental_decimal_and_yuv_contracts ... ok
+test supplemental::supplemental_conversion_boundaries ... ok
+test stream::StreamPeek ... ok
+test supplemental::supplemental_fixed_and_fdot6_boundaries ... ok
+test supplemental::supplemental_safe_math_boundaries ... ok
+test supplemental::supplemental_random_seed_advancement ... ok
+test supplemental::supplemental_signed_zero_nan_half_and_ulps ... ok
+test supplemental::supplemental_stream_byte_order_boundaries_and_lifetimes ... ok
+test support::tests::reporter_collects_failures_and_evaluates_once ... ok
+test supplemental::supplemental_integer_widths_overflow_and_bits ... ok
+test tarray::FixedArray_Basic ... ok
+test tarray::FixedArray_Comparison ... ok
+test tarray::FixedArray_Construction ... ok
+test bit_set::BitSetComparisonBitMatching ... ok
+test tarray::FixedArray_InnerPush ... ok
+test tarray::TArray_Basic ... ok
+test tarray::FixedArray_SelfAssignment ... ok
+test tarray::TArray_BoundsCheck ... ok
+test tarray::TArray_Comparison ... ok
+test tarray::TArray_Construction ... ok
+test tarray::TArray_InnerPush ... ok
+test tarray::TArray_NoUnnecessaryAllocs ... ok
+test tarray::TArray_STArrayCompatibility ... ok
+test tarray::TArray_InnerEmplace ... ok
+test tarray::TArray_SelfAssignment ... ok
+test tarray::TArray_Move ... ok
+test tarray::TArray_Reserve ... ok
+test utils::SkMakeZip ... ok
+test utils::SkEnumerate ... ok
+test float16::HalfToFloat ... ok
+test utils::SkZip ... ok
+test utils::UtilsPreserveBitPatterns ... ok
+test tarray::TArray_Swap ... ok
+test vx::SkVx_cross_dot ... ok
+test vx::SkVx_isfinite ... ok
+test utils::Utils ... ok
+test vx::SkVx_length ... ok
+test vx::SkVx_normalize ... ok
+test vx::SkVx_normalize_infinity_and_nan ... ok
+test vx::SkVx_strided_loads ... ok
+test vx::SkVx_xy ... ok
+test stream::StreamPeek_BlockMemoryStream ... ok
+test vx::SkVx_xyzw ... ok
+test vx::SkVx_saturated_add ... ok
+test tdpqueue::TDPQueueTest ... ok
+test vx::SkVx_ScaledDividerU32 ... ok
+test vx::SkVx ... ok
+test random::Random ... ok
+test float16::FloatToHalf ... ok
+test sort::Sort ... ok
+
+test result: ok. 97 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.53s
+
+     Running tests/m04_test.rs (target/debug/deps/m04_test-95d3bd4f05eee83d)
+
+running 21 tests
+test rect::Rect_largest ... ok
+test rect::Rect_ClosestDisjointEdge ... ok
+test rect::Rect_subtract ... ok
+test rect::Rect_setbounds ... ok
+test rect::Rect_subtract_overflow ... ok
+test rect::Rect_whOverflow ... ok
+test rrect::RRect_b511391129 ... ok
+test rrect::RRect_b527765132 ... ok
+test rrect::RRect_b547198215 ... ok
+test rrect::RRect_fuzzer_regressions ... ok
+test size::ISize ... ok
+test size::Size ... ok
+test supplemental::supplemental_boundaries_overflow_and_layout ... ok
+test supplemental::supplemental_point3_nonfinite_cross_and_value_ownership ... ok
+test supplemental::supplemental_rect_memcpy_strides_guards_and_source_lifetime ... ok
+test supplemental::supplemental_rrect_native_byte_order_truncation_and_lifetime ... ok
+test supplemental::supplemental_rrect_normalization_and_radius_boundaries ... ok
+test supplemental::supplemental_scale_to_sides_fit_and_symmetry ... ok
+test support::tests::reporter_collects_failures_and_evaluates_once ... ok
+test scale_to_sides::ScaleToSides ... ok
+test point3::Point3 ... ok
+
+test result: ok. 21 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+     Running tests/m05_test.rs (target/debug/deps/m05_test-ed96e008a1e4edba)
+
+running 21 tests
+test m44_tests::M44_mapRect_skbug12335 ... ok
+test m44_tests::M44 ... ok
+test m44_tests::M44_rectToRect ... ok
+test m44_tests::M44_rotate ... ok
+test m44_tests::M44_v3 ... ok
+test m44_tests::M44_v4 ... ok
+test matrix_tests::Matrix_Concat ... ok
+test matrix_tests::Matrix_Ctor ... ok
+test matrix_tests::Matrix_LookAt ... ok
+test matrix_tests::Matrix_SetRotateSnap ... ok
+test matrix_tests::Matrix_mapRect_skbug12335 ... ok
+test matrix_tests::Matrix_rectStaysRect_zeroScale ... ok
+test supplemental::supplemental_fixed_tiling_overflow_and_packed_byte_order ... ok
+test rect_tests::Rect_QuadContainsRect ... ok
+test supplemental::supplemental_matrix_order_cache_layout_and_lifetime ... ok
+test supplemental::supplemental_serialization_boundaries_byte_order_and_ownership ... ok
+test supplemental::supplemental_inversion_singular_nonfinite_and_near_singular ... FAILED
+test supplemental::supplemental_rsxform_camera_stack_and_owned_outputs ... FAILED
+test support::tests::reporter_collects_failures_and_evaluates_once ... ok
+test matrix_tests::Matrix_maprects ... ok
+test matrix_tests::Matrix ... ok
+
+failures:
+
+---- supplemental::supplemental_inversion_singular_nonfinite_and_near_singular stdout ----
+
+thread 'supplemental::supplemental_inversion_singular_nonfinite_and_near_singular' (16335173) panicked at tests/m05/supplemental.rs:33:37:
+assertion failed: !m.invert(None)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- supplemental::supplemental_rsxform_camera_stack_and_owned_outputs stdout ----
+
+thread 'supplemental::supplemental_rsxform_camera_stack_and_owned_outputs' (16335175) panicked at tests/m05/supplemental.rs:119:5:
+assertion `left == right` failed
+  left: [Point { x: 5.0, y: 7.0 }, Point { x: -13.0, y: 19.0 }, Point { x: 13.0, y: 19.0 }, Point { x: -5.0, y: 31.0 }]
+ right: [Point { x: 5.0, y: 7.0 }, Point { x: 13.0, y: 19.0 }, Point { x: -13.0, y: 19.0 }, Point { x: -5.0, y: 31.0 }]
+
+
+failures:
+    supplemental::supplemental_inversion_singular_nonfinite_and_near_singular
+    supplemental::supplemental_rsxform_camera_stack_and_owned_outputs
+
+test result: FAILED. 19 passed; 2 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.19s
+
+error: test failed, to rerun pass `--test m05_test`

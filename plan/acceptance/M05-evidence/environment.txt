@@ -1,0 +1,26 @@
+date: 2026-10-22T11:52:23Z
+pwd: /Volumes/Data/Users/paul/development/src/github/rust-skia
+HEAD: 3a823b69d882ef42a17d9c9fc4306ceb58cd2668
+status:
+ M src/lib.rs
+ M src/rect_priv.rs
+?? plan/acceptance/M05-evidence/
+?? plan/handoffs/M05.md
+?? src/bitmap_proc_state_matrix_procs.rs
+?? src/camera.rs
+?? src/m44.rs
+?? src/matrix.rs
+?? src/matrix22.rs
+?? src/matrix_invert.rs
+?? src/matrix_priv.rs
+?? src/matrix_utils.rs
+?? src/rsxform.rs
+?? tests/m05/
+?? tests/m05_test.rs
+os: macOS 15.6 (24G84)
+arch: arm64
+rustc: rustc 1.94.1 (e408947bf 2026-03-25)
+cargo: cargo 1.94.1 (29ea6fb6a 2026-03-24)
+clang: Apple clang version 17.0.0 (clang-1700.4.4.1)
+sdk: 26.1 /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk
+skia: b81c69985fd14bb7bfbd356b7618633ce07dc1a4

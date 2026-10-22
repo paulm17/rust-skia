@@ -1,0 +1,94 @@
+   Compiling rust-skia v0.1.0 (/Volumes/Data/Users/paul/development/src/github/rust-skia)
+warning: unnecessary parentheses around method argument
+   --> tests/m05/matrix.rs:234:23
+    |
+234 |             check!(r, (perpdot.abs() <= NZ));
+    |                       ^                   ^
+    |
+    = note: `#[warn(unused_parens)]` (part of `#[warn(unused)]`) on by default
+help: remove these parentheses
+    |
+234 -             check!(r, (perpdot.abs() <= NZ));
+234 +             check!(r, perpdot.abs() <= NZ);
+    |
+
+warning: `rust-skia` (test "m05_test") generated 1 warning (run `cargo fix --test "m05_test" -p rust-skia` to apply 1 suggestion)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.76s
+     Running tests/m05_test.rs (target/debug/deps/m05_test-ed96e008a1e4edba)
+
+running 21 tests
+test m44_tests::M44_v3 ... ok
+test m44_tests::M44_mapRect_skbug12335 ... ok
+test m44_tests::M44 ... ok
+test m44_tests::M44_v4 ... ok
+test m44_tests::M44_rectToRect ... ok
+test m44_tests::M44_rotate ... ok
+test matrix_tests::Matrix_Concat ... ok
+test matrix_tests::Matrix_Ctor ... ok
+test matrix_tests::Matrix_LookAt ... ok
+test matrix_tests::Matrix_mapRect_skbug12335 ... ok
+test matrix_tests::Matrix_SetRotateSnap ... ok
+test matrix_tests::Matrix_rectStaysRect_zeroScale ... ok
+test supplemental::supplemental_fixed_tiling_overflow_and_packed_byte_order ... ok
+test rect_tests::Rect_QuadContainsRect ... ok
+test supplemental::supplemental_matrix_order_cache_layout_and_lifetime ... ok
+test supplemental::supplemental_inversion_singular_nonfinite_and_near_singular ... FAILED
+test supplemental::supplemental_serialization_boundaries_byte_order_and_ownership ... ok
+test supplemental::supplemental_rsxform_camera_stack_and_owned_outputs ... FAILED
+test support::tests::reporter_collects_failures_and_evaluates_once ... ok
+test matrix_tests::Matrix_maprects ... ok
+test matrix_tests::Matrix ... FAILED
+
+failures:
+
+---- supplemental::supplemental_inversion_singular_nonfinite_and_near_singular stdout ----
+
+thread 'supplemental::supplemental_inversion_singular_nonfinite_and_near_singular' (16327123) panicked at tests/m05/supplemental.rs:33:37:
+assertion failed: !m.invert(None)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- supplemental::supplemental_rsxform_camera_stack_and_owned_outputs stdout ----
+
+thread 'supplemental::supplemental_rsxform_camera_stack_and_owned_outputs' (16327125) panicked at tests/m05/supplemental.rs:119:5:
+assertion `left == right` failed
+  left: [Point { x: 5.0, y: 7.0 }, Point { x: -13.0, y: 19.0 }, Point { x: 13.0, y: 19.0 }, Point { x: -5.0, y: 31.0 }]
+ right: [Point { x: 5.0, y: 7.0 }, Point { x: 13.0, y: 19.0 }, Point { x: -13.0, y: 19.0 }, Point { x: -5.0, y: 31.0 }]
+
+---- matrix_tests::Matrix stdout ----
+reporter assertions=3022797 failures=14
+
+thread 'matrix_tests::Matrix' (16327113) panicked at tests/support/mod.rs:25:9:
+14 assertion(s) failed:
+tests/m05/matrix.rs:161: matrix_utils::decompose_upper2x2(&mat, Some(&mut rotation1), Some(&mut scale),
+Some(&mut rotation2))
+tests/m05/matrix.rs:162: recompose(&mat, rotation1, scale, rotation2)
+tests/m05/matrix.rs:186: matrix_utils::decompose_upper2x2(&mat, Some(&mut rotation1), Some(&mut scale),
+Some(&mut rotation2))
+tests/m05/matrix.rs:187: recompose(&mat, rotation1, scale, rotation2)
+tests/m05/matrix.rs:191: matrix_utils::decompose_upper2x2(&mat, Some(&mut rotation1), Some(&mut scale),
+Some(&mut rotation2))
+tests/m05/matrix.rs:192: recompose(&mat, rotation1, scale, rotation2)
+tests/m05/matrix.rs:196: matrix_utils::decompose_upper2x2(&mat, Some(&mut rotation1), Some(&mut scale),
+Some(&mut rotation2))
+tests/m05/matrix.rs:197: recompose(&mat, rotation1, scale, rotation2)
+tests/m05/matrix.rs:201: matrix_utils::decompose_upper2x2(&mat, Some(&mut rotation1), Some(&mut scale),
+Some(&mut rotation2))
+tests/m05/matrix.rs:202: recompose(&mat, rotation1, scale, rotation2)
+tests/m05/matrix.rs:211: matrix_utils::decompose_upper2x2(&mat, Some(&mut rotation1), Some(&mut scale),
+Some(&mut rotation2))
+tests/m05/matrix.rs:212: recompose(&mat, rotation1, scale, rotation2)
+tests/m05/matrix.rs:216: matrix_utils::decompose_upper2x2(&mat, Some(&mut rotation1), Some(&mut scale),
+Some(&mut rotation2))
+tests/m05/matrix.rs:217: recompose(&mat, rotation1, scale, rotation2)
+
+
+failures:
+    matrix_tests::Matrix
+    supplemental::supplemental_inversion_singular_nonfinite_and_near_singular
+    supplemental::supplemental_rsxform_camera_stack_and_owned_outputs
+
+test result: FAILED. 18 passed; 3 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.20s
+
+error: test failed, to rerun pass `--test m05_test`
+error: 1 target failed:
+    `--test m05_test`

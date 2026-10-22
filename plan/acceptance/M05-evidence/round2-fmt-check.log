@@ -1,0 +1,2394 @@
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m05/m44.rs:2:
+ // M44_mapRect (:269) remains at M07, including its path-builder comparison.
+ use super::*;
+ fn eq(a: M44, b: M44, tol: f32) -> bool {
+[31m-    let fa = a.get_col_major(); let fb = b.get_col_major();
+(B[m[31m-    (0..16).all(|i| (fa[i]-fb[i]).abs() <= tol)
+(B[m[32m+    let fa = a.get_col_major();
+(B[m[32m+    let fb = b.get_col_major();
+(B[m[32m+    (0..16).all(|i| (fa[i] - fb[i]).abs() <= tol)
+(B[m }
+[31m-fn rows(a: [f32;16]) -> M44 { M44::RowMajor(&a) }
+(B[m[32m+fn rows(a: [f32; 16]) -> M44 {
+(B[m[32m+    M44::RowMajor(&a)
+(B[m[32m+}
+(B[m #[test]
+ fn M44() {
+     let mut r = Reporter::default();
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m05/m44.rs:12:
+[31m-    let mut m = M44::I(); let mut im = M44::I();
+(B[m[31m-    check!(r, rows([1.,0.,0.,0., 0.,1.,0.,0., 0.,0.,1.,0., 0.,0.,0.,1.]) == m);
+(B[m[32m+    let mut m = M44::I();
+(B[m[32m+    let mut im = M44::I();
+(B[m[32m+    check!(
+(B[m[32m+        r,
+(B[m[32m+        rows([
+(B[m[32m+            1., 0., 0., 0., 0., 1., 0., 0., 0., 0., 1., 0., 0., 0., 0., 1.
+(B[m[32m+        ]) == m
+(B[m[32m+    );
+(B[m     check!(r, M44::I() == m);
+     check!(r, m.invert(Some(&mut im)));
+     check!(r, M44::I() == im);
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m05/m44.rs:17:
+[31m-    m.set_translate(3.,4.,2.);
+(B[m[31m-    check!(r, rows([1.,0.,0.,3., 0.,1.,0.,4., 0.,0.,1.,2., 0.,0.,0.,1.]) == m);
+(B[m[31m-    let f = [1.,0.,0.,2.,3.,1.,2.,5.,0.,5.,3.,0.,0.,1.,0.,2.];
+(B[m[32m+    m.set_translate(3., 4., 2.);
+(B[m[32m+    check!(
+(B[m[32m+        r,
+(B[m[32m+        rows([
+(B[m[32m+            1., 0., 0., 3., 0., 1., 0., 4., 0., 0., 1., 2., 0., 0., 0., 1.
+(B[m[32m+        ]) == m
+(B[m[32m+    );
+(B[m[32m+    let f = [
+(B[m[32m+        1., 0., 0., 2., 3., 1., 2., 5., 0., 5., 3., 0., 0., 1., 0., 2.,
+(B[m[32m+    ];
+(B[m     m = M44::ColMajor(&f);
+[31m-    check!(r, rows([f[0],f[4],f[8],f[12], f[1],f[5],f[9],f[13], f[2],f[6],f[10],f[14], f[3],f[7],f[11],f[15]]) == m);
+(B[m[32m+    check!(
+(B[m[32m+        r,
+(B[m[32m+        rows([
+(B[m[32m+            f[0], f[4], f[8], f[12], f[1], f[5], f[9], f[13], f[2], f[6], f[10], f[14], f[3], f[7],
+(B[m[32m+            f[11], f[15]
+(B[m[32m+        ]) == m
+(B[m[32m+    );
+(B[m     {
+[31m-        let t = m.transpose(); check!(r, t != m);
+(B[m[31m-        check!(r, t.rc(1,0) == m.rc(0,1));
+(B[m[31m-        let tt = t.transpose(); check!(r, tt == m);
+(B[m[32m+        let t = m.transpose();
+(B[m[32m+        check!(r, t != m);
+(B[m[32m+        check!(r, t.rc(1, 0) == m.rc(0, 1));
+(B[m[32m+        let tt = t.transpose();
+(B[m[32m+        check!(r, tt == m);
+(B[m     }
+     m = M44::RowMajor(&f);
+     // Preserve upstream's f[14] at row 2 column 3 (both f[11] and f[14] are zero).
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m05/m44.rs:29:
+[31m-    check!(r, rows([f[0],f[1],f[2],f[3], f[4],f[5],f[6],f[7], f[8],f[9],f[10],f[14], f[12],f[13],f[14],f[15]]) == m);
+(B[m[32m+    check!(
+(B[m[32m+        r,
+(B[m[32m+        rows([
+(B[m[32m+            f[0], f[1], f[2], f[3], f[4], f[5], f[6], f[7], f[8], f[9], f[10], f[14], f[12], f[13],
+(B[m[32m+            f[14], f[15]
+(B[m[32m+        ]) == m
+(B[m[32m+    );
+(B[m     check!(r, m.invert(Some(&mut im)));
+     m = m * im;
+     check!(r, eq(M44::I(), m, 0.0000005));
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m05/m44.rs:36:
+ #[test]
+ fn M44_v3() {
+     let mut r = Reporter::default();
+[31m-    let a = V3::new(1.,2.,3.); let b = V3::new(1.,2.,2.);
+(B[m[31m-    check!(r, a.length_squared() == 1.+4.+9.);
+(B[m[32m+    let a = V3::new(1., 2., 3.);
+(B[m[32m+    let b = V3::new(1., 2., 2.);
+(B[m[32m+    check!(r, a.length_squared() == 1. + 4. + 9.);
+(B[m     check!(r, b.length() == 3.);
+[31m-    check!(r, a.dot(&b) == 1.+4.+6.); check!(r, b.dot(&a) == 1.+4.+6.);
+(B[m[31m-    check!(r, a.cross(&b) == V3::new(-2.,1.,0.));
+(B[m[31m-    check!(r, b.cross(&a) == V3::new(2.,-1.,0.));
+(B[m[31m-    let m = rows([2.,0.,0.,3., 0.,1.,0.,5., 0.,0.,3.,1., 0.,0.,0.,1.]);
+(B[m[31m-    let c = m*a; check!(r, c == V3::new(2.,2.,9.));
+(B[m[31m-    let d = m.map(4.,3.,2.,1.); check!(r, d == V4::new(11.,8.,7.,1.));
+(B[m[32m+    check!(r, a.dot(&b) == 1. + 4. + 6.);
+(B[m[32m+    check!(r, b.dot(&a) == 1. + 4. + 6.);
+(B[m[32m+    check!(r, a.cross(&b) == V3::new(-2., 1., 0.));
+(B[m[32m+    check!(r, b.cross(&a) == V3::new(2., -1., 0.));
+(B[m[32m+    let m = rows([
+(B[m[32m+        2., 0., 0., 3., 0., 1., 0., 5., 0., 0., 3., 1., 0., 0., 0., 1.,
+(B[m[32m+    ]);
+(B[m[32m+    let c = m * a;
+(B[m[32m+    check!(r, c == V3::new(2., 2., 9.));
+(B[m[32m+    let d = m.map(4., 3., 2., 1.);
+(B[m[32m+    check!(r, d == V4::new(11., 8., 7., 1.));
+(B[m     r.finish();
+ }
+ #[test]
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m05/m44.rs:51:
+ fn M44_v4() {
+     let mut r = Reporter::default();
+[31m-    let m = rows([1.,2.,3.,4., 5.,6.,7.,8., 9.,10.,11.,12., 13.,14.,15.,16.]);
+(B[m[31m-    let (r0,r1,r2,r3) = (m.row(0),m.row(1),m.row(2),m.row(3));
+(B[m[31m-    check!(r, r0 == V4::new(1.,2.,3.,4.)); check!(r, r1 == V4::new(5.,6.,7.,8.));
+(B[m[31m-    check!(r, r2 == V4::new(9.,10.,11.,12.)); check!(r, r3 == V4::new(13.,14.,15.,16.));
+(B[m[31m-    check!(r, M44::Rows(r0,r1,r2,r3) == m);
+(B[m[31m-    let (c0,c1,c2,c3) = (m.col(0),m.col(1),m.col(2),m.col(3));
+(B[m[31m-    check!(r, c0 == V4::new(1.,5.,9.,13.)); check!(r, c1 == V4::new(2.,6.,10.,14.));
+(B[m[31m-    check!(r, c2 == V4::new(3.,7.,11.,15.)); check!(r, c3 == V4::new(4.,8.,12.,16.));
+(B[m[31m-    check!(r, M44::Cols(c0,c1,c2,c3) == m);
+(B[m[31m-    let v = V4::new(1.,2.,3.,4.); let v1 = m*v;
+(B[m[31m-    let v2 = c0*v.x + c1*v.y + c2*v.z + c3*v.w;
+(B[m[32m+    let m = rows([
+(B[m[32m+        1., 2., 3., 4., 5., 6., 7., 8., 9., 10., 11., 12., 13., 14., 15., 16.,
+(B[m[32m+    ]);
+(B[m[32m+    let (r0, r1, r2, r3) = (m.row(0), m.row(1), m.row(2), m.row(3));
+(B[m[32m+    check!(r, r0 == V4::new(1., 2., 3., 4.));
+(B[m[32m+    check!(r, r1 == V4::new(5., 6., 7., 8.));
+(B[m[32m+    check!(r, r2 == V4::new(9., 10., 11., 12.));
+(B[m[32m+    check!(r, r3 == V4::new(13., 14., 15., 16.));
+(B[m[32m+    check!(r, M44::Rows(r0, r1, r2, r3) == m);
+(B[m[32m+    let (c0, c1, c2, c3) = (m.col(0), m.col(1), m.col(2), m.col(3));
+(B[m[32m+    check!(r, c0 == V4::new(1., 5., 9., 13.));
+(B[m[32m+    check!(r, c1 == V4::new(2., 6., 10., 14.));
+(B[m[32m+    check!(r, c2 == V4::new(3., 7., 11., 15.));
+(B[m[32m+    check!(r, c3 == V4::new(4., 8., 12., 16.));
+(B[m[32m+    check!(r, M44::Cols(c0, c1, c2, c3) == m);
+(B[m[32m+    let v = V4::new(1., 2., 3., 4.);
+(B[m[32m+    let v1 = m * v;
+(B[m[32m+    let v2 = c0 * v.x + c1 * v.y + c2 * v.z + c3 * v.w;
+(B[m     check!(r, v1 == v2);
+[31m-    check!(r, c0+r0 == V4::new(c0.x+r0.x,c0.y+r0.y,c0.z+r0.z,c0.w+r0.w));
+(B[m[31m-    check!(r, c0-r0 == V4::new(c0.x-r0.x,c0.y-r0.y,c0.z-r0.z,c0.w-r0.w));
+(B[m[31m-    check!(r, c0*r0 == V4::new(c0.x*r0.x,c0.y*r0.y,c0.z*r0.z,c0.w*r0.w));
+(B[m[32m+    check!(
+(B[m[32m+        r,
+(B[m[32m+        c0 + r0 == V4::new(c0.x + r0.x, c0.y + r0.y, c0.z + r0.z, c0.w + r0.w)
+(B[m[32m+    );
+(B[m[32m+    check!(
+(B[m[32m+        r,
+(B[m[32m+        c0 - r0 == V4::new(c0.x - r0.x, c0.y - r0.y, c0.z - r0.z, c0.w - r0.w)
+(B[m[32m+    );
+(B[m[32m+    check!(
+(B[m[32m+        r,
+(B[m[32m+        c0 * r0 == V4::new(c0.x * r0.x, c0.y * r0.y, c0.z * r0.z, c0.w * r0.w)
+(B[m[32m+    );
+(B[m     r.finish();
+ }
+ #[test]
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m05/m44.rs:71:
+ fn M44_rotate() {
+     let mut r = Reporter::default();
+[31m-    let x = V3::new(1.,0.,0.); let y = V3::new(0.,1.,0.); let z = V3::new(0.,0.,1.);
+(B[m[32m+    let x = V3::new(1., 0., 0.);
+(B[m[32m+    let y = V3::new(0., 1., 0.);
+(B[m[32m+    let z = V3::new(0., 0., 1.);
+(B[m     let recs = [
+[31m-        (0.,1.,x,x,y,z),(0.,1.,y,x,y,z),(0.,1.,z,x,y,z),
+(B[m[31m-        (0.,-1.,x,x,-y,-z),(0.,-1.,y,-x,y,-z),(0.,-1.,z,-x,-y,z),
+(B[m[31m-        (1.,0.,x,x,z,-y),(1.,0.,y,-z,y,x),(1.,0.,z,y,-x,z),
+(B[m[31m-        (-1.,0.,x,x,-z,y),(-1.,0.,y,z,y,-x),(-1.,0.,z,-y,x,z),
+(B[m[32m+        (0., 1., x, x, y, z),
+(B[m[32m+        (0., 1., y, x, y, z),
+(B[m[32m+        (0., 1., z, x, y, z),
+(B[m[32m+        (0., -1., x, x, -y, -z),
+(B[m[32m+        (0., -1., y, -x, y, -z),
+(B[m[32m+        (0., -1., z, -x, -y, z),
+(B[m[32m+        (1., 0., x, x, z, -y),
+(B[m[32m+        (1., 0., y, -z, y, x),
+(B[m[32m+        (1., 0., z, y, -x, z),
+(B[m[32m+        (-1., 0., x, x, -z, y),
+(B[m[32m+        (-1., 0., y, z, y, -x),
+(B[m[32m+        (-1., 0., z, -y, x, z),
+(B[m     ];
+[31m-    for (sin,cos,axis,ex,ey,ez) in recs {
+(B[m[31m-        let mut m = M44::nan(); m.set_rotate_unit_sin_cos(axis,sin,cos);
+(B[m[31m-        let mut mx = m*x; let mut my = m*y; let mut mz = m*z;
+(B[m[31m-        check!(r, mx == ex); check!(r, my == ey); check!(r, mz == ez);
+(B[m[31m-        mx = m * -x; my = m * -y; mz = m * -z;
+(B[m[31m-        check!(r, mx == -ex); check!(r, my == -ey); check!(r, mz == -ez);
+(B[m[32m+    for (sin, cos, axis, ex, ey, ez) in recs {
+(B[m[32m+        let mut m = M44::nan();
+(B[m[32m+        m.set_rotate_unit_sin_cos(axis, sin, cos);
+(B[m[32m+        let mut mx = m * x;
+(B[m[32m+        let mut my = m * y;
+(B[m[32m+        let mut mz = m * z;
+(B[m[32m+        check!(r, mx == ex);
+(B[m[32m+        check!(r, my == ey);
+(B[m[32m+        check!(r, mz == ez);
+(B[m[32m+        mx = m * -x;
+(B[m[32m+        my = m * -y;
+(B[m[32m+        mz = m * -z;
+(B[m[32m+        check!(r, mx == -ex);
+(B[m[32m+        check!(r, my == -ey);
+(B[m[32m+        check!(r, mz == -ez);
+(B[m     }
+     r.finish();
+ }
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m05/m44.rs:89:
+ fn map2d(r: &mut Reporter, m: &M44, x: f32, y: f32) -> V2 {
+[31m-    let p = m.map(x,y,0.,1.);
+(B[m[31m-    check!(r, p.z == 0.); check!(r, p.w == 1.); V2::new(p.x,p.y)
+(B[m[32m+    let p = m.map(x, y, 0., 1.);
+(B[m[32m+    check!(r, p.z == 0.);
+(B[m[32m+    check!(r, p.w == 1.);
+(B[m[32m+    V2::new(p.x, p.y)
+(B[m }
+ fn edges(r: &mut Reporter, lo: f32, hi: f32, elo: f32, ehi: f32) {
+[31m-    debug_assert!(elo < ehi); check!(r, lo < hi);
+(B[m[31m-    check!(r, near(lo,elo)); check!(r, near(hi,ehi));
+(B[m[32m+    debug_assert!(elo < ehi);
+(B[m[32m+    check!(r, lo < hi);
+(B[m[32m+    check!(r, near(lo, elo));
+(B[m[32m+    check!(r, near(hi, ehi));
+(B[m }
+ #[test]
+ fn M44_rectToRect() {
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m05/m44.rs:99:
+[31m-    let mut r = Reporter::default(); let mut rand = SkRandom::new();
+(B[m[31m-    for (sx,sy) in [(1.,1.),(0.25,0.5),(0.5,0.25),(0.5,0.5),(2.,3.),(3.,2.),(2.,2.),(0.5,2.),(2.,0.5)] {
+(B[m[31m-        let src = Rect::make_xywh(rand.next_range_f(-10.,10.),rand.next_range_f(-10.,10.),rand.next_range_f(1.,10.),rand.next_range_f(1.,10.));
+(B[m[31m-        let dst = Rect::make_xywh(rand.next_range_f(-10.,10.),rand.next_range_f(-10.,10.),sx*src.width(),sy*src.height());
+(B[m[31m-        let m = M44::RectToRect(&src,&dst);
+(B[m[31m-        let c = map2d(&mut r,&m,src.center_x(),src.center_y());
+(B[m[31m-        check!(r, near(c.x,dst.center_x())); check!(r, near(c.y,dst.center_y()));
+(B[m[31m-        let tl = map2d(&mut r,&m,src.left,src.top); let tr = map2d(&mut r,&m,src.right,src.top);
+(B[m[31m-        let br = map2d(&mut r,&m,src.right,src.bottom); let bl = map2d(&mut r,&m,src.left,src.bottom);
+(B[m[31m-        edges(&mut r,tl.x,tr.x,dst.left,dst.right); edges(&mut r,bl.x,br.x,dst.left,dst.right);
+(B[m[31m-        edges(&mut r,tl.y,bl.y,dst.top,dst.bottom); edges(&mut r,tr.y,br.y,dst.top,dst.bottom);
+(B[m[32m+    let mut r = Reporter::default();
+(B[m[32m+    let mut rand = SkRandom::new();
+(B[m[32m+    for (sx, sy) in [
+(B[m[32m+        (1., 1.),
+(B[m[32m+        (0.25, 0.5),
+(B[m[32m+        (0.5, 0.25),
+(B[m[32m+        (0.5, 0.5),
+(B[m[32m+        (2., 3.),
+(B[m[32m+        (3., 2.),
+(B[m[32m+        (2., 2.),
+(B[m[32m+        (0.5, 2.),
+(B[m[32m+        (2., 0.5),
+(B[m[32m+    ] {
+(B[m[32m+        let src = Rect::make_xywh(
+(B[m[32m+            rand.next_range_f(-10., 10.),
+(B[m[32m+            rand.next_range_f(-10., 10.),
+(B[m[32m+            rand.next_range_f(1., 10.),
+(B[m[32m+            rand.next_range_f(1., 10.),
+(B[m[32m+        );
+(B[m[32m+        let dst = Rect::make_xywh(
+(B[m[32m+            rand.next_range_f(-10., 10.),
+(B[m[32m+            rand.next_range_f(-10., 10.),
+(B[m[32m+            sx * src.width(),
+(B[m[32m+            sy * src.height(),
+(B[m[32m+        );
+(B[m[32m+        let m = M44::RectToRect(&src, &dst);
+(B[m[32m+        let c = map2d(&mut r, &m, src.center_x(), src.center_y());
+(B[m[32m+        check!(r, near(c.x, dst.center_x()));
+(B[m[32m+        check!(r, near(c.y, dst.center_y()));
+(B[m[32m+        let tl = map2d(&mut r, &m, src.left, src.top);
+(B[m[32m+        let tr = map2d(&mut r, &m, src.right, src.top);
+(B[m[32m+        let br = map2d(&mut r, &m, src.right, src.bottom);
+(B[m[32m+        let bl = map2d(&mut r, &m, src.left, src.bottom);
+(B[m[32m+        edges(&mut r, tl.x, tr.x, dst.left, dst.right);
+(B[m[32m+        edges(&mut r, bl.x, br.x, dst.left, dst.right);
+(B[m[32m+        edges(&mut r, tl.y, bl.y, dst.top, dst.bottom);
+(B[m[32m+        edges(&mut r, tr.y, br.y, dst.top, dst.bottom);
+(B[m     }
+     r.finish();
+ }
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m05/m44.rs:113:
+ #[test]
+ fn M44_mapRect_skbug12335() {
+     let mut r = Reporter::default();
+[31m-    let rect = Rect::new(0.,0.,319.,620.);
+(B[m[31m-    let m = M44::from(Matrix::MakeAll(0.000152695269,0.,-6.53848401e-05, -1.75697533e-05,0.000157153074,-1.10847975e-06, -6.00415362e-08,0.,0.000169880834));
+(B[m[31m-    let out = matrix_priv::map_rect(&m,&rect); check!(r, !out.is_empty()); r.finish();
+(B[m[32m+    let rect = Rect::new(0., 0., 319., 620.);
+(B[m[32m+    let m = M44::from(Matrix::MakeAll(
+(B[m[32m+        0.000152695269,
+(B[m[32m+        0.,
+(B[m[32m+        -6.53848401e-05,
+(B[m[32m+        -1.75697533e-05,
+(B[m[32m+        0.000157153074,
+(B[m[32m+        -1.10847975e-06,
+(B[m[32m+        -6.00415362e-08,
+(B[m[32m+        0.,
+(B[m[32m+        0.000169880834,
+(B[m[32m+    ));
+(B[m[32m+    let out = matrix_priv::map_rect(&m, &rect);
+(B[m[32m+    check!(r, !out.is_empty());
+(B[m[32m+    r.finish();
+(B[m }
+ 
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m05/matrix.rs:1:
+ // MatrixTest.cpp:363-660, reached by Matrix (:868). BSD: tests/LICENSE.skia.
+ use super::*;
+ fn test_matrix_preserve_shape(r: &mut Reporter) {
+[31m-
+(B[m     let mut mat = Matrix::I();
+ 
+[31m-    
+(B[m     mat.set_identity();
+     check!(r, mat.is_similarity());
+     check!(r, mat.preserves_right_angles());
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m05/matrix.rs:11:
+ 
+[31m-    
+(B[m     mat.set_translate(100.0, 100.0);
+     check!(r, mat.is_similarity());
+     check!(r, mat.preserves_right_angles());
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m05/matrix.rs:16:
+ 
+[31m-    
+(B[m     mat.set_scale(15.0, 15.0);
+     check!(r, mat.is_similarity());
+     check!(r, mat.preserves_right_angles());
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m05/matrix.rs:21:
+ 
+[31m-    
+(B[m     mat.set_scale(-15.0, 15.0);
+     check!(r, mat.is_similarity());
+     check!(r, mat.preserves_right_angles());
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m05/matrix.rs:26:
+ 
+[31m-    
+(B[m     mat.set_scale(15.0, 20.0);
+     check!(r, !mat.is_similarity());
+     check!(r, mat.preserves_right_angles());
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m05/matrix.rs:31:
+ 
+[31m-    
+(B[m     mat.set_scale_pivot(15.0, 15.0, 2.0, 2.0);
+     check!(r, mat.is_similarity());
+     check!(r, mat.preserves_right_angles());
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m05/matrix.rs:36:
+ 
+[31m-    
+(B[m     mat.set_scale_pivot(15.0, 20.0, 2.0, 2.0);
+     check!(r, !mat.is_similarity());
+     check!(r, mat.preserves_right_angles());
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m05/matrix.rs:41:
+ 
+[31m-    
+(B[m     mat.set_skew(15.0, 15.0);
+     check!(r, !mat.is_similarity());
+     check!(r, !mat.preserves_right_angles());
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m05/matrix.rs:46:
+ 
+[31m-    
+(B[m     mat.set_skew(15.0, 20.0);
+     check!(r, !mat.is_similarity());
+     check!(r, !mat.preserves_right_angles());
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m05/matrix.rs:51:
+ 
+[31m-    
+(B[m     mat.set_skew_pivot(15.0, 15.0, 2.0, 2.0);
+     check!(r, !mat.is_similarity());
+     check!(r, !mat.preserves_right_angles());
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m05/matrix.rs:56:
+ 
+[31m-    
+(B[m     mat.set_skew_pivot(15.0, 20.0, 2.0, 2.0);
+     check!(r, !mat.is_similarity());
+     check!(r, !mat.preserves_right_angles());
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m05/matrix.rs:61:
+ 
+[31m-    
+(B[m     mat.reset().set_persp_x(1.0 / 2.0);
+     check!(r, !mat.is_similarity());
+     check!(r, !mat.preserves_right_angles());
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m05/matrix.rs:66:
+ 
+[31m-    
+(B[m     mat.reset().set_persp_y(1.0 / 2.0);
+     check!(r, !mat.is_similarity());
+     check!(r, !mat.preserves_right_angles());
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m05/matrix.rs:71:
+ 
+[31m-    
+(B[m     for angle in 0..360 {
+         mat.set_rotate(angle as f32);
+         check!(r, mat.is_similarity());
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m05/matrix.rs:76:
+         check!(r, mat.preserves_right_angles());
+     }
+ 
+[31m-    
+(B[m     mat.reset();
+     for _ in 1..360 {
+         mat.post_rotate(1.0);
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m05/matrix.rs:84:
+     check!(r, mat.is_similarity());
+     check!(r, mat.preserves_right_angles());
+ 
+[31m-    
+(B[m     mat.set_rotate(30.0).post_translate(10.0, 20.0);
+     check!(r, mat.is_similarity());
+     check!(r, mat.preserves_right_angles());
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m05/matrix.rs:91:
+ 
+[31m-    
+(B[m     mat.set_rotate(30.0).post_scale(2.0, 2.0);
+     check!(r, mat.is_similarity());
+     check!(r, mat.preserves_right_angles());
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m05/matrix.rs:96:
+ 
+[31m-    
+(B[m     mat.set_rotate(30.0).post_scale(3.0, 2.0);
+     check!(r, !mat.is_similarity());
+     check!(r, !mat.preserves_right_angles());
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m05/matrix.rs:101:
+ 
+[31m-    
+(B[m     mat.set_scale(3.0, 2.0).post_rotate(30.0);
+     check!(r, !mat.is_similarity());
+     check!(r, mat.preserves_right_angles());
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m05/matrix.rs:106:
+ 
+[31m-    
+(B[m     mat.set_all(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
+     check!(r, !mat.is_similarity());
+     check!(r, !mat.preserves_right_angles());
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m05/matrix.rs:111:
+ 
+[31m-    
+(B[m     mat.set_all(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0);
+     check!(r, !mat.is_similarity());
+     check!(r, !mat.preserves_right_angles());
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m05/matrix.rs:116:
+ 
+[31m-    
+(B[m[31m-    mat.set_all(0.0, 1.0, 0.0,
+(B[m[31m-               -1.0, 0.0, 0.0,
+(B[m[31m-               0.0, 0.0, 1.0);
+(B[m[32m+    mat.set_all(0.0, 1.0, 0.0, -1.0, 0.0, 0.0, 0.0, 0.0, 1.0);
+(B[m     check!(r, mat.is_similarity());
+     check!(r, mat.preserves_right_angles());
+ 
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m05/matrix.rs:124:
+[31m-    
+(B[m[31m-    mat.set_all(0.0, 1.0, 0.0,
+(B[m[31m-               1.0, 0.0, 0.0,
+(B[m[31m-               0.0, 0.0, 1.0);
+(B[m[32m+    mat.set_all(0.0, 1.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0);
+(B[m     check!(r, mat.is_similarity());
+     check!(r, mat.preserves_right_angles());
+[31m-
+(B[m }
+ fn test_matrix_decomposition(r: &mut Reporter) {
+[31m-
+(B[m     let mut mat = Matrix::I();
+[31m-    let (mut rotation1, mut scale, mut rotation2) = (Point::default(), Point::default(), Point::default());
+(B[m[32m+    let (mut rotation1, mut scale, mut rotation2) =
+(B[m[32m+        (Point::default(), Point::default(), Point::default());
+(B[m 
+     let kRotation0: f32 = 15.5;
+     let kRotation1: f32 = -50.;
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m05/matrix.rs:139:
+     let kScale0: f32 = 5000.;
+     let kScale1: f32 = 0.001;
+ 
+[31m-    
+(B[m     mat.reset();
+[31m-    check!(r, matrix_utils::decompose_upper2x2(&mat, Some(&mut rotation1), Some(&mut scale), Some(&mut rotation2)));
+(B[m[32m+    check!(
+(B[m[32m+        r,
+(B[m[32m+        matrix_utils::decompose_upper2x2(
+(B[m[32m+            &mat,
+(B[m[32m+            Some(&mut rotation1),
+(B[m[32m+            Some(&mut scale),
+(B[m[32m+            Some(&mut rotation2)
+(B[m[32m+        )
+(B[m[32m+    );
+(B[m     check!(r, recompose(&mat, rotation1, scale, rotation2));
+[31m-    
+(B[m[32m+
+(B[m     check!(r, matrix_utils::decompose_upper2x2(&mat, None, None, None));
+ 
+[31m-    
+(B[m     mat.set_rotate(kRotation0);
+[31m-    check!(r, matrix_utils::decompose_upper2x2(&mat, Some(&mut rotation1), Some(&mut scale), Some(&mut rotation2)));
+(B[m[32m+    check!(
+(B[m[32m+        r,
+(B[m[32m+        matrix_utils::decompose_upper2x2(
+(B[m[32m+            &mat,
+(B[m[32m+            Some(&mut rotation1),
+(B[m[32m+            Some(&mut scale),
+(B[m[32m+            Some(&mut rotation2)
+(B[m[32m+        )
+(B[m[32m+    );
+(B[m     check!(r, recompose(&mat, rotation1, scale, rotation2));
+ 
+[31m-    
+(B[m     mat.set_scale(kScale0, kScale0);
+[31m-    check!(r, matrix_utils::decompose_upper2x2(&mat, Some(&mut rotation1), Some(&mut scale), Some(&mut rotation2)));
+(B[m[32m+    check!(
+(B[m[32m+        r,
+(B[m[32m+        matrix_utils::decompose_upper2x2(
+(B[m[32m+            &mat,
+(B[m[32m+            Some(&mut rotation1),
+(B[m[32m+            Some(&mut scale),
+(B[m[32m+            Some(&mut rotation2)
+(B[m[32m+        )
+(B[m[32m+    );
+(B[m     check!(r, recompose(&mat, rotation1, scale, rotation2));
+ 
+[31m-    
+(B[m     mat.set_scale(kScale1, kScale0);
+[31m-    check!(r, matrix_utils::decompose_upper2x2(&mat, Some(&mut rotation1), Some(&mut scale), Some(&mut rotation2)));
+(B[m[32m+    check!(
+(B[m[32m+        r,
+(B[m[32m+        matrix_utils::decompose_upper2x2(
+(B[m[32m+            &mat,
+(B[m[32m+            Some(&mut rotation1),
+(B[m[32m+            Some(&mut scale),
+(B[m[32m+            Some(&mut rotation2)
+(B[m[32m+        )
+(B[m[32m+    );
+(B[m     check!(r, recompose(&mat, rotation1, scale, rotation2));
+ 
+[31m-    
+(B[m     mat.set_rotate(kRotation1).post_scale(kScale0, kScale0);
+[31m-    check!(r, matrix_utils::decompose_upper2x2(&mat, Some(&mut rotation1), Some(&mut scale), Some(&mut rotation2)));
+(B[m[32m+    check!(
+(B[m[32m+        r,
+(B[m[32m+        matrix_utils::decompose_upper2x2(
+(B[m[32m+            &mat,
+(B[m[32m+            Some(&mut rotation1),
+(B[m[32m+            Some(&mut scale),
+(B[m[32m+            Some(&mut rotation2)
+(B[m[32m+        )
+(B[m[32m+    );
+(B[m     check!(r, recompose(&mat, rotation1, scale, rotation2));
+ 
+[31m-    
+(B[m     mat.set_scale(kScale0, kScale0).post_rotate(kRotation1);
+[31m-    check!(r, matrix_utils::decompose_upper2x2(&mat, Some(&mut rotation1), Some(&mut scale), Some(&mut rotation2)));
+(B[m[32m+    check!(
+(B[m[32m+        r,
+(B[m[32m+        matrix_utils::decompose_upper2x2(
+(B[m[32m+            &mat,
+(B[m[32m+            Some(&mut rotation1),
+(B[m[32m+            Some(&mut scale),
+(B[m[32m+            Some(&mut rotation2)
+(B[m[32m+        )
+(B[m[32m+    );
+(B[m     check!(r, recompose(&mat, rotation1, scale, rotation2));
+ 
+[31m-    
+(B[m     mat.set_rotate(kRotation0).post_scale(kScale1, -kScale1);
+[31m-    check!(r, matrix_utils::decompose_upper2x2(&mat, Some(&mut rotation1), Some(&mut scale), Some(&mut rotation2)));
+(B[m[32m+    check!(
+(B[m[32m+        r,
+(B[m[32m+        matrix_utils::decompose_upper2x2(
+(B[m[32m+            &mat,
+(B[m[32m+            Some(&mut rotation1),
+(B[m[32m+            Some(&mut scale),
+(B[m[32m+            Some(&mut rotation2)
+(B[m[32m+        )
+(B[m[32m+    );
+(B[m     check!(r, recompose(&mat, rotation1, scale, rotation2));
+ 
+[31m-    
+(B[m     mat.set_scale(kScale0, -kScale0).post_rotate(kRotation1);
+[31m-    check!(r, matrix_utils::decompose_upper2x2(&mat, Some(&mut rotation1), Some(&mut scale), Some(&mut rotation2)));
+(B[m[32m+    check!(
+(B[m[32m+        r,
+(B[m[32m+        matrix_utils::decompose_upper2x2(
+(B[m[32m+            &mat,
+(B[m[32m+            Some(&mut rotation1),
+(B[m[32m+            Some(&mut scale),
+(B[m[32m+            Some(&mut rotation2)
+(B[m[32m+        )
+(B[m[32m+    );
+(B[m     check!(r, recompose(&mat, rotation1, scale, rotation2));
+ 
+[31m-    
+(B[m     mat.set_rotate(kRotation1).post_scale(kScale1, kScale0);
+[31m-    check!(r, matrix_utils::decompose_upper2x2(&mat, Some(&mut rotation1), Some(&mut scale), Some(&mut rotation2)));
+(B[m[32m+    check!(
+(B[m[32m+        r,
+(B[m[32m+        matrix_utils::decompose_upper2x2(
+(B[m[32m+            &mat,
+(B[m[32m+            Some(&mut rotation1),
+(B[m[32m+            Some(&mut scale),
+(B[m[32m+            Some(&mut rotation2)
+(B[m[32m+        )
+(B[m[32m+    );
+(B[m     check!(r, recompose(&mat, rotation1, scale, rotation2));
+ 
+[31m-    
+(B[m     mat.set_rotate(90.0).post_scale(kScale1, kScale0);
+[31m-    check!(r, matrix_utils::decompose_upper2x2(&mat, Some(&mut rotation1), Some(&mut scale), Some(&mut rotation2)));
+(B[m[32m+    check!(
+(B[m[32m+        r,
+(B[m[32m+        matrix_utils::decompose_upper2x2(
+(B[m[32m+            &mat,
+(B[m[32m+            Some(&mut rotation1),
+(B[m[32m+            Some(&mut scale),
+(B[m[32m+            Some(&mut rotation2)
+(B[m[32m+        )
+(B[m[32m+    );
+(B[m     check!(r, recompose(&mat, rotation1, scale, rotation2));
+ 
+[31m-    
+(B[m     mat.set_scale(kScale1, kScale0).post_rotate(kRotation0);
+[31m-    check!(r, matrix_utils::decompose_upper2x2(&mat, Some(&mut rotation1), Some(&mut scale), Some(&mut rotation2)));
+(B[m[32m+    check!(
+(B[m[32m+        r,
+(B[m[32m+        matrix_utils::decompose_upper2x2(
+(B[m[32m+            &mat,
+(B[m[32m+            Some(&mut rotation1),
+(B[m[32m+            Some(&mut scale),
+(B[m[32m+            Some(&mut rotation2)
+(B[m[32m+        )
+(B[m[32m+    );
+(B[m     check!(r, recompose(&mat, rotation1, scale, rotation2));
+ 
+[31m-    
+(B[m     mat.set_scale(kScale1, kScale0).post_rotate(90.0);
+[31m-    check!(r, matrix_utils::decompose_upper2x2(&mat, Some(&mut rotation1), Some(&mut scale), Some(&mut rotation2)));
+(B[m[32m+    check!(
+(B[m[32m+        r,
+(B[m[32m+        matrix_utils::decompose_upper2x2(
+(B[m[32m+            &mat,
+(B[m[32m+            Some(&mut rotation1),
+(B[m[32m+            Some(&mut scale),
+(B[m[32m+            Some(&mut rotation2)
+(B[m[32m+        )
+(B[m[32m+    );
+(B[m     check!(r, recompose(&mat, rotation1, scale, rotation2));
+ 
+[31m-    
+(B[m[31m-    mat.set_rotate(kRotation1).post_scale(kScale0, kScale0).post_rotate(kRotation0);
+(B[m[31m-    check!(r, matrix_utils::decompose_upper2x2(&mat, Some(&mut rotation1), Some(&mut scale), Some(&mut rotation2)));
+(B[m[32m+    mat.set_rotate(kRotation1)
+(B[m[32m+        .post_scale(kScale0, kScale0)
+(B[m[32m+        .post_rotate(kRotation0);
+(B[m[32m+    check!(
+(B[m[32m+        r,
+(B[m[32m+        matrix_utils::decompose_upper2x2(
+(B[m[32m+            &mat,
+(B[m[32m+            Some(&mut rotation1),
+(B[m[32m+            Some(&mut scale),
+(B[m[32m+            Some(&mut rotation2)
+(B[m[32m+        )
+(B[m[32m+    );
+(B[m     check!(r, recompose(&mat, rotation1, scale, rotation2));
+ 
+[31m-    
+(B[m[31m-    mat.set_rotate(kRotation0).post_scale(kScale1, kScale0).post_rotate(kRotation1);
+(B[m[31m-    check!(r, matrix_utils::decompose_upper2x2(&mat, Some(&mut rotation1), Some(&mut scale), Some(&mut rotation2)));
+(B[m[32m+    mat.set_rotate(kRotation0)
+(B[m[32m+        .post_scale(kScale1, kScale0)
+(B[m[32m+        .post_rotate(kRotation1);
+(B[m[32m+    check!(
+(B[m[32m+        r,
+(B[m[32m+        matrix_utils::decompose_upper2x2(
+(B[m[32m+            &mat,
+(B[m[32m+            Some(&mut rotation1),
+(B[m[32m+            Some(&mut scale),
+(B[m[32m+            Some(&mut rotation2)
+(B[m[32m+        )
+(B[m[32m+    );
+(B[m     check!(r, recompose(&mat, rotation1, scale, rotation2));
+ 
+[31m-    
+(B[m[31m-    mat.set_rotate(kRotation0).post_scale(-kScale1, kScale0).post_rotate(kRotation1);
+(B[m[31m-    check!(r, matrix_utils::decompose_upper2x2(&mat, Some(&mut rotation1), Some(&mut scale), Some(&mut rotation2)));
+(B[m[32m+    mat.set_rotate(kRotation0)
+(B[m[32m+        .post_scale(-kScale1, kScale0)
+(B[m[32m+        .post_rotate(kRotation1);
+(B[m[32m+    check!(
+(B[m[32m+        r,
+(B[m[32m+        matrix_utils::decompose_upper2x2(
+(B[m[32m+            &mat,
+(B[m[32m+            Some(&mut rotation1),
+(B[m[32m+            Some(&mut scale),
+(B[m[32m+            Some(&mut rotation2)
+(B[m[32m+        )
+(B[m[32m+    );
+(B[m     check!(r, recompose(&mat, rotation1, scale, rotation2));
+ 
+[31m-    
+(B[m     let mut rand = SkRandom::new();
+     for _ in 0..1000 {
+         let rot0 = rand.next_range_f(-180.0, 180.0);
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m05/matrix.rs:225:
+         let rot1 = rand.next_range_f(-180.0, 180.0);
+         mat.set_rotate(rot0).post_scale(sx, sy).post_rotate(rot1);
+ 
+[31m-        if matrix_utils::decompose_upper2x2(&mat, Some(&mut rotation1), Some(&mut scale), Some(&mut rotation2)) {
+(B[m[32m+        if matrix_utils::decompose_upper2x2(
+(B[m[32m+            &mat,
+(B[m[32m+            Some(&mut rotation1),
+(B[m[32m+            Some(&mut scale),
+(B[m[32m+            Some(&mut rotation2),
+(B[m[32m+        ) {
+(B[m             check!(r, recompose(&mat, rotation1, scale, rotation2));
+         } else {
+[31m-            
+(B[m[31m-            let perpdot = mat[Matrix::M_SCALE_X]*mat[Matrix::M_SCALE_Y] -
+(B[m[31m-                               mat[Matrix::M_SKEW_X]*mat[Matrix::M_SKEW_Y];
+(B[m[32m+            let perpdot = mat[Matrix::M_SCALE_X] * mat[Matrix::M_SCALE_Y]
+(B[m[32m+                - mat[Matrix::M_SKEW_X] * mat[Matrix::M_SKEW_Y];
+(B[m             check!(r, (perpdot.abs() <= NZ));
+         }
+     }
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m05/matrix.rs:237:
+ 
+[31m-    
+(B[m     mat.post_translate(-1000., 1000.);
+[31m-    check!(r, matrix_utils::decompose_upper2x2(&mat, Some(&mut rotation1), Some(&mut scale), Some(&mut rotation2)));
+(B[m[32m+    check!(
+(B[m[32m+        r,
+(B[m[32m+        matrix_utils::decompose_upper2x2(
+(B[m[32m+            &mat,
+(B[m[32m+            Some(&mut rotation1),
+(B[m[32m+            Some(&mut scale),
+(B[m[32m+            Some(&mut rotation2)
+(B[m[32m+        )
+(B[m[32m+    );
+(B[m     check!(r, recompose(&mat, rotation1, scale, rotation2));
+ 
+[31m-    
+(B[m     mat[Matrix::M_PERSP_0] = 12.;
+     mat[Matrix::M_PERSP_1] = 4.;
+     mat[Matrix::M_PERSP_2] = 1872.;
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m05/matrix.rs:247:
+[31m-    check!(r, matrix_utils::decompose_upper2x2(&mat, Some(&mut rotation1), Some(&mut scale), Some(&mut rotation2)));
+(B[m[32m+    check!(
+(B[m[32m+        r,
+(B[m[32m+        matrix_utils::decompose_upper2x2(
+(B[m[32m+            &mat,
+(B[m[32m+            Some(&mut rotation1),
+(B[m[32m+            Some(&mut scale),
+(B[m[32m+            Some(&mut rotation2)
+(B[m[32m+        )
+(B[m[32m+    );
+(B[m     check!(r, recompose(&mat, rotation1, scale, rotation2));
+ 
+[31m-    
+(B[m[31m-    
+(B[m     mat.reset();
+     mat[Matrix::M_SCALE_X] = 0.;
+[31m-    check!(r, !matrix_utils::decompose_upper2x2(&mat, Some(&mut rotation1), Some(&mut scale), Some(&mut rotation2)));
+(B[m[32m+    check!(
+(B[m[32m+        r,
+(B[m[32m+        !matrix_utils::decompose_upper2x2(
+(B[m[32m+            &mat,
+(B[m[32m+            Some(&mut rotation1),
+(B[m[32m+            Some(&mut scale),
+(B[m[32m+            Some(&mut rotation2)
+(B[m[32m+        )
+(B[m[32m+    );
+(B[m     mat.reset();
+     mat[Matrix::M_SCALE_Y] = 0.;
+[31m-    check!(r, !matrix_utils::decompose_upper2x2(&mat, Some(&mut rotation1), Some(&mut scale), Some(&mut rotation2)));
+(B[m[32m+    check!(
+(B[m[32m+        r,
+(B[m[32m+        !matrix_utils::decompose_upper2x2(
+(B[m[32m+            &mat,
+(B[m[32m+            Some(&mut rotation1),
+(B[m[32m+            Some(&mut scale),
+(B[m[32m+            Some(&mut rotation2)
+(B[m[32m+        )
+(B[m[32m+    );
+(B[m     mat.reset();
+[31m-    
+(B[m[32m+
+(B[m     mat[Matrix::M_SCALE_X] = 1.;
+     mat[Matrix::M_SKEW_X] = 2.;
+     mat[Matrix::M_SKEW_Y] = 4.;
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m05/matrix.rs:263:
+     mat[Matrix::M_SCALE_Y] = 8.;
+[31m-    check!(r, !matrix_utils::decompose_upper2x2(&mat, Some(&mut rotation1), Some(&mut scale), Some(&mut rotation2)));
+(B[m[31m-
+(B[m[32m+    check!(
+(B[m[32m+        r,
+(B[m[32m+        !matrix_utils::decompose_upper2x2(
+(B[m[32m+            &mat,
+(B[m[32m+            Some(&mut rotation1),
+(B[m[32m+            Some(&mut scale),
+(B[m[32m+            Some(&mut rotation2)
+(B[m[32m+        )
+(B[m[32m+    );
+(B[m }
+ fn nearly_equal(a: &Matrix, b: &Matrix) -> bool {
+[31m-    (0..9).all(|i| (a[i]-b[i]).abs() <= 1.0/200000.0)
+(B[m[32m+    (0..9).all(|i| (a[i] - b[i]).abs() <= 1.0 / 200000.0)
+(B[m }
+[31m-fn is_identity(m: &Matrix) -> bool { let mut id = Matrix::I(); id.reset(); nearly_equal(m,&id) }
+(B[m[32m+fn is_identity(m: &Matrix) -> bool {
+(B[m[32m+    let mut id = Matrix::I();
+(B[m[32m+    id.reset();
+(B[m[32m+    nearly_equal(m, &id)
+(B[m[32m+}
+(B[m fn are_equal(r: &mut Reporter, a: &Matrix, b: &Matrix) -> bool {
+[31m-    let equal = a == b; let cheap = matrix_priv::cheap_equal(a,b);
+(B[m[32m+    let equal = a == b;
+(B[m[32m+    let cheap = matrix_priv::cheap_equal(a, b);
+(B[m     if equal != cheap {
+         if equal {
+             let mut found = false;
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m05/matrix.rs:276:
+[31m-            for i in 0..9 { let av=a.get(i); let bv=b.get(i);
+(B[m[31m-                if av == 0. && bv == 0. && av.to_bits() != bv.to_bits() { found=true; }
+(B[m[31m-                else { check!(r, av == bv && av.to_bits() == bv.to_bits()); }
+(B[m[32m+            for i in 0..9 {
+(B[m[32m+                let av = a.get(i);
+(B[m[32m+                let bv = b.get(i);
+(B[m[32m+                if av == 0. && bv == 0. && av.to_bits() != bv.to_bits() {
+(B[m[32m+                    found = true;
+(B[m[32m+                } else {
+(B[m[32m+                    check!(r, av == bv && av.to_bits() == bv.to_bits());
+(B[m[32m+                }
+(B[m             }
+             check!(r, found);
+         } else {
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m05/matrix.rs:282:
+             let mut found = false;
+[31m-            for i in 0..9 { let av=a.get(i); let bv=b.get(i);
+(B[m[31m-                if av.is_nan() && av.to_bits() == bv.to_bits() { found=true; }
+(B[m[31m-                else { check!(r, av == bv && av.to_bits() == bv.to_bits()); }
+(B[m[32m+            for i in 0..9 {
+(B[m[32m+                let av = a.get(i);
+(B[m[32m+                let bv = b.get(i);
+(B[m[32m+                if av.is_nan() && av.to_bits() == bv.to_bits() {
+(B[m[32m+                    found = true;
+(B[m[32m+                } else {
+(B[m[32m+                    check!(r, av == bv && av.to_bits() == bv.to_bits());
+(B[m[32m+                }
+(B[m             }
+             check!(r, found);
+         }
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m05/matrix.rs:289:
+     }
+     equal
+ }
+[31m-fn assert9(r: &mut Reporter, m: &Matrix, expected: [f32;9]) {
+(B[m[31m-    let mut buffer=[0.;9]; m.get9(&mut buffer);
+(B[m[31m-    for i in 0..9 { check!(r, buffer[i] == expected[i]); }
+(B[m[31m-    for i in 0..9 { check!(r, m.rc(i/3,i%3) == expected[i]); }
+(B[m[32m+fn assert9(r: &mut Reporter, m: &Matrix, expected: [f32; 9]) {
+(B[m[32m+    let mut buffer = [0.; 9];
+(B[m[32m+    m.get9(&mut buffer);
+(B[m[32m+    for i in 0..9 {
+(B[m[32m+        check!(r, buffer[i] == expected[i]);
+(B[m[32m+    }
+(B[m[32m+    for i in 0..9 {
+(B[m[32m+        check!(r, m.rc(i / 3, i % 3) == expected[i]);
+(B[m[32m+    }
+(B[m }
+ fn test_set9(r: &mut Reporter) {
+[31m-    let mut m=Matrix::I(); m.reset(); assert9(r,&m,[1.,0.,0.,0.,1.,0.,0.,0.,1.]);
+(B[m[31m-    m.set_scale(2.,3.); assert9(r,&m,[2.,0.,0.,0.,3.,0.,0.,0.,1.]);
+(B[m[31m-    m.post_translate(4.,5.); assert9(r,&m,[2.,0.,4.,0.,3.,5.,0.,0.,1.]);
+(B[m[31m-    let mut buffer=[0.;9]; buffer[Matrix::M_SCALE_X]=1.; buffer[Matrix::M_SCALE_Y]=1.; buffer[Matrix::M_PERSP_2]=1.;
+(B[m[31m-    check!(r,!m.is_identity()); m.set9(&buffer); check!(r,m.is_identity());
+(B[m[32m+    let mut m = Matrix::I();
+(B[m[32m+    m.reset();
+(B[m[32m+    assert9(r, &m, [1., 0., 0., 0., 1., 0., 0., 0., 1.]);
+(B[m[32m+    m.set_scale(2., 3.);
+(B[m[32m+    assert9(r, &m, [2., 0., 0., 0., 3., 0., 0., 0., 1.]);
+(B[m[32m+    m.post_translate(4., 5.);
+(B[m[32m+    assert9(r, &m, [2., 0., 4., 0., 3., 5., 0., 0., 1.]);
+(B[m[32m+    let mut buffer = [0.; 9];
+(B[m[32m+    buffer[Matrix::M_SCALE_X] = 1.;
+(B[m[32m+    buffer[Matrix::M_SCALE_Y] = 1.;
+(B[m[32m+    buffer[Matrix::M_PERSP_2] = 1.;
+(B[m[32m+    check!(r, !m.is_identity());
+(B[m[32m+    m.set9(&buffer);
+(B[m[32m+    check!(r, m.is_identity());
+(B[m }
+ fn test_matrix_recttorect(r: &mut Reporter) {
+[31m-    let mut src=Rect::new(0.,0.,10.,10.); let mut dst=src;
+(B[m[31m-    let mut matrix=Matrix::Rect2Rect(&src,&dst);
+(B[m[31m-    check!(r,matrix.is_some());
+(B[m[31m-    check!(r,matrix.unwrap().get_type()==Matrix::IDENTITY_MASK); check!(r,matrix.unwrap().rect_stays_rect());
+(B[m[31m-    dst.offset(1.,1.); matrix=Matrix::Rect2Rect(&src,&dst);
+(B[m[31m-    check!(r,matrix.is_some()); check!(r,matrix.unwrap().get_type()==Matrix::TRANSLATE_MASK); check!(r,matrix.unwrap().rect_stays_rect());
+(B[m[31m-    dst.right+=1.; matrix=Matrix::Rect2Rect(&src,&dst);
+(B[m[31m-    check!(r,matrix.is_some()); check!(r,matrix.unwrap().get_type()==(Matrix::TRANSLATE_MASK|Matrix::SCALE_MASK)); check!(r,matrix.unwrap().rect_stays_rect());
+(B[m[31m-    dst=src; dst.right=src.right*2.; matrix=Matrix::Rect2Rect(&src,&dst);
+(B[m[31m-    check!(r,matrix.is_some()); check!(r,matrix.unwrap().get_type()==Matrix::SCALE_MASK); check!(r,matrix.unwrap().rect_stays_rect());
+(B[m[31m-    src=Rect::make_xywh(10.,20.,0.,0.); matrix=Matrix::Rect2Rect(&src,&dst);
+(B[m[31m-    check!(r,matrix.is_none()); let mx=Matrix::RectToRectOrIdentity(&src,&dst); check!(r,mx.get_type()==Matrix::IDENTITY_MASK);
+(B[m[31m-    let mut m=Matrix::Translate(20.,20.);
+(B[m[31m-    check!(r,!m.set_rect_to_rect(&Rect::default(),&Rect::make_wh(10.,20.)));
+(B[m[31m-    check!(r,m.is_identity());
+(B[m[32m+    let mut src = Rect::new(0., 0., 10., 10.);
+(B[m[32m+    let mut dst = src;
+(B[m[32m+    let mut matrix = Matrix::Rect2Rect(&src, &dst);
+(B[m[32m+    check!(r, matrix.is_some());
+(B[m[32m+    check!(r, matrix.unwrap().get_type() == Matrix::IDENTITY_MASK);
+(B[m[32m+    check!(r, matrix.unwrap().rect_stays_rect());
+(B[m[32m+    dst.offset(1., 1.);
+(B[m[32m+    matrix = Matrix::Rect2Rect(&src, &dst);
+(B[m[32m+    check!(r, matrix.is_some());
+(B[m[32m+    check!(r, matrix.unwrap().get_type() == Matrix::TRANSLATE_MASK);
+(B[m[32m+    check!(r, matrix.unwrap().rect_stays_rect());
+(B[m[32m+    dst.right += 1.;
+(B[m[32m+    matrix = Matrix::Rect2Rect(&src, &dst);
+(B[m[32m+    check!(r, matrix.is_some());
+(B[m[32m+    check!(
+(B[m[32m+        r,
+(B[m[32m+        matrix.unwrap().get_type() == (Matrix::TRANSLATE_MASK | Matrix::SCALE_MASK)
+(B[m[32m+    );
+(B[m[32m+    check!(r, matrix.unwrap().rect_stays_rect());
+(B[m[32m+    dst = src;
+(B[m[32m+    dst.right = src.right * 2.;
+(B[m[32m+    matrix = Matrix::Rect2Rect(&src, &dst);
+(B[m[32m+    check!(r, matrix.is_some());
+(B[m[32m+    check!(r, matrix.unwrap().get_type() == Matrix::SCALE_MASK);
+(B[m[32m+    check!(r, matrix.unwrap().rect_stays_rect());
+(B[m[32m+    src = Rect::make_xywh(10., 20., 0., 0.);
+(B[m[32m+    matrix = Matrix::Rect2Rect(&src, &dst);
+(B[m[32m+    check!(r, matrix.is_none());
+(B[m[32m+    let mx = Matrix::RectToRectOrIdentity(&src, &dst);
+(B[m[32m+    check!(r, mx.get_type() == Matrix::IDENTITY_MASK);
+(B[m[32m+    let mut m = Matrix::Translate(20., 20.);
+(B[m[32m+    check!(
+(B[m[32m+        r,
+(B[m[32m+        !m.set_rect_to_rect(&Rect::default(), &Rect::make_wh(10., 20.))
+(B[m[32m+    );
+(B[m[32m+    check!(r, m.is_identity());
+(B[m }
+ fn test_flatten(r: &mut Reporter, m: &Matrix) {
+[31m-    let mut buffer=[0u8; matrix_priv::MAX_FLATTEN_SIZE+100];
+(B[m[32m+    let mut buffer = [0u8; matrix_priv::MAX_FLATTEN_SIZE + 100];
+(B[m     // Safe slice API has no null size-query argument. The source payload is nine SkScalars.
+[31m-    let size1=9*std::mem::size_of::<f32>();
+(B[m[31m-    let size2=matrix_priv::write_to_memory(m,&mut buffer);
+(B[m[31m-    check!(r,size1==size2); check!(r,size1<=matrix_priv::MAX_FLATTEN_SIZE);
+(B[m[31m-    let mut m2=Matrix::I(); let mut size3=matrix_priv::read_from_memory(&mut m2,&buffer);
+(B[m[31m-    check!(r,size1==size3); let equal=are_equal(r,m,&m2); check!(r,equal);
+(B[m[31m-    let mut buffer2=[0u8; matrix_priv::MAX_FLATTEN_SIZE+100];
+(B[m[31m-    size3=matrix_priv::write_to_memory(&m2,&mut buffer2);
+(B[m[31m-    check!(r,size1==size3); check!(r,buffer[..size1]==buffer2[..size1]);
+(B[m[32m+    let size1 = 9 * std::mem::size_of::<f32>();
+(B[m[32m+    let size2 = matrix_priv::write_to_memory(m, &mut buffer);
+(B[m[32m+    check!(r, size1 == size2);
+(B[m[32m+    check!(r, size1 <= matrix_priv::MAX_FLATTEN_SIZE);
+(B[m[32m+    let mut m2 = Matrix::I();
+(B[m[32m+    let mut size3 = matrix_priv::read_from_memory(&mut m2, &buffer);
+(B[m[32m+    check!(r, size1 == size3);
+(B[m[32m+    let equal = are_equal(r, m, &m2);
+(B[m[32m+    check!(r, equal);
+(B[m[32m+    let mut buffer2 = [0u8; matrix_priv::MAX_FLATTEN_SIZE + 100];
+(B[m[32m+    size3 = matrix_priv::write_to_memory(&m2, &mut buffer2);
+(B[m[32m+    check!(r, size1 == size3);
+(B[m[32m+    check!(r, buffer[..size1] == buffer2[..size1]);
+(B[m }
+ fn recompose(mat: &Matrix, r1: Point, scale: Point, r2: Point) -> bool {
+[31m-    let (c1,s1,sx,sy,c2,s2)=(r1.x,r1.y,scale.x,scale.y,r2.x,r2.y);
+(B[m[31m-    relative(mat[0],sx*c1*c2-sy*s1*s2) && relative(mat[1],-sx*s1*c2-sy*c1*s2) &&
+(B[m[31m-    relative(mat[3],sx*c1*s2+sy*s1*c2) && relative(mat[4],-sx*s1*s2+sy*c1*c2)
+(B[m[32m+    let (c1, s1, sx, sy, c2, s2) = (r1.x, r1.y, scale.x, scale.y, r2.x, r2.y);
+(B[m[32m+    relative(mat[0], sx * c1 * c2 - sy * s1 * s2)
+(B[m[32m+        && relative(mat[1], -sx * s1 * c2 - sy * c1 * s2)
+(B[m[32m+        && relative(mat[3], sx * c1 * s2 + sy * s1 * c2)
+(B[m[32m+        && relative(mat[4], -sx * s1 * s2 + sy * c1 * c2)
+(B[m }
+ fn test_matrix_min_max_scale(r: &mut Reporter) {
+[31m-    let mut scales=[0.;2];
+(B[m[31m-    let mut identity=Matrix::I(); identity.reset();
+(B[m[31m-    check!(r,1.==identity.get_min_scale()); check!(r,1.==identity.get_max_scale());
+(B[m[31m-    let mut success=identity.get_min_max_scales(&mut scales); check!(r,success && scales==[1.,1.]);
+(B[m[31m-    let mut scale=Matrix::I(); scale.set_scale(2.,4.);
+(B[m[31m-    check!(r,2.==scale.get_min_scale()); check!(r,4.==scale.get_max_scale());
+(B[m[31m-    success=scale.get_min_max_scales(&mut scales); check!(r,success && scales==[2.,4.]);
+(B[m[31m-    let mut rot90=Matrix::I(); rot90.set_rotate(90.).post_scale(1./4.,1./2.);
+(B[m[31m-    check!(r,1./4.==rot90.get_min_scale()); check!(r,1./2.==rot90.get_max_scale());
+(B[m[31m-    success=rot90.get_min_max_scales(&mut scales); check!(r,success && scales==[1./4.,1./2.]);
+(B[m[31m-    let mut rotate=Matrix::I(); rotate.set_rotate(128.);
+(B[m[31m-    check!(r,near(1.,rotate.get_min_scale())); check!(r,near(1.,rotate.get_max_scale()));
+(B[m[31m-    success=rotate.get_min_max_scales(&mut scales); check!(r,success); check!(r,near(1.,scales[0])); check!(r,near(1.,scales[1]));
+(B[m[31m-    let mut translate=Matrix::I(); translate.set_translate(10.,-5.);
+(B[m[31m-    check!(r,1.==translate.get_min_scale()); check!(r,1.==translate.get_max_scale());
+(B[m[31m-    success=translate.get_min_max_scales(&mut scales); check!(r,success && scales==[1.,1.]);
+(B[m[31m-    let mut px=Matrix::I(); px.reset().set_persp_x(1./1000.);
+(B[m[31m-    check!(r,-1.==px.get_min_scale()); check!(r,-1.==px.get_max_scale());
+(B[m[31m-    success=px.get_min_max_scales(&mut scales); check!(r,!success);
+(B[m[31m-    let big=Matrix::MakeAll(2.39394089e36,8.85347779e36,9.26526204e36,3.9159619e36,1.44823453e37,1.51559342e37,0.,0.,1.);
+(B[m[31m-    success=big.get_min_max_scales(&mut scales); check!(r,!success);
+(B[m[31m-    let negative=Matrix::MakeAll(0.00436534,0.114138,0.37141,0.00358857,0.0936228,-0.0174198,0.,0.,1.);
+(B[m[31m-    success=negative.get_min_max_scales(&mut scales); check!(r,success && scales[0]==0.);
+(B[m[31m-    let mut py=Matrix::I(); py.reset().set_persp_y(-1./500.);
+(B[m[31m-    check!(r,-1.==py.get_min_scale()); check!(r,-1.==py.get_max_scale()); scales=[-5.,-5.];
+(B[m[31m-    success=py.get_min_max_scales(&mut scales); check!(r,!success && scales==[-5.,-5.]);
+(B[m[31m-    let base=[scale,rot90,rotate,translate,px,py]; let mut mats=[Matrix::I();12];
+(B[m[31m-    for i in 0..6 { mats[i]=base[i]; let mut inv=Matrix::I(); let invertible=mats[i].invert(Some(&mut inv)); mats[i+6]=inv; check!(r,invertible); }
+(B[m[31m-    let mut rand=SkRandom::new(); let mut m=0;
+(B[m[31m-    while m<1000 {
+(B[m[31m-        let mut mat=Matrix::I(); mat.reset();
+(B[m[31m-        for _ in 0..4 { let x=rand.next_u() as usize % mats.len(); mat.post_concat(&mats[x]); }
+(B[m[31m-        let min_scale=mat.get_min_scale(); let max_scale=mat.get_max_scale();
+(B[m[31m-        check!(r,(min_scale<0.)==(max_scale<0.)); check!(r,(max_scale<0.)==mat.has_perspective());
+(B[m[31m-        success=mat.get_min_max_scales(&mut scales);
+(B[m[31m-        check!(r,success==!mat.has_perspective()); check!(r,!success || scales==[min_scale,max_scale]);
+(B[m[31m-        if mat.has_perspective() { continue; }
+(B[m[31m-        let mut max=0.; let mut min=f32::MAX;
+(B[m[31m-        let mut vectors=[Point::default();1000]; let mut i=0;
+(B[m[31m-        while i<vectors.len() {
+(B[m[31m-            vectors[i].x=rand.next_s_scalar1(); vectors[i].y=rand.next_s_scalar1();
+(B[m[31m-            if !vectors[i].normalize() { continue; } i+=1;
+(B[m[32m+    let mut scales = [0.; 2];
+(B[m[32m+    let mut identity = Matrix::I();
+(B[m[32m+    identity.reset();
+(B[m[32m+    check!(r, 1. == identity.get_min_scale());
+(B[m[32m+    check!(r, 1. == identity.get_max_scale());
+(B[m[32m+    let mut success = identity.get_min_max_scales(&mut scales);
+(B[m[32m+    check!(r, success && scales == [1., 1.]);
+(B[m[32m+    let mut scale = Matrix::I();
+(B[m[32m+    scale.set_scale(2., 4.);
+(B[m[32m+    check!(r, 2. == scale.get_min_scale());
+(B[m[32m+    check!(r, 4. == scale.get_max_scale());
+(B[m[32m+    success = scale.get_min_max_scales(&mut scales);
+(B[m[32m+    check!(r, success && scales == [2., 4.]);
+(B[m[32m+    let mut rot90 = Matrix::I();
+(B[m[32m+    rot90.set_rotate(90.).post_scale(1. / 4., 1. / 2.);
+(B[m[32m+    check!(r, 1. / 4. == rot90.get_min_scale());
+(B[m[32m+    check!(r, 1. / 2. == rot90.get_max_scale());
+(B[m[32m+    success = rot90.get_min_max_scales(&mut scales);
+(B[m[32m+    check!(r, success && scales == [1. / 4., 1. / 2.]);
+(B[m[32m+    let mut rotate = Matrix::I();
+(B[m[32m+    rotate.set_rotate(128.);
+(B[m[32m+    check!(r, near(1., rotate.get_min_scale()));
+(B[m[32m+    check!(r, near(1., rotate.get_max_scale()));
+(B[m[32m+    success = rotate.get_min_max_scales(&mut scales);
+(B[m[32m+    check!(r, success);
+(B[m[32m+    check!(r, near(1., scales[0]));
+(B[m[32m+    check!(r, near(1., scales[1]));
+(B[m[32m+    let mut translate = Matrix::I();
+(B[m[32m+    translate.set_translate(10., -5.);
+(B[m[32m+    check!(r, 1. == translate.get_min_scale());
+(B[m[32m+    check!(r, 1. == translate.get_max_scale());
+(B[m[32m+    success = translate.get_min_max_scales(&mut scales);
+(B[m[32m+    check!(r, success && scales == [1., 1.]);
+(B[m[32m+    let mut px = Matrix::I();
+(B[m[32m+    px.reset().set_persp_x(1. / 1000.);
+(B[m[32m+    check!(r, -1. == px.get_min_scale());
+(B[m[32m+    check!(r, -1. == px.get_max_scale());
+(B[m[32m+    success = px.get_min_max_scales(&mut scales);
+(B[m[32m+    check!(r, !success);
+(B[m[32m+    let big = Matrix::MakeAll(
+(B[m[32m+        2.39394089e36,
+(B[m[32m+        8.85347779e36,
+(B[m[32m+        9.26526204e36,
+(B[m[32m+        3.9159619e36,
+(B[m[32m+        1.44823453e37,
+(B[m[32m+        1.51559342e37,
+(B[m[32m+        0.,
+(B[m[32m+        0.,
+(B[m[32m+        1.,
+(B[m[32m+    );
+(B[m[32m+    success = big.get_min_max_scales(&mut scales);
+(B[m[32m+    check!(r, !success);
+(B[m[32m+    let negative = Matrix::MakeAll(
+(B[m[32m+        0.00436534, 0.114138, 0.37141, 0.00358857, 0.0936228, -0.0174198, 0., 0., 1.,
+(B[m[32m+    );
+(B[m[32m+    success = negative.get_min_max_scales(&mut scales);
+(B[m[32m+    check!(r, success && scales[0] == 0.);
+(B[m[32m+    let mut py = Matrix::I();
+(B[m[32m+    py.reset().set_persp_y(-1. / 500.);
+(B[m[32m+    check!(r, -1. == py.get_min_scale());
+(B[m[32m+    check!(r, -1. == py.get_max_scale());
+(B[m[32m+    scales = [-5., -5.];
+(B[m[32m+    success = py.get_min_max_scales(&mut scales);
+(B[m[32m+    check!(r, !success && scales == [-5., -5.]);
+(B[m[32m+    let base = [scale, rot90, rotate, translate, px, py];
+(B[m[32m+    let mut mats = [Matrix::I(); 12];
+(B[m[32m+    for i in 0..6 {
+(B[m[32m+        mats[i] = base[i];
+(B[m[32m+        let mut inv = Matrix::I();
+(B[m[32m+        let invertible = mats[i].invert(Some(&mut inv));
+(B[m[32m+        mats[i + 6] = inv;
+(B[m[32m+        check!(r, invertible);
+(B[m[32m+    }
+(B[m[32m+    let mut rand = SkRandom::new();
+(B[m[32m+    let mut m = 0;
+(B[m[32m+    while m < 1000 {
+(B[m[32m+        let mut mat = Matrix::I();
+(B[m[32m+        mat.reset();
+(B[m[32m+        for _ in 0..4 {
+(B[m[32m+            let x = rand.next_u() as usize % mats.len();
+(B[m[32m+            mat.post_concat(&mats[x]);
+(B[m         }
+[31m-        let source=vectors; mat.map_vectors(&mut vectors,&source);
+(B[m[31m-        for v in vectors { let d=v.length();
+(B[m[31m-            check!(r,d/max_scale < 105./100.); check!(r,min_scale/d < 105./100.);
+(B[m[31m-            if max<d { max=d; } if min>d { min=d; }
+(B[m[32m+        let min_scale = mat.get_min_scale();
+(B[m[32m+        let max_scale = mat.get_max_scale();
+(B[m[32m+        check!(r, (min_scale < 0.) == (max_scale < 0.));
+(B[m[32m+        check!(r, (max_scale < 0.) == mat.has_perspective());
+(B[m[32m+        success = mat.get_min_max_scales(&mut scales);
+(B[m[32m+        check!(r, success == !mat.has_perspective());
+(B[m[32m+        check!(r, !success || scales == [min_scale, max_scale]);
+(B[m[32m+        if mat.has_perspective() {
+(B[m[32m+            continue;
+(B[m         }
+[31m-        check!(r,max/max_scale>=97./100.); check!(r,min_scale/min>=97./100.); m+=1;
+(B[m[32m+        let mut max = 0.;
+(B[m[32m+        let mut min = f32::MAX;
+(B[m[32m+        let mut vectors = [Point::default(); 1000];
+(B[m[32m+        let mut i = 0;
+(B[m[32m+        while i < vectors.len() {
+(B[m[32m+            vectors[i].x = rand.next_s_scalar1();
+(B[m[32m+            vectors[i].y = rand.next_s_scalar1();
+(B[m[32m+            if !vectors[i].normalize() {
+(B[m[32m+                continue;
+(B[m[32m+            }
+(B[m[32m+            i += 1;
+(B[m[32m+        }
+(B[m[32m+        let source = vectors;
+(B[m[32m+        mat.map_vectors(&mut vectors, &source);
+(B[m[32m+        for v in vectors {
+(B[m[32m+            let d = v.length();
+(B[m[32m+            check!(r, d / max_scale < 105. / 100.);
+(B[m[32m+            check!(r, min_scale / d < 105. / 100.);
+(B[m[32m+            if max < d {
+(B[m[32m+                max = d;
+(B[m[32m+            }
+(B[m[32m+            if min > d {
+(B[m[32m+                min = d;
+(B[m[32m+            }
+(B[m[32m+        }
+(B[m[32m+        check!(r, max / max_scale >= 97. / 100.);
+(B[m[32m+        check!(r, min_scale / min >= 97. / 100.);
+(B[m[32m+        m += 1;
+(B[m     }
+ }
+ fn point3_equal(a: &[Point3], b: &[Point3]) -> bool {
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m05/matrix.rs:391:
+[31m-    a.iter().zip(b).all(|(a,b)| relative(a.x,b.x)&&relative(a.y,b.y)&&relative(a.z,b.z))
+(B[m[32m+    a.iter()
+(B[m[32m+        .zip(b)
+(B[m[32m+        .all(|(a, b)| relative(a.x, b.x) && relative(a.y, b.y) && relative(a.z, b.z))
+(B[m }
+ fn naive_homogeneous(m: &Matrix, src: Point3, dst: Point3) -> bool {
+[31m-    let ms=m.get9_array();
+(B[m[31m-    let res=Point3::new(src.x*ms[0]+src.y*ms[1]+src.z*ms[2],src.x*ms[3]+src.y*ms[4]+src.z*ms[5],src.x*ms[6]+src.y*ms[7]+src.z*ms[8]);
+(B[m[31m-    point3_equal(&[res],&[dst])
+(B[m[32m+    let ms = m.get9_array();
+(B[m[32m+    let res = Point3::new(
+(B[m[32m+        src.x * ms[0] + src.y * ms[1] + src.z * ms[2],
+(B[m[32m+        src.x * ms[3] + src.y * ms[4] + src.z * ms[5],
+(B[m[32m+        src.x * ms[6] + src.y * ms[7] + src.z * ms[8],
+(B[m[32m+    );
+(B[m[32m+    point3_equal(&[res], &[dst])
+(B[m }
+ fn test_matrix_homogeneous(r: &mut Reporter) {
+[31m-    let mut mat=Matrix::I(); let mut rand=SkRandom::new();
+(B[m[31m-    let mut triples=[Point3::default();1000];
+(B[m[31m-    for p in &mut triples { p.x=rand.next_range_f(-3000.,3000.); p.y=rand.next_range_f(-3000.,3000.); p.z=rand.next_range_f(-3000.,3000.); }
+(B[m[31m-    let mut mats=[Matrix::I();1000];
+(B[m[31m-    for m in &mut mats { for j in 0..9 { m.set(j,rand.next_range_f(-3000.,3000.)); } }
+(B[m[31m-    mat.reset(); let mut dst=[Point3::default();1000]; mat.map_homogeneous_points(&mut dst,&triples);
+(B[m[31m-    check!(r,point3_equal(&triples,&dst));
+(B[m[31m-    let zero=Point3::new(0.,0.,0.);
+(B[m[31m-    mat.set_all(0.,0.,0.,0.,0.,0.,0.,0.,0.); mat.map_homogeneous_points(&mut dst,&triples);
+(B[m[31m-    for p in dst { check!(r,point3_equal(&[p],&[zero])); }
+(B[m[31m-    for m in &mats { let dst=m.map_homogeneous_point(zero); check!(r,point3_equal(&[dst],&[zero])); }
+(B[m[31m-    mats[0].map_homogeneous_points(&mut [],&[]);
+(B[m[31m-    mat.set_scale(5000.,5000.);
+(B[m[32m+    let mut mat = Matrix::I();
+(B[m[32m+    let mut rand = SkRandom::new();
+(B[m[32m+    let mut triples = [Point3::default(); 1000];
+(B[m[32m+    for p in &mut triples {
+(B[m[32m+        p.x = rand.next_range_f(-3000., 3000.);
+(B[m[32m+        p.y = rand.next_range_f(-3000., 3000.);
+(B[m[32m+        p.z = rand.next_range_f(-3000., 3000.);
+(B[m[32m+    }
+(B[m[32m+    let mut mats = [Matrix::I(); 1000];
+(B[m[32m+    for m in &mut mats {
+(B[m[32m+        for j in 0..9 {
+(B[m[32m+            m.set(j, rand.next_range_f(-3000., 3000.));
+(B[m[32m+        }
+(B[m[32m+    }
+(B[m[32m+    mat.reset();
+(B[m[32m+    let mut dst = [Point3::default(); 1000];
+(B[m[32m+    mat.map_homogeneous_points(&mut dst, &triples);
+(B[m[32m+    check!(r, point3_equal(&triples, &dst));
+(B[m[32m+    let zero = Point3::new(0., 0., 0.);
+(B[m[32m+    mat.set_all(0., 0., 0., 0., 0., 0., 0., 0., 0.);
+(B[m[32m+    mat.map_homogeneous_points(&mut dst, &triples);
+(B[m[32m+    for p in dst {
+(B[m[32m+        check!(r, point3_equal(&[p], &[zero]));
+(B[m[32m+    }
+(B[m[32m+    for m in &mats {
+(B[m[32m+        let dst = m.map_homogeneous_point(zero);
+(B[m[32m+        check!(r, point3_equal(&[dst], &[zero]));
+(B[m[32m+    }
+(B[m[32m+    mats[0].map_homogeneous_points(&mut [], &[]);
+(B[m[32m+    mat.set_scale(5000., 5000.);
+(B[m     for stage in 0..3 {
+[31m-        if stage==1 { mat.set_rotate(15.5); }
+(B[m[31m-        if stage==2 { mat.set_rotate(-50.).post_scale(5000.,5000.).post_rotate(15.5); }
+(B[m[31m-        let src=Point3::new(triples[0].x,triples[0].y,1.); let mut p=Point::new(src.x,src.y);
+(B[m[31m-        let dst=mat.map_homogeneous_point(src); p=mat.map_point(p);
+(B[m[31m-        check!(r,near(dst.x,p.x)); check!(r,near(dst.y,p.y)); check!(r,near(dst.z,1.));
+(B[m[32m+        if stage == 1 {
+(B[m[32m+            mat.set_rotate(15.5);
+(B[m[32m+        }
+(B[m[32m+        if stage == 2 {
+(B[m[32m+            mat.set_rotate(-50.)
+(B[m[32m+                .post_scale(5000., 5000.)
+(B[m[32m+                .post_rotate(15.5);
+(B[m[32m+        }
+(B[m[32m+        let src = Point3::new(triples[0].x, triples[0].y, 1.);
+(B[m[32m+        let mut p = Point::new(src.x, src.y);
+(B[m[32m+        let dst = mat.map_homogeneous_point(src);
+(B[m[32m+        p = mat.map_point(p);
+(B[m[32m+        check!(r, near(dst.x, p.x));
+(B[m[32m+        check!(r, near(dst.y, p.y));
+(B[m[32m+        check!(r, near(dst.z, 1.));
+(B[m     }
+[31m-    for m in &mats { for src in triples { let dst=m.map_homogeneous_point(src); check!(r,naive_homogeneous(m,src,dst)); } }
+(B[m[32m+    for m in &mats {
+(B[m[32m+        for src in triples {
+(B[m[32m+            let dst = m.map_homogeneous_point(src);
+(B[m[32m+            check!(r, naive_homogeneous(m, src, dst));
+(B[m[32m+        }
+(B[m[32m+    }
+(B[m }
+ fn check_decomp_scale(original: &Matrix) -> bool {
+[31m-    let mut scale=Size::default(); let mut remaining=Matrix::I();
+(B[m[31m-    if !original.decompose_scale(&mut scale,&mut remaining) { return false; }
+(B[m[31m-    if scale.width<=0. || scale.height<=0. { return false; }
+(B[m[31m-    let mut reconstituted=remaining; reconstituted.pre_scale(scale.width,scale.height);
+(B[m[31m-    if !nearly_equal(original,&reconstituted) { return false; }
+(B[m[31m-    let pts=[Point::new(0.,0.),Point::new(1.,1.),Point::new(1.,0.5),Point::new(-1.,-0.5),Point::new(-1.,2.)];
+(B[m[31m-    let mut v1=[Point::default();5]; original.map_points(&mut v1,&pts);
+(B[m[31m-    let mut v2=[Point::default();5]; let scale_mat=Matrix::Scale(scale.width,scale.height);
+(B[m[31m-    scale_mat.map_points(&mut v2,&pts); remaining.map_points_in_place(&mut v2);
+(B[m[31m-    for i in 0..5 { if !((v1[i].x-v2[i].x).abs()<=0.00001 && (v1[i].y-v2[i].y).abs()<=0.00001) { return false; } }
+(B[m[32m+    let mut scale = Size::default();
+(B[m[32m+    let mut remaining = Matrix::I();
+(B[m[32m+    if !original.decompose_scale(&mut scale, &mut remaining) {
+(B[m[32m+        return false;
+(B[m[32m+    }
+(B[m[32m+    if scale.width <= 0. || scale.height <= 0. {
+(B[m[32m+        return false;
+(B[m[32m+    }
+(B[m[32m+    let mut reconstituted = remaining;
+(B[m[32m+    reconstituted.pre_scale(scale.width, scale.height);
+(B[m[32m+    if !nearly_equal(original, &reconstituted) {
+(B[m[32m+        return false;
+(B[m[32m+    }
+(B[m[32m+    let pts = [
+(B[m[32m+        Point::new(0., 0.),
+(B[m[32m+        Point::new(1., 1.),
+(B[m[32m+        Point::new(1., 0.5),
+(B[m[32m+        Point::new(-1., -0.5),
+(B[m[32m+        Point::new(-1., 2.),
+(B[m[32m+    ];
+(B[m[32m+    let mut v1 = [Point::default(); 5];
+(B[m[32m+    original.map_points(&mut v1, &pts);
+(B[m[32m+    let mut v2 = [Point::default(); 5];
+(B[m[32m+    let scale_mat = Matrix::Scale(scale.width, scale.height);
+(B[m[32m+    scale_mat.map_points(&mut v2, &pts);
+(B[m[32m+    remaining.map_points_in_place(&mut v2);
+(B[m[32m+    for i in 0..5 {
+(B[m[32m+        if !((v1[i].x - v2[i].x).abs() <= 0.00001 && (v1[i].y - v2[i].y).abs() <= 0.00001) {
+(B[m[32m+            return false;
+(B[m[32m+        }
+(B[m[32m+    }
+(B[m     true
+ }
+ fn test_decompScale(r: &mut Reporter) {
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m05/matrix.rs:435:
+[31m-    let mut m=Matrix::I(); m.reset(); check!(r,check_decomp_scale(&m));
+(B[m[31m-    m.set_scale(2.,3.); check!(r,check_decomp_scale(&m));
+(B[m[31m-    m.set_rotate_pivot(35.,0.,0.); check!(r,check_decomp_scale(&m));
+(B[m[31m-    m.set_scale(1.,0.); check!(r,!check_decomp_scale(&m));
+(B[m[31m-    m.set_rotate_pivot(35.,0.,0.).pre_scale(2.,3.); check!(r,check_decomp_scale(&m));
+(B[m[31m-    m.set_rotate_pivot(35.,0.,0.).post_scale(2.,3.); check!(r,check_decomp_scale(&m));
+(B[m[32m+    let mut m = Matrix::I();
+(B[m[32m+    m.reset();
+(B[m[32m+    check!(r, check_decomp_scale(&m));
+(B[m[32m+    m.set_scale(2., 3.);
+(B[m[32m+    check!(r, check_decomp_scale(&m));
+(B[m[32m+    m.set_rotate_pivot(35., 0., 0.);
+(B[m[32m+    check!(r, check_decomp_scale(&m));
+(B[m[32m+    m.set_scale(1., 0.);
+(B[m[32m+    check!(r, !check_decomp_scale(&m));
+(B[m[32m+    m.set_rotate_pivot(35., 0., 0.).pre_scale(2., 3.);
+(B[m[32m+    check!(r, check_decomp_scale(&m));
+(B[m[32m+    m.set_rotate_pivot(35., 0., 0.).post_scale(2., 3.);
+(B[m[32m+    check!(r, check_decomp_scale(&m));
+(B[m }
+ // Original registrations MatrixTest.cpp:868,1036,1050,1090,1104,1108,1114,1133.
+ #[test]
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m05/matrix.rs:444:
+ fn Matrix() {
+[31m-    let mut r=Reporter::default();
+(B[m[31m-    let (mut mat,mut inverse,mut iden1,mut iden2)=(Matrix::I(),Matrix::I(),Matrix::I(),Matrix::I());
+(B[m[31m-    mat.reset(); mat.set_translate(1.,1.); check!(r,mat.invert(Some(&mut inverse)));
+(B[m[31m-    iden1.set_concat(&mat,&inverse); check!(r,is_identity(&iden1));
+(B[m[31m-    mat.set_scale(2.,4.); check!(r,mat.invert(Some(&mut inverse)));
+(B[m[31m-    iden1.set_concat(&mat,&inverse); check!(r,is_identity(&iden1)); test_flatten(&mut r,&mat);
+(B[m[31m-    mat.set_scale(1./2.,2.); check!(r,mat.invert(Some(&mut inverse)));
+(B[m[31m-    iden1.set_concat(&mat,&inverse); check!(r,is_identity(&iden1)); test_flatten(&mut r,&mat);
+(B[m[31m-    mat.set_scale_pivot(3.,5.,20.,0.).post_rotate(25.);
+(B[m[31m-    check!(r,mat.invert(None)); check!(r,mat.invert(Some(&mut inverse)));
+(B[m[31m-    iden1.set_concat(&mat,&inverse); check!(r,is_identity(&iden1));
+(B[m[31m-    iden2.set_concat(&inverse,&mat); check!(r,is_identity(&iden2)); test_flatten(&mut r,&mat); test_flatten(&mut r,&iden2);
+(B[m[31m-    mat.set_scale(0.,1.); check!(r,!mat.invert(None)); check!(r,!mat.invert(Some(&mut inverse)));
+(B[m[31m-    mat.set_scale(1.,0.); check!(r,!mat.invert(None)); check!(r,!mat.invert(Some(&mut inverse)));
+(B[m[31m-    mat.set_all(0.,1.,2.,0.,1.,-3.40277175e38,1.00003040,1.,0.);
+(B[m[31m-    check!(r,!mat.invert(None)); check!(r,!mat.invert(Some(&mut inverse)));
+(B[m[31m-    mat.set_all(f32::from_bits(1),0.,0.,0.,1.,0.,0.,0.,1.);
+(B[m[31m-    check!(r,mat.is_scale_translate()); check!(r,!mat.invert(None)); check!(r,!mat.invert(Some(&mut inverse)));
+(B[m[31m-    mat.set_all(2.,0.,f32::NAN,0.,2.,0.,0.,0.,1.);
+(B[m[31m-    check!(r,mat.is_scale_translate()); check!(r,!mat.invert(None)); check!(r,!mat.invert(Some(&mut inverse)));
+(B[m[31m-    mat.set_all(1.,0.,f32::NAN,0.,1.,0.,0.,0.,1.);
+(B[m[31m-    check!(r,mat.is_translate()); check!(r,!mat.invert(None)); check!(r,!mat.invert(Some(&mut inverse)));
+(B[m[31m-    mat.set_all(f32::MIN_POSITIVE,0.,f32::MAX,0.,1.,0.,0.,0.,1.);
+(B[m[31m-    check!(r,mat.is_scale_translate()); check!(r,mat.is_finite()); check!(r,!mat.invert(None)); check!(r,!mat.invert(Some(&mut inverse)));
+(B[m[31m-    let samples=[
+(B[m[31m-        (0.,0.,0.,0.,false),(0.,0.,0.,1.,false),(0.,0.,1.,0.,false),(0.,0.,1.,1.,false),
+(B[m[31m-        (0.,1.,0.,0.,false),(0.,1.,0.,1.,false),(0.,1.,1.,0.,true),(0.,1.,1.,1.,false),
+(B[m[31m-        (1.,0.,0.,0.,false),(1.,0.,0.,1.,true),(1.,0.,1.,0.,false),(1.,0.,1.,1.,false),
+(B[m[31m-        (1.,1.,0.,0.,false),(1.,1.,0.,1.,false),(1.,1.,1.,0.,false),(1.,1.,1.,1.,false)];
+(B[m[31m-    for (a,b,c,d,expected) in samples {
+(B[m[31m-        let mut m=Matrix::I(); m.reset(); m.set(Matrix::M_SCALE_X,a).set(Matrix::M_SKEW_X,b).set(Matrix::M_SKEW_Y,c).set(Matrix::M_SCALE_Y,d);
+(B[m[31m-        check!(r,m.rect_stays_rect()==expected);
+(B[m[32m+    let mut r = Reporter::default();
+(B[m[32m+    let (mut mat, mut inverse, mut iden1, mut iden2) =
+(B[m[32m+        (Matrix::I(), Matrix::I(), Matrix::I(), Matrix::I());
+(B[m[32m+    mat.reset();
+(B[m[32m+    mat.set_translate(1., 1.);
+(B[m[32m+    check!(r, mat.invert(Some(&mut inverse)));
+(B[m[32m+    iden1.set_concat(&mat, &inverse);
+(B[m[32m+    check!(r, is_identity(&iden1));
+(B[m[32m+    mat.set_scale(2., 4.);
+(B[m[32m+    check!(r, mat.invert(Some(&mut inverse)));
+(B[m[32m+    iden1.set_concat(&mat, &inverse);
+(B[m[32m+    check!(r, is_identity(&iden1));
+(B[m[32m+    test_flatten(&mut r, &mat);
+(B[m[32m+    mat.set_scale(1. / 2., 2.);
+(B[m[32m+    check!(r, mat.invert(Some(&mut inverse)));
+(B[m[32m+    iden1.set_concat(&mat, &inverse);
+(B[m[32m+    check!(r, is_identity(&iden1));
+(B[m[32m+    test_flatten(&mut r, &mat);
+(B[m[32m+    mat.set_scale_pivot(3., 5., 20., 0.).post_rotate(25.);
+(B[m[32m+    check!(r, mat.invert(None));
+(B[m[32m+    check!(r, mat.invert(Some(&mut inverse)));
+(B[m[32m+    iden1.set_concat(&mat, &inverse);
+(B[m[32m+    check!(r, is_identity(&iden1));
+(B[m[32m+    iden2.set_concat(&inverse, &mat);
+(B[m[32m+    check!(r, is_identity(&iden2));
+(B[m[32m+    test_flatten(&mut r, &mat);
+(B[m[32m+    test_flatten(&mut r, &iden2);
+(B[m[32m+    mat.set_scale(0., 1.);
+(B[m[32m+    check!(r, !mat.invert(None));
+(B[m[32m+    check!(r, !mat.invert(Some(&mut inverse)));
+(B[m[32m+    mat.set_scale(1., 0.);
+(B[m[32m+    check!(r, !mat.invert(None));
+(B[m[32m+    check!(r, !mat.invert(Some(&mut inverse)));
+(B[m[32m+    mat.set_all(0., 1., 2., 0., 1., -3.40277175e38, 1.00003040, 1., 0.);
+(B[m[32m+    check!(r, !mat.invert(None));
+(B[m[32m+    check!(r, !mat.invert(Some(&mut inverse)));
+(B[m[32m+    mat.set_all(f32::from_bits(1), 0., 0., 0., 1., 0., 0., 0., 1.);
+(B[m[32m+    check!(r, mat.is_scale_translate());
+(B[m[32m+    check!(r, !mat.invert(None));
+(B[m[32m+    check!(r, !mat.invert(Some(&mut inverse)));
+(B[m[32m+    mat.set_all(2., 0., f32::NAN, 0., 2., 0., 0., 0., 1.);
+(B[m[32m+    check!(r, mat.is_scale_translate());
+(B[m[32m+    check!(r, !mat.invert(None));
+(B[m[32m+    check!(r, !mat.invert(Some(&mut inverse)));
+(B[m[32m+    mat.set_all(1., 0., f32::NAN, 0., 1., 0., 0., 0., 1.);
+(B[m[32m+    check!(r, mat.is_translate());
+(B[m[32m+    check!(r, !mat.invert(None));
+(B[m[32m+    check!(r, !mat.invert(Some(&mut inverse)));
+(B[m[32m+    mat.set_all(f32::MIN_POSITIVE, 0., f32::MAX, 0., 1., 0., 0., 0., 1.);
+(B[m[32m+    check!(r, mat.is_scale_translate());
+(B[m[32m+    check!(r, mat.is_finite());
+(B[m[32m+    check!(r, !mat.invert(None));
+(B[m[32m+    check!(r, !mat.invert(Some(&mut inverse)));
+(B[m[32m+    let samples = [
+(B[m[32m+        (0., 0., 0., 0., false),
+(B[m[32m+        (0., 0., 0., 1., false),
+(B[m[32m+        (0., 0., 1., 0., false),
+(B[m[32m+        (0., 0., 1., 1., false),
+(B[m[32m+        (0., 1., 0., 0., false),
+(B[m[32m+        (0., 1., 0., 1., false),
+(B[m[32m+        (0., 1., 1., 0., true),
+(B[m[32m+        (0., 1., 1., 1., false),
+(B[m[32m+        (1., 0., 0., 0., false),
+(B[m[32m+        (1., 0., 0., 1., true),
+(B[m[32m+        (1., 0., 1., 0., false),
+(B[m[32m+        (1., 0., 1., 1., false),
+(B[m[32m+        (1., 1., 0., 0., false),
+(B[m[32m+        (1., 1., 0., 1., false),
+(B[m[32m+        (1., 1., 1., 0., false),
+(B[m[32m+        (1., 1., 1., 1., false),
+(B[m[32m+    ];
+(B[m[32m+    for (a, b, c, d, expected) in samples {
+(B[m[32m+        let mut m = Matrix::I();
+(B[m[32m+        m.reset();
+(B[m[32m+        m.set(Matrix::M_SCALE_X, a)
+(B[m[32m+            .set(Matrix::M_SKEW_X, b)
+(B[m[32m+            .set(Matrix::M_SKEW_Y, c)
+(B[m[32m+            .set(Matrix::M_SCALE_Y, d);
+(B[m[32m+        check!(r, m.rect_stays_rect() == expected);
+(B[m     }
+[31m-    mat.reset(); mat.set(Matrix::M_SCALE_X,1.).set(Matrix::M_SKEW_X,2.).set(Matrix::M_TRANS_X,3.).set(Matrix::M_SKEW_Y,4.).set(Matrix::M_SCALE_Y,5.).set(Matrix::M_TRANS_Y,6.);
+(B[m[31m-    let mut affine=[0.;6]; check!(r,mat.as_affine(&mut affine));
+(B[m[31m-    for (a,m) in [(Matrix::A_SCALE_X,Matrix::M_SCALE_X),(Matrix::A_SKEW_Y,Matrix::M_SKEW_Y),(Matrix::A_SKEW_X,Matrix::M_SKEW_X),(Matrix::A_SCALE_Y,Matrix::M_SCALE_Y),(Matrix::A_TRANS_X,Matrix::M_TRANS_X),(Matrix::A_TRANS_Y,Matrix::M_TRANS_Y)] { check!(r,affine[a]==mat.get(m)); }
+(B[m[31m-    mat.set(Matrix::M_PERSP_1,1./2.); check!(r,!mat.as_affine(&mut affine));
+(B[m[31m-    let mut mat2=Matrix::I(); mat2.reset(); mat.reset(); let zero=0.; mat.set(Matrix::M_SKEW_X,-zero);
+(B[m[31m-    let equal=are_equal(&mut r,&mat,&mat2); check!(r,equal);
+(B[m[31m-    mat2.reset(); mat.reset(); mat.set(Matrix::M_SKEW_X,f32::NAN); mat2.set(Matrix::M_SKEW_X,f32::NAN);
+(B[m[31m-    let equal=are_equal(&mut r,&mat,&mat2); check!(r,!equal);
+(B[m[31m-    test_matrix_min_max_scale(&mut r); test_matrix_preserve_shape(&mut r); test_matrix_recttorect(&mut r);
+(B[m[31m-    test_matrix_decomposition(&mut r); test_matrix_homogeneous(&mut r); test_set9(&mut r); test_decompScale(&mut r);
+(B[m[31m-    mat.set_scale_translate(2.,3.,1.,4.); mat2.set_scale(2.,3.).post_translate(1.,4.); check!(r,mat==mat2);
+(B[m[32m+    mat.reset();
+(B[m[32m+    mat.set(Matrix::M_SCALE_X, 1.)
+(B[m[32m+        .set(Matrix::M_SKEW_X, 2.)
+(B[m[32m+        .set(Matrix::M_TRANS_X, 3.)
+(B[m[32m+        .set(Matrix::M_SKEW_Y, 4.)
+(B[m[32m+        .set(Matrix::M_SCALE_Y, 5.)
+(B[m[32m+        .set(Matrix::M_TRANS_Y, 6.);
+(B[m[32m+    let mut affine = [0.; 6];
+(B[m[32m+    check!(r, mat.as_affine(&mut affine));
+(B[m[32m+    for (a, m) in [
+(B[m[32m+        (Matrix::A_SCALE_X, Matrix::M_SCALE_X),
+(B[m[32m+        (Matrix::A_SKEW_Y, Matrix::M_SKEW_Y),
+(B[m[32m+        (Matrix::A_SKEW_X, Matrix::M_SKEW_X),
+(B[m[32m+        (Matrix::A_SCALE_Y, Matrix::M_SCALE_Y),
+(B[m[32m+        (Matrix::A_TRANS_X, Matrix::M_TRANS_X),
+(B[m[32m+        (Matrix::A_TRANS_Y, Matrix::M_TRANS_Y),
+(B[m[32m+    ] {
+(B[m[32m+        check!(r, affine[a] == mat.get(m));
+(B[m[32m+    }
+(B[m[32m+    mat.set(Matrix::M_PERSP_1, 1. / 2.);
+(B[m[32m+    check!(r, !mat.as_affine(&mut affine));
+(B[m[32m+    let mut mat2 = Matrix::I();
+(B[m[32m+    mat2.reset();
+(B[m[32m+    mat.reset();
+(B[m[32m+    let zero = 0.;
+(B[m[32m+    mat.set(Matrix::M_SKEW_X, -zero);
+(B[m[32m+    let equal = are_equal(&mut r, &mat, &mat2);
+(B[m[32m+    check!(r, equal);
+(B[m[32m+    mat2.reset();
+(B[m[32m+    mat.reset();
+(B[m[32m+    mat.set(Matrix::M_SKEW_X, f32::NAN);
+(B[m[32m+    mat2.set(Matrix::M_SKEW_X, f32::NAN);
+(B[m[32m+    let equal = are_equal(&mut r, &mat, &mat2);
+(B[m[32m+    check!(r, !equal);
+(B[m[32m+    test_matrix_min_max_scale(&mut r);
+(B[m[32m+    test_matrix_preserve_shape(&mut r);
+(B[m[32m+    test_matrix_recttorect(&mut r);
+(B[m[32m+    test_matrix_decomposition(&mut r);
+(B[m[32m+    test_matrix_homogeneous(&mut r);
+(B[m[32m+    test_set9(&mut r);
+(B[m[32m+    test_decompScale(&mut r);
+(B[m[32m+    mat.set_scale_translate(2., 3., 1., 4.);
+(B[m[32m+    mat2.set_scale(2., 3.).post_translate(1., 4.);
+(B[m[32m+    check!(r, mat == mat2);
+(B[m     r.finish();
+ }
+ #[test]
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m05/matrix.rs:492:
+ fn Matrix_Concat() {
+[31m-    let mut r=Reporter::default(); let mut a=Matrix::I(); a.set_translate(10.,20.);
+(B[m[31m-    let mut b=Matrix::I(); b.set_scale(3.,5.); let mut expected=Matrix::I(); expected.set_concat(&a,&b);
+(B[m[31m-    check!(r,expected==Matrix::Concat(&a,&b)); r.finish();
+(B[m[32m+    let mut r = Reporter::default();
+(B[m[32m+    let mut a = Matrix::I();
+(B[m[32m+    a.set_translate(10., 20.);
+(B[m[32m+    let mut b = Matrix::I();
+(B[m[32m+    b.set_scale(3., 5.);
+(B[m[32m+    let mut expected = Matrix::I();
+(B[m[32m+    expected.set_concat(&a, &b);
+(B[m[32m+    check!(r, expected == Matrix::Concat(&a, &b));
+(B[m[32m+    r.finish();
+(B[m }
+ #[test]
+ fn Matrix_maprects() {
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m05/matrix.rs:499:
+[31m-    let mut r=Reporter::default(); let scale=1000.; let mut mat=Matrix::I(); mat.set_scale(2.,3.).post_translate(1.,4.);
+(B[m[31m-    let mut rand=SkRandom::new();
+(B[m[32m+    let mut r = Reporter::default();
+(B[m[32m+    let scale = 1000.;
+(B[m[32m+    let mut mat = Matrix::I();
+(B[m[32m+    mat.set_scale(2., 3.).post_translate(1., 4.);
+(B[m[32m+    let mut rand = SkRandom::new();
+(B[m     for _ in 0..10000 {
+[31m-        let src=Rect::new(rand.next_s_scalar1()*scale,rand.next_s_scalar1()*scale,rand.next_s_scalar1()*scale,rand.next_s_scalar1()*scale);
+(B[m[31m-        let mut dst=[Rect::default();4];
+(B[m[31m-        let mut mapped=[Point::default();2];
+(B[m[31m-        mat.map_points(&mut mapped,&[Point::new(src.left,src.top),Point::new(src.right,src.bottom)]);
+(B[m[31m-        dst[0]=Rect::new(mapped[0].x,mapped[0].y,mapped[1].x,mapped[1].y); dst[0].sort();
+(B[m[31m-        mat.map_rect_into(&mut dst[1],&src); dst[2]=mat.map_rect_scale_translate(&src); dst[3]=mat.map_rect(&src);
+(B[m[31m-        check!(r,dst[0]==dst[1]); check!(r,dst[0]==dst[2]); check!(r,dst[0]==dst[3]);
+(B[m[32m+        let src = Rect::new(
+(B[m[32m+            rand.next_s_scalar1() * scale,
+(B[m[32m+            rand.next_s_scalar1() * scale,
+(B[m[32m+            rand.next_s_scalar1() * scale,
+(B[m[32m+            rand.next_s_scalar1() * scale,
+(B[m[32m+        );
+(B[m[32m+        let mut dst = [Rect::default(); 4];
+(B[m[32m+        let mut mapped = [Point::default(); 2];
+(B[m[32m+        mat.map_points(
+(B[m[32m+            &mut mapped,
+(B[m[32m+            &[
+(B[m[32m+                Point::new(src.left, src.top),
+(B[m[32m+                Point::new(src.right, src.bottom),
+(B[m[32m+            ],
+(B[m[32m+        );
+(B[m[32m+        dst[0] = Rect::new(mapped[0].x, mapped[0].y, mapped[1].x, mapped[1].y);
+(B[m[32m+        dst[0].sort();
+(B[m[32m+        mat.map_rect_into(&mut dst[1], &src);
+(B[m[32m+        dst[2] = mat.map_rect_scale_translate(&src);
+(B[m[32m+        dst[3] = mat.map_rect(&src);
+(B[m[32m+        check!(r, dst[0] == dst[1]);
+(B[m[32m+        check!(r, dst[0] == dst[2]);
+(B[m[32m+        check!(r, dst[0] == dst[3]);
+(B[m     }
+[31m-    let m0=Matrix::Scale(1e20,1e20); let mut m1=Matrix::I(); m1.set_rotate(30.).post_scale(1e20,1e20);
+(B[m[31m-    for m in [m0,m1] { let mut rect=Rect::new(0.,0.,1e20,1e20); check!(r,rect.is_finite()); rect=m.map_rect(&rect); check!(r,!rect.is_finite()); }
+(B[m[32m+    let m0 = Matrix::Scale(1e20, 1e20);
+(B[m[32m+    let mut m1 = Matrix::I();
+(B[m[32m+    m1.set_rotate(30.).post_scale(1e20, 1e20);
+(B[m[32m+    for m in [m0, m1] {
+(B[m[32m+        let mut rect = Rect::new(0., 0., 1e20, 1e20);
+(B[m[32m+        check!(r, rect.is_finite());
+(B[m[32m+        rect = m.map_rect(&rect);
+(B[m[32m+        check!(r, !rect.is_finite());
+(B[m[32m+    }
+(B[m     r.finish();
+ }
+ #[test]
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m05/matrix.rs:515:
+ fn Matrix_mapRect_skbug12335() {
+[31m-    let mut r=Reporter::default(); let rect=Rect::new(0.,0.,319.,620.);
+(B[m[31m-    let m=Matrix::MakeAll(0.000152695269,0.,-6.53848401e-05,-1.75697533e-05,0.000157153074,-1.10847975e-06,-6.00415362e-08,0.,0.000169880834);
+(B[m[31m-    let out=m.map_rect(&rect); check!(r,!out.is_empty()); r.finish();
+(B[m[32m+    let mut r = Reporter::default();
+(B[m[32m+    let rect = Rect::new(0., 0., 319., 620.);
+(B[m[32m+    let m = Matrix::MakeAll(
+(B[m[32m+        0.000152695269,
+(B[m[32m+        0.,
+(B[m[32m+        -6.53848401e-05,
+(B[m[32m+        -1.75697533e-05,
+(B[m[32m+        0.000157153074,
+(B[m[32m+        -1.10847975e-06,
+(B[m[32m+        -6.00415362e-08,
+(B[m[32m+        0.,
+(B[m[32m+        0.000169880834,
+(B[m[32m+    );
+(B[m[32m+    let out = m.map_rect(&rect);
+(B[m[32m+    check!(r, !out.is_empty());
+(B[m[32m+    r.finish();
+(B[m }
+ #[test]
+[31m-fn Matrix_Ctor() { let mut r=Reporter::default(); check!(r,Matrix::default()==Matrix::I()); r.finish(); }
+(B[m[32m+fn Matrix_Ctor() {
+(B[m[32m+    let mut r = Reporter::default();
+(B[m[32m+    check!(r, Matrix::default() == Matrix::I());
+(B[m[32m+    r.finish();
+(B[m[32m+}
+(B[m #[test]
+ fn Matrix_LookAt() {
+[31m-    let mut r=Reporter::default(); let m=M44::LookAt(V3::new(0.,0.,0.),V3::new(0.,0.,0.),V3::new(0.,0.,0.));
+(B[m[31m-    check!(r,m==M44::I()); r.finish();
+(B[m[32m+    let mut r = Reporter::default();
+(B[m[32m+    let m = M44::LookAt(
+(B[m[32m+        V3::new(0., 0., 0.),
+(B[m[32m+        V3::new(0., 0., 0.),
+(B[m[32m+        V3::new(0., 0., 0.),
+(B[m[32m+    );
+(B[m[32m+    check!(r, m == M44::I());
+(B[m[32m+    r.finish();
+(B[m }
+ #[test]
+ fn Matrix_SetRotateSnap() {
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m05/matrix.rs:529:
+[31m-    let mut r=Reporter::default(); let mut m=Matrix::I(); let mut deg=90.;
+(B[m[31m-    while deg<=1080. { m.set_rotate(deg); check!(r,m.rect_stays_rect()); m.set_rotate(-deg); check!(r,m.rect_stays_rect()); deg+=90.; }
+(B[m[31m-    m.set_rotate(0.01); check!(r,!m.rect_stays_rect()); r.finish();
+(B[m[32m+    let mut r = Reporter::default();
+(B[m[32m+    let mut m = Matrix::I();
+(B[m[32m+    let mut deg = 90.;
+(B[m[32m+    while deg <= 1080. {
+(B[m[32m+        m.set_rotate(deg);
+(B[m[32m+        check!(r, m.rect_stays_rect());
+(B[m[32m+        m.set_rotate(-deg);
+(B[m[32m+        check!(r, m.rect_stays_rect());
+(B[m[32m+        deg += 90.;
+(B[m[32m+    }
+(B[m[32m+    m.set_rotate(0.01);
+(B[m[32m+    check!(r, !m.rect_stays_rect());
+(B[m[32m+    r.finish();
+(B[m }
+ #[test]
+ fn Matrix_rectStaysRect_zeroScale() {
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m05/matrix.rs:535:
+[31m-    let mut r=Reporter::default();
+(B[m[31m-    for (x,y) in [(0.,0.),(0.,2.),(2.,0.)] { check!(r,!Matrix::Scale(x,y).rect_stays_rect()); }
+(B[m[31m-    let src=Rect::new(0.,0.,10.,10.);
+(B[m[31m-    for dst in [Rect::new(0.,0.,0.,0.),Rect::new(0.,0.,0.,20.),Rect::new(0.,0.,20.,0.)] { check!(r,!Matrix::Rect2Rect(&src,&dst).unwrap().rect_stays_rect()); }
+(B[m[31m-    let rect=Matrix::I(); check!(r,rect.rect_stays_rect());
+(B[m[31m-    for (x,y) in [(0.,0.),(0.,2.),(2.,0.)] { let mut non_rect=rect; non_rect.pre_scale(x,y); check!(r,!non_rect.rect_stays_rect()); }
+(B[m[31m-    for (x,y) in [(0.,0.),(0.,2.),(2.,0.)] { let mut m=Matrix::I(); m.set_scale(x,y); check!(r,!m.rect_stays_rect()); }
+(B[m[31m-    let mut m=Matrix::I(); m.set_scale_translate(0.,0.,10.,10.); check!(r,!m.rect_stays_rect()); r.finish();
+(B[m[32m+    let mut r = Reporter::default();
+(B[m[32m+    for (x, y) in [(0., 0.), (0., 2.), (2., 0.)] {
+(B[m[32m+        check!(r, !Matrix::Scale(x, y).rect_stays_rect());
+(B[m[32m+    }
+(B[m[32m+    let src = Rect::new(0., 0., 10., 10.);
+(B[m[32m+    for dst in [
+(B[m[32m+        Rect::new(0., 0., 0., 0.),
+(B[m[32m+        Rect::new(0., 0., 0., 20.),
+(B[m[32m+        Rect::new(0., 0., 20., 0.),
+(B[m[32m+    ] {
+(B[m[32m+        check!(r, !Matrix::Rect2Rect(&src, &dst).unwrap().rect_stays_rect());
+(B[m[32m+    }
+(B[m[32m+    let rect = Matrix::I();
+(B[m[32m+    check!(r, rect.rect_stays_rect());
+(B[m[32m+    for (x, y) in [(0., 0.), (0., 2.), (2., 0.)] {
+(B[m[32m+        let mut non_rect = rect;
+(B[m[32m+        non_rect.pre_scale(x, y);
+(B[m[32m+        check!(r, !non_rect.rect_stays_rect());
+(B[m[32m+    }
+(B[m[32m+    for (x, y) in [(0., 0.), (0., 2.), (2., 0.)] {
+(B[m[32m+        let mut m = Matrix::I();
+(B[m[32m+        m.set_scale(x, y);
+(B[m[32m+        check!(r, !m.rect_stays_rect());
+(B[m[32m+    }
+(B[m[32m+    let mut m = Matrix::I();
+(B[m[32m+    m.set_scale_translate(0., 0., 10., 10.);
+(B[m[32m+    check!(r, !m.rect_stays_rect());
+(B[m[32m+    r.finish();
+(B[m }
+ 
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m05/rect.rs:2:
+ use super::*;
+ #[test]
+ fn Rect_QuadContainsRect() {
+[31m-    let mut r=Reporter::default();
+(B[m[31m-    let mut epsilon=Matrix::MakeAll(0.984808,0.173648,-98.4808,-0.173648,0.984808,17.3648,0.,0.,1.);
+(B[m[31m-    epsilon.pre_translate(65.,0.);
+(B[m[31m-    let tests=[
+(B[m[31m-        ("Identity matrix contains success",true,Matrix::I(),[0,0,15,15],[2,2,10,10],0.),
+(B[m[31m-        ("Identity matrix contains failure",false,Matrix::I(),[0,0,15,15],[-2,-2,10,10],0.),
+(B[m[31m-        ("Identity mapped rect contains itself",true,Matrix::I(),[0,0,10,10],[0,0,10,10],0.),
+(B[m[31m-        ("Scaled rect contains success",true,Matrix::Scale(2.,3.4),[0,0,4,4],[1,1,6,6],0.),
+(B[m[31m-        ("Scaled rect contains failure",false,Matrix::Scale(0.25,0.3),[0,0,8,8],[0,0,5,5],0.),
+(B[m[31m-        ("Rotate rect contains success",true,Matrix::rotate_deg_pivot(45.,10.,10.),[0,0,20,20],[3,3,17,17],0.),
+(B[m[31m-        ("Rotate rect contains failure",false,Matrix::rotate_deg_pivot(45.,10.,10.),[0,0,20,20],[2,2,18,18],0.),
+(B[m[31m-        ("Negative scale contains success",true,Matrix::Scale(-1.,1.),[0,0,10,10],[-9,1,-1,9],0.),
+(B[m[31m-        ("Empty rect contains nothing",false,Matrix::rotate_deg_pivot(45.,0.,0.),[10,10,10,20],[10,14,10,16],0.),
+(B[m[31m-        ("MakeEmpty() contains nothing",false,Matrix::rotate_deg_pivot(45.,0.,0.),[0,0,0,0],[0,0,1,1],0.),
+(B[m[31m-        ("Unsorted rect contains nothing",false,Matrix::I(),[10,10,0,0],[2,2,8,8],0.),
+(B[m[31m-        ("Unsorted rect is contained",true,Matrix::I(),[0,0,10,10],[8,8,2,2],0.),
+(B[m[31m-        ("Epsilon not contained",true,epsilon,[0,0,134,215],[0,0,100,200],0.001),
+(B[m[32m+    let mut r = Reporter::default();
+(B[m[32m+    let mut epsilon = Matrix::MakeAll(
+(B[m[32m+        0.984808, 0.173648, -98.4808, -0.173648, 0.984808, 17.3648, 0., 0., 1.,
+(B[m[32m+    );
+(B[m[32m+    epsilon.pre_translate(65., 0.);
+(B[m[32m+    let tests = [
+(B[m[32m+        (
+(B[m[32m+            "Identity matrix contains success",
+(B[m[32m+            true,
+(B[m[32m+            Matrix::I(),
+(B[m[32m+            [0, 0, 15, 15],
+(B[m[32m+            [2, 2, 10, 10],
+(B[m[32m+            0.,
+(B[m[32m+        ),
+(B[m[32m+        (
+(B[m[32m+            "Identity matrix contains failure",
+(B[m[32m+            false,
+(B[m[32m+            Matrix::I(),
+(B[m[32m+            [0, 0, 15, 15],
+(B[m[32m+            [-2, -2, 10, 10],
+(B[m[32m+            0.,
+(B[m[32m+        ),
+(B[m[32m+        (
+(B[m[32m+            "Identity mapped rect contains itself",
+(B[m[32m+            true,
+(B[m[32m+            Matrix::I(),
+(B[m[32m+            [0, 0, 10, 10],
+(B[m[32m+            [0, 0, 10, 10],
+(B[m[32m+            0.,
+(B[m[32m+        ),
+(B[m[32m+        (
+(B[m[32m+            "Scaled rect contains success",
+(B[m[32m+            true,
+(B[m[32m+            Matrix::Scale(2., 3.4),
+(B[m[32m+            [0, 0, 4, 4],
+(B[m[32m+            [1, 1, 6, 6],
+(B[m[32m+            0.,
+(B[m[32m+        ),
+(B[m[32m+        (
+(B[m[32m+            "Scaled rect contains failure",
+(B[m[32m+            false,
+(B[m[32m+            Matrix::Scale(0.25, 0.3),
+(B[m[32m+            [0, 0, 8, 8],
+(B[m[32m+            [0, 0, 5, 5],
+(B[m[32m+            0.,
+(B[m[32m+        ),
+(B[m[32m+        (
+(B[m[32m+            "Rotate rect contains success",
+(B[m[32m+            true,
+(B[m[32m+            Matrix::rotate_deg_pivot(45., 10., 10.),
+(B[m[32m+            [0, 0, 20, 20],
+(B[m[32m+            [3, 3, 17, 17],
+(B[m[32m+            0.,
+(B[m[32m+        ),
+(B[m[32m+        (
+(B[m[32m+            "Rotate rect contains failure",
+(B[m[32m+            false,
+(B[m[32m+            Matrix::rotate_deg_pivot(45., 10., 10.),
+(B[m[32m+            [0, 0, 20, 20],
+(B[m[32m+            [2, 2, 18, 18],
+(B[m[32m+            0.,
+(B[m[32m+        ),
+(B[m[32m+        (
+(B[m[32m+            "Negative scale contains success",
+(B[m[32m+            true,
+(B[m[32m+            Matrix::Scale(-1., 1.),
+(B[m[32m+            [0, 0, 10, 10],
+(B[m[32m+            [-9, 1, -1, 9],
+(B[m[32m+            0.,
+(B[m[32m+        ),
+(B[m[32m+        (
+(B[m[32m+            "Empty rect contains nothing",
+(B[m[32m+            false,
+(B[m[32m+            Matrix::rotate_deg_pivot(45., 0., 0.),
+(B[m[32m+            [10, 10, 10, 20],
+(B[m[32m+            [10, 14, 10, 16],
+(B[m[32m+            0.,
+(B[m[32m+        ),
+(B[m[32m+        (
+(B[m[32m+            "MakeEmpty() contains nothing",
+(B[m[32m+            false,
+(B[m[32m+            Matrix::rotate_deg_pivot(45., 0., 0.),
+(B[m[32m+            [0, 0, 0, 0],
+(B[m[32m+            [0, 0, 1, 1],
+(B[m[32m+            0.,
+(B[m[32m+        ),
+(B[m[32m+        (
+(B[m[32m+            "Unsorted rect contains nothing",
+(B[m[32m+            false,
+(B[m[32m+            Matrix::I(),
+(B[m[32m+            [10, 10, 0, 0],
+(B[m[32m+            [2, 2, 8, 8],
+(B[m[32m+            0.,
+(B[m[32m+        ),
+(B[m[32m+        (
+(B[m[32m+            "Unsorted rect is contained",
+(B[m[32m+            true,
+(B[m[32m+            Matrix::I(),
+(B[m[32m+            [0, 0, 10, 10],
+(B[m[32m+            [8, 8, 2, 2],
+(B[m[32m+            0.,
+(B[m[32m+        ),
+(B[m[32m+        (
+(B[m[32m+            "Epsilon not contained",
+(B[m[32m+            true,
+(B[m[32m+            epsilon,
+(B[m[32m+            [0, 0, 134, 215],
+(B[m[32m+            [0, 0, 100, 200],
+(B[m[32m+            0.001,
+(B[m[32m+        ),
+(B[m     ];
+[31m-    for (label,expect,m,a,b,tol) in tests {
+(B[m[32m+    for (label, expect, m, a, b, tol) in tests {
+(B[m         eprintln!("{label}");
+[31m-        let a=IRect::new(a[0],a[1],a[2],a[3]); let b=IRect::new(b[0],b[1],b[2],b[3]);
+(B[m[31m-        check!(r,RectPriv::quad_contains_rect(&m,&a,&b,tol)==expect);
+(B[m[31m-        let mut offset=m.map_vector(Point::new(0.5,0.5));
+(B[m[31m-        let mut af=Rect::from(a); af.offset(0.5,0.5);
+(B[m[31m-        let mut bf=Rect::from(b); bf.offset(offset.x,offset.y);
+(B[m[31m-        check!(r,RectPriv::quad_contains_rect_m44(&M44::from(m),&af,&bf,tol)==expect);
+(B[m[31m-        if tol!=0. {
+(B[m[31m-            check!(r,RectPriv::quad_contains_rect(&m,&a,&b,0.)==!expect);
+(B[m[31m-            offset=m.map_vector(Point::new(0.5,0.5)); af=Rect::from(a); af.offset(0.5,0.5); bf=Rect::from(b); bf.offset(offset.x,offset.y);
+(B[m[31m-            check!(r,RectPriv::quad_contains_rect_m44(&M44::from(m),&af,&bf,0.)==!expect);
+(B[m[32m+        let a = IRect::new(a[0], a[1], a[2], a[3]);
+(B[m[32m+        let b = IRect::new(b[0], b[1], b[2], b[3]);
+(B[m[32m+        check!(r, RectPriv::quad_contains_rect(&m, &a, &b, tol) == expect);
+(B[m[32m+        let mut offset = m.map_vector(Point::new(0.5, 0.5));
+(B[m[32m+        let mut af = Rect::from(a);
+(B[m[32m+        af.offset(0.5, 0.5);
+(B[m[32m+        let mut bf = Rect::from(b);
+(B[m[32m+        bf.offset(offset.x, offset.y);
+(B[m[32m+        check!(
+(B[m[32m+            r,
+(B[m[32m+            RectPriv::quad_contains_rect_m44(&M44::from(m), &af, &bf, tol) == expect
+(B[m[32m+        );
+(B[m[32m+        if tol != 0. {
+(B[m[32m+            check!(r, RectPriv::quad_contains_rect(&m, &a, &b, 0.) == !expect);
+(B[m[32m+            offset = m.map_vector(Point::new(0.5, 0.5));
+(B[m[32m+            af = Rect::from(a);
+(B[m[32m+            af.offset(0.5, 0.5);
+(B[m[32m+            bf = Rect::from(b);
+(B[m[32m+            bf.offset(offset.x, offset.y);
+(B[m[32m+            check!(
+(B[m[32m+                r,
+(B[m[32m+                RectPriv::quad_contains_rect_m44(&M44::from(m), &af, &bf, 0.) == !expect
+(B[m[32m+            );
+(B[m         }
+     }
+[31m-    let a=Rect::new(1.83,-0.48,15.53,30.68);
+(B[m[32m+    let a = Rect::new(1.83, -0.48, 15.53, 30.68);
+(B[m     {
+         eprintln!("Perspective, W > 0");
+[31m-        let mut p=M44::Perspective(0.01,10.,std::f32::consts::PI/3.);
+(B[m[31m-        p.pre_translate(0.,5.,-0.1); p.pre_concat(&M44::Rotate(V3::new(0.,1.,0.),0.008));
+(B[m[31m-        check!(r,RectPriv::quad_contains_rect_m44(&p,&a,&Rect::new(4.,10.,20.,45.),0.));
+(B[m[31m-        check!(r,!RectPriv::quad_contains_rect_m44(&p,&a,&Rect::new(2.,6.,23.,50.),0.));
+(B[m[32m+        let mut p = M44::Perspective(0.01, 10., std::f32::consts::PI / 3.);
+(B[m[32m+        p.pre_translate(0., 5., -0.1);
+(B[m[32m+        p.pre_concat(&M44::Rotate(V3::new(0., 1., 0.), 0.008));
+(B[m[32m+        check!(
+(B[m[32m+            r,
+(B[m[32m+            RectPriv::quad_contains_rect_m44(&p, &a, &Rect::new(4., 10., 20., 45.), 0.)
+(B[m[32m+        );
+(B[m[32m+        check!(
+(B[m[32m+            r,
+(B[m[32m+            !RectPriv::quad_contains_rect_m44(&p, &a, &Rect::new(2., 6., 23., 50.), 0.)
+(B[m[32m+        );
+(B[m     }
+     {
+         eprintln!("Perspective, some W > 0");
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m05/rect.rs:47:
+[31m-        let mut p=M44::I(); p.set_row(3,V4::new(-0.2,-0.6,0.,8.));
+(B[m[31m-        check!(r,RectPriv::quad_contains_rect_m44(&p,&a,&Rect::new(10.,50.,20.,60.),0.));
+(B[m[31m-        check!(r,!RectPriv::quad_contains_rect_m44(&p,&a,&Rect::new(0.,1.,10.,10.),0.));
+(B[m[32m+        let mut p = M44::I();
+(B[m[32m+        p.set_row(3, V4::new(-0.2, -0.6, 0., 8.));
+(B[m[32m+        check!(
+(B[m[32m+            r,
+(B[m[32m+            RectPriv::quad_contains_rect_m44(&p, &a, &Rect::new(10., 50., 20., 60.), 0.)
+(B[m[32m+        );
+(B[m[32m+        check!(
+(B[m[32m+            r,
+(B[m[32m+            !RectPriv::quad_contains_rect_m44(&p, &a, &Rect::new(0., 1., 10., 10.), 0.)
+(B[m[32m+        );
+(B[m     }
+     {
+         eprintln!("Perspective, no W > 0");
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m05/rect.rs:53:
+[31m-        let mut p=M44::I(); p.set_row(3,V4::new(-0.2,-0.6,0.,8.)); let mut na=a; na.offset(16.,31.);
+(B[m[31m-        check!(r,!RectPriv::quad_contains_rect_m44(&p,&na,&Rect::new(10.,50.,20.,60.),0.));
+(B[m[31m-        check!(r,!RectPriv::quad_contains_rect_m44(&p,&na,&Rect::new(-1.1,-1.8,-1.,-1.79),0.));
+(B[m[31m-        check!(r,!RectPriv::quad_contains_rect_m44(&p,&na,&Rect::new(-1.9,-2.3,-0.4,-1.6),0.));
+(B[m[32m+        let mut p = M44::I();
+(B[m[32m+        p.set_row(3, V4::new(-0.2, -0.6, 0., 8.));
+(B[m[32m+        let mut na = a;
+(B[m[32m+        na.offset(16., 31.);
+(B[m[32m+        check!(
+(B[m[32m+            r,
+(B[m[32m+            !RectPriv::quad_contains_rect_m44(&p, &na, &Rect::new(10., 50., 20., 60.), 0.)
+(B[m[32m+        );
+(B[m[32m+        check!(
+(B[m[32m+            r,
+(B[m[32m+            !RectPriv::quad_contains_rect_m44(&p, &na, &Rect::new(-1.1, -1.8, -1., -1.79), 0.)
+(B[m[32m+        );
+(B[m[32m+        check!(
+(B[m[32m+            r,
+(B[m[32m+            !RectPriv::quad_contains_rect_m44(&p, &na, &Rect::new(-1.9, -2.3, -0.4, -1.6), 0.)
+(B[m[32m+        );
+(B[m     }
+     r.finish();
+ }
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m05/supplemental.rs:1:
+ // Supplemental M05 contracts; independent of the faithful original registrations.
+ use super::*;
+[31m-use rust_skia::{bitmap_proc_state_matrix_procs as tile, camera::{Camera3D,Patch3D,View3D}, matrix_invert};
+(B[m[32m+use rust_skia::{
+(B[m[32m+    bitmap_proc_state_matrix_procs as tile,
+(B[m[32m+    camera::{Camera3D, Patch3D, View3D},
+(B[m[32m+    matrix_invert,
+(B[m[32m+};
+(B[m 
+ #[test]
+ fn supplemental_serialization_boundaries_byte_order_and_ownership() {
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m05/supplemental.rs:7:
+     // Native-endian row-major scalar payload, including signed zero and NaN payload bits.
+[31m-    let values=[1.25,-0.0,f32::from_bits(0x7fc12345),-7.5,2.0,6.0,0.125,-0.25,1.0];
+(B[m[31m-    let mut m=Matrix::I(); m.set9(&values);
+(B[m[31m-    let mut buffer=[0xa5;140];
+(B[m[31m-    let n=matrix_priv::write_to_memory(&m,&mut buffer[4..136]);
+(B[m[31m-    assert_eq!(n,36); assert_eq!(&buffer[..4],&[0xa5;4]); assert!(buffer[40..].iter().all(|b|*b==0xa5));
+(B[m[31m-    for i in 0..9 { assert_eq!(&buffer[4+i*4..8+i*4],&values[i].to_ne_bytes()); }
+(B[m[32m+    let values = [
+(B[m[32m+        1.25,
+(B[m[32m+        -0.0,
+(B[m[32m+        f32::from_bits(0x7fc12345),
+(B[m[32m+        -7.5,
+(B[m[32m+        2.0,
+(B[m[32m+        6.0,
+(B[m[32m+        0.125,
+(B[m[32m+        -0.25,
+(B[m[32m+        1.0,
+(B[m[32m+    ];
+(B[m[32m+    let mut m = Matrix::I();
+(B[m[32m+    m.set9(&values);
+(B[m[32m+    let mut buffer = [0xa5; 140];
+(B[m[32m+    let n = matrix_priv::write_to_memory(&m, &mut buffer[4..136]);
+(B[m[32m+    assert_eq!(n, 36);
+(B[m[32m+    assert_eq!(&buffer[..4], &[0xa5; 4]);
+(B[m[32m+    assert!(buffer[40..].iter().all(|b| *b == 0xa5));
+(B[m[32m+    for i in 0..9 {
+(B[m[32m+        assert_eq!(&buffer[4 + i * 4..8 + i * 4], &values[i].to_ne_bytes());
+(B[m[32m+    }
+(B[m     for len in 0..36 {
+[31m-        let mut dst=Matrix::Translate(17.,19.); let before=dst.get9_array();
+(B[m[31m-        assert_eq!(matrix_priv::read_from_memory(&mut dst,&buffer[4..4+len]),0);
+(B[m[31m-        assert_eq!(dst.get9_array(),before);
+(B[m[31m-        let mut short=[0x5a;36]; assert_eq!(matrix_priv::write_to_memory(&m,&mut short[..len]),0);
+(B[m[31m-        assert_eq!(short,[0x5a;36]);
+(B[m[32m+        let mut dst = Matrix::Translate(17., 19.);
+(B[m[32m+        let before = dst.get9_array();
+(B[m[32m+        assert_eq!(
+(B[m[32m+            matrix_priv::read_from_memory(&mut dst, &buffer[4..4 + len]),
+(B[m[32m+            0
+(B[m[32m+        );
+(B[m[32m+        assert_eq!(dst.get9_array(), before);
+(B[m[32m+        let mut short = [0x5a; 36];
+(B[m[32m+        assert_eq!(matrix_priv::write_to_memory(&m, &mut short[..len]), 0);
+(B[m[32m+        assert_eq!(short, [0x5a; 36]);
+(B[m     }
+[31m-    let mut decoded=Matrix::I(); assert_eq!(matrix_priv::read_from_memory(&mut decoded,&buffer[4..40]),36);
+(B[m[31m-    for i in 0..9 { assert_eq!(decoded[i].to_bits(),values[i].to_bits()); }
+(B[m[31m-    buffer.fill(0); m.reset();
+(B[m[31m-    for i in 0..9 { assert_eq!(decoded[i].to_bits(),values[i].to_bits()); }
+(B[m[31m-    let persisted={ let temporary=Matrix::ScaleTranslate(2.,3.,4.,5.); let mut bytes=[0;36]; temporary.write_to_memory(&mut bytes); bytes };
+(B[m[31m-    let mut restored=Matrix::I(); assert_eq!(restored.read_from_memory(&persisted),36);
+(B[m[31m-    assert_eq!(restored,Matrix::ScaleTranslate(2.,3.,4.,5.));
+(B[m[32m+    let mut decoded = Matrix::I();
+(B[m[32m+    assert_eq!(
+(B[m[32m+        matrix_priv::read_from_memory(&mut decoded, &buffer[4..40]),
+(B[m[32m+        36
+(B[m[32m+    );
+(B[m[32m+    for i in 0..9 {
+(B[m[32m+        assert_eq!(decoded[i].to_bits(), values[i].to_bits());
+(B[m[32m+    }
+(B[m[32m+    buffer.fill(0);
+(B[m[32m+    m.reset();
+(B[m[32m+    for i in 0..9 {
+(B[m[32m+        assert_eq!(decoded[i].to_bits(), values[i].to_bits());
+(B[m[32m+    }
+(B[m[32m+    let persisted = {
+(B[m[32m+        let temporary = Matrix::ScaleTranslate(2., 3., 4., 5.);
+(B[m[32m+        let mut bytes = [0; 36];
+(B[m[32m+        temporary.write_to_memory(&mut bytes);
+(B[m[32m+        bytes
+(B[m[32m+    };
+(B[m[32m+    let mut restored = Matrix::I();
+(B[m[32m+    assert_eq!(restored.read_from_memory(&persisted), 36);
+(B[m[32m+    assert_eq!(restored, Matrix::ScaleTranslate(2., 3., 4., 5.));
+(B[m }
+ 
+ #[test]
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m05/supplemental.rs:31:
+ fn supplemental_inversion_singular_nonfinite_and_near_singular() {
+[31m-    for sx in [0.,-0.,f32::from_bits(1),f32::INFINITY,f32::NEG_INFINITY,f32::NAN] {
+(B[m[31m-        let m=Matrix::Scale(sx,1.); assert!(!m.invert(None)); let mut out=Matrix::I(); assert!(!m.invert(Some(&mut out)));
+(B[m[32m+    for sx in [
+(B[m[32m+        0.,
+(B[m[32m+        -0.,
+(B[m[32m+        f32::from_bits(1),
+(B[m[32m+        f32::INFINITY,
+(B[m[32m+        f32::NEG_INFINITY,
+(B[m[32m+        f32::NAN,
+(B[m[32m+    ] {
+(B[m[32m+        let m = Matrix::Scale(sx, 1.);
+(B[m[32m+        assert!(!m.invert(None));
+(B[m[32m+        let mut out = Matrix::I();
+(B[m[32m+        assert!(!m.invert(Some(&mut out)));
+(B[m     }
+[31m-    let m=Matrix::Scale(1e-6,2.); let inv=m.inverted().expect("finite near-singular diagonal");
+(B[m[31m-    let p=Point::new(3.,-4.); let q=inv.map_point(m.map_point(p)); assert!(near(p.x,q.x)&&near(p.y,q.y));
+(B[m[31m-    for m in [M44::Scale(0.,1.,1.),M44::Scale(f32::INFINITY,1.,1.),M44::nan()] {
+(B[m[31m-        assert!(!m.invert(None)); let mut out=M44::I(); assert!(!m.invert(Some(&mut out)));
+(B[m[32m+    let m = Matrix::Scale(1e-6, 2.);
+(B[m[32m+    let inv = m.inverted().expect("finite near-singular diagonal");
+(B[m[32m+    let p = Point::new(3., -4.);
+(B[m[32m+    let q = inv.map_point(m.map_point(p));
+(B[m[32m+    assert!(near(p.x, q.x) && near(p.y, q.y));
+(B[m[32m+    for m in [
+(B[m[32m+        M44::Scale(0., 1., 1.),
+(B[m[32m+        M44::Scale(f32::INFINITY, 1., 1.),
+(B[m[32m+        M44::nan(),
+(B[m[32m+    ] {
+(B[m[32m+        assert!(!m.invert(None));
+(B[m[32m+        let mut out = M44::I();
+(B[m[32m+        assert!(!m.invert(Some(&mut out)));
+(B[m     }
+[31m-    let mut o2=[0.;4]; assert_eq!(matrix_invert::invert_2x2_matrix(&[2.,0.,0.,4.],&mut o2),8.); assert_eq!(o2,[0.5,0.,0.,0.25]);
+(B[m[31m-    assert_eq!(matrix_invert::invert_2x2_matrix(&[1.,2.,2.,4.],&mut o2),0.);
+(B[m[31m-    let mut o3=[0.;9]; assert_eq!(matrix_invert::invert_3x3_matrix(&[2.,0.,0.,0.,4.,0.,0.,0.,8.],&mut o3),64.);
+(B[m[31m-    assert_eq!(o3,[0.5,0.,0.,0.,0.25,0.,0.,0.,0.125]);
+(B[m[31m-    let mut o4=[0.;16]; let diag=[2.,0.,0.,0.,0.,4.,0.,0.,0.,0.,8.,0.,0.,0.,0.,16.];
+(B[m[31m-    assert_eq!(matrix_invert::invert_4x4_matrix(&diag,&mut o4),1024.);
+(B[m[31m-    assert_eq!(o4,[0.5,0.,0.,0.,0.,0.25,0.,0.,0.,0.,0.125,0.,0.,0.,0.,0.0625]);
+(B[m[32m+    let mut o2 = [0.; 4];
+(B[m[32m+    assert_eq!(
+(B[m[32m+        matrix_invert::invert_2x2_matrix(&[2., 0., 0., 4.], &mut o2),
+(B[m[32m+        8.
+(B[m[32m+    );
+(B[m[32m+    assert_eq!(o2, [0.5, 0., 0., 0.25]);
+(B[m[32m+    assert_eq!(
+(B[m[32m+        matrix_invert::invert_2x2_matrix(&[1., 2., 2., 4.], &mut o2),
+(B[m[32m+        0.
+(B[m[32m+    );
+(B[m[32m+    let mut o3 = [0.; 9];
+(B[m[32m+    assert_eq!(
+(B[m[32m+        matrix_invert::invert_3x3_matrix(&[2., 0., 0., 0., 4., 0., 0., 0., 8.], &mut o3),
+(B[m[32m+        64.
+(B[m[32m+    );
+(B[m[32m+    assert_eq!(o3, [0.5, 0., 0., 0., 0.25, 0., 0., 0., 0.125]);
+(B[m[32m+    let mut o4 = [0.; 16];
+(B[m[32m+    let diag = [
+(B[m[32m+        2., 0., 0., 0., 0., 4., 0., 0., 0., 0., 8., 0., 0., 0., 0., 16.,
+(B[m[32m+    ];
+(B[m[32m+    assert_eq!(matrix_invert::invert_4x4_matrix(&diag, &mut o4), 1024.);
+(B[m[32m+    assert_eq!(
+(B[m[32m+        o4,
+(B[m[32m+        [
+(B[m[32m+            0.5, 0., 0., 0., 0., 0.25, 0., 0., 0., 0., 0.125, 0., 0., 0., 0., 0.0625
+(B[m[32m+        ]
+(B[m[32m+    );
+(B[m }
+ 
+ #[test]
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m05/supplemental.rs:50:
+ fn supplemental_matrix_order_cache_layout_and_lifetime() {
+[31m-    let mut m=Matrix::Translate(3.,5.); m.pre_scale(2.,4.);
+(B[m[31m-    assert_eq!(m.map_point(Point::new(1.,1.)),Point::new(5.,9.));
+(B[m[31m-    let mut post=Matrix::Translate(3.,5.); post.post_scale(2.,4.);
+(B[m[31m-    assert_eq!(post.map_point(Point::new(1.,1.)),Point::new(8.,24.));
+(B[m[31m-    assert!(m.rect_stays_rect()); m[Matrix::M_PERSP_0]=0.25; assert!(m.has_perspective());
+(B[m[31m-    m[Matrix::M_PERSP_0]=0.; assert!(!m.has_perspective());
+(B[m[31m-    let mut scaled=Matrix::MakeAll(4.,0.,8.,0.,6.,10.,0.,0.,2.); scaled.normalize_perspective();
+(B[m[31m-    assert_eq!(scaled,Matrix::ScaleTranslate(2.,3.,4.,5.));
+(B[m[31m-    let mut m44=M44::RowMajor(&[1.,2.,3.,4.,5.,6.,7.,8.,9.,10.,11.,12.,13.,14.,15.,16.]);
+(B[m[31m-    assert_eq!(std::mem::size_of::<M44>(),64); assert_eq!(std::mem::size_of::<Matrix>(),40);
+(B[m[31m-    assert_eq!(matrix_priv::m44_col_major(&m44),&[1.,5.,9.,13.,2.,6.,10.,14.,3.,7.,11.,15.,4.,8.,12.,16.]);
+(B[m[31m-    let owned=m44.get_col_major(); m44.set_identity(); assert_eq!(owned[1],5.);
+(B[m[31m-    let mapped={ let local=Matrix::Translate(7.,9.); local.map_point(Point::new(1.,2.)) };
+(B[m[31m-    assert_eq!(mapped,Point::new(8.,11.));
+(B[m[31m-    let src=Rect::new(-1.,-2.,3.,4.); let mut dst=Rect::new(99.,98.,100.,101.); let saved=dst;
+(B[m[31m-    assert!(!matrix_priv::inverse_map_rect(&Matrix::Scale(0.,1.),&mut dst,&src)); assert_eq!(dst,saved);
+(B[m[31m-    assert!(matrix_priv::inverse_map_rect(&Matrix::Scale(-2.,4.),&mut dst,&src)); assert_eq!(dst,Rect::new(-1.5,-0.5,0.5,1.));
+(B[m[31m-    let sentinel=Point::new(99.,101.); let mut strided=[Point::new(1.,2.),sentinel,Point::new(3.,4.),sentinel];
+(B[m[31m-    matrix_priv::map_points_in_place_with_stride(&Matrix::Translate(7.,9.),&mut strided,2,2);
+(B[m[31m-    assert_eq!(strided,[Point::new(8.,11.),sentinel,Point::new(10.,13.),sentinel]);
+(B[m[31m-    Matrix::I().map_points(&mut [],&[]); Matrix::I().map_vectors(&mut [],&[]);
+(B[m[32m+    let mut m = Matrix::Translate(3., 5.);
+(B[m[32m+    m.pre_scale(2., 4.);
+(B[m[32m+    assert_eq!(m.map_point(Point::new(1., 1.)), Point::new(5., 9.));
+(B[m[32m+    let mut post = Matrix::Translate(3., 5.);
+(B[m[32m+    post.post_scale(2., 4.);
+(B[m[32m+    assert_eq!(post.map_point(Point::new(1., 1.)), Point::new(8., 24.));
+(B[m[32m+    assert!(m.rect_stays_rect());
+(B[m[32m+    m[Matrix::M_PERSP_0] = 0.25;
+(B[m[32m+    assert!(m.has_perspective());
+(B[m[32m+    m[Matrix::M_PERSP_0] = 0.;
+(B[m[32m+    assert!(!m.has_perspective());
+(B[m[32m+    let mut scaled = Matrix::MakeAll(4., 0., 8., 0., 6., 10., 0., 0., 2.);
+(B[m[32m+    scaled.normalize_perspective();
+(B[m[32m+    assert_eq!(scaled, Matrix::ScaleTranslate(2., 3., 4., 5.));
+(B[m[32m+    let mut m44 = M44::RowMajor(&[
+(B[m[32m+        1., 2., 3., 4., 5., 6., 7., 8., 9., 10., 11., 12., 13., 14., 15., 16.,
+(B[m[32m+    ]);
+(B[m[32m+    assert_eq!(std::mem::size_of::<M44>(), 64);
+(B[m[32m+    assert_eq!(std::mem::size_of::<Matrix>(), 40);
+(B[m[32m+    assert_eq!(
+(B[m[32m+        matrix_priv::m44_col_major(&m44),
+(B[m[32m+        &[
+(B[m[32m+            1., 5., 9., 13., 2., 6., 10., 14., 3., 7., 11., 15., 4., 8., 12., 16.
+(B[m[32m+        ]
+(B[m[32m+    );
+(B[m[32m+    let owned = m44.get_col_major();
+(B[m[32m+    m44.set_identity();
+(B[m[32m+    assert_eq!(owned[1], 5.);
+(B[m[32m+    let mapped = {
+(B[m[32m+        let local = Matrix::Translate(7., 9.);
+(B[m[32m+        local.map_point(Point::new(1., 2.))
+(B[m[32m+    };
+(B[m[32m+    assert_eq!(mapped, Point::new(8., 11.));
+(B[m[32m+    let src = Rect::new(-1., -2., 3., 4.);
+(B[m[32m+    let mut dst = Rect::new(99., 98., 100., 101.);
+(B[m[32m+    let saved = dst;
+(B[m[32m+    assert!(!matrix_priv::inverse_map_rect(
+(B[m[32m+        &Matrix::Scale(0., 1.),
+(B[m[32m+        &mut dst,
+(B[m[32m+        &src
+(B[m[32m+    ));
+(B[m[32m+    assert_eq!(dst, saved);
+(B[m[32m+    assert!(matrix_priv::inverse_map_rect(
+(B[m[32m+        &Matrix::Scale(-2., 4.),
+(B[m[32m+        &mut dst,
+(B[m[32m+        &src
+(B[m[32m+    ));
+(B[m[32m+    assert_eq!(dst, Rect::new(-1.5, -0.5, 0.5, 1.));
+(B[m[32m+    let sentinel = Point::new(99., 101.);
+(B[m[32m+    let mut strided = [Point::new(1., 2.), sentinel, Point::new(3., 4.), sentinel];
+(B[m[32m+    matrix_priv::map_points_in_place_with_stride(&Matrix::Translate(7., 9.), &mut strided, 2, 2);
+(B[m[32m+    assert_eq!(
+(B[m[32m+        strided,
+(B[m[32m+        [
+(B[m[32m+            Point::new(8., 11.),
+(B[m[32m+            sentinel,
+(B[m[32m+            Point::new(10., 13.),
+(B[m[32m+            sentinel
+(B[m[32m+        ]
+(B[m[32m+    );
+(B[m[32m+    Matrix::I().map_points(&mut [], &[]);
+(B[m[32m+    Matrix::I().map_vectors(&mut [], &[]);
+(B[m }
+ 
+ #[test]
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m05/supplemental.rs:75:
+ fn supplemental_fixed_tiling_overflow_and_packed_byte_order() {
+[31m-    for n in [1,2,3,255,32767] {
+(B[m[31m-        for x in [i32::MIN,-65537,-1,0,1,65535,i32::MAX] {
+(B[m[31m-            let expected=(x as i64).rem_euclid(n as i64) as u16;
+(B[m[31m-            assert_eq!(tile::int_repeat(x,n),expected);
+(B[m[31m-            let folded=(x as i64).rem_euclid(2*n as i64);
+(B[m[31m-            let expected=if folded<n as i64 { folded } else { 2*n as i64-1-folded } as u16;
+(B[m[31m-            assert_eq!(tile::int_mirror(x,n),expected);
+(B[m[31m-            assert_eq!(tile::int_clamp(x,n),(x as i64).clamp(0,n as i64-1) as u16);
+(B[m[32m+    for n in [1, 2, 3, 255, 32767] {
+(B[m[32m+        for x in [i32::MIN, -65537, -1, 0, 1, 65535, i32::MAX] {
+(B[m[32m+            let expected = (x as i64).rem_euclid(n as i64) as u16;
+(B[m[32m+            assert_eq!(tile::int_repeat(x, n), expected);
+(B[m[32m+            let folded = (x as i64).rem_euclid(2 * n as i64);
+(B[m[32m+            let expected = if folded < n as i64 {
+(B[m[32m+                folded
+(B[m[32m+            } else {
+(B[m[32m+                2 * n as i64 - 1 - folded
+(B[m[32m+            } as u16;
+(B[m[32m+            assert_eq!(tile::int_mirror(x, n), expected);
+(B[m[32m+            assert_eq!(
+(B[m[32m+                tile::int_clamp(x, n),
+(B[m[32m+                (x as i64).clamp(0, n as i64 - 1) as u16
+(B[m[32m+            );
+(B[m         }
+     }
+[31m-    for max in [0,1,255,16383] {
+(B[m[31m-        for f in [i32::MIN,-65537,-65536,-1,0,1,4095,4096,65535,65536,i32::MAX] {
+(B[m[31m-            assert_eq!(tile::clamp(f,max),(f>>16).clamp(0,max) as u32);
+(B[m[31m-            assert_eq!(tile::repeat(f,max),(((f as u32&65535) as u64*(max+1) as u64)>>16) as u32);
+(B[m[31m-            let parity=(f>>16)&1; let fraction=(f as u32&65535) ^ if parity!=0 {65535} else {0};
+(B[m[31m-            assert_eq!(tile::mirror(f,max),((fraction as u64*(max+1) as u64)>>16) as u32);
+(B[m[32m+    for max in [0, 1, 255, 16383] {
+(B[m[32m+        for f in [
+(B[m[32m+            i32::MIN,
+(B[m[32m+            -65537,
+(B[m[32m+            -65536,
+(B[m[32m+            -1,
+(B[m[32m+            0,
+(B[m[32m+            1,
+(B[m[32m+            4095,
+(B[m[32m+            4096,
+(B[m[32m+            65535,
+(B[m[32m+            65536,
+(B[m[32m+            i32::MAX,
+(B[m[32m+        ] {
+(B[m[32m+            assert_eq!(tile::clamp(f, max), (f >> 16).clamp(0, max) as u32);
+(B[m[32m+            assert_eq!(
+(B[m[32m+                tile::repeat(f, max),
+(B[m[32m+                (((f as u32 & 65535) as u64 * (max + 1) as u64) >> 16) as u32
+(B[m[32m+            );
+(B[m[32m+            let parity = (f >> 16) & 1;
+(B[m[32m+            let fraction = (f as u32 & 65535) ^ if parity != 0 { 65535 } else { 0 };
+(B[m[32m+            assert_eq!(
+(B[m[32m+                tile::mirror(f, max),
+(B[m[32m+                ((fraction as u64 * (max + 1) as u64) >> 16) as u32
+(B[m[32m+            );
+(B[m         }
+     }
+[31m-    let packed=tile::pack_clamp((3<<16)+(5<<12),100);
+(B[m[31m-    assert_eq!(packed,(((3u32<<4)|5)<<14)|4);
+(B[m[32m+    let packed = tile::pack_clamp((3 << 16) + (5 << 12), 100);
+(B[m[32m+    assert_eq!(packed, (((3u32 << 4) | 5) << 14) | 4);
+(B[m     // Validate the packed word's native bytes explicitly for each target byte order.
+[31m-    #[cfg(target_endian="little")] assert_eq!(packed.to_ne_bytes(),[0x04,0x40,0x0d,0x00]);
+(B[m[31m-    #[cfg(target_endian="big")] assert_eq!(packed.to_ne_bytes(),[0x00,0x0d,0x40,0x04]);
+(B[m[31m-    for count in 0..=7 { let mut dst=[0xdead;9]; tile::decal_nofilter_scale(&mut dst[1..8],1<<16,1<<15,count);
+(B[m[31m-        assert_eq!(dst[0],0xdead); for i in 0..count { assert_eq!(dst[i+1],((65536+i*32768)>>16) as u16); }
+(B[m[31m-        assert!(dst[count+1..].iter().all(|x|*x==0xdead));
+(B[m[32m+    #[cfg(target_endian = "little")]
+(B[m[32m+    assert_eq!(packed.to_ne_bytes(), [0x04, 0x40, 0x0d, 0x00]);
+(B[m[32m+    #[cfg(target_endian = "big")]
+(B[m[32m+    assert_eq!(packed.to_ne_bytes(), [0x00, 0x0d, 0x40, 0x04]);
+(B[m[32m+    for count in 0..=7 {
+(B[m[32m+        let mut dst = [0xdead; 9];
+(B[m[32m+        tile::decal_nofilter_scale(&mut dst[1..8], 1 << 16, 1 << 15, count);
+(B[m[32m+        assert_eq!(dst[0], 0xdead);
+(B[m[32m+        for i in 0..count {
+(B[m[32m+            assert_eq!(dst[i + 1], ((65536 + i * 32768) >> 16) as u16);
+(B[m[32m+        }
+(B[m[32m+        assert!(dst[count + 1..].iter().all(|x| *x == 0xdead));
+(B[m     }
+[31m-    assert!(!tile::can_truncate_to_fixed_for_decal(0,tile::DECAL_DX_MIN,1,10));
+(B[m[31m-    assert!(tile::can_truncate_to_fixed_for_decal(0,tile::DECAL_DX_MIN+1,1,10));
+(B[m[31m-    assert!(!tile::can_truncate_to_fixed_for_decal(-1,65536,1,10));
+(B[m[31m-    assert!(!tile::can_truncate_to_fixed_for_decal(0,65536,11,10));
+(B[m[31m-    assert!(!tile::can_truncate_to_fixed_for_decal(i32::MAX-65536,65536,3,65535));
+(B[m[31m-    for (x,expected) in [(i64::MIN,i32::MIN),(-32768i64<<32,i32::MIN),(-1i64<<32,-65536),(0,0),(1i64<<32,65536),(32767i64<<32,32767<<16),(i64::MAX,32767<<16)] {
+(B[m[31m-        assert_eq!(tile::sk_fixed3232_saturate2fixed(x),expected);
+(B[m[32m+    assert!(!tile::can_truncate_to_fixed_for_decal(
+(B[m[32m+        0,
+(B[m[32m+        tile::DECAL_DX_MIN,
+(B[m[32m+        1,
+(B[m[32m+        10
+(B[m[32m+    ));
+(B[m[32m+    assert!(tile::can_truncate_to_fixed_for_decal(
+(B[m[32m+        0,
+(B[m[32m+        tile::DECAL_DX_MIN + 1,
+(B[m[32m+        1,
+(B[m[32m+        10
+(B[m[32m+    ));
+(B[m[32m+    assert!(!tile::can_truncate_to_fixed_for_decal(-1, 65536, 1, 10));
+(B[m[32m+    assert!(!tile::can_truncate_to_fixed_for_decal(0, 65536, 11, 10));
+(B[m[32m+    assert!(!tile::can_truncate_to_fixed_for_decal(
+(B[m[32m+        i32::MAX - 65536,
+(B[m[32m+        65536,
+(B[m[32m+        3,
+(B[m[32m+        65535
+(B[m[32m+    ));
+(B[m[32m+    for (x, expected) in [
+(B[m[32m+        (i64::MIN, i32::MIN),
+(B[m[32m+        (-32768i64 << 32, i32::MIN),
+(B[m[32m+        (-1i64 << 32, -65536),
+(B[m[32m+        (0, 0),
+(B[m[32m+        (1i64 << 32, 65536),
+(B[m[32m+        (32767i64 << 32, 32767 << 16),
+(B[m[32m+        (i64::MAX, 32767 << 16),
+(B[m[32m+    ] {
+(B[m[32m+        assert_eq!(tile::sk_fixed3232_saturate2fixed(x), expected);
+(B[m     }
+[31m-    assert_eq!(tile::fixed3232_floor_to_int(-1),-1);
+(B[m[32m+    assert_eq!(tile::fixed3232_floor_to_int(-1), -1);
+(B[m }
+ 
+ #[test]
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m05/supplemental.rs:115:
+ fn supplemental_rsxform_camera_stack_and_owned_outputs() {
+[31m-    let x=RSXform::Make(2.,3.,5.,7.); let quad=x.to_quad(4.,6.);
+(B[m[31m-    assert_eq!(quad,[Point::new(5.,7.),Point::new(13.,19.),Point::new(-5.,31.),Point::new(-13.,19.)]);
+(B[m[31m-    let mut strip=[Point::default();4]; x.to_tri_strip(4.,6.,&mut strip);
+(B[m[31m-    assert_eq!(strip,[quad[0],quad[1],quad[3],quad[2]]);
+(B[m[31m-    let anchored=RSXform::MakeFromRadians(2.,0.,10.,20.,3.,4.); let mut m=Matrix::I(); m.set_rs_xform(&anchored);
+(B[m[31m-    assert_eq!(m.map_point(Point::new(3.,4.)),Point::new(10.,20.));
+(B[m[31m-    assert!(RSXform::Make(0.,3.,0.,0.).rect_stays_rect()); assert!(!x.rect_stays_rect());
+(B[m[31m-    let owned={ let local=RSXform::Make(1.,0.,2.,3.); local.to_quad(0.,0.) }; assert_eq!(owned,[Point::new(2.,3.);4]);
+(B[m[31m-    let patch=Patch3D::new(); assert_eq!(patch.dot_with(0.,0.,1.),-1.);
+(B[m[31m-    let moved=patch.transformed(&M44::Translate(3.,4.,5.));
+(B[m[31m-    assert_eq!(moved.f_u,patch.f_u); assert_eq!(moved.f_v,patch.f_v); assert_eq!(moved.f_origin,V3::new(3.,4.,5.));
+(B[m[31m-    let mut camera=Camera3D::new(); let mut projected=Matrix::I(); camera.patch_to_matrix(&patch,&mut projected); assert_eq!(projected,Matrix::I());
+(B[m[31m-    let mut view=View3D::new(); let mut original=Matrix::I(); view.get_matrix(&mut original); assert_eq!(original,Matrix::I());
+(B[m[31m-    view.translate(3.,4.,0.); let mut translated=Matrix::I(); view.get_matrix(&mut translated); assert_eq!(translated,Matrix::Translate(3.,-4.));
+(B[m[31m-    view.save(); view.rotate_x(30.); view.save(); view.rotate_y(45.); view.rotate_z(15.);
+(B[m[31m-    let mut changed=Matrix::I(); view.get_matrix(&mut changed); assert_ne!(changed,translated);
+(B[m[31m-    view.restore(); view.restore(); let mut restored=Matrix::I(); view.get_matrix(&mut restored); assert_eq!(restored,translated);
+(B[m[31m-    for _ in 0..64 { view.save(); view.translate(1.,2.,3.); view.restore(); }
+(B[m[31m-    view.get_matrix(&mut restored); assert_eq!(restored,translated);
+(B[m[31m-    let retained={ let mut local=View3D::new(); let mut dst=Matrix::I(); local.get_matrix(&mut dst); dst }; assert_eq!(retained,original);
+(B[m[31m-    for h in [Point::new(0.,0.),Point::new(-3.,0.),Point::new(0.,-4.),Point::new(3.,4.),Point::new(-3.,4.)] {
+(B[m[31m-        let g=rust_skia::matrix22::givens_rotation(h); let p=g.map_point(h);
+(B[m[31m-        assert!(near(p.y,0.)); assert!(near(p.x,h.length()));
+(B[m[32m+    let x = RSXform::Make(2., 3., 5., 7.);
+(B[m[32m+    let quad = x.to_quad(4., 6.);
+(B[m[32m+    assert_eq!(
+(B[m[32m+        quad,
+(B[m[32m+        [
+(B[m[32m+            Point::new(5., 7.),
+(B[m[32m+            Point::new(13., 19.),
+(B[m[32m+            Point::new(-5., 31.),
+(B[m[32m+            Point::new(-13., 19.)
+(B[m[32m+        ]
+(B[m[32m+    );
+(B[m[32m+    let mut strip = [Point::default(); 4];
+(B[m[32m+    x.to_tri_strip(4., 6., &mut strip);
+(B[m[32m+    assert_eq!(strip, [quad[0], quad[1], quad[3], quad[2]]);
+(B[m[32m+    let anchored = RSXform::MakeFromRadians(2., 0., 10., 20., 3., 4.);
+(B[m[32m+    let mut m = Matrix::I();
+(B[m[32m+    m.set_rs_xform(&anchored);
+(B[m[32m+    assert_eq!(m.map_point(Point::new(3., 4.)), Point::new(10., 20.));
+(B[m[32m+    assert!(RSXform::Make(0., 3., 0., 0.).rect_stays_rect());
+(B[m[32m+    assert!(!x.rect_stays_rect());
+(B[m[32m+    let owned = {
+(B[m[32m+        let local = RSXform::Make(1., 0., 2., 3.);
+(B[m[32m+        local.to_quad(0., 0.)
+(B[m[32m+    };
+(B[m[32m+    assert_eq!(owned, [Point::new(2., 3.); 4]);
+(B[m[32m+    let patch = Patch3D::new();
+(B[m[32m+    assert_eq!(patch.dot_with(0., 0., 1.), -1.);
+(B[m[32m+    let moved = patch.transformed(&M44::Translate(3., 4., 5.));
+(B[m[32m+    assert_eq!(moved.f_u, patch.f_u);
+(B[m[32m+    assert_eq!(moved.f_v, patch.f_v);
+(B[m[32m+    assert_eq!(moved.f_origin, V3::new(3., 4., 5.));
+(B[m[32m+    let mut camera = Camera3D::new();
+(B[m[32m+    let mut projected = Matrix::I();
+(B[m[32m+    camera.patch_to_matrix(&patch, &mut projected);
+(B[m[32m+    assert_eq!(projected, Matrix::I());
+(B[m[32m+    let mut view = View3D::new();
+(B[m[32m+    let mut original = Matrix::I();
+(B[m[32m+    view.get_matrix(&mut original);
+(B[m[32m+    assert_eq!(original, Matrix::I());
+(B[m[32m+    view.translate(3., 4., 0.);
+(B[m[32m+    let mut translated = Matrix::I();
+(B[m[32m+    view.get_matrix(&mut translated);
+(B[m[32m+    assert_eq!(translated, Matrix::Translate(3., -4.));
+(B[m[32m+    view.save();
+(B[m[32m+    view.rotate_x(30.);
+(B[m[32m+    view.save();
+(B[m[32m+    view.rotate_y(45.);
+(B[m[32m+    view.rotate_z(15.);
+(B[m[32m+    let mut changed = Matrix::I();
+(B[m[32m+    view.get_matrix(&mut changed);
+(B[m[32m+    assert_ne!(changed, translated);
+(B[m[32m+    view.restore();
+(B[m[32m+    view.restore();
+(B[m[32m+    let mut restored = Matrix::I();
+(B[m[32m+    view.get_matrix(&mut restored);
+(B[m[32m+    assert_eq!(restored, translated);
+(B[m[32m+    for _ in 0..64 {
+(B[m[32m+        view.save();
+(B[m[32m+        view.translate(1., 2., 3.);
+(B[m[32m+        view.restore();
+(B[m[32m+    }
+(B[m[32m+    view.get_matrix(&mut restored);
+(B[m[32m+    assert_eq!(restored, translated);
+(B[m[32m+    let retained = {
+(B[m[32m+        let mut local = View3D::new();
+(B[m[32m+        let mut dst = Matrix::I();
+(B[m[32m+        local.get_matrix(&mut dst);
+(B[m[32m+        dst
+(B[m[32m+    };
+(B[m[32m+    assert_eq!(retained, original);
+(B[m[32m+    for h in [
+(B[m[32m+        Point::new(0., 0.),
+(B[m[32m+        Point::new(-3., 0.),
+(B[m[32m+        Point::new(0., -4.),
+(B[m[32m+        Point::new(3., 4.),
+(B[m[32m+        Point::new(-3., 4.),
+(B[m[32m+    ] {
+(B[m[32m+        let g = rust_skia::matrix22::givens_rotation(h);
+(B[m[32m+        let p = g.map_point(h);
+(B[m[32m+        assert!(near(p.y, 0.));
+(B[m[32m+        assert!(near(p.x, h.length()));
+(B[m     }
+ }
+ 
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m05_test.rs:5:
+ use rust_skia::{matrix_priv, matrix_utils, random::SkRandom};
+ use support::{Reporter, reporter_assert as check};
+ const NZ: f32 = 1.0 / 4096.0;
+[31m-fn near(a: f32, b: f32) -> bool { (a-b).abs() <= NZ }
+(B[m[32m+fn near(a: f32, b: f32) -> bool {
+(B[m[32m+    (a - b).abs() <= NZ
+(B[m[32m+}
+(B[m fn relative(a: f32, b: f32) -> bool {
+[31m-    let diff = (a-b).abs();
+(B[m[32m+    let diff = (a - b).abs();
+(B[m     diff < NZ || diff <= (if b.abs() > a.abs() { b.abs() } else { a.abs() }) * NZ
+ }
+[31m-#[path = "m05/m44.rs"] mod m44_tests;
+(B[m[31m-#[path = "m05/matrix.rs"] mod matrix_tests;
+(B[m[31m-#[path = "m05/rect.rs"] mod rect_tests;
+(B[m[31m-#[path = "m05/supplemental.rs"] mod supplemental;
+(B[m[32m+#[path = "m05/m44.rs"]
+(B[m[32m+mod m44_tests;
+(B[m[32m+#[path = "m05/matrix.rs"]
+(B[m[32m+mod matrix_tests;
+(B[m[32m+#[path = "m05/rect.rs"]
+(B[m[32m+mod rect_tests;
+(B[m[32m+#[path = "m05/supplemental.rs"]
+(B[m[32m+mod supplemental;
+(B[m 

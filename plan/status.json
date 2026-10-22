@@ -29,8 +29,8 @@
     {
       "id": "M05",
       "title": "Matrices, camera transforms and coordinate mapping",
-      "state": "NOT_STARTED",
-      "acceptance_report": null
+      "state": "ACCEPTED",
+      "acceptance_report": "acceptance/M05.md"
     },
     {
       "id": "M06",

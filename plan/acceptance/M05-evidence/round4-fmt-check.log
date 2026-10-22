@@ -1,0 +1,11 @@
+Diff in /Volumes/Data/Users/paul/development/src/github/rust-skia/tests/m05/matrix.rs:99:
+     mat.set_all(0.0, 1.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0);
+     check!(r, mat.is_similarity());
+     check!(r, mat.preserves_right_angles());
+[31m-
+(B[m }
+ fn test_matrix_decomposition(r: &mut Reporter) {
+[31m-
+(B[m     let mut mat = Matrix::I();
+     let (mut rotation1, mut scale, mut rotation2) =
+         (Point::default(), Point::default(), Point::default());

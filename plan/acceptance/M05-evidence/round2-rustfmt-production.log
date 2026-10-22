@@ -1,0 +1,2 @@
+$ rustfmt --edition 2024 --check src/*.rs
+exit=0

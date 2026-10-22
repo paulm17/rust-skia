@@ -22,9 +22,11 @@
 )]
 
 pub mod arena;
+pub mod bitmap_proc_state_matrix_procs;
 pub mod bitmask_enum;
 pub mod block_allocator;
 pub mod cache;
+pub mod camera;
 pub mod codec;
 pub mod config;
 pub mod containers;
@@ -43,8 +45,14 @@ pub mod ipoint;
 pub mod ipoint16;
 pub mod json;
 pub mod logging;
+pub mod m44;
 pub mod math;
 pub mod math_priv;
+pub mod matrix;
+pub mod matrix22;
+pub mod matrix_invert;
+pub mod matrix_priv;
+pub mod matrix_utils;
 pub mod memory;
 pub mod os_file;
 pub mod point;
@@ -57,6 +65,7 @@ pub mod rect_priv;
 pub mod ref_cnt;
 pub mod ref_ext;
 pub mod rrect;
+pub mod rsxform;
 pub mod safe32;
 pub mod safe_math;
 pub mod scalar;
@@ -88,6 +97,7 @@ pub use cache::{
     SkCachedData, SkDiscardableMemory, SkDiscardableMemoryFactory, SkResourceCache,
     SkResourceCacheKey, SkResourceCacheRec, sk_discardable_memory_create,
 };
+pub use camera::{Camera3D, Patch3D, Sk3DView, SkCamera3D, SkPatch3D, View3D};
 pub use codec::{
     SkBase64Error, SkMD5, SkMD5Digest, sk_base64_decode, sk_base64_encode, sk_base64_encode_with,
     sk_base64_encoded_size, sk_bswap16, sk_bswap32, sk_bswap64, sk_checksum_cheap_mix,
@@ -170,6 +180,7 @@ pub use logging::{
     TRACE_EVENT_PHASE_END, TRACE_EVENT_PHASE_INSTANT, sk_abort, sk_debugf, sk_event_tracer, sk_log,
     sk_set_event_tracer, sk_set_log_handler,
 };
+pub use m44::{M44, SkM44, SkV2, SkV3, SkV4, V2, V3, V4};
 pub use math::{
     SK_MAX_S16, SK_MAX_S32, SK_MAX_S64, SK_MIN_S16, SK_MIN_S32, SK_MIN_S64, SK_NA_N32, SK_NAN32,
     left_shift_i32, left_shift_i64, sk_64_mul, sk_is_pow2_value, sk_mul_div255_round,
@@ -182,6 +193,22 @@ pub use math_priv::{
     sk_pop_count, sk_prev_log2, sk_prev_pow2, sk_sqrt_bits, sk_sqrt32, sk_tdivmod_i8,
     sk_tdivmod_i16, sk_tdivmod_i32, sk_tdivmod_i64, sk_tdivmod_u8, sk_tdivmod_u16, sk_tdivmod_u32,
     sk_tdivmod_u64,
+};
+pub use matrix::{
+    K_AFFINE_MASK, K_ALL_MASKS, K_IDENTITY_MASK, K_ONLY_PERSPECTIVE_VALID_MASK, K_PERSPECTIVE_MASK,
+    K_RECT_STAYS_RECT_MASK, K_SCALE_MASK, K_TRANSLATE_MASK, K_UNKNOWN_MASK, Matrix, SkMatrix,
+};
+pub use matrix_invert::{
+    invert_2x2_matrix, invert_2x2_matrix_impl, invert_3x3_matrix, invert_3x3_matrix_impl,
+    invert_4x4_matrix, invert_4x4_matrix_impl,
+};
+pub use matrix_priv::MAX_FLATTEN_SIZE;
+pub use matrix_utils::{
+    SkDecomposeUpper2x2, compute_res_scale_for_stroking, decompose_upper2x2,
+    differential_area_scale, is_degenerate_2x2, nearly_affine,
+};
+pub use matrix22::{
+    SkComputeGivensRotation, compute_givens_rotation, givens_cos_sin, givens_rotation,
 };
 pub use memory::{
     DisableDanglingPtrDetection, ENABLE_DANGLING_RAW_PTR_CHECKS, K_CAPACITY_MULTIPLE, RawPtr,
@@ -209,6 +236,7 @@ pub use ref_cnt::{
 };
 pub use ref_ext::{SingleOwner, SkAnySubclass, SkNVRefCnt, SkRefCnt, SkWeakRefCnt};
 pub use rrect::{Corner, RRect, RRectPriv, Type};
+pub use rsxform::{RSXform, SkRSXform};
 pub use safe_math::{SkSafeMath, sk_safe_math_add, sk_safe_math_align4, sk_safe_math_mul};
 pub use safe32::{
     pin_to_s32, sat_add, sat_sub, sk_abs32, sk32_can_overflow_add, sk32_can_overflow_sub,

@@ -939,13 +939,13 @@ tests/LazyProxyTest.cpp,251,DEF_GANESH_TEST,LazyProxyTest,32,Ganesh,pending-runt
 tests/LazyProxyTest.cpp,286,DEF_GANESH_TEST,LazyProxyReleaseTest,32,Ganesh,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/LazyProxyTest.cpp,466,DEF_GANESH_TEST,LazyProxyFailedInstantiationTest,32,Ganesh,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/LazyStencilAttachmentTest.cpp,35,DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS,crbug_1271431,38,Ganesh,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/M44Test.cpp,33,DEF_TEST,M44,5,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/M44Test.cpp,79,DEF_TEST,M44_v3,5,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/M44Test.cpp,103,DEF_TEST,M44_v4,5,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/M44Test.cpp,144,DEF_TEST,M44_rotate,5,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/M44Test.cpp,198,DEF_TEST,M44_rectToRect,5,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
+tests/M44Test.cpp,33,DEF_TEST,M44,5,CPU,PASS,M05 execution: original registration passes debug+release; all M05 original and supplemental tests pass; milestone ACCEPTED; see plan/acceptance/M05.md
+tests/M44Test.cpp,79,DEF_TEST,M44_v3,5,CPU,PASS,M05 execution: original registration passes debug+release; all M05 original and supplemental tests pass; milestone ACCEPTED; see plan/acceptance/M05.md
+tests/M44Test.cpp,103,DEF_TEST,M44_v4,5,CPU,PASS,M05 execution: original registration passes debug+release; all M05 original and supplemental tests pass; milestone ACCEPTED; see plan/acceptance/M05.md
+tests/M44Test.cpp,144,DEF_TEST,M44_rotate,5,CPU,PASS,M05 execution: original registration passes debug+release; all M05 original and supplemental tests pass; milestone ACCEPTED; see plan/acceptance/M05.md
+tests/M44Test.cpp,198,DEF_TEST,M44_rectToRect,5,CPU,PASS,M05 execution: original registration passes debug+release; all M05 original and supplemental tests pass; milestone ACCEPTED; see plan/acceptance/M05.md
 tests/M44Test.cpp,262,DEF_TEST,M44_mapRect,7,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/M44Test.cpp,374,DEF_TEST,M44_mapRect_skbug12335,5,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
+tests/M44Test.cpp,374,DEF_TEST,M44_mapRect_skbug12335,5,CPU,PASS,M05 execution: original registration passes debug+release; all M05 original and supplemental tests pass; milestone ACCEPTED; see plan/acceptance/M05.md
 tests/MD5Test.cpp,67,DEF_TEST,MD5,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
 tests/MallocPixelRefTest.cpp,28,DEF_TEST,MallocPixelRef,11,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/MaskCacheTest.cpp,39,DEF_TEST,RRectMaskCache,15,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
@@ -973,14 +973,14 @@ tests/MatrixProcsTest.cpp,83,DEF_TEST,MatrixProcs_pack_clamp_out_of_range,12,CPU
 tests/MatrixProcsTest.cpp,125,DEF_TEST,MatrixProcs_pack_repeat,12,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/MatrixProcsTest.cpp,185,DEF_TEST,MatrixProcs_pack_mirror,12,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/MatrixProcsTest.cpp,246,DEF_TEST,MatrixProcs_unpack_int,12,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/MatrixTest.cpp,868,DEF_TEST,Matrix,5,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/MatrixTest.cpp,1036,DEF_TEST,Matrix_Concat,5,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/MatrixTest.cpp,1050,DEF_TEST,Matrix_maprects,5,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/MatrixTest.cpp,1090,DEF_TEST,Matrix_mapRect_skbug12335,5,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/MatrixTest.cpp,1104,DEF_TEST,Matrix_Ctor,5,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/MatrixTest.cpp,1108,DEF_TEST,Matrix_LookAt,5,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/MatrixTest.cpp,1114,DEF_TEST,Matrix_SetRotateSnap,5,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/MatrixTest.cpp,1133,DEF_TEST,Matrix_rectStaysRect_zeroScale,5,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
+tests/MatrixTest.cpp,868,DEF_TEST,Matrix,5,CPU,PASS,M05 execution: original registration passes debug+release; all M05 original and supplemental tests pass; milestone ACCEPTED; see plan/acceptance/M05.md
+tests/MatrixTest.cpp,1036,DEF_TEST,Matrix_Concat,5,CPU,PASS,M05 execution: original registration passes debug+release; all M05 original and supplemental tests pass; milestone ACCEPTED; see plan/acceptance/M05.md
+tests/MatrixTest.cpp,1050,DEF_TEST,Matrix_maprects,5,CPU,PASS,M05 execution: original registration passes debug+release; all M05 original and supplemental tests pass; milestone ACCEPTED; see plan/acceptance/M05.md
+tests/MatrixTest.cpp,1090,DEF_TEST,Matrix_mapRect_skbug12335,5,CPU,PASS,M05 execution: original registration passes debug+release; all M05 original and supplemental tests pass; milestone ACCEPTED; see plan/acceptance/M05.md
+tests/MatrixTest.cpp,1104,DEF_TEST,Matrix_Ctor,5,CPU,PASS,M05 execution: original registration passes debug+release; all M05 original and supplemental tests pass; milestone ACCEPTED; see plan/acceptance/M05.md
+tests/MatrixTest.cpp,1108,DEF_TEST,Matrix_LookAt,5,CPU,PASS,M05 execution: original registration passes debug+release; all M05 original and supplemental tests pass; milestone ACCEPTED; see plan/acceptance/M05.md
+tests/MatrixTest.cpp,1114,DEF_TEST,Matrix_SetRotateSnap,5,CPU,PASS,M05 execution: original registration passes debug+release; all M05 original and supplemental tests pass; milestone ACCEPTED; see plan/acceptance/M05.md
+tests/MatrixTest.cpp,1133,DEF_TEST,Matrix_rectStaysRect_zeroScale,5,CPU,PASS,M05 execution: original registration passes debug+release; all M05 original and supplemental tests pass; milestone ACCEPTED; see plan/acceptance/M05.md
 tests/MemoryTest.cpp,12,DEF_TEST,memory_calloc,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
 tests/MemsetTest.cpp,88,DEF_TEST,Memset,12,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/MeshTest.cpp,167,DEF_TEST,MeshSpec_Valid,26,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
@@ -1492,7 +1492,7 @@ tests/RectTest.cpp,133,DEF_TEST,Rect_setbounds,4,CPU,PASS,M04 accepted: original
 tests/RectTest.cpp,163,DEF_TEST,Rect_whOverflow,4,CPU,PASS,M04 accepted: original registration passes in debug+release; see plan/acceptance/M04.md
 tests/RectTest.cpp,182,DEF_TEST,Rect_subtract,4,CPU,PASS,M04 accepted: original registration passes in debug+release; see plan/acceptance/M04.md
 tests/RectTest.cpp,255,DEF_TEST,Rect_subtract_overflow,4,CPU,PASS,M04 accepted: original registration passes in debug+release; see plan/acceptance/M04.md
-tests/RectTest.cpp,281,DEF_TEST,Rect_QuadContainsRect,5,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
+tests/RectTest.cpp,281,DEF_TEST,Rect_QuadContainsRect,5,CPU,PASS,M05 execution: original registration passes debug+release; all M05 original and supplemental tests pass; milestone ACCEPTED; see plan/acceptance/M05.md
 tests/RectTest.cpp,398,DEF_TEST,Rect_ClosestDisjointEdge,4,CPU,PASS,M04 accepted: original registration passes in debug+release; see plan/acceptance/M04.md
 tests/RectTest.cpp,440,DEF_TEST,big_tiled_rect_crbug_927075,14,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/RectangleTextureTest.cpp,155,DEF_GANESH_TEST_FOR_GL_CONTEXT,RectangleTexture,34,Ganesh,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery

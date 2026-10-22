@@ -1,5 +1,7 @@
 use crate::floating_point::float_midpoint;
+use crate::m44::M44;
 use crate::math_priv::sk_fits_in_fixed;
+use crate::matrix::Matrix;
 use crate::point::Point;
 use crate::rect::{IRect, Rect};
 
@@ -159,6 +161,84 @@ impl RectPriv {
         let mut diff = IRect::make_empty();
         Self::subtract_irect(a, b, &mut diff);
         diff
+    }
+
+    pub fn quad_contains_rect_matrix_mask(m: &Matrix, a: &IRect, b: &IRect, tol: f32) -> [bool; 4] {
+        Self::quad_contains_rect_m44_mask(
+            &M44::from(m),
+            &Rect::make_irect(*a),
+            &Rect::make_irect(*b),
+            tol,
+        )
+    }
+
+    pub fn quad_contains_rect_matrix(m: &Matrix, a: &IRect, b: &IRect, tol: f32) -> bool {
+        Self::quad_contains_rect_matrix_mask(m, a, b, tol)
+            .iter()
+            .all(|value| *value)
+    }
+
+    pub fn quad_contains_rect_m44(m: &M44, a: &Rect, b: &Rect, tol: f32) -> bool {
+        Self::quad_contains_rect_m44_mask(m, a, b, tol)
+            .iter()
+            .all(|value| *value)
+    }
+
+    pub fn quad_contains_rect_m44_mask(m: &M44, a: &Rect, b: &Rect, tol: f32) -> [bool; 4] {
+        if a.is_empty() {
+            return [false; 4];
+        }
+
+        let ax = [a.left, a.right, a.right, a.left];
+        let ay = [a.top, a.top, a.bottom, a.bottom];
+        let mut max = [0.0; 4];
+        let mut may = [0.0; 4];
+        let mut maw = [0.0; 4];
+        for i in 0..4 {
+            max[i] = m.rc(0, 0) * ax[i] + m.rc(0, 1) * ay[i] + m.rc(0, 3);
+            may[i] = m.rc(1, 0) * ax[i] + m.rc(1, 1) * ay[i] + m.rc(1, 3);
+            maw[i] = m.rc(3, 0) * ax[i] + m.rc(3, 1) * ay[i] + m.rc(3, 3);
+        }
+        if maw.iter().all(|value| *value < 0.0) {
+            return [false; 4];
+        }
+
+        let mut la = [0.0; 4];
+        let mut lb = [0.0; 4];
+        let mut lc = [0.0; 4];
+        for i in 0..4 {
+            let next = (i + 1) & 3;
+            la[i] = may[i] * maw[next] - maw[i] * may[next];
+            lb[i] = maw[i] * max[next] - max[i] * maw[next];
+            lc[i] = max[i] * may[next] - may[i] * max[next];
+        }
+
+        let sign = if la[0] * lb[1] - lb[0] * la[1] < 0.0 {
+            -1.0
+        } else {
+            1.0
+        };
+
+        let inset = b.make_inset(tol, tol);
+        let corners = [
+            (inset.left, inset.top),
+            (inset.right, inset.top),
+            (inset.right, inset.bottom),
+            (inset.left, inset.bottom),
+        ];
+        let mut result = [false; 4];
+        for (i, (x, y)) in corners.iter().enumerate() {
+            let d0 = sign * (la[0] * x + lb[0] * y + lc[0]);
+            let d1 = sign * (la[1] * x + lb[1] * y + lc[1]);
+            let d2 = sign * (la[2] * x + lb[2] * y + lc[2]);
+            let d3 = sign * (la[3] * x + lb[3] * y + lc[3]);
+            result[i] = d0 >= 0.0 && d1 >= 0.0 && d2 >= 0.0 && d3 >= 0.0;
+        }
+        result
+    }
+
+    pub fn quad_contains_rect(m: &Matrix, a: &IRect, b: &IRect, tol: f32) -> bool {
+        Self::quad_contains_rect_matrix(m, a, b, tol)
     }
 
     pub fn closest_disjoint_edge(src: &IRect, dst: &IRect) -> IRect {

@@ -1,0 +1,94 @@
+In file included from /Volumes/Data/Users/paul/development/src/github/skia/src/core/SkM44.cpp:15:
+/Volumes/Data/Users/paul/development/src/github/skia/src/core/SkPathPriv.h:87:51: error: no template named 'to_array' in namespace 'std'; did you mean 'is_array'?
+   87 |         static constexpr auto gOppositeDir = std::to_array<SkPathFirstDirection>({
+      |                                              ~~~~~^~~~~~~~
+      |                                                   is_array
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/__type_traits/is_array.h:36:29: note: 'is_array' declared here
+   36 | struct _LIBCPP_TEMPLATE_VIS is_array : public false_type {};
+      |                             ^
+In file included from /Volumes/Data/Users/paul/development/src/github/skia/src/core/SkM44.cpp:15:
+/Volumes/Data/Users/paul/development/src/github/skia/src/core/SkPathPriv.h:87:46: error: no matching constructor for initialization of 'std::is_array<SkPathFirstDirection>'
+   87 |         static constexpr auto gOppositeDir = std::to_array<SkPathFirstDirection>({
+      |                                              ^                                   ~
+   88 |             SkPathFirstDirection::kCCW, SkPathFirstDirection::kCW, SkPathFirstDirection::kUnknown,
+      |             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   89 |         });
+      |         ~
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/__type_traits/is_array.h:36:29: note: candidate constructor (the implicit copy constructor) not viable: cannot convert initializer list argument to 'const is_array<SkPathFirstDirection>'
+   36 | struct _LIBCPP_TEMPLATE_VIS is_array : public false_type {};
+      |                             ^~~~~~~~
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/__type_traits/is_array.h:36:29: note: candidate constructor (the implicit move constructor) not viable: cannot convert initializer list argument to 'is_array<SkPathFirstDirection>'
+   36 | struct _LIBCPP_TEMPLATE_VIS is_array : public false_type {};
+      |                             ^~~~~~~~
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/__type_traits/is_array.h:36:29: note: candidate constructor (the implicit default constructor) not viable: requires 0 arguments, but 1 was provided
+In file included from /Volumes/Data/Users/paul/development/src/github/skia/src/core/SkM44.cpp:15:
+/Volumes/Data/Users/paul/development/src/github/skia/src/core/SkPathPriv.h:252:49: error: no template named 'to_array' in namespace 'std'; did you mean 'is_array'?
+  252 |         static constexpr auto gPtsInVerb = std::to_array<uint8_t>({
+      |                                            ~~~~~^~~~~~~~
+      |                                                 is_array
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/__type_traits/is_array.h:36:29: note: 'is_array' declared here
+   36 | struct _LIBCPP_TEMPLATE_VIS is_array : public false_type {};
+      |                             ^
+In file included from /Volumes/Data/Users/paul/development/src/github/skia/src/core/SkM44.cpp:15:
+/Volumes/Data/Users/paul/development/src/github/skia/src/core/SkPathPriv.h:252:44: error: no matching constructor for initialization of 'std::is_array<uint8_t>' (aka 'is_array<unsigned char>')
+  252 |         static constexpr auto gPtsInVerb = std::to_array<uint8_t>({
+      |                                            ^                      ~
+  253 |             1,  // kMove    pts[0]
+      |             ~~~~~~~~~~~~~~~~~~~~~~
+  254 |             2,  // kLine    pts[0..1]
+      |             ~~~~~~~~~~~~~~~~~~~~~~~~~
+  255 |             3,  // kQuad    pts[0..2]
+      |             ~~~~~~~~~~~~~~~~~~~~~~~~~
+  256 |             3,  // kConic   pts[0..2]
+      |             ~~~~~~~~~~~~~~~~~~~~~~~~~
+  257 |             4,  // kCubic   pts[0..3]
+      |             ~~~~~~~~~~~~~~~~~~~~~~~~~
+  258 |             0,  // kClose
+      |             ~~~~~~~~~~~~~
+  259 |             0   // kDone
+      |             ~~~~~~~~~~~~
+  260 |         });
+      |         ~
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/__type_traits/is_array.h:36:29: note: candidate constructor (the implicit copy constructor) not viable: cannot convert initializer list argument to 'const is_array<unsigned char>'
+   36 | struct _LIBCPP_TEMPLATE_VIS is_array : public false_type {};
+      |                             ^~~~~~~~
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/__type_traits/is_array.h:36:29: note: candidate constructor (the implicit move constructor) not viable: cannot convert initializer list argument to 'is_array<unsigned char>'
+   36 | struct _LIBCPP_TEMPLATE_VIS is_array : public false_type {};
+      |                             ^~~~~~~~
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/__type_traits/is_array.h:36:29: note: candidate constructor (the implicit default constructor) not viable: requires 0 arguments, but 1 was provided
+In file included from /Volumes/Data/Users/paul/development/src/github/skia/src/core/SkM44.cpp:15:
+/Volumes/Data/Users/paul/development/src/github/skia/src/core/SkPathPriv.h:271:49: error: no template named 'to_array' in namespace 'std'; did you mean 'is_array'?
+  271 |         static constexpr auto gPtsInVerb = std::to_array<uint8_t>({
+      |                                            ~~~~~^~~~~~~~
+      |                                                 is_array
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/__type_traits/is_array.h:36:29: note: 'is_array' declared here
+   36 | struct _LIBCPP_TEMPLATE_VIS is_array : public false_type {};
+      |                             ^
+In file included from /Volumes/Data/Users/paul/development/src/github/skia/src/core/SkM44.cpp:15:
+/Volumes/Data/Users/paul/development/src/github/skia/src/core/SkPathPriv.h:271:44: error: no matching constructor for initialization of 'std::is_array<uint8_t>' (aka 'is_array<unsigned char>')
+  271 |         static constexpr auto gPtsInVerb = std::to_array<uint8_t>({
+      |                                            ^                      ~
+  272 |             1,  // kMove    pts[0]
+      |             ~~~~~~~~~~~~~~~~~~~~~~
+  273 |             1,  // kLine    pts[0..1]
+      |             ~~~~~~~~~~~~~~~~~~~~~~~~~
+  274 |             2,  // kQuad    pts[0..2]
+      |             ~~~~~~~~~~~~~~~~~~~~~~~~~
+  275 |             2,  // kConic   pts[0..2]
+      |             ~~~~~~~~~~~~~~~~~~~~~~~~~
+  276 |             3,  // kCubic   pts[0..3]
+      |             ~~~~~~~~~~~~~~~~~~~~~~~~~
+  277 |             0,  // kClose
+      |             ~~~~~~~~~~~~~
+  278 |             0   // kDone
+      |             ~~~~~~~~~~~~
+  279 |         });
+      |         ~
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/__type_traits/is_array.h:36:29: note: candidate constructor (the implicit copy constructor) not viable: cannot convert initializer list argument to 'const is_array<unsigned char>'
+   36 | struct _LIBCPP_TEMPLATE_VIS is_array : public false_type {};
+      |                             ^~~~~~~~
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/__type_traits/is_array.h:36:29: note: candidate constructor (the implicit move constructor) not viable: cannot convert initializer list argument to 'is_array<unsigned char>'
+   36 | struct _LIBCPP_TEMPLATE_VIS is_array : public false_type {};
+      |                             ^~~~~~~~
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/__type_traits/is_array.h:36:29: note: candidate constructor (the implicit default constructor) not viable: requires 0 arguments, but 1 was provided
+6 errors generated.

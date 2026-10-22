@@ -1,0 +1,376 @@
+### m44_tests::M44
+warning: unnecessary parentheses around method argument
+   --> tests/m05/matrix.rs:234:23
+    |
+234 |             check!(r, (perpdot.abs() <= NZ));
+    |                       ^                   ^
+    |
+    = note: `#[warn(unused_parens)]` (part of `#[warn(unused)]`) on by default
+help: remove these parentheses
+    |
+234 -             check!(r, (perpdot.abs() <= NZ));
+234 +             check!(r, perpdot.abs() <= NZ);
+    |
+
+warning: `rust-skia` (test "m05_test") generated 1 warning (run `cargo fix --test "m05_test" -p rust-skia` to apply 1 suggestion)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.00s
+     Running tests/m05_test.rs (target/debug/deps/m05_test-ed96e008a1e4edba)
+
+running 1 test
+reporter assertions=13 failures=0
+test m44_tests::M44 ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 20 filtered out; finished in 0.00s
+
+### m44_tests::M44_v3
+warning: unnecessary parentheses around method argument
+   --> tests/m05/matrix.rs:234:23
+    |
+234 |             check!(r, (perpdot.abs() <= NZ));
+    |                       ^                   ^
+    |
+    = note: `#[warn(unused_parens)]` (part of `#[warn(unused)]`) on by default
+help: remove these parentheses
+    |
+234 -             check!(r, (perpdot.abs() <= NZ));
+234 +             check!(r, perpdot.abs() <= NZ);
+    |
+
+warning: `rust-skia` (test "m05_test") generated 1 warning (run `cargo fix --test "m05_test" -p rust-skia` to apply 1 suggestion)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.00s
+     Running tests/m05_test.rs (target/debug/deps/m05_test-ed96e008a1e4edba)
+
+running 1 test
+reporter assertions=8 failures=0
+test m44_tests::M44_v3 ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 20 filtered out; finished in 0.00s
+
+### m44_tests::M44_v4
+warning: unnecessary parentheses around method argument
+   --> tests/m05/matrix.rs:234:23
+    |
+234 |             check!(r, (perpdot.abs() <= NZ));
+    |                       ^                   ^
+    |
+    = note: `#[warn(unused_parens)]` (part of `#[warn(unused)]`) on by default
+help: remove these parentheses
+    |
+234 -             check!(r, (perpdot.abs() <= NZ));
+234 +             check!(r, perpdot.abs() <= NZ);
+    |
+
+warning: `rust-skia` (test "m05_test") generated 1 warning (run `cargo fix --test "m05_test" -p rust-skia` to apply 1 suggestion)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.00s
+     Running tests/m05_test.rs (target/debug/deps/m05_test-ed96e008a1e4edba)
+
+running 1 test
+reporter assertions=14 failures=0
+test m44_tests::M44_v4 ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 20 filtered out; finished in 0.00s
+
+### m44_tests::M44_rotate
+warning: unnecessary parentheses around method argument
+   --> tests/m05/matrix.rs:234:23
+    |
+234 |             check!(r, (perpdot.abs() <= NZ));
+    |                       ^                   ^
+    |
+    = note: `#[warn(unused_parens)]` (part of `#[warn(unused)]`) on by default
+help: remove these parentheses
+    |
+234 -             check!(r, (perpdot.abs() <= NZ));
+234 +             check!(r, perpdot.abs() <= NZ);
+    |
+
+warning: `rust-skia` (test "m05_test") generated 1 warning (run `cargo fix --test "m05_test" -p rust-skia` to apply 1 suggestion)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.00s
+     Running tests/m05_test.rs (target/debug/deps/m05_test-ed96e008a1e4edba)
+
+running 1 test
+reporter assertions=72 failures=0
+test m44_tests::M44_rotate ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 20 filtered out; finished in 0.00s
+
+### m44_tests::M44_rectToRect
+warning: unnecessary parentheses around method argument
+   --> tests/m05/matrix.rs:234:23
+    |
+234 |             check!(r, (perpdot.abs() <= NZ));
+    |                       ^                   ^
+    |
+    = note: `#[warn(unused_parens)]` (part of `#[warn(unused)]`) on by default
+help: remove these parentheses
+    |
+234 -             check!(r, (perpdot.abs() <= NZ));
+234 +             check!(r, perpdot.abs() <= NZ);
+    |
+
+warning: `rust-skia` (test "m05_test") generated 1 warning (run `cargo fix --test "m05_test" -p rust-skia` to apply 1 suggestion)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.00s
+     Running tests/m05_test.rs (target/debug/deps/m05_test-ed96e008a1e4edba)
+
+running 1 test
+reporter assertions=216 failures=0
+test m44_tests::M44_rectToRect ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 20 filtered out; finished in 0.00s
+
+### m44_tests::M44_mapRect_skbug12335
+warning: unnecessary parentheses around method argument
+   --> tests/m05/matrix.rs:234:23
+    |
+234 |             check!(r, (perpdot.abs() <= NZ));
+    |                       ^                   ^
+    |
+    = note: `#[warn(unused_parens)]` (part of `#[warn(unused)]`) on by default
+help: remove these parentheses
+    |
+234 -             check!(r, (perpdot.abs() <= NZ));
+234 +             check!(r, perpdot.abs() <= NZ);
+    |
+
+warning: `rust-skia` (test "m05_test") generated 1 warning (run `cargo fix --test "m05_test" -p rust-skia` to apply 1 suggestion)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.00s
+     Running tests/m05_test.rs (target/debug/deps/m05_test-ed96e008a1e4edba)
+
+running 1 test
+reporter assertions=1 failures=0
+test m44_tests::M44_mapRect_skbug12335 ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 20 filtered out; finished in 0.00s
+
+### matrix_tests::Matrix
+warning: unnecessary parentheses around method argument
+   --> tests/m05/matrix.rs:234:23
+    |
+234 |             check!(r, (perpdot.abs() <= NZ));
+    |                       ^                   ^
+    |
+    = note: `#[warn(unused_parens)]` (part of `#[warn(unused)]`) on by default
+help: remove these parentheses
+    |
+234 -             check!(r, (perpdot.abs() <= NZ));
+234 +             check!(r, perpdot.abs() <= NZ);
+    |
+
+warning: `rust-skia` (test "m05_test") generated 1 warning (run `cargo fix --test "m05_test" -p rust-skia` to apply 1 suggestion)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.00s
+     Running tests/m05_test.rs (target/debug/deps/m05_test-ed96e008a1e4edba)
+
+running 1 test
+reporter assertions=3022797 failures=0
+test matrix_tests::Matrix ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 20 filtered out; finished in 0.19s
+
+### matrix_tests::Matrix_Concat
+warning: unnecessary parentheses around method argument
+   --> tests/m05/matrix.rs:234:23
+    |
+234 |             check!(r, (perpdot.abs() <= NZ));
+    |                       ^                   ^
+    |
+    = note: `#[warn(unused_parens)]` (part of `#[warn(unused)]`) on by default
+help: remove these parentheses
+    |
+234 -             check!(r, (perpdot.abs() <= NZ));
+234 +             check!(r, perpdot.abs() <= NZ);
+    |
+
+warning: `rust-skia` (test "m05_test") generated 1 warning (run `cargo fix --test "m05_test" -p rust-skia` to apply 1 suggestion)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.00s
+     Running tests/m05_test.rs (target/debug/deps/m05_test-ed96e008a1e4edba)
+
+running 1 test
+reporter assertions=1 failures=0
+test matrix_tests::Matrix_Concat ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 20 filtered out; finished in 0.00s
+
+### matrix_tests::Matrix_maprects
+warning: unnecessary parentheses around method argument
+   --> tests/m05/matrix.rs:234:23
+    |
+234 |             check!(r, (perpdot.abs() <= NZ));
+    |                       ^                   ^
+    |
+    = note: `#[warn(unused_parens)]` (part of `#[warn(unused)]`) on by default
+help: remove these parentheses
+    |
+234 -             check!(r, (perpdot.abs() <= NZ));
+234 +             check!(r, perpdot.abs() <= NZ);
+    |
+
+warning: `rust-skia` (test "m05_test") generated 1 warning (run `cargo fix --test "m05_test" -p rust-skia` to apply 1 suggestion)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.00s
+     Running tests/m05_test.rs (target/debug/deps/m05_test-ed96e008a1e4edba)
+
+running 1 test
+reporter assertions=30004 failures=0
+test matrix_tests::Matrix_maprects ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 20 filtered out; finished in 0.01s
+
+### matrix_tests::Matrix_mapRect_skbug12335
+warning: unnecessary parentheses around method argument
+   --> tests/m05/matrix.rs:234:23
+    |
+234 |             check!(r, (perpdot.abs() <= NZ));
+    |                       ^                   ^
+    |
+    = note: `#[warn(unused_parens)]` (part of `#[warn(unused)]`) on by default
+help: remove these parentheses
+    |
+234 -             check!(r, (perpdot.abs() <= NZ));
+234 +             check!(r, perpdot.abs() <= NZ);
+    |
+
+warning: `rust-skia` (test "m05_test") generated 1 warning (run `cargo fix --test "m05_test" -p rust-skia` to apply 1 suggestion)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.00s
+     Running tests/m05_test.rs (target/debug/deps/m05_test-ed96e008a1e4edba)
+
+running 1 test
+reporter assertions=1 failures=0
+test matrix_tests::Matrix_mapRect_skbug12335 ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 20 filtered out; finished in 0.00s
+
+### matrix_tests::Matrix_Ctor
+warning: unnecessary parentheses around method argument
+   --> tests/m05/matrix.rs:234:23
+    |
+234 |             check!(r, (perpdot.abs() <= NZ));
+    |                       ^                   ^
+    |
+    = note: `#[warn(unused_parens)]` (part of `#[warn(unused)]`) on by default
+help: remove these parentheses
+    |
+234 -             check!(r, (perpdot.abs() <= NZ));
+234 +             check!(r, perpdot.abs() <= NZ);
+    |
+
+warning: `rust-skia` (test "m05_test") generated 1 warning (run `cargo fix --test "m05_test" -p rust-skia` to apply 1 suggestion)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.00s
+     Running tests/m05_test.rs (target/debug/deps/m05_test-ed96e008a1e4edba)
+
+running 1 test
+reporter assertions=1 failures=0
+test matrix_tests::Matrix_Ctor ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 20 filtered out; finished in 0.00s
+
+### matrix_tests::Matrix_LookAt
+warning: unnecessary parentheses around method argument
+   --> tests/m05/matrix.rs:234:23
+    |
+234 |             check!(r, (perpdot.abs() <= NZ));
+    |                       ^                   ^
+    |
+    = note: `#[warn(unused_parens)]` (part of `#[warn(unused)]`) on by default
+help: remove these parentheses
+    |
+234 -             check!(r, (perpdot.abs() <= NZ));
+234 +             check!(r, perpdot.abs() <= NZ);
+    |
+
+warning: `rust-skia` (test "m05_test") generated 1 warning (run `cargo fix --test "m05_test" -p rust-skia` to apply 1 suggestion)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.00s
+     Running tests/m05_test.rs (target/debug/deps/m05_test-ed96e008a1e4edba)
+
+running 1 test
+reporter assertions=1 failures=0
+test matrix_tests::Matrix_LookAt ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 20 filtered out; finished in 0.00s
+
+### matrix_tests::Matrix_SetRotateSnap
+warning: unnecessary parentheses around method argument
+   --> tests/m05/matrix.rs:234:23
+    |
+234 |             check!(r, (perpdot.abs() <= NZ));
+    |                       ^                   ^
+    |
+    = note: `#[warn(unused_parens)]` (part of `#[warn(unused)]`) on by default
+help: remove these parentheses
+    |
+234 -             check!(r, (perpdot.abs() <= NZ));
+234 +             check!(r, perpdot.abs() <= NZ);
+    |
+
+warning: `rust-skia` (test "m05_test") generated 1 warning (run `cargo fix --test "m05_test" -p rust-skia` to apply 1 suggestion)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.00s
+     Running tests/m05_test.rs (target/debug/deps/m05_test-ed96e008a1e4edba)
+
+running 1 test
+reporter assertions=25 failures=0
+test matrix_tests::Matrix_SetRotateSnap ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 20 filtered out; finished in 0.00s
+
+### matrix_tests::Matrix_rectStaysRect_zeroScale
+warning: unnecessary parentheses around method argument
+   --> tests/m05/matrix.rs:234:23
+    |
+234 |             check!(r, (perpdot.abs() <= NZ));
+    |                       ^                   ^
+    |
+    = note: `#[warn(unused_parens)]` (part of `#[warn(unused)]`) on by default
+help: remove these parentheses
+    |
+234 -             check!(r, (perpdot.abs() <= NZ));
+234 +             check!(r, perpdot.abs() <= NZ);
+    |
+
+warning: `rust-skia` (test "m05_test") generated 1 warning (run `cargo fix --test "m05_test" -p rust-skia` to apply 1 suggestion)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.00s
+     Running tests/m05_test.rs (target/debug/deps/m05_test-ed96e008a1e4edba)
+
+running 1 test
+reporter assertions=14 failures=0
+test matrix_tests::Matrix_rectStaysRect_zeroScale ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 20 filtered out; finished in 0.00s
+
+### rect_tests::Rect_QuadContainsRect
+warning: unnecessary parentheses around method argument
+   --> tests/m05/matrix.rs:234:23
+    |
+234 |             check!(r, (perpdot.abs() <= NZ));
+    |                       ^                   ^
+    |
+    = note: `#[warn(unused_parens)]` (part of `#[warn(unused)]`) on by default
+help: remove these parentheses
+    |
+234 -             check!(r, (perpdot.abs() <= NZ));
+234 +             check!(r, perpdot.abs() <= NZ);
+    |
+
+warning: `rust-skia` (test "m05_test") generated 1 warning (run `cargo fix --test "m05_test" -p rust-skia` to apply 1 suggestion)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.00s
+     Running tests/m05_test.rs (target/debug/deps/m05_test-ed96e008a1e4edba)
+
+running 1 test
+Identity matrix contains success
+Identity matrix contains failure
+Identity mapped rect contains itself
+Scaled rect contains success
+Scaled rect contains failure
+Rotate rect contains success
+Rotate rect contains failure
+Negative scale contains success
+Empty rect contains nothing
+MakeEmpty() contains nothing
+Unsorted rect contains nothing
+Unsorted rect is contained
+Epsilon not contained
+Perspective, W > 0
+Perspective, some W > 0
+Perspective, no W > 0
+reporter assertions=35 failures=0
+test rect_tests::Rect_QuadContainsRect ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 20 filtered out; finished in 0.00s
+

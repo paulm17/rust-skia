@@ -1,0 +1,19 @@
+invert Scale(+inf,1) ok=1 finite=1
+  inv=[0 0 -0; 0 1 -0; 0 0 1] mask=0x2 type=0x2
+invert Scale(-inf,1) ok=1 finite=1
+  inv=[-0 0 0; 0 1 -0; 0 0 1] mask=0x2 type=0x2
+invert Scale(nan,1) ok=0 finite=1
+  inv=[1 0 0; 0 1 0; 0 0 1] mask=0x0 type=0x0
+invert Scale(0,1) ok=0 finite=1
+  inv=[1 0 0; 0 1 0; 0 0 1] mask=0x0 type=0x0
+invert Scale(-0,1) ok=0 finite=1
+  inv=[1 0 0; 0 1 0; 0 0 1] mask=0x0 type=0x0
+decompose aniso ok=1 sx=0.00100000005 sy=5000
+  remaining=[1 0 0; 0 1 0; 0 0 1] mask=0x0 type=0x0
+quad=[(5,7),(13,19),(-5,31),(-13,19)]
+strip=[(5,7),(-13,19),(13,19),(-5,31)]
+m44 scale map=(2,6,12,1)
+m44 invert Scale(0) ok=0
+m44 invert Scale(inf) ok=0
+m44 invert Scale(-inf) ok=0
+m44 invert Scale(nan) ok=0
