@@ -1,0 +1,217 @@
+path,owner,disposition,codex_disposition
+bazel/external/icu4x/src/lib.rs,Deepseek,deepseek-adapt-rust,Original is a Cargo.lock-generation placeholder; no M02 runtime body. ICU4X/vello consumers retain their later integration gates.
+bazel/external/vello/src/lib.rs,Deepseek,deepseek-adapt-rust,Original is a Cargo.lock-generation placeholder; no M02 runtime body. ICU4X/vello consumers retain their later integration gates.
+include/BUILD.bazel,Deepseek,adapt-build,Cargo replaces these Bazel/GN build descriptions; original source membership/guards inspected. No Bazel/GN runtime PASS claim.
+include/OWNERS,Shared,preserve,Preserved unchanged in pinned reference; SHA-256 in reference.sha256.
+include/config/BUILD.bazel,Deepseek,adapt-build,Cargo replaces these Bazel/GN build descriptions; original source membership/guards inspected. No Bazel/GN runtime PASS claim.
+include/config/MODULE.bazel,Deepseek,adapt-build,Cargo replaces these Bazel/GN build descriptions; original source membership/guards inspected. No Bazel/GN runtime PASS claim.
+include/config/OWNERS,Shared,preserve,Preserved unchanged in pinned reference; SHA-256 in reference.sha256.
+include/config/SkUserConfig.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+include/config/WORKSPACE.bazel,Deepseek,adapt-build,Cargo replaces these Bazel/GN build descriptions; original source membership/guards inspected. No Bazel/GN runtime PASS claim.
+include/config/copts.bzl,Deepseek,adapt-build,Cargo replaces these Bazel/GN build descriptions; original source membership/guards inspected. No Bazel/GN runtime PASS claim.
+include/config/linkopts.bzl,Deepseek,adapt-build,Cargo replaces these Bazel/GN build descriptions; original source membership/guards inspected. No Bazel/GN runtime PASS claim.
+include/core/BUILD.bazel,Deepseek,adapt-build,Cargo replaces these Bazel/GN build descriptions; original source membership/guards inspected. No Bazel/GN runtime PASS claim.
+include/core/SkCoverageMode.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+include/core/SkData.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+include/core/SkDataTable.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+include/core/SkExecutor.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+include/core/SkFourByteTag.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+include/core/SkMilestone.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+include/core/SkRefCnt.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+include/core/SkSpan.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+include/core/SkStream.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+include/core/SkString.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+include/core/SkTraceMemoryDump.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+include/core/SkTypes.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+include/cpu/BUILD.bazel,Deepseek,adapt-build,Cargo replaces these Bazel/GN build descriptions; original source membership/guards inspected. No Bazel/GN runtime PASS claim.
+include/docs/BUILD.bazel,Deepseek,adapt-build,Cargo replaces these Bazel/GN build descriptions; original source membership/guards inspected. No Bazel/GN runtime PASS claim.
+include/ports/BUILD.bazel,Deepseek,adapt-build,Cargo replaces these Bazel/GN build descriptions; original source membership/guards inspected. No Bazel/GN runtime PASS claim.
+include/private/BUILD.bazel,Deepseek,adapt-build,Cargo replaces these Bazel/GN build descriptions; original source membership/guards inspected. No Bazel/GN runtime PASS claim.
+include/private/OWNERS,Shared,preserve,Preserved unchanged in pinned reference; SHA-256 in reference.sha256.
+include/private/SingleOwner.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+include/private/SkAPI.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+include/private/SkASAN.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+include/private/SkAlign.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+include/private/SkAlignedStorage.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+include/private/SkAnySubclass.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+include/private/SkAssert.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+include/private/SkAttributes.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+include/private/SkCPUTypes.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+include/private/SkContainers.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+include/private/SkDebug.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+include/private/SkDeque.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+include/private/SkFeatures.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+include/private/SkIDChangeListener.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+include/private/SkLoadUserConfig.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+include/private/SkLog.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+include/private/SkLogPriority.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+include/private/SkMacros.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+include/private/SkMalloc.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+include/private/SkMutex.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+include/private/SkNoncopyable.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+include/private/SkOnce.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+include/private/SkOnlyStackAllocatable.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+include/private/SkSemaphore.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+include/private/SkTArray.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+include/private/SkTDArray.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+include/private/SkTLogic.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+include/private/SkTPin.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+include/private/SkTemplates.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+include/private/SkThreadID.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+include/private/SkTypeTraits.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+include/private/SkWeakRefCnt.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+include/private/chromium/BUILD.bazel,Deepseek,adapt-build,Cargo replaces these Bazel/GN build descriptions; original source membership/guards inspected. No Bazel/GN runtime PASS claim.
+include/private/chromium/SkDiscardableMemory.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+include/utils/BUILD.bazel,Deepseek,adapt-build,Cargo replaces these Bazel/GN build descriptions; original source membership/guards inspected. No Bazel/GN runtime PASS claim.
+include/utils/SkEventTracer.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+include/utils/SkLogHandler.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+include/utils/SkParse.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+include/utils/SkTraceEventPhase.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+include/utils/mac/BUILD.bazel,Deepseek,adapt-build,Cargo replaces these Bazel/GN build descriptions; original source membership/guards inspected. No Bazel/GN runtime PASS claim.
+src/BUILD.bazel,Deepseek,adapt-build,Cargo replaces these Bazel/GN build descriptions; original source membership/guards inspected. No Bazel/GN runtime PASS claim.
+src/core/BUILD.bazel,Deepseek,adapt-build,Cargo replaces these Bazel/GN build descriptions; original source membership/guards inspected. No Bazel/GN runtime PASS claim.
+src/core/SkATrace.cpp,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+src/core/SkATrace.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+src/core/SkArenaAlloc.cpp,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+src/core/SkArenaAlloc.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+src/core/SkArenaAllocList.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+src/core/SkAutoLocaleSetter.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+src/core/SkAutoMalloc.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+src/core/SkBase64.cpp,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+src/core/SkBase64.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+src/core/SkBlockAllocator.cpp,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+src/core/SkBlockAllocator.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+src/core/SkBuffer.cpp,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+src/core/SkBuffer.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+src/core/SkCachedData.cpp,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+src/core/SkCachedData.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+src/core/SkChecksum.cpp,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+src/core/SkChecksum.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+src/core/SkContainers.cpp,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+src/core/SkData.cpp,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+src/core/SkDataTable.cpp,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+src/core/SkDebug.cpp,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+src/core/SkDebugUtils.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+src/core/SkDeque.cpp,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+src/core/SkEndian.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+src/core/SkEnumerate.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+src/core/SkExecutor.cpp,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+src/core/SkExecutors.cpp,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+src/core/SkExecutors.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+src/core/SkGlobalInitialization_core.cpp,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+src/core/SkIDChangeListener.cpp,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+src/core/SkLRUCache.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+src/core/SkLog.cpp,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+src/core/SkMD5.cpp,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+src/core/SkMD5.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+src/core/SkMSAN.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+src/core/SkMalloc.cpp,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+src/core/SkMessageBus.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+src/core/SkNextID.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+src/core/SkNoDestructor.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+src/core/SkOSFile.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+src/core/SkResourceCache.cpp,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+src/core/SkResourceCache.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+src/core/SkSafeRange.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+src/core/SkSafetyChecks.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+src/core/SkScopeExit.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+src/core/SkSemaphore.cpp,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+src/core/SkSharedMutex.cpp,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+src/core/SkSharedMutex.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+src/core/SkSpanPriv.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+src/core/SkSpinlock.cpp,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+src/core/SkSpinlock.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+src/core/SkStream.cpp,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+src/core/SkStreamPriv.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+src/core/SkString.cpp,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+src/core/SkStringUtils.cpp,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+src/core/SkStringUtils.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+src/core/SkStringView.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+src/core/SkSynchronizedResourceCache.cpp,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+src/core/SkSynchronizedResourceCache.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+src/core/SkTBlockList.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+src/core/SkTDArray.cpp,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+src/core/SkTDPQueue.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+src/core/SkTDynamicHash.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+src/core/SkTHash.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+src/core/SkTInternalLList.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+src/core/SkTLazy.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+src/core/SkTMultiMap.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+src/core/SkTSearch.cpp,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+src/core/SkTSearch.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+src/core/SkTSort.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+src/core/SkTaskGroup.cpp,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+src/core/SkTaskGroup.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+src/core/SkThreadID.cpp,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+src/core/SkTime.cpp,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+src/core/SkTime.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+src/core/SkTraceEvent.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+src/core/SkTraceEventCommon.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+src/core/SkUTF.cpp,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+src/core/SkUTF.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+src/core/SkUtils.cpp,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+src/core/SkUtils.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+src/core/SkValidationUtils.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+src/core/SkWriter32.cpp,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+src/core/SkWriter32.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+src/core/SkZip.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+src/partition_alloc/BUILD.bazel,Deepseek,adapt-build,Cargo replaces these Bazel/GN build descriptions; original source membership/guards inspected. No Bazel/GN runtime PASS claim.
+src/partition_alloc/BUILD.gn,Deepseek,adapt-build,Cargo replaces these Bazel/GN build descriptions; original source membership/guards inspected. No Bazel/GN runtime PASS claim.
+src/partition_alloc/noop/raw_ptr.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+src/partition_alloc/noop/raw_ptr_exclusion.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+src/partition_alloc/noop/raw_ref.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+src/partition_alloc/raw_ptr.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+src/partition_alloc/raw_ptr_exclusion.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+src/partition_alloc/raw_ref.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+src/partition_alloc/safety_checks.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+src/ports/BUILD.bazel,Deepseek,adapt-build,Cargo replaces these Bazel/GN build descriptions; original source membership/guards inspected. No Bazel/GN runtime PASS claim.
+src/ports/SkDiscardableMemory_none.cpp,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+src/ports/SkGlobalInitialization_default.cpp,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+src/ports/SkLog_stdio.cpp,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+src/ports/SkMemory_malloc.cpp,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+src/ports/SkMemory_mozalloc.cpp,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+src/ports/SkOSFile_posix.cpp,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+src/ports/SkOSFile_stdio.cpp,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+src/utils/BUILD.bazel,Deepseek,adapt-build,Cargo replaces these Bazel/GN build descriptions; original source membership/guards inspected. No Bazel/GN runtime PASS claim.
+src/utils/SkBitSet.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+src/utils/SkCallableTraits.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+src/utils/SkEventTracer.cpp,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+src/utils/SkJSONWriter.cpp,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+src/utils/SkJSONWriter.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+src/utils/SkLogHandler.cpp,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+src/utils/SkOSPath.cpp,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+src/utils/SkOSPath.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+src/utils/SkParse.cpp,Deepseek,deepseek-port,Handoff cluster/symbol map retained; ACCEPTED: all assigned M02 originals pass with supplemental/API checks and full source-row reconciliation.
+src/utils/mac/BUILD.bazel,Deepseek,adapt-build,Cargo replaces these Bazel/GN build descriptions; original source membership/guards inspected. No Bazel/GN runtime PASS claim.
+tests/ArenaAllocTest.cpp,Codex,codex-test,Unchanged Codex test/support source; reconciled by correspondence.csv and M02 acceptance evidence.
+tests/BUILD.bazel,Deepseek,adapt-build,Cargo replaces these Bazel/GN build descriptions; original source membership/guards inspected. No Bazel/GN runtime PASS claim.
+tests/CtsEnforcement.h,Codex,codex-test,Unchanged Codex test/support source; reconciled by correspondence.csv and M02 acceptance evidence.
+tests/DataRefTest.cpp,Codex,codex-test,Unchanged Codex test/support source; reconciled by correspondence.csv and M02 acceptance evidence.
+tests/DequeTest.cpp,Codex,codex-test,Unchanged Codex test/support source; reconciled by correspondence.csv and M02 acceptance evidence.
+tests/ExecutorTest.cpp,Codex,codex-test,Unchanged Codex test/support source; reconciled by correspondence.csv and M02 acceptance evidence.
+tests/FakeStreams.h,Codex,codex-test,Unchanged Codex test/support source; reconciled by correspondence.csv and M02 acceptance evidence.
+tests/HashTest.cpp,Codex,codex-test,Unchanged Codex test/support source; reconciled by correspondence.csv and M02 acceptance evidence.
+tests/IncrTopoSortTest.cpp,Codex,codex-test,Unchanged Codex test/support source; reconciled by correspondence.csv and M02 acceptance evidence.
+tests/LListTest.cpp,Codex,codex-test,Unchanged Codex test/support source; reconciled by correspondence.csv and M02 acceptance evidence.
+tests/LRUCacheTest.cpp,Codex,codex-test,Unchanged Codex test/support source; reconciled by correspondence.csv and M02 acceptance evidence.
+tests/MD5Test.cpp,Codex,codex-test,Unchanged Codex test/support source; reconciled by correspondence.csv and M02 acceptance evidence.
+tests/MemoryTest.cpp,Codex,codex-test,Unchanged Codex test/support source; reconciled by correspondence.csv and M02 acceptance evidence.
+tests/MessageBusTest.cpp,Codex,codex-test,Unchanged Codex test/support source; reconciled by correspondence.csv and M02 acceptance evidence.
+tests/MetaDataTest.cpp,Codex,codex-test,Unchanged Codex test/support source; reconciled by correspondence.csv and M02 acceptance evidence.
+tests/OnceTest.cpp,Codex,codex-test,Unchanged Codex test/support source; reconciled by correspondence.csv and M02 acceptance evidence.
+tests/RawPtrTest.cpp,Codex,codex-test,Unchanged Codex test/support source; reconciled by correspondence.csv and M02 acceptance evidence.
+tests/RefCntTest.cpp,Codex,codex-test,Unchanged Codex test/support source; reconciled by correspondence.csv and M02 acceptance evidence.
+tests/SkBlockAllocatorTest.cpp,Codex,codex-test,Unchanged Codex test/support source; reconciled by correspondence.csv and M02 acceptance evidence.
+tests/SkContainersTest.cpp,Codex,codex-test,Unchanged Codex test/support source; reconciled by correspondence.csv and M02 acceptance evidence.
+tests/SkMallocTest.cpp,Codex,codex-test,Unchanged Codex test/support source; reconciled by correspondence.csv and M02 acceptance evidence.
+tests/SkSharedMutexTest.cpp,Codex,codex-test,Unchanged Codex test/support source; reconciled by correspondence.csv and M02 acceptance evidence.
+tests/SkSpanTest.cpp,Codex,codex-test,Unchanged Codex test/support source; reconciled by correspondence.csv and M02 acceptance evidence.
+tests/SkStringViewTest.cpp,Codex,codex-test,Unchanged Codex test/support source; reconciled by correspondence.csv and M02 acceptance evidence.
+tests/SkTBlockListTest.cpp,Codex,codex-test,Unchanged Codex test/support source; reconciled by correspondence.csv and M02 acceptance evidence.
+tests/SkUTFTest.cpp,Codex,codex-test,Unchanged Codex test/support source; reconciled by correspondence.csv and M02 acceptance evidence.
+tests/StringTest.cpp,Codex,codex-test,Unchanged Codex test/support source; reconciled by correspondence.csv and M02 acceptance evidence.
+tests/TLazyTest.cpp,Codex,codex-test,Unchanged Codex test/support source; reconciled by correspondence.csv and M02 acceptance evidence.
+tests/TemplatesTest.cpp,Codex,codex-test,Unchanged Codex test/support source; reconciled by correspondence.csv and M02 acceptance evidence.
+tests/Test.cpp,Codex,codex-test,Unchanged Codex test/support source; reconciled by correspondence.csv and M02 acceptance evidence.
+tools/Resources.cpp,Codex,codex-test,Unchanged Codex test/support source; reconciled by correspondence.csv and M02 acceptance evidence.
+tools/Resources.h,Codex,codex-test,Unchanged Codex test/support source; reconciled by correspondence.csv and M02 acceptance evidence.

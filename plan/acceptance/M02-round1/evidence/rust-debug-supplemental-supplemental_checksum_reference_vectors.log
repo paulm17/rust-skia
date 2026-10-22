@@ -1,0 +1,43 @@
+COMMAND: ['/Volumes/Data/Users/paul/development/src/github/rust-skia/target/debug/deps/m02_test-a997dd6914494635', 'supplemental::supplemental_checksum_reference_vectors', '--exact', '--nocapture']
+
+running 1 test
+checksum bytes=[] seed=0 expected=3804095577 actual=0
+checksum bytes=[] seed=1 expected=638533687 actual=1
+checksum bytes=[] seed=4294967295 expected=2821084191 actual=4294967295
+checksum bytes=[97] seed=0 expected=164791601 actual=1147936356
+checksum bytes=[97] seed=1 expected=459268265 actual=3183019953
+checksum bytes=[97] seed=4294967295 expected=4117487878 actual=3407753494
+checksum bytes=[97, 98, 99] seed=0 expected=3411111026 actual=2810448472
+checksum bytes=[97, 98, 99] seed=1 expected=2184336823 actual=1000126016
+checksum bytes=[97, 98, 99] seed=4294967295 expected=1582327983 actual=775381995
+checksum bytes=[97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122] seed=0 expected=517385426 actual=3017572367
+checksum bytes=[97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122] seed=1 expected=3575925044 actual=3640846425
+checksum bytes=[97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122] seed=4294967295 expected=3468900993 actual=2943870044
+reporter assertions=12 failures=12
+
+thread 'supplemental::supplemental_checksum_reference_vectors' (15785965) panicked at tests/support/mod.rs:25:9:
+12 assertion(s) failed:
+tests/m02/supplemental.rs:136: actual == expected[i]
+tests/m02/supplemental.rs:136: actual == expected[i]
+tests/m02/supplemental.rs:136: actual == expected[i]
+tests/m02/supplemental.rs:136: actual == expected[i]
+tests/m02/supplemental.rs:136: actual == expected[i]
+tests/m02/supplemental.rs:136: actual == expected[i]
+tests/m02/supplemental.rs:136: actual == expected[i]
+tests/m02/supplemental.rs:136: actual == expected[i]
+tests/m02/supplemental.rs:136: actual == expected[i]
+tests/m02/supplemental.rs:136: actual == expected[i]
+tests/m02/supplemental.rs:136: actual == expected[i]
+tests/m02/supplemental.rs:136: actual == expected[i]
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+test supplemental::supplemental_checksum_reference_vectors ... FAILED
+
+failures:
+
+failures:
+    supplemental::supplemental_checksum_reference_vectors
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 98 filtered out; finished in 0.00s
+
+
+EXIT: 101

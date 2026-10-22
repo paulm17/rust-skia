@@ -1,0 +1,3 @@
+PASS: all handoff file hashes and final working-tree/reference manifests match.
+PASS: 111 registration rows; M01 ACCEPTED, M02 NEEDS_FIX, M03 NOT_STARTED.
+No production implementation edits made by Codex.

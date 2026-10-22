@@ -1,0 +1,15 @@
+/reference-debug
+/reference-release
+/M01-reference/reference-debug
+/M01-reference/reference-release
+/api-debug-cow
+/api-debug-polymorphic
+/api-debug-probes
+/api-debug-erasure_type_safety
+/api-release-cow
+/api-release-polymorphic
+/api-release-probes
+/api-release-erasure_type_safety
+*.dSYM/
+/api-debug-erasure_sized_type_safety
+/api-release-erasure_sized_type_safety

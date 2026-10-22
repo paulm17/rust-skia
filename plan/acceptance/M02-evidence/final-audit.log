@@ -1,0 +1,9 @@
+PASS: 111 M02 inventory rows reconcile to correspondence names exactly: 110 PASS + 1 NOT_APPLICABLE (RawPtr_DanglingPointerDetected).
+PASS: all 111 correspondence source/line/hash records match the clean pinned reference; all Rust test locations exist.
+PASS: 216 M02 source-file disposition rows cover every inventory path; no unaccounted row.
+PASS: 251 reference SHA-256 entries match the pinned checkout; assigned source/test paths are all included.
+PASS: all 41 production/build handoff hashes match the tested working tree.
+PASS: Rust and C++ debug/release each pass 110/110 applicable originals; isolated M02 122/122 in each profile.
+PASS: 11/11 supplemental runtime cases, reporter self-test, and both negative API compile contracts.
+PASS: cumulative Cargo 188/188 per profile; M01 remains green.
+M01 ACCEPTED; M02 ACCEPTED; M03 NOT_STARTED.

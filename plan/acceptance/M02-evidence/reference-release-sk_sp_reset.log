@@ -1,0 +1,4 @@
+COMMAND: ['/Volumes/Data/Users/paul/development/src/github/rust-skia/plan/acceptance/M02-evidence/reference-release', 'sk_sp_reset']
+PASS sk_sp_reset failures=0
+
+EXIT: 0

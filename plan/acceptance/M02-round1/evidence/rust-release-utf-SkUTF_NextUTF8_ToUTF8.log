@@ -1,0 +1,23 @@
+COMMAND: ['/Volumes/Data/Users/paul/development/src/github/rust-skia/target/release/deps/m02_test-f37e1713df482657', 'utf::SkUTF_NextUTF8_ToUTF8', '--exact', '--nocapture']
+
+running 1 test
+ToUTF8(-1) expected=0 actual=4
+ToUTF8(-1) expected=0 actual=4
+reporter assertions=26 failures=2
+
+thread 'utf::SkUTF_NextUTF8_ToUTF8' (15786995) panicked at tests/support/mod.rs:25:9:
+2 assertion(s) failed:
+tests/m02/utf.rs:101: len == 0
+tests/m02/utf.rs:101: len == 0
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+test utf::SkUTF_NextUTF8_ToUTF8 ... FAILED
+
+failures:
+
+failures:
+    utf::SkUTF_NextUTF8_ToUTF8
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 98 filtered out; finished in 0.00s
+
+
+EXIT: 101

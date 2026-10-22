@@ -4,7 +4,7 @@
 
 Implement skparagraph and skplaintexteditor surfaces, text styles, runs, line breaking, ellipsis, hit testing, selections and editing. Preserve UTF indexing, rounding, font fallback and cache invalidation across layout calls.
 
-Begin implementation only after milestone 20 is marked ACCEPTED by Codex and the user has handed over this milestone. All earlier accepted tests remain required.
+Begin implementation only after milestone 20 is marked ACCEPTED by Deepseek after running the tests and completing the audit and the user has handed over this milestone. All earlier accepted tests remain required.
 
 Read `../WORKFLOW.md`, `../MACOS-SCOPE.md` and the inventories before starting. All source paths below are relative to the pinned C++ Skia checkout; all Rust work belongs in the separate rust-skia repository. Never edit the reference checkout to make a test pass.
 
@@ -16,7 +16,7 @@ Implement skparagraph and skplaintexteditor surfaces, text styles, runs, line br
 - Map original symbols to Rust modules in the handoff. Keep production logic under `src/` (or workspace library crates); use explicit Cargo features for optional macOS backends. Preserve widths, ownership, layout when observable, and binary formats where required by original tests.
 - Keep Skia-owned algorithmic/runtime code in Rust. External codec/shaping/GPU libraries and Apple framework FFI are allowed only as named, versioned dependencies. Never delegate the implementation to a pre-existing Skia Rust port or C++ Skia.
 - Inspect reached dependencies before coding. `forward-includes.csv` contains syntactic warnings, not proof of runtime dependency. Implement a required earlier prerequisite fully and record it in the handoff; if it materially changes this milestone, request a plan amendment before continuing. Never use fake return values, ignored tests or unimplemented runtime branches to clear a gate.
-- Do not author or change Codex-owned acceptance tests, expected values, tolerances, fixtures or pass records. Development checks may be separate and must be labeled as such. Fix production code when acceptance tests fail.
+- Do not author or change Codex-owned acceptance tests, expected values, tolerances, fixtures. Deepseek owns execution logs, audit records and acceptance status. Development checks may be separate and must be labeled as such. Fix production code when acceptance tests fail.
 - Supply reproducible build commands, feature flags, source/symbol mapping, external dependencies, and known unfinished work using `../HANDOFF-TEMPLATE.md`. Stop after the handoff; do not begin the next milestone.
 
 ### Port these production files (Deepseek)
@@ -86,7 +86,9 @@ Implement skparagraph and skplaintexteditor surfaces, text styles, runs, line br
 - `modules/skparagraph/utils/BUILD.bazel`.
 - `modules/skplaintexteditor/BUILD.gn`.
 
-## Codex: acceptance-test contract
+## Codex: test-writing contract
+
+Codex writes the tests and minimum required test support only, including supplemental checks in the initial pass, then stops. Deepseek subsequently executes all tests and references, performs discovery and coverage audits, records evidence, fixes production defects and updates acceptance/status. Execution, hashing, resource verification and acceptance instructions below belong to Deepseek; Codex does not run them. Follow `../NEXT-STEPS.md` for the three prompts.
 
 Translate paragraph tests and test JSON writers, then their module GMs. Validate bidi/ellipsis/soft-hyphen fixtures and exact original layout assertions. Do not substitute screenshots for numeric glyph/line/selection checks.
 
@@ -151,7 +153,7 @@ Interfaces with later consumers may be declared now, but the accepted feature se
 
 ## Commands, required evidence and stop condition
 
-Codex runs the milestone tests and all previously accepted tests in debug and release with the exact feature list from the handoff. The standard baseline commands are:
+Deepseek runs the milestone tests and all previously accepted tests in debug and release with the exact feature list from the handoff. The standard baseline commands are:
 
 ```sh
 cargo test --locked
@@ -162,8 +164,8 @@ cargo clippy --all-targets --locked -- -D warnings
 
 For feature-specific crates/backends, record the additional exact package/target/features commands; do not use an unexamined `--all-features` combination. Native backend, GM, browser, fuzz and benchmark commands are added when their harnesses exist and must be copied into the acceptance report.
 
-Acceptance requires: all assigned macOS cases enumerated; every applicable assertion passing; all earlier accepted tests passing; every source row mapped to implemented Rust or a documented non-code disposition; no unexplained missing resources, untested required backends or unsupported required API; and a Codex-authored evidence report. Formatting/build success alone never constitutes acceptance.
+Acceptance requires: all assigned macOS cases enumerated; every applicable assertion passing; all earlier accepted tests passing; every source row mapped to implemented Rust or a documented non-code disposition; no unexplained missing resources, untested required backends or unsupported required API; and a Deepseek-authored evidence report. Formatting/build success alone never constitutes acceptance.
 
-Record PASS, FAIL, BLOCKED or NOT_APPLICABLE per test/configuration. NOT_APPLICABLE requires an original platform/capability condition and a reason. M01–M45 require native Apple Silicon macOS evidence; Intel-specific files may remain explicitly pending until M46, whose gate requires native Intel Mac results. This is a scheduled architecture gate, not an assertion that Intel already passed.
+Record PASS, FAIL, BLOCKED or NOT_APPLICABLE per test/configuration. NOT_APPLICABLE requires an original platform/capability condition and a reason. All milestones require Apple Silicon macOS evidence only. Intel/x86_64 implementation, builds and execution are excluded by user direction, including M46/M47. Intel-specific inventory paths are reference accounting only, not pending work or acceptance blockers.
 
-Only after Codex marks M21 ACCEPTED may the user hand Deepseek M22.
+Only after Deepseek runs the tests, completes the audit and marks M21 ACCEPTED may the user hand Deepseek M22.

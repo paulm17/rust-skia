@@ -1,0 +1,4 @@
+COMMAND: ['/Volumes/Data/Users/paul/development/src/github/rust-skia/plan/acceptance/M02-evidence/reference-release', 'HashSetWithStdStringView']
+PASS HashSetWithStdStringView failures=0
+
+EXIT: 0

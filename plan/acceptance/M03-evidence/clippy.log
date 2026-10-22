@@ -1,0 +1,107 @@
+    Checking rust-skia v0.1.0 (/Volumes/Data/Users/paul/development/src/github/rust-skia)
+error: this `.into_iter()` call is equivalent to `.iter_mut()` and will not consume the `slice`
+   --> src/extras.rs:513:19
+    |
+513 |         self.data.into_iter().enumerate().map(move |(i, v)| (base + i, v))
+    |                   ^^^^^^^^^ help: call directly: `iter_mut`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#into_iter_on_ref
+    = note: `-D clippy::into-iter-on-ref` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::into_iter_on_ref)]`
+
+error: the following explicit lifetimes could be elided: 'a
+   --> src/extras.rs:524:6
+    |
+524 | impl<'a, T> ZipColumn for &'a [T] {
+    |      ^^                    ^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#needless_lifetimes
+    = note: `-D clippy::needless-lifetimes` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::needless_lifetimes)]`
+help: elide the lifetimes
+    |
+524 - impl<'a, T> ZipColumn for &'a [T] {
+524 + impl<T> ZipColumn for &[T] {
+    |
+
+error: the following explicit lifetimes could be elided: 'a
+   --> src/extras.rs:530:6
+    |
+530 | impl<'a, T, const N: usize> ZipColumn for &'a [T; N] {
+    |      ^^                                    ^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#needless_lifetimes
+help: elide the lifetimes
+    |
+530 - impl<'a, T, const N: usize> ZipColumn for &'a [T; N] {
+530 + impl<T, const N: usize> ZipColumn for &[T; N] {
+    |
+
+error: the following explicit lifetimes could be elided: 'a
+   --> src/extras.rs:536:6
+    |
+536 | impl<'a, T> ZipColumn for &'a Vec<T> {
+    |      ^^                    ^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#needless_lifetimes
+help: elide the lifetimes
+    |
+536 - impl<'a, T> ZipColumn for &'a Vec<T> {
+536 + impl<T> ZipColumn for &Vec<T> {
+    |
+
+error: the following explicit lifetimes could be elided: 'a
+   --> src/extras.rs:682:6
+    |
+682 | impl<'a, T> ZipMutColumn for &'a mut [T] {
+    |      ^^                       ^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#needless_lifetimes
+help: elide the lifetimes
+    |
+682 - impl<'a, T> ZipMutColumn for &'a mut [T] {
+682 + impl<T> ZipMutColumn for &mut [T] {
+    |
+
+error: the following explicit lifetimes could be elided: 'a
+   --> src/extras.rs:688:6
+    |
+688 | impl<'a, T, const N: usize> ZipMutColumn for &'a mut [T; N] {
+    |      ^^                                       ^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#needless_lifetimes
+help: elide the lifetimes
+    |
+688 - impl<'a, T, const N: usize> ZipMutColumn for &'a mut [T; N] {
+688 + impl<T, const N: usize> ZipMutColumn for &mut [T; N] {
+    |
+
+error: the following explicit lifetimes could be elided: 'a
+   --> src/extras.rs:694:6
+    |
+694 | impl<'a, T> ZipMutColumn for &'a mut Vec<T> {
+    |      ^^                       ^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#needless_lifetimes
+help: elide the lifetimes
+    |
+694 - impl<'a, T> ZipMutColumn for &'a mut Vec<T> {
+694 + impl<T> ZipMutColumn for &mut Vec<T> {
+    |
+
+error: unnecessary map of the identity function
+   --> src/extras.rs:729:25
+    |
+729 |               .enumerate()
+    |  _________________________^
+730 | |             .map(|(i, (a, b))| (i, (a, b)))
+    | |___________________________________________^ help: remove the call to `map`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#map_identity
+    = note: `-D clippy::map-identity` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::map_identity)]`
+
+error: could not compile `rust-skia` (lib) due to 8 previous errors
+warning: build failed, waiting for other jobs to finish...
+error: could not compile `rust-skia` (lib test) due to 8 previous errors
+clippy exit=101

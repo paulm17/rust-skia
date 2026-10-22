@@ -11,14 +11,14 @@
     {
       "id": "M02",
       "title": "Core ownership, containers, data and streams",
-      "state": "NOT_STARTED",
-      "acceptance_report": null
+      "state": "ACCEPTED",
+      "acceptance_report": "acceptance/M02.md"
     },
     {
       "id": "M03",
       "title": "Numeric primitives, SIMD contracts and deterministic random",
-      "state": "NOT_STARTED",
-      "acceptance_report": null
+      "state": "ACCEPTED",
+      "acceptance_report": "acceptance/M03.md"
     },
     {
       "id": "M04",

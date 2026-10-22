@@ -23,7 +23,7 @@ M01's Scalar/Point tests already passed locally on Apple Silicon in this convers
 | Gate | Milestone | Initial status |
 | --- | --- | --- |
 | M01 | [Scalar and point baseline](milestones/01-scalar-and-point-baseline.md) | BASELINE_PASSED_LOCAL |
-| M02 | [Core ownership, containers, data and streams](milestones/02-core-ownership-containers-data-and-streams.md) | NOT_STARTED |
+| M02 | [Core ownership, containers, data and streams](milestones/02-core-ownership-containers-data-and-streams.md) | ACCEPTED |
 | M03 | [Numeric primitives, SIMD contracts and deterministic random](milestones/03-numeric-primitives-simd-contracts-and-deterministic-random.md) | NOT_STARTED |
 | M04 | [Rectangles, rounded rectangles, sizes and 3D points](milestones/04-rectangles-rounded-rectangles-sizes-and-3d-points.md) | NOT_STARTED |
 | M05 | [Matrices, camera transforms and coordinate mapping](milestones/05-matrices-camera-transforms-and-coordinate-mapping.md) | NOT_STARTED |

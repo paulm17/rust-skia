@@ -32,7 +32,7 @@ Shared resources are usable before their final M43 inventory gate. Shared test h
 
 Always run current and cumulative accepted tests in debug and release. Run formatting and Clippy, but never treat those as behavior tests. Use actual backend hardware for GPU milestones and compare test/context counts with the reference. CPU, Metal, OpenGL, Graphite Metal and Graphite Dawn-Metal are separate result variants. Missing supported variants cannot be counted as passing. Original unsupported-feature guards may produce NOT_APPLICABLE with evidence.
 
-Apple Silicon is the native incremental gate host. Intel-specific implementation is tracked from its owning milestone and receives its mandatory native execution gate in M46 before final acceptance. Cross-compilation is useful but cannot replace execution. A missing Intel Mac blocks M46/M47; it does not retroactively claim Intel passage at early gates.
+Apple Silicon is the only target architecture. Intel/x86_64 implementation, cross-compilation and native execution are excluded, including M46/M47. Do not report Intel as pending or blocked. Architecture-specific source paths remain inventory references only; they do not create Intel work.
 
 ## Complete means complete
 

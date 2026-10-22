@@ -1,0 +1,3 @@
+COMMAND: ['python3', 'tests/reference/check_m02_api.py']
+
+EXIT: 0

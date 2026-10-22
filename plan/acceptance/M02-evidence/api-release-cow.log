@@ -1,0 +1,13 @@
+COMMAND: ['rustc', '--edition=2024', '--test', 'tests/m02-api/cow.rs', '--extern', 'rust_skia=/Volumes/Data/Users/paul/development/src/github/rust-skia/target/release/librust_skia.rlib', '-L', 'dependency=/Volumes/Data/Users/paul/development/src/github/rust-skia/target/release/deps', '-L', 'dependency=/Volumes/Data/Users/paul/development/src/github/rust-skia/target/release', '-o', 'plan/acceptance/M02-evidence/api-release-cow', '-C', 'opt-level=3', '-C', 'debug-assertions=no']
+warning: function `TCopyOnFirstWrite_copy` should have a snake case name
+ --> tests/m02-api/cow.rs:6:4
+  |
+6 | fn TCopyOnFirstWrite_copy() {
+  |    ^^^^^^^^^^^^^^^^^^^^^^ help: convert the identifier to snake case: `tcopy_on_first_write_copy`
+  |
+  = note: `#[warn(non_snake_case)]` (part of `#[warn(nonstandard_style)]`) on by default
+
+warning: 1 warning emitted
+
+
+EXIT: 0

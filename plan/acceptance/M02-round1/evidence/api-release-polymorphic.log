@@ -1,0 +1,42 @@
+COMMAND: ['rustc', '--edition=2024', '--test', 'tests/m02-api/polymorphic.rs', '--extern', 'rust_skia=/Volumes/Data/Users/paul/development/src/github/rust-skia/target/release/librust_skia.rlib', '-L', 'dependency=/Volumes/Data/Users/paul/development/src/github/rust-skia/target/release/deps', '-L', 'dependency=/Volumes/Data/Users/paul/development/src/github/rust-skia/target/release', '-o', 'plan/acceptance/M02-evidence/api-release-polymorphic', '-C', 'opt-level=3', '-C', 'debug-assertions=no']
+error[E0061]: this function takes 0 arguments but 1 argument was supplied
+  --> tests/m02-api/polymorphic.rs:18:5
+   |
+18 |       sk_make_sp(Concrete {
+   |  _____^^^^^^^^^^_-
+19 | |         base: RefCntBase::new(),
+20 | |     })
+   | |_____- unexpected argument of type `Concrete`
+   |
+note: function defined here
+  --> tests/m02-api/polymorphic.rs:23:4
+   |
+23 | fn sk_make_sp() {
+   |    ^^^^^^^^^^
+help: remove the extra argument
+   |
+18 -     sk_make_sp(Concrete {
+19 -         base: RefCntBase::new(),
+20 -     })
+18 +     sk_make_sp()
+   |
+
+error[E0308]: mismatched types
+  --> tests/m02-api/polymorphic.rs:18:5
+   |
+17 |   fn make_foo() -> SkSp<dyn Abstract> {
+   |                    ------------------ expected `rust_skia::SkSp<(dyn Abstract + 'static)>` because of return type
+18 | /     sk_make_sp(Concrete {
+19 | |         base: RefCntBase::new(),
+20 | |     })
+   | |______^ expected `SkSp<dyn Abstract>`, found `()`
+   |
+   = note: expected struct `rust_skia::SkSp<(dyn Abstract + 'static)>`
+           found unit type `()`
+
+error: aborting due to 2 previous errors
+
+Some errors have detailed explanations: E0061, E0308.
+For more information about an error, try `rustc --explain E0061`.
+
+EXIT: 1

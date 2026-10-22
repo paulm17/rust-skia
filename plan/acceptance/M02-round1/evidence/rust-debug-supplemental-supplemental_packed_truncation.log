@@ -1,0 +1,27 @@
+COMMAND: ['/Volumes/Data/Users/paul/development/src/github/rust-skia/target/debug/deps/m02_test-a997dd6914494635', 'supplemental::supplemental_packed_truncation', '--exact', '--nocapture']
+
+running 1 test
+packed input=[] expected=None actual=Some(0)
+packed input=[fe] expected=None actual=Some(0)
+packed input=[fe, 01] expected=None actual=Some(0)
+packed input=[ff, 01, 02, 03] expected=None actual=Some(0)
+reporter assertions=4 failures=4
+
+thread 'supplemental::supplemental_packed_truncation' (15785977) panicked at tests/support/mod.rs:25:9:
+4 assertion(s) failed:
+tests/m02/supplemental.rs:34: actual.is_none()
+tests/m02/supplemental.rs:34: actual.is_none()
+tests/m02/supplemental.rs:34: actual.is_none()
+tests/m02/supplemental.rs:34: actual.is_none()
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+test supplemental::supplemental_packed_truncation ... FAILED
+
+failures:
+
+failures:
+    supplemental::supplemental_packed_truncation
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 98 filtered out; finished in 0.00s
+
+
+EXIT: 101

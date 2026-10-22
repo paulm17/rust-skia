@@ -1,0 +1,22 @@
+COMMAND: ['/Volumes/Data/Users/paul/development/src/github/rust-skia/target/release/deps/m02_test-f37e1713df482657', 'supplemental::supplemental_checksum_reference_vectors', '--exact', '--nocapture']
+
+running 1 test
+checksum bytes=[] seed=0 expected=3804095577 actual=3804095577
+checksum bytes=[] seed=1 expected=638533687 actual=638533687
+checksum bytes=[] seed=4294967295 expected=2821084191 actual=2821084191
+checksum bytes=[97] seed=0 expected=164791601 actual=164791601
+checksum bytes=[97] seed=1 expected=459268265 actual=459268265
+checksum bytes=[97] seed=4294967295 expected=4117487878 actual=4117487878
+checksum bytes=[97, 98, 99] seed=0 expected=3411111026 actual=3411111026
+checksum bytes=[97, 98, 99] seed=1 expected=2184336823 actual=2184336823
+checksum bytes=[97, 98, 99] seed=4294967295 expected=1582327983 actual=1582327983
+checksum bytes=[97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122] seed=0 expected=517385426 actual=517385426
+checksum bytes=[97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122] seed=1 expected=3575925044 actual=3575925044
+checksum bytes=[97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122] seed=4294967295 expected=3468900993 actual=3468900993
+reporter assertions=12 failures=0
+test supplemental::supplemental_checksum_reference_vectors ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 117 filtered out; finished in 0.00s
+
+
+EXIT: 0

@@ -1,0 +1,115 @@
+# M02 acceptance rerun — Codex
+
+**Decision: NEEDS_FIX. M02 is not accepted; M03 remains NOT_STARTED.**
+
+The revised implementation fixes all runtime failures from the first report. Expanded faithful tests expose two further original-test failures. Smart-pointer layout/type safety and executor behavior also remain defective, and three complete original registrations remain unexecuted. Successful compilation and the earlier 99-test subset do not clear the gate.
+
+- Implementation: revised [Deepseek handoff](../handoffs/M02.md), HEAD `86a2f7738e74b9b4888498fa5efd54a83ad61ba1` plus the handoff working tree. All 41 handoff hashes match [the verified manifest](M02-evidence/handoff-hashes.json). Codex changed tests, test tooling and acceptance evidence only; no production/build implementation was fixed here.
+- Reference: clean C++ checkout at `b81c69985fd14bb7bfbd356b7618633ce07dc1a4`. Native arm64 macOS 15.6 (24G84), Rust/Cargo 1.94.1, Apple clang 17.0.0, SDK 26.1. Default CPU Cargo configuration, no optional features; dependency `libc 0.2.191`.
+- [Environment](M02-evidence/environment.log), [reference/input hashes](M02-evidence/reference.sha256), [final working-tree hashes](M02-evidence/working-tree.sha256), [111-row correspondence](M02-evidence/correspondence.csv), [216-row source accounting](M02-evidence/source-dispositions.csv).
+- The first rejection and its evidence are retained separately: [round-one report snapshot](M02-round1/report.txt). Its counts and defects describe the earlier implementation, not this rerun.
+
+## Discovery, coverage and test corrections
+
+Both newly built C++ profiles discover exactly **110 enabled CPU registrations**, and **all 110 pass** in each profile. There are no extras or duplicate names. Of the 111 static registration sites, only `RawPtr_DanglingPointerDetected` is absent: its original guards require PartitionAlloc and dangling checks, neither enabled by this CPU configuration. It is NOT_APPLICABLE, never an executed PASS. The other 14 RawPtr cases are enabled.
+
+| Original registration results | Debug | Release |
+| --- | --- | --- |
+| Rust complete executable bodies | 107 | 107 |
+| PASS | 105 | 105 |
+| FAIL | 2 | 2 |
+| Failed API obligations: complete bodies unexecuted | 3 | 3 |
+| NOT_APPLICABLE by original guard | 1 | 1 |
+| C++ enabled cases passed | 110 / 110 | 110 / 110 |
+
+The ledger contains one row per original registration, with source location/hash, Rust path/name, both profile results and adaptation/gap notes. A PASS applies to the observations of that registration, not every API in its source file. All three unexecuted registrations remain required at M02.
+
+### Corrections to Codex test/tool sources
+
+These changes correct test interfaces and strengthen evidence collection; no expected value, tolerance, input, exclusion or existing failure assertion was relaxed.
+
+1. The old polymorphic probe's local test named `sk_make_sp` shadowed the imported factory. The helper now explicitly uses Deepseek's documented `rust_skia::sk_make_sp_as::<dyn Abstract, _>` to return an abstract owning handle. Both API compilation and the original zero-assertion `sk_make_sp` registration pass. This validates the reached construction/drop helper, **not** arbitrary erasure safety, virtual access or convertible smart-pointer copy/move behavior.
+2. The two-argument `SkTaskGroup::add` probe now calls the documented `add_priority` method. Rust has no overloads for the two earlier call shapes. This fixes the probe spelling only; it does not establish executor binding, priorities or concurrency.
+3. The Rust isolation runner previously chose the last Cargo JSON executable, which can be the application binary when artifact ordering changes. It now requires target name `m02_test`, target kind `test`, and test profile, then reconciles the exact 107-original name set and all 118 discovered cases. Both profiles were rerun after this correction; an empty or partial discovery now fails the runner.
+4. Seventeen previously unexecuted registrations are now complete executable translations: the remaining eight hash cases, Deque, InternalLList, RawPtr_Stl, both container-API template cases, the full String registration, SkTBlockList, copy-on-first-write and the abstract factory helper. The full String and container-API cases fail as recorded below. All prior 90 bodies remain in the run.
+
+### Helpers, fixtures and language adaptations
+
+- Nonfatal reporter assertions still evaluate once and accumulate failures. Unexpected production panics terminate that case. Individual cases run in separate processes with timeouts; none times out. The reporter's caught negative self-test panic is expected and separate from real failures.
+- The original arena, data/table, UTF, MD5, reference-count, allocator, string splitting/resize/overflow, LRU, message-bus, span, synchronization and utility fixtures are retained. Block tests keep all four growth policies and all 9 padding × 8 alignment owning-block cases. MD5 retains seven RFC1321 messages and both write granularities; UTF retains all invalid/truncated fixtures and negative expectations. Supplied-storage, pointer identity, release callbacks and byte-order checks remain separate supplemental observations.
+- The full String body retains the original scalar records, including signed NaNs, infinities and native-macOS exponent strings, all width-15 integer cases, contains-empty predicate and scalar maximum-size bound 15. Numeric casts preserve the original signed bit patterns. Only the original Windows formatting branch is inapplicable. VAList/printf use typed `SkFormatArg` inputs; no expected string was changed.
+- Hash helpers preserve all eight map iteration/foreach passes, all five set iteration passes, copies, reference releases, colliding copy counters and the entire reserve/shrink/hysteresis sequence. Initializer-list construction uses ordered insertion of the same entries, retaining original post-construction observations. Pointer-entry THashTable explicitly supplies the fixture's extracted key to the Rust key/value API; no separate map replaces it.
+- Template API helpers run all four original container types and retain every null/non-null, data/get identity, fill, move and reset observation. A test-only trait maps calls to the actual production containers. Rust constructors use new/reset or with-count conventions; `mem::take` permits reuse after the original move sites.
+- TBlockList retains its 20-byte C fixture, per-thread constructor/destructor counts, all five initializer paths, forward/reverse const/mutable address observations, seven allocator scenarios per configuration, all five reserve configurations, all four heterogeneous concat pairs for C and trivial D, and the large-increment clamp/alignment case. **9,352 reporter assertions execute and pass** in each profile. No fixture implements reserve/allocation/concat behavior.
+- Deque retains allocation counts 1 and 10, counts/pointer relations, block bounds and forward/reverse/mixed order observations. Rust iterator passes represent the C++ reset/cursor operations. For the mixed pass, the reverse prefix includes the next-unread element, matching the original `prev()` return-before-move semantics.
+- InternalLList uses returned numeric handles for mutations and tail removal. Original external node identity is held with Rc; debug membership is observed through production traversal because numeric handles are list-local, especially after concat. It retains original validation/count assertions and all iteration sequences. It does not claim additional coverage of arbitrary stale/cross-list numeric handles.
+- Span immutable views are recreated around backing-store mutation where Rust borrowing prohibits C++ aliasing. RawPtr uses explicit take for moved-from null state; raw-left relational observations use the exposed production pointer. Base/derived raw fixtures use a repr(C) prefix. Ordered/unordered set observations now use the actual RawPtr keys.
+- IncrTopoSort retains the original test-local Node/Graph DFS/shift algorithm and four fixtures, using production arrays, sorting, strings and intrusive references. Reached SkMetaData lookup/type/update/iteration/removal is Codex-owned tool support; M40 tool packaging is not production completion here. FakeStreams' three helpers are translated for supplemental stream checks. No assigned original body reaches SkRandom or Resources; their resources are not invented or replaced. Relevant Test/CTS/Resources/FakeStreams metadata and OWNERS files are hashed.
+- RefCnt runs native 100000-iteration strong/weak thread loops. Once retains 1021 group submissions and shared mutex retains 8 × 100000 tasks with 5,400,000 reader assertions. Atomic shared cells and synchronized reporter access avoid undefined behavior on failure. Because the production task group remains synchronous, those passing group-based bodies do not establish worker concurrency.
+- Required files are local temporary alphabet data and inline literal fixtures; no shader, golden, download or external service is missing. The String_huge manual crash loop retains its original false condition, not a new skip. M03-owned Stream/TArray/Random and other later registrations are not claimed complete.
+
+## Remaining failures for Deepseek
+
+### Original runtime tests — fail in both profiles
+
+| Original source/assertion | Rust case and exact observations | Evidence |
+| --- | --- | --- |
+| `StringTest.cpp:64,181,183` | `full_string::String`: five failed assertions. `contains("")` returns false; scalar 0.5 produces `0.5f` instead of `0.5`; maxima produce `3.40282347e+38f` and `-3.40282347e+38f` instead of `3.4028235e+38` / `-3.4028235e+38`; the negative result also exceeds original size bound 15. | [debug](M02-evidence/rust-debug-full_string-String.log), [release](M02-evidence/rust-release-full_string-String.log) |
+| `TemplatesTest.cpp:84–85,140–144` | `more_templates::TemplateContainerAPIs`: 12 failed assertions. AutoTArray and AutoSTArray expose non-null get/data for zero-sized construction, reset(0), and moved empty containers; six null observations fail for each type. The two malloc-backed types pass. | [debug](M02-evidence/rust-debug-more_templates-TemplateContainerAPIs.log), [release](M02-evidence/rust-release-more_templates-TemplateContainerAPIs.log) |
+
+Reproduce each with `cargo test --locked --test m02_test MODULE::NAME -- --exact --nocapture`; add `--release` after `test` for release. Logs give the translated assertion locations and exact commands. The corresponding unchanged C++ registrations pass both profiles.
+
+### Additional ownership and executor defects
+
+| Check | Expected / actual | Reproduction/evidence |
+| --- | --- | --- |
+| `supplemental_smart_pointer_size` | Direct reproduction of the `sk_sp` original assertion at `RefCntTest.cpp:190`: sized owning handle must be one pointer (8 bytes); actual SkSp is 24 bytes after adding function pointers. This assertion is labeled supplemental until the complete original sk_sp body can run. | [debug](M02-evidence/rust-debug-supplemental-supplemental_smart_pointer_size.log), [release](M02-evidence/rust-release-supplemental-supplemental_smart_pointer_size.log); same Cargo invocation with `supplemental::supplemental_smart_pointer_size`. |
+| `supplemental_executor_background_workers` | Each original functional factory requests four workers with borrowing disabled. No submitted task completes without external draining in any of the three variants. Production with_mode discards thread count, list count and FIFO/LIFO mode; no worker starts. The 200ms timeout is a bounded liveness diagnostic, corroborated by source, not an imported upstream performance threshold. | [debug](M02-evidence/rust-debug-supplemental-supplemental_executor_background_workers.log), [release](M02-evidence/rust-release-supplemental-supplemental_executor_background_workers.log); case `supplemental::supplemental_executor_background_workers`. |
+| Compile-negative `erasure_type_safety` | A safe typed erasure factory must reject an unrelated concrete type with Rc as an abstract Send+Sync type it does not implement. Instead, `sk_make_sp_as` compiles it as `SkSp<dyn Abstract>` and the result satisfies Send. The negative program is compiled only, never executed. This is missing type/auto-trait validation in production, not a probe spelling conflict. | `python3 tests/reference/check_m02_api.py` exits 1 in both profiles because rustc unexpectedly exits **0** for this negative unit. [debug](M02-evidence/api-debug-erasure_type_safety.log), [release](M02-evidence/api-release-erasure_type_safety.log), [summary with expected rejection](M02-evidence/api-summary.json). |
+
+The original eight supplemental contracts from round one all pass now. Of ten runtime supplemental checks in this rerun, eight pass and the two above fail. The new compile-negative failure is recorded separately, not added to runtime case counts.
+
+### Three complete original registrations still unexecuted
+
+| Registration | Required behavior still missing |
+| --- | --- |
+| `ExecutorTest_StdFunction` | Executor-bound SkTaskGroup construction and actual pool execution. All three original FIFO/LIFO/multilist variants, task sleeps, priorities and final collector assertions must run against the selected executor. Substituting the unbound synchronous group would make the factory under test irrelevant. |
+| `ExecutorTest_Callback` | Actual callback pool factories, high/low submission, pending acquire/release accounting, borrow and shutdown semantics for the same three variants. An alias named SkCallbackExecutors supplies none of those implementations. This is an enabled CPU registration on macOS; it cannot be deferred or excluded by a production comment. |
+| `sk_sp` | Convertible copy/move assignment/construction and comparisons of existing derived/base handles, plus full counter, method, null/comparison, self-reset and reference-cycle helper closure. The explicit erased allocation helper does not provide existing-handle conversions or erased access. The original size assertion already fails independently. No partial body is counted as a whole-registration PASS. |
+
+These are failed required API/behavior obligations, not missing external dependencies or hardware. Codex must finish the complete bodies when production exposes the required contracts. No implementation fix was made in test support to obtain passage.
+
+## Evidence and gate decision
+
+Both C++ builds compile unchanged upstream test bodies, Test.cpp reporter/context implementation and reached production support. Debug uses C++20, `-O0 -g -DSK_DEBUG`; release uses `-O3 -DNDEBUG`; both use `-DSK_DISABLE_TRACING -Wl,-dead_strip`, with Ganesh, Graphite and PartitionAlloc disabled. Exact source lists, commands, dependency scans and hashes are retained. Each reference registration runs separately with a 120-second timeout; none times out. C++ supplemental contracts and checksum vectors also remain green in both profiles.
+
+| Variant | Debug | Release |
+| --- | --- | --- |
+| Native arm64 C++ M02 originals | 110 PASS | 110 PASS |
+| Native arm64 Rust originals | 105 PASS, 2 FAIL, 3 unexecuted API failures | Same |
+| Previous accepted M01 integration tests | All 15 PASS | All 15 PASS |
+| M01 C++ reference | Six enabled original registrations and contracts PASS | Same |
+| Current library development checks | 46 PASS | 46 PASS |
+| Ganesh Metal / macOS OpenGL | NOT_APPLICABLE at M02: CPU discovery only, no M02 backend inventory row or Cargo backend feature | Same |
+| Graphite Metal / Dawn-Metal | NOT_APPLICABLE at M02 for the same reason; required later backend gates remain open | Same |
+| Native Intel | Explicitly pending M46 | Explicitly pending M46 |
+
+| Command | Exit / counts | Evidence |
+| --- | --- | --- |
+| `cargo test --locked -- --nocapture` | 101; expanded M02 binary fails | [debug](M02-evidence/cargo-test-debug.log) |
+| `cargo test --release --locked -- --nocapture` | 101 | [release](M02-evidence/cargo-test-release.log) |
+| `cargo test --locked --no-fail-fast -- --nocapture` | 101; **175 PASS / 4 FAIL** across 179 cases; every test binary executes | [cumulative debug](M02-evidence/cargo-cumulative-debug.log) |
+| `cargo test --release --locked --no-fail-fast -- --nocapture` | 101; same counts | [cumulative release](M02-evidence/cargo-cumulative-release.log) |
+| Isolated M02 binary, each `NAME --exact --nocapture` | 118 discovered/executed per profile: 107 original + 10 supplemental + 1 reporter self-test; 114 PASS / 4 FAIL, no timeout/ignored cases | [discovery debug](M02-evidence/rust-discovery-debug.log), [release](M02-evidence/rust-discovery-release.log), [all exits](M02-evidence/checks-summary.json) |
+| `python3 tests/reference/check_m02_api.py` | 1: cow/polymorphic/ordinary probes compile and their test harnesses exit 0; the additional negative erasure unit incorrectly compiles and therefore FAILS its contract | [API results](M02-evidence/api-summary.json) |
+| `python3 tests/reference/run_m02.py --source /Volumes/Data/Users/paul/development/src/github/skia` | 0; both builds, exact registry reconciliation, 110 original runs and contracts pass | [summary](M02-evidence/reference-summary.json), [debug build](M02-evidence/reference-build-debug.log), [release build](M02-evidence/reference-build-release.log) |
+| `python3 tests/reference/run_m01.py --source /Volumes/Data/Users/paul/development/src/github/skia --output plan/acceptance/M02-evidence/M01-reference` | 0 | [driver](M02-evidence/m01-reference-driver.log), [debug](M02-evidence/M01-reference/reference-run-debug.log), [release](M02-evidence/M01-reference/reference-run-release.log) |
+| `cargo fmt --all -- --check` | 0 | [format](M02-evidence/fmt-check.log) |
+| `cargo clippy --all-targets --locked -- -D warnings` | 0 | [Clippy](M02-evidence/clippy.log) |
+| `python3 plan/validate_plan.py --source /Volumes/Data/Users/paul/development/src/github/skia --check-hashes` | 0 | [audit](M02-evidence/validate-plan.log) |
+
+`tests/reference/run_m02_checks.py` reproduces cumulative Rust runs, exact isolated discovery, API checks, the M01 reference and supporting checks. `capture_m02_inputs.py` records the environment, handoff hashes and reached reference/input hashes. The no-fail-fast runs are required because ordinary Cargo stops at the failing M02 integration binary. Local lint allowances retain original assertion forms and the literal 3.14; they do not alter production behavior.
+
+**NEEDS_FIX** remains the actual gate state. The two original failures, ownership/type-safety defects, executor defects and three unexecuted registrations prevent acceptance. M01 stays ACCEPTED. M03 stays NOT_STARTED. Source mappings, the existing Rust placeholders and Cargo build adaptations remain accounted for without asserting whole-source completeness. Typed serialization, color APIs, tile-mode integration, discardable-memory pool, global initialization/serialization, tool packaging and Intel execution retain their explicit later gates.
+
+Deepseek owns the production repairs and interfaces. Codex must complete the remaining original helper closures, retain all factories/counters/cycle cases and repeat exact discovery plus cumulative debug/release runs after those repairs. The current passing subset cannot unlock M03.

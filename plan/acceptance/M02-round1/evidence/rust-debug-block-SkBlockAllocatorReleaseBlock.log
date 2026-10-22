@@ -1,0 +1,18 @@
+COMMAND: ['/Volumes/Data/Users/paul/development/src/github/rust-skia/target/debug/deps/m02_test-a997dd6914494635', 'block::SkBlockAllocatorReleaseBlock', '--exact', '--nocapture']
+
+running 1 test
+
+thread 'block::SkBlockAllocatorReleaseBlock' (15785791) panicked at src/block_allocator.rs:514:20:
+attempt to add with overflow
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+test block::SkBlockAllocatorReleaseBlock ... FAILED
+
+failures:
+
+failures:
+    block::SkBlockAllocatorReleaseBlock
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 98 filtered out; finished in 0.00s
+
+
+EXIT: 101

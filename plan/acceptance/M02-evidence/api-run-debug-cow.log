@@ -1,0 +1,18 @@
+
+running 2 tests
+reporter assertions=3 failures=2
+reporter assertions=20
+thread 'support::tests::reporter_collects_failures_and_evaluates_once' (16043977) panicked at tests/m02-api/../support/mod.rs:25:9:
+2 assertion(s) failed:
+tests/m02-api/../support/mod.rs:49: { evaluations += 1; false }
+tests/m02-api/../support/mod.rs:53: false
+ failures=note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+0
+reporter assertions=0 failures=0
+test TCopyOnFirstWrite_copy ... ok
+test support::tests::reporter_collects_failures_and_evaluates_once ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+EXIT: 0

@@ -1,0 +1,25 @@
+COMMAND: ['/Volumes/Data/Users/paul/development/src/github/rust-skia/target/release/deps/m02_test-f37e1713df482657', 'supplemental::supplemental_executor_background_workers', '--exact', '--nocapture']
+
+running 1 test
+factory 0 workers=4 allow_borrowing=false completed_without_borrow=false
+factory 1 workers=4 allow_borrowing=false completed_without_borrow=false
+factory 2 workers=4 allow_borrowing=false completed_without_borrow=false
+reporter assertions=3 failures=3
+
+thread 'supplemental::supplemental_executor_background_workers' (15869550) panicked at tests/support/mod.rs:25:9:
+3 assertion(s) failed:
+tests/m02/supplemental.rs:170: completed
+tests/m02/supplemental.rs:170: completed
+tests/m02/supplemental.rs:170: completed
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+test supplemental::supplemental_executor_background_workers ... FAILED
+
+failures:
+
+failures:
+    supplemental::supplemental_executor_background_workers
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 117 filtered out; finished in 0.61s
+
+
+EXIT: 101

@@ -1,0 +1,1369 @@
+   Compiling rust-skia v0.1.0 (/Volumes/Data/Users/paul/development/src/github/rust-skia)
+error[E0432]: unresolved import `rust_skia::containers::STArray`
+ --> tests/m03/tarray.rs:4:5
+  |
+4 | use rust_skia::containers::STArray;
+  |     ^^^^^^^^^^^^^^^^^^^^^^^-------
+  |     |                      |
+  |     |                      help: a similar name exists in the module: `TArray`
+  |     no `STArray` in `containers`
+
+error[E0432]: unresolved imports `rust_skia::extras::SkEnumerate`, `rust_skia::extras::SkZip`
+ --> tests/m03/utils.rs:5:25
+  |
+5 | use rust_skia::extras::{SkEnumerate,SkZip};
+  |                         ^^^^^^^^^^^ ^^^^^ no `SkZip` in `extras`
+  |                         |
+  |                         no `SkEnumerate` in `extras`
+  |                         help: a similar name exists in the module: `sk_enumerate`
+
+error[E0432]: unresolved import `rust_skia::stream::remaining_length_is_below`
+   --> tests/m03/stream.rs:111:9
+    |
+111 |     use rust_skia::stream::remaining_length_is_below as below;
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ no `remaining_length_is_below` in `stream`
+
+error[E0432]: unresolved import `rust_skia::extras::sk_make_zip`
+   --> tests/m03/utils.rs:108:9
+    |
+108 |     use rust_skia::extras::sk_make_zip;
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ no `sk_make_zip` in `extras`
+
+error[E0425]: cannot find function `is_finite2_f64` in module `rust_skia::floating_point`
+  --> tests/m03/math.rs:27:68
+   |
+27 |     fn finite2(a: Self,b: Self)->bool { rust_skia::floating_point::is_finite2_f64(a,b) }
+   |                                                                    ^^^^^^^^^^^^^^
+   |
+  ::: src/floating_point.rs:49:1
+   |
+49 | pub fn is_finite2(x: f32, y: f32) -> bool {
+   | ----------------------------------------- similarly named function `is_finite2` defined here
+   |
+help: a function with a similar name exists
+   |
+27 -     fn finite2(a: Self,b: Self)->bool { rust_skia::floating_point::is_finite2_f64(a,b) }
+27 +     fn finite2(a: Self,b: Self)->bool { rust_skia::floating_point::is_finite2(a,b) }
+   |
+
+error[E0425]: cannot find function `is_finite3_f64` in module `rust_skia::floating_point`
+  --> tests/m03/math.rs:28:76
+   |
+28 |     fn finite3(a: Self,b: Self,c: Self)->bool { rust_skia::floating_point::is_finite3_f64(a,b,c) }
+   |                                                                            ^^^^^^^^^^^^^^
+   |
+  ::: src/floating_point.rs:54:1
+   |
+54 | pub fn is_finite3(x: f32, y: f32, z: f32) -> bool {
+   | ------------------------------------------------- similarly named function `is_finite3` defined here
+   |
+help: a function with a similar name exists
+   |
+28 -     fn finite3(a: Self,b: Self,c: Self)->bool { rust_skia::floating_point::is_finite3_f64(a,b,c) }
+28 +     fn finite3(a: Self,b: Self,c: Self)->bool { rust_skia::floating_point::is_finite3(a,b,c) }
+   |
+
+error[E0425]: cannot find function `sk_tdivmod_u8` in module `rust_skia::math_priv`
+   --> tests/m03/math.rs:196:49
+    |
+196 | divmod_test!(divmod_u8,u8,rust_skia::math_priv::sk_tdivmod_u8);
+    |                                                 ^^^^^^^^^^^^^
+    |
+   ::: src/math_priv.rs:133:1
+    |
+133 | pub const fn sk_tdivmod_i32(numer: i32, denom: i32) -> (i32, i32) {
+    | ----------------------------------------------------------------- similarly named function `sk_tdivmod_i32` defined here
+    |
+help: a function with a similar name exists
+    |
+196 - divmod_test!(divmod_u8,u8,rust_skia::math_priv::sk_tdivmod_u8);
+196 + divmod_test!(divmod_u8,u8,rust_skia::math_priv::sk_tdivmod_i32);
+    |
+
+error[E0425]: cannot find function `sk_tdivmod_u16` in module `rust_skia::math_priv`
+   --> tests/m03/math.rs:197:51
+    |
+197 | divmod_test!(divmod_u16,u16,rust_skia::math_priv::sk_tdivmod_u16);
+    |                                                   ^^^^^^^^^^^^^^
+    |
+   ::: src/math_priv.rs:133:1
+    |
+133 | pub const fn sk_tdivmod_i32(numer: i32, denom: i32) -> (i32, i32) {
+    | ----------------------------------------------------------------- similarly named function `sk_tdivmod_i32` defined here
+    |
+help: a function with a similar name exists
+    |
+197 - divmod_test!(divmod_u16,u16,rust_skia::math_priv::sk_tdivmod_u16);
+197 + divmod_test!(divmod_u16,u16,rust_skia::math_priv::sk_tdivmod_i32);
+    |
+
+error[E0425]: cannot find function `sk_tdivmod_u32` in module `rust_skia::math_priv`
+   --> tests/m03/math.rs:198:51
+    |
+198 | divmod_test!(divmod_u32,u32,rust_skia::math_priv::sk_tdivmod_u32);
+    |                                                   ^^^^^^^^^^^^^^
+    |
+   ::: src/math_priv.rs:133:1
+    |
+133 | pub const fn sk_tdivmod_i32(numer: i32, denom: i32) -> (i32, i32) {
+    | ----------------------------------------------------------------- similarly named function `sk_tdivmod_i32` defined here
+    |
+help: a function with a similar name exists
+    |
+198 - divmod_test!(divmod_u32,u32,rust_skia::math_priv::sk_tdivmod_u32);
+198 + divmod_test!(divmod_u32,u32,rust_skia::math_priv::sk_tdivmod_i32);
+    |
+
+error[E0425]: cannot find function `sk_tdivmod_u64` in module `rust_skia::math_priv`
+   --> tests/m03/math.rs:199:51
+    |
+199 | divmod_test!(divmod_u64,u64,rust_skia::math_priv::sk_tdivmod_u64);
+    |                                                   ^^^^^^^^^^^^^^
+    |
+   ::: src/math_priv.rs:137:1
+    |
+137 | pub fn sk_tdivmod_i64(numer: i64, denom: i64) -> (i64, i64) {
+    | ----------------------------------------------------------- similarly named function `sk_tdivmod_i64` defined here
+    |
+help: a function with a similar name exists
+    |
+199 - divmod_test!(divmod_u64,u64,rust_skia::math_priv::sk_tdivmod_u64);
+199 + divmod_test!(divmod_u64,u64,rust_skia::math_priv::sk_tdivmod_i64);
+    |
+
+error[E0425]: cannot find function `sk_tdivmod_i8` in module `rust_skia::math_priv`
+   --> tests/m03/math.rs:200:49
+    |
+200 | divmod_test!(divmod_s8,i8,rust_skia::math_priv::sk_tdivmod_i8);
+    |                                                 ^^^^^^^^^^^^^
+    |
+   ::: src/math_priv.rs:133:1
+    |
+133 | pub const fn sk_tdivmod_i32(numer: i32, denom: i32) -> (i32, i32) {
+    | ----------------------------------------------------------------- similarly named function `sk_tdivmod_i32` defined here
+    |
+help: a function with a similar name exists
+    |
+200 - divmod_test!(divmod_s8,i8,rust_skia::math_priv::sk_tdivmod_i8);
+200 + divmod_test!(divmod_s8,i8,rust_skia::math_priv::sk_tdivmod_i32);
+    |
+
+error[E0425]: cannot find function `sk_tdivmod_i16` in module `rust_skia::math_priv`
+   --> tests/m03/math.rs:201:51
+    |
+201 | divmod_test!(divmod_s16,i16,rust_skia::math_priv::sk_tdivmod_i16);
+    |                                                   ^^^^^^^^^^^^^^
+    |
+   ::: src/math_priv.rs:133:1
+    |
+133 | pub const fn sk_tdivmod_i32(numer: i32, denom: i32) -> (i32, i32) {
+    | ----------------------------------------------------------------- similarly named function `sk_tdivmod_i32` defined here
+    |
+help: a function with a similar name exists
+    |
+201 - divmod_test!(divmod_s16,i16,rust_skia::math_priv::sk_tdivmod_i16);
+201 + divmod_test!(divmod_s16,i16,rust_skia::math_priv::sk_tdivmod_i32);
+    |
+
+error[E0425]: cannot find function `scalar_pin` in module `rust_skia::scalar`
+   --> tests/m03/math.rs:220:36
+    |
+220 |         let p = rust_skia::scalar::scalar_pin(f,0.,100.); check!(r, p >= 0. && p <= 100.); }
+    |                                    ^^^^^^^^^^
+    |
+   ::: src/scalar.rs:73:1
+    |
+ 73 | pub fn scalar_sin(radians: Scalar) -> Scalar {
+    | -------------------------------------------- similarly named function `scalar_sin` defined here
+    |
+help: a function with a similar name exists
+    |
+220 -         let p = rust_skia::scalar::scalar_pin(f,0.,100.); check!(r, p >= 0. && p <= 100.); }
+220 +         let p = rust_skia::scalar::scalar_sin(f,0.,100.); check!(r, p >= 0. && p <= 100.); }
+    |
+
+error[E0425]: cannot find function `sk_stream_copy` in module `rust_skia::stream`
+   --> tests/m03/stream.rs:125:71
+    |
+125 |     let mut tgt=SkDynamicMemoryWStream::new(); if !rust_skia::stream::sk_stream_copy(&mut tgt,stream) { check!(r,false); return; }
+    |                                                                       ^^^^^^^^^^^^^^ not found in `rust_skia::stream`
+
+warning: unnecessary parentheses around function argument
+  --> tests/m03/floating_point.rs:18:35
+   |
+18 |     check!(r, !double_nearly_zero((f32::EPSILON as f64)));
+   |                                   ^                   ^
+   |
+   = note: `#[warn(unused_parens)]` (part of `#[warn(unused)]`) on by default
+help: remove these parentheses
+   |
+18 -     check!(r, !double_nearly_zero((f32::EPSILON as f64)));
+18 +     check!(r, !double_nearly_zero(f32::EPSILON as f64));
+   |
+
+warning: unnecessary parentheses around function argument
+  --> tests/m03/floating_point.rs:53:42
+   |
+53 |     check!(r, !doubles_nearly_equal_ulps((f32::EPSILON as f64), 0.));
+   |                                          ^                   ^
+   |
+help: remove these parentheses
+   |
+53 -     check!(r, !doubles_nearly_equal_ulps((f32::EPSILON as f64), 0.));
+53 +     check!(r, !doubles_nearly_equal_ulps(f32::EPSILON as f64, 0.));
+   |
+
+warning: unnecessary parentheses around assigned value
+  --> tests/m03/safe_math.rs:17:23
+   |
+17 |     let bits: usize = (std::mem::size_of::<usize>() * 8);
+   |                       ^                                ^
+   |
+help: remove these parentheses
+   |
+17 -     let bits: usize = (std::mem::size_of::<usize>() * 8);
+17 +     let bits: usize = std::mem::size_of::<usize>() * 8;
+   |
+
+warning: unnecessary parentheses around assigned value
+  --> tests/m03/safe_math.rs:42:23
+   |
+42 |     let bits: usize = (std::mem::size_of::<usize>() * 8);
+   |                       ^                                ^
+   |
+help: remove these parentheses
+   |
+42 -     let bits: usize = (std::mem::size_of::<usize>() * 8);
+42 +     let bits: usize = std::mem::size_of::<usize>() * 8;
+   |
+
+warning: unnecessary braces around block return value
+   --> tests/m03/utils.rs:118:5
+    |
+118 |     { for (i,(av,bv,cv,dv,sv)) in sk_make_zip((&a,&B,c.as_slice(),&d,s.as_slice())).enumerate() { check!(r,*av==a[i]); check!(r,*bv==B[i]); check!(r,*cv==c[i]); check!(r,*dv==d[i]); check!(r,*sv==s[i]); } }
+    |     ^^                                                                                                                                                                                                      ^^
+    |
+    = note: `#[warn(unused_braces)]` (part of `#[warn(unused)]`) on by default
+help: remove these braces
+    |
+118 -     { for (i,(av,bv,cv,dv,sv)) in sk_make_zip((&a,&B,c.as_slice(),&d,s.as_slice())).enumerate() { check!(r,*av==a[i]); check!(r,*bv==B[i]); check!(r,*cv==c[i]); check!(r,*dv==d[i]); check!(r,*sv==s[i]); } }
+118 +     for (i,(av,bv,cv,dv,sv)) in sk_make_zip((&a,&B,c.as_slice(),&d,s.as_slice())).enumerate() { check!(r,*av==a[i]); check!(r,*bv==B[i]); check!(r,*cv==c[i]); check!(r,*dv==d[i]); check!(r,*sv==s[i]); }
+    |
+
+error[E0599]: no method named `reset` found for struct `rust_skia::SkBitSet` in the current scope
+    --> tests/m03/bit_set.rs:49:10
+     |
+  49 |     set0.reset();
+     |          ^^^^^
+     |
+help: there is a method `set` with a similar name, but with different arguments
+    --> src/containers.rs:1027:5
+     |
+1027 |     pub fn set(&mut self, index: usize) {
+     |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error[E0599]: no method named `set_all` found for struct `rust_skia::SkBitSet` in the current scope
+  --> tests/m03/bit_set.rs:53:10
+   |
+53 |     set0.set_all();
+   |          ^^^^^^^ method not found in `rust_skia::SkBitSet`
+
+error[E0599]: no method named `find_first_unset` found for struct `rust_skia::SkBitSet` in the current scope
+  --> tests/m03/bit_set.rs:54:20
+   |
+54 |     check!(r, set0.find_first_unset().is_none());
+   |                    ^^^^^^^^^^^^^^^^
+   |
+help: there is a method `find_first` with a similar name
+   |
+54 -     check!(r, set0.find_first_unset().is_none());
+54 +     check!(r, set0.find_first().is_none());
+   |
+
+error[E0369]: binary operation `==` cannot be applied to type `rust_skia::SkBitSet`
+    --> tests/m03/bit_set.rs:66:25
+     |
+  66 |     check!(r,   bitsetA == bitsetB);
+     |                 ------- ^^ ------- rust_skia::SkBitSet
+     |                 |
+     |                 rust_skia::SkBitSet
+     |
+note: `rust_skia::SkBitSet` does not implement `PartialEq`
+    --> src/containers.rs:1006:1
+     |
+1006 | pub struct SkBitSet {
+     | ^^^^^^^^^^^^^^^^^^^ `rust_skia::SkBitSet` is defined in another crate
+
+error[E0369]: binary operation `!=` cannot be applied to type `rust_skia::SkBitSet`
+    --> tests/m03/bit_set.rs:67:25
+     |
+  67 |     check!(r, !(bitsetA != bitsetB));
+     |                 ------- ^^ ------- rust_skia::SkBitSet
+     |                 |
+     |                 rust_skia::SkBitSet
+     |
+note: `rust_skia::SkBitSet` does not implement `PartialEq`
+    --> src/containers.rs:1006:1
+     |
+1006 | pub struct SkBitSet {
+     | ^^^^^^^^^^^^^^^^^^^ `rust_skia::SkBitSet` is defined in another crate
+
+error[E0369]: binary operation `!=` cannot be applied to type `rust_skia::SkBitSet`
+    --> tests/m03/bit_set.rs:70:25
+     |
+  70 |     check!(r,   bitsetA != bitsetC);
+     |                 ------- ^^ ------- rust_skia::SkBitSet
+     |                 |
+     |                 rust_skia::SkBitSet
+     |
+note: `rust_skia::SkBitSet` does not implement `PartialEq`
+    --> src/containers.rs:1006:1
+     |
+1006 | pub struct SkBitSet {
+     | ^^^^^^^^^^^^^^^^^^^ `rust_skia::SkBitSet` is defined in another crate
+
+error[E0369]: binary operation `==` cannot be applied to type `rust_skia::SkBitSet`
+    --> tests/m03/bit_set.rs:71:25
+     |
+  71 |     check!(r, !(bitsetA == bitsetC));
+     |                 ------- ^^ ------- rust_skia::SkBitSet
+     |                 |
+     |                 rust_skia::SkBitSet
+     |
+note: `rust_skia::SkBitSet` does not implement `PartialEq`
+    --> src/containers.rs:1006:1
+     |
+1006 | pub struct SkBitSet {
+     | ^^^^^^^^^^^^^^^^^^^ `rust_skia::SkBitSet` is defined in another crate
+
+error[E0369]: binary operation `!=` cannot be applied to type `rust_skia::SkBitSet`
+    --> tests/m03/bit_set.rs:74:25
+     |
+  74 |     check!(r,   bitsetA != bitsetD);
+     |                 ------- ^^ ------- rust_skia::SkBitSet
+     |                 |
+     |                 rust_skia::SkBitSet
+     |
+note: `rust_skia::SkBitSet` does not implement `PartialEq`
+    --> src/containers.rs:1006:1
+     |
+1006 | pub struct SkBitSet {
+     | ^^^^^^^^^^^^^^^^^^^ `rust_skia::SkBitSet` is defined in another crate
+
+error[E0369]: binary operation `==` cannot be applied to type `rust_skia::SkBitSet`
+    --> tests/m03/bit_set.rs:75:25
+     |
+  75 |     check!(r, !(bitsetA == bitsetD));
+     |                 ------- ^^ ------- rust_skia::SkBitSet
+     |                 |
+     |                 rust_skia::SkBitSet
+     |
+note: `rust_skia::SkBitSet` does not implement `PartialEq`
+    --> src/containers.rs:1006:1
+     |
+1006 | pub struct SkBitSet {
+     | ^^^^^^^^^^^^^^^^^^^ `rust_skia::SkBitSet` is defined in another crate
+
+error[E0369]: binary operation `==` cannot be applied to type `rust_skia::SkBitSet`
+    --> tests/m03/bit_set.rs:98:29
+     |
+  98 |         check!(r,   bitsetA == bitsetB);
+     |                     ------- ^^ ------- rust_skia::SkBitSet
+     |                     |
+     |                     rust_skia::SkBitSet
+     |
+note: `rust_skia::SkBitSet` does not implement `PartialEq`
+    --> src/containers.rs:1006:1
+     |
+1006 | pub struct SkBitSet {
+     | ^^^^^^^^^^^^^^^^^^^ `rust_skia::SkBitSet` is defined in another crate
+
+error[E0369]: binary operation `!=` cannot be applied to type `rust_skia::SkBitSet`
+    --> tests/m03/bit_set.rs:99:29
+     |
+  99 |         check!(r, !(bitsetA != bitsetB));
+     |                     ------- ^^ ------- rust_skia::SkBitSet
+     |                     |
+     |                     rust_skia::SkBitSet
+     |
+note: `rust_skia::SkBitSet` does not implement `PartialEq`
+    --> src/containers.rs:1006:1
+     |
+1006 | pub struct SkBitSet {
+     | ^^^^^^^^^^^^^^^^^^^ `rust_skia::SkBitSet` is defined in another crate
+
+error[E0369]: binary operation `!=` cannot be applied to type `rust_skia::SkBitSet`
+    --> tests/m03/bit_set.rs:114:29
+     |
+ 114 |         check!(r,   bitsetA != bitsetB);
+     |                     ------- ^^ ------- rust_skia::SkBitSet
+     |                     |
+     |                     rust_skia::SkBitSet
+     |
+note: `rust_skia::SkBitSet` does not implement `PartialEq`
+    --> src/containers.rs:1006:1
+     |
+1006 | pub struct SkBitSet {
+     | ^^^^^^^^^^^^^^^^^^^ `rust_skia::SkBitSet` is defined in another crate
+
+error[E0369]: binary operation `==` cannot be applied to type `rust_skia::SkBitSet`
+    --> tests/m03/bit_set.rs:115:29
+     |
+ 115 |         check!(r, !(bitsetA == bitsetB));
+     |                     ------- ^^ ------- rust_skia::SkBitSet
+     |                     |
+     |                     rust_skia::SkBitSet
+     |
+note: `rust_skia::SkBitSet` does not implement `PartialEq`
+    --> src/containers.rs:1006:1
+     |
+1006 | pub struct SkBitSet {
+     | ^^^^^^^^^^^^^^^^^^^ `rust_skia::SkBitSet` is defined in another crate
+
+error[E0308]: mismatched types
+   --> tests/m03/checksum.rs:71:51
+    |
+ 71 |     check!(r, expected == sk_checksum_hash_string(sk.as_str()));
+    |                           ----------------------- ^^^^^^^^^^^ expected `&str`, found `Cow<'_, str>`
+    |                           |
+    |                           arguments to this function are incorrect
+    |
+    = note: expected reference `&str`
+                    found enum `Cow<'_, str>`
+note: function defined here
+   --> src/codec.rs:106:8
+    |
+106 | pub fn sk_checksum_hash_string(data: &str) -> u32 {
+    |        ^^^^^^^^^^^^^^^^^^^^^^^
+help: consider borrowing here
+    |
+ 71 |     check!(r, expected == sk_checksum_hash_string(&sk.as_str()));
+    |                                                   +
+
+error[E0015]: cannot call non-const function `rust_skia::sk_bswap16` in constants
+   --> tests/m03/math.rs:172:25
+    |
+172 |     const SWAP16: u16 = rust_skia::codec::sk_bswap16(0x2211);
+    |                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+note: function `sk_bswap16` is not const
+   --> src/codec.rs:246:1
+    |
+246 | pub fn sk_bswap16(value: u16) -> u16 {
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    = note: calls in constants are limited to constant functions, tuple structs and tuple variants
+
+error[E0015]: cannot call non-const function `rust_skia::sk_bswap32` in constants
+   --> tests/m03/math.rs:173:25
+    |
+173 |     const SWAP32: u32 = rust_skia::codec::sk_bswap32(0x44332211);
+    |                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+note: function `sk_bswap32` is not const
+   --> src/codec.rs:249:1
+    |
+249 | pub fn sk_bswap32(value: u32) -> u32 {
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    = note: calls in constants are limited to constant functions, tuple structs and tuple variants
+
+error[E0015]: cannot call non-const function `rust_skia::sk_bswap64` in constants
+   --> tests/m03/math.rs:174:25
+    |
+174 |     const SWAP64: u64 = rust_skia::codec::sk_bswap64(0x8877665544332211);
+    |                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+note: function `sk_bswap64` is not const
+   --> src/codec.rs:252:1
+    |
+252 | pub fn sk_bswap64(value: u64) -> u64 {
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    = note: calls in constants are limited to constant functions, tuple structs and tuple variants
+
+error[E0599]: no method named `detach_as_stream` found for struct `rust_skia::SkDynamicMemoryWStream` in the current scope
+  --> tests/m03/stream.rs:36:25
+   |
+36 |     { let mut stream=ds.detach_as_stream(); check!(r,100*26==stream.length()); check!(r,ds.bytes_written()==0);
+   |                         ^^^^^^^^^^^^^^^^
+   |
+help: there is a method `detach_as_data` with a similar name
+   |
+36 -     { let mut stream=ds.detach_as_stream(); check!(r,100*26==stream.length()); check!(r,ds.bytes_written()==0);
+36 +     { let mut stream=ds.detach_as_data(); check!(r,100*26==stream.length()); check!(r,ds.bytes_written()==0);
+   |
+
+error[E0599]: no method named `detach_as_stream` found for struct `rust_skia::SkDynamicMemoryWStream` in the current scope
+  --> tests/m03/stream.rs:41:25
+   |
+41 |     { let mut stream=ds.detach_as_stream(); check!(r,ds.bytes_written()==0); test_loop_stream(r,&mut stream,ABC,100);
+   |                         ^^^^^^^^^^^^^^^^
+   |
+help: there is a method `detach_as_data` with a similar name
+   |
+41 -     { let mut stream=ds.detach_as_stream(); check!(r,ds.bytes_written()==0); test_loop_stream(r,&mut stream,ABC,100);
+41 +     { let mut stream=ds.detach_as_data(); check!(r,ds.bytes_written()==0); test_loop_stream(r,&mut stream,ABC,100);
+   |
+
+error[E0599]: no method named `detach_as_stream` found for struct `rust_skia::SkDynamicMemoryWStream` in the current scope
+  --> tests/m03/stream.rs:50:29
+   |
+50 |     let mut rstream=wstream.detach_as_stream();
+   |                             ^^^^^^^^^^^^^^^^
+   |
+help: there is a method `detach_as_data` with a similar name
+   |
+50 -     let mut rstream=wstream.detach_as_stream();
+50 +     let mut rstream=wstream.detach_as_data();
+   |
+
+error[E0599]: no method named `set_data` found for struct `rust_skia::SkMemoryStream` in the current scope
+   --> tests/m03/stream.rs:59:7
+    |
+ 59 |     s.set_data(None); TestDereferencingData(r,&mut s);
+    |       ^^^^^^^^
+    |
+help: there is a method `data` with a similar name, but with different arguments
+   --> src/stream.rs:220:5
+    |
+220 |     pub fn data(&self) -> &SkData {
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error[E0599]: no method named `detach_as_stream` found for struct `rust_skia::SkDynamicMemoryWStream` in the current scope
+   --> tests/m03/stream.rs:105:26
+    |
+105 |     let mut asset=stream.detach_as_stream(); let mut expected=SkData::make_uninitialized(asset.length()); values.set_seed(seed);
+    |                          ^^^^^^^^^^^^^^^^
+    |
+help: there is a method `detach_as_data` with a similar name
+    |
+105 -     let mut asset=stream.detach_as_stream(); let mut expected=SkData::make_uninitialized(asset.length()); values.set_seed(seed);
+105 +     let mut asset=stream.detach_as_data(); let mut expected=SkData::make_uninitialized(asset.length()); values.set_seed(seed);
+    |
+
+error[E0599]: no method named `detach_as_stream` found for struct `rust_skia::SkDynamicMemoryWStream` in the current scope
+   --> tests/m03/stream.rs:148:93
+    |
+148 |     let mut r=Reporter::default(); let mut tmp=SkDynamicMemoryWStream::new(); let asset=tmp.detach_as_stream(); check!(r,asset.get_...
+    |                                                                                             ^^^^^^^^^^^^^^^^
+    |
+help: there is a method `detach_as_data` with a similar name
+    |
+148 -     let mut r=Reporter::default(); let mut tmp=SkDynamicMemoryWStream::new(); let asset=tmp.detach_as_stream(); check!(r,asset.get_memory_base().is_none()); r.finish();
+148 +     let mut r=Reporter::default(); let mut tmp=SkDynamicMemoryWStream::new(); let asset=tmp.detach_as_data(); check!(r,asset.get_memory_base().is_none()); r.finish();
+    |
+
+error[E0599]: no method named `move_long` found for mutable reference `&mut rust_skia::SkFILEStream` in the current scope
+   --> tests/m03/stream.rs:157:18
+    |
+157 |     { check!(r,s.move_long(-(size as i64))); check!(r,s.position()==0); check!(r,s.move_long(i64::MIN)); check!(r,s.position()==0);
+    |                  ^^^^^^^^^
+    |
+help: there is a method `move_` with a similar name
+    |
+157 -     { check!(r,s.move_long(-(size as i64))); check!(r,s.position()==0); check!(r,s.move_long(i64::MIN)); check!(r,s.position()==0);
+157 +     { check!(r,s.move_(-(size as i64))); check!(r,s.position()==0); check!(r,s.move_long(i64::MIN)); check!(r,s.position()==0);
+    |
+
+error[E0599]: no method named `move_long` found for mutable reference `&mut rust_skia::SkFILEStream` in the current scope
+   --> tests/m03/stream.rs:157:84
+    |
+157 |     { check!(r,s.move_long(-(size as i64))); check!(r,s.position()==0); check!(r,s.move_long(i64::MIN)); check!(r,s.position()==0);
+    |                                                                                    ^^^^^^^^^
+    |
+help: there is a method `move_` with a similar name
+    |
+157 -     { check!(r,s.move_long(-(size as i64))); check!(r,s.position()==0); check!(r,s.move_long(i64::MIN)); check!(r,s.position()==0);
+157 +     { check!(r,s.move_long(-(size as i64))); check!(r,s.position()==0); check!(r,s.move_(i64::MIN)); check!(r,s.position()==0);
+    |
+
+error[E0599]: no method named `move_long` found for mutable reference `&mut rust_skia::SkFILEStream` in the current scope
+   --> tests/m03/stream.rs:159:18
+    |
+159 |       check!(r,s.move_long(1)); check!(r,s.is_at_end()); check!(r,s.position()==remaining); }
+    |                  ^^^^^^^^^
+    |
+help: there is a method `move_` with a similar name
+    |
+159 -       check!(r,s.move_long(1)); check!(r,s.is_at_end()); check!(r,s.position()==remaining); }
+159 +       check!(r,s.move_(1)); check!(r,s.is_at_end()); check!(r,s.position()==remaining); }
+    |
+
+error[E0599]: no function or associated item named `with_capacity` found for struct `rust_skia::SkTArray<T>` in the current scope
+   --> tests/m03/tarray.rs:31:48
+    |
+ 31 |             fn reserved(n:usize)->Self { Self::with_capacity(n) }
+    |                                                ^^^^^^^^^^^^^ function or associated item not found in `rust_skia::SkTArray<T>`
+...
+ 46 | dynamic_array!([]; SkTArray<T>);
+    | ------------------------------- in this macro invocation
+    |
+note: if you're trying to build a new `rust_skia::SkTArray<T>`, consider using `rust_skia::SkTArray::<T>::new` which returns `rust_skia::SkTArray<_>`
+   --> src/containers.rs:149:5
+    |
+149 |     pub fn new() -> Self {
+    |     ^^^^^^^^^^^^^^^^^^^^
+    = note: this error originates in the macro `dynamic_array` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0599]: no function or associated item named `from_slice` found for struct `rust_skia::SkTArray<T>` in the current scope
+   --> tests/m03/tarray.rs:32:50
+    |
+ 32 |             fn from_values(s:&[T])->Self { Self::from_slice(s) }
+    |                                                  ^^^^^^^^^^ function or associated item not found in `rust_skia::SkTArray<T>`
+...
+ 46 | dynamic_array!([]; SkTArray<T>);
+    | ------------------------------- in this macro invocation
+    |
+note: if you're trying to build a new `rust_skia::SkTArray<T>`, consider using `rust_skia::SkTArray::<T>::new` which returns `rust_skia::SkTArray<_>`
+   --> src/containers.rs:149:5
+    |
+149 |     pub fn new() -> Self {
+    |     ^^^^^^^^^^^^^^^^^^^^
+    = note: this error originates in the macro `dynamic_array` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0599]: no method named `capacity` found for reference `&rust_skia::SkTArray<T>` in the current scope
+  --> tests/m03/tarray.rs:34:41
+   |
+34 |             fn cap(&self)->usize { self.capacity() }
+   |                                         ^^^^^^^^ method not found in `&rust_skia::SkTArray<T>`
+...
+46 | dynamic_array!([]; SkTArray<T>);
+   | ------------------------------- in this macro invocation
+   |
+   = note: this error originates in the macro `dynamic_array` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0599]: no method named `reset_from_slice` found for mutable reference `&mut rust_skia::SkTArray<T>` in the current scope
+  --> tests/m03/tarray.rs:38:54
+   |
+38 |             fn reset_values(&mut self,s:&[T]) { self.reset_from_slice(s); }
+   |                                                      ^^^^^^^^^^^^^^^^
+...
+46 | dynamic_array!([]; SkTArray<T>);
+   | ------------------------------- in this macro invocation
+   |
+   = note: this error originates in the macro `dynamic_array` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0599]: no method named `push_back_n_with` found for mutable reference `&mut rust_skia::SkTArray<T>` in the current scope
+  --> tests/m03/tarray.rs:39:53
+   |
+39 |             fn push_n(&mut self,n:usize,t:T) { self.push_back_n_with(n,t); }
+   |                                                     ^^^^^^^^^^^^^^^^
+...
+46 | dynamic_array!([]; SkTArray<T>);
+   | ------------------------------- in this macro invocation
+   |
+   = note: this error originates in the macro `dynamic_array` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0599]: no method named `pop_back_n` found for mutable reference `&mut rust_skia::SkTArray<T>` in the current scope
+  --> tests/m03/tarray.rs:40:48
+   |
+40 |             fn pop_n(&mut self,n:usize) { self.pop_back_n(n); } fn reserve_count(&mut self,n:usize) { self.reserve(n); }
+   |                                                ^^^^^^^^^^
+...
+46 | dynamic_array!([]; SkTArray<T>);
+   | ------------------------------- in this macro invocation
+   |
+   = note: this error originates in the macro `dynamic_array` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0369]: binary operation `==` cannot be applied to type `&rust_skia::SkTArray<T>`
+   --> tests/m03/tarray.rs:42:53
+    |
+ 42 |             fn same(&self,other:&Self)->bool { self == other } fn different(&self,other:&Self)->bool { self != other }
+    |                                                ---- ^^ ----- &rust_skia::SkTArray<T>
+    |                                                |
+    |                                                &rust_skia::SkTArray<T>
+...
+ 46 | dynamic_array!([]; SkTArray<T>);
+    | ------------------------------- in this macro invocation
+    |
+note: `rust_skia::SkTArray<T>` does not implement `PartialEq`
+   --> src/containers.rs:144:1
+    |
+144 | pub struct SkTArray<T> {
+    | ^^^^^^^^^^^^^^^^^^^^^^ `rust_skia::SkTArray<T>` is defined in another crate
+    = note: this error originates in the macro `dynamic_array` (in Nightly builds, run with -Z macro-backtrace for more info)
+help: consider introducing a `where` clause, but there might be an alternative better way to express this requirement
+    |
+ 30 |         impl<$($generic)* T:Value> Array<T> for $a where rust_skia::SkTArray<T>: PartialEq {
+    |                                                    +++++++++++++++++++++++++++++++++++++++
+
+error[E0369]: binary operation `!=` cannot be applied to type `&rust_skia::SkTArray<T>`
+   --> tests/m03/tarray.rs:42:109
+    |
+ 42 |             fn same(&self,other:&Self)->bool { self == other } fn different(&self,other:&Self)->bool { self != other }
+    |                                                                                                        ---- ^^ ----- &rust_skia::SkTArray<T>
+    |                                                                                                        |
+    |                                                                                                        &rust_skia::SkTArray<T>
+...
+ 46 | dynamic_array!([]; SkTArray<T>);
+    | ------------------------------- in this macro invocation
+    |
+note: `rust_skia::SkTArray<T>` does not implement `PartialEq`
+   --> src/containers.rs:144:1
+    |
+144 | pub struct SkTArray<T> {
+    | ^^^^^^^^^^^^^^^^^^^^^^ `rust_skia::SkTArray<T>` is defined in another crate
+    = note: this error originates in the macro `dynamic_array` (in Nightly builds, run with -Z macro-backtrace for more info)
+help: consider introducing a `where` clause, but there might be an alternative better way to express this requirement
+    |
+ 30 |         impl<$($generic)* T:Value> Array<T> for $a where rust_skia::SkTArray<T>: PartialEq {
+    |                                                    +++++++++++++++++++++++++++++++++++++++
+
+error[E0599]: no method named `push` found for type parameter `A` in the current scope
+  --> tests/m03/tarray.rs:96:50
+   |
+94 | fn comparison<T:Value,A:Array<T>>(r:&mut Reporter) {
+   |                       - method `push` not found for this type parameter
+95 |     let mut a=A::default(); let mut b=A::default(); check!(r,a.same(&b)); check!(r,!a.different(&b));
+96 |     for x in 0..10 { a.add_value(T::value(x)); b.push(T::value(x)); check!(r,a.same(&b)); check!(r,!a.different(&b)); }
+   |                                                  ^^^^
+   |
+help: there is a method `push_n` with a similar name, but with different arguments
+  --> tests/m03/tarray.rs:24:68
+   |
+24 |     fn clear_values(&mut self); fn reset_values(&mut self,s:&[T]); fn push_n(&mut self,n:usize,t:T); fn pop_n(&mut self,n:usize);
+   |                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error[E0282]: type annotations needed
+   --> tests/m03/tarray.rs:130:9
+    |
+130 |         a.clear(); for i in 0..size_a { a.push_back(T::make(i as i32)); } a.move_back_self(); check!(r,a.count()==size_a);
+    |         ^ cannot infer type
+
+error[E0282]: type annotations needed
+   --> tests/m03/tarray.rs:136:9
+    |
+136 | ...   a.clear(); b.clear(); let mut curr=0; for _ in 0..size_a { a.push_back(T::make(curr)); curr+=1; } for _ in 0..size_b { b.push...
+    |       ^ cannot infer type
+
+error[E0282]: type annotations needed
+   --> tests/m03/tarray.rs:136:20
+    |
+136 | ...   a.clear(); b.clear(); let mut curr=0; for _ in 0..size_a { a.push_back(T::make(curr)); curr+=1; } for _ in 0..size_b { b.push...
+    |                  ^ cannot infer type
+
+error[E0282]: type annotations needed
+   --> tests/m03/tarray.rs:138:42
+    |
+138 |             for x in a.iter() { check!(r,x.equals(curr)); curr+=1; }
+    |                                          ^ cannot infer type
+
+error[E0282]: type annotations needed
+   --> tests/m03/tarray.rs:140:42
+    |
+140 |             for x in b.iter() { check!(r,x.equals(curr)); curr+=1; } for x in a.iter() { check!(r,x.equals(curr)); curr+=1; }
+    |                                          ^ cannot infer type
+
+error[E0282]: type annotations needed
+   --> tests/m03/tarray.rs:140:99
+    |
+140 |             for x in b.iter() { check!(r,x.equals(curr)); curr+=1; } for x in a.iter() { check!(r,x.equals(curr)); curr+=1; }
+    |                                                                                                   ^ cannot infer type
+
+error[E0282]: type annotations needed
+   --> tests/m03/tarray.rs:141:77
+    |
+141 |             a.swap_self(); curr=size_a as i32; for x in a.iter() { check!(r,x.equals(curr)); curr+=1; }
+    |                                                                             ^ cannot infer type
+
+error[E0599]: no method named `capacity` found for struct `rust_skia::SkTArray<T>` in the current scope
+   --> tests/m03/tarray.rs:152:48
+    |
+152 |     { let a=SkTArray::<i32>::new(); check!(r,a.capacity()==0); }
+    |                                                ^^^^^^^^ method not found in `rust_skia::SkTArray<i32>`
+
+error[E0599]: no function or associated item named `with_capacity` found for struct `rust_skia::SkTArray<T>` in the current scope
+   --> tests/m03/tarray.rs:154:30
+    |
+154 |     { let a=SkTArray::<i32>::with_capacity(1); check!(r,a.capacity()>=1); }
+    |                              ^^^^^^^^^^^^^ function or associated item not found in `rust_skia::SkTArray<i32>`
+    |
+note: if you're trying to build a new `rust_skia::SkTArray<i32>`, consider using `rust_skia::SkTArray::<T>::new` which returns `rust_skia::SkTArray<_>`
+   --> src/containers.rs:149:5
+    |
+149 |     pub fn new() -> Self {
+    |     ^^^^^^^^^^^^^^^^^^^^
+
+error[E0599]: no method named `capacity` found for struct `rust_skia::SkTArray<T>` in the current scope
+   --> tests/m03/tarray.rs:155:93
+    |
+155 |     { let a=SkTArray::<i32>::new(); let mut b=SkTArray::new(); b.clone_from(&a); check!(r,b.capacity()==0); }
+    |                                                                                             ^^^^^^^^ method not found in `rust_skia::SkTArray<i32>`
+
+error[E0599]: no method named `assign_from` found for struct `rust_skia::SkTArray<T>` in the current scope
+   --> tests/m03/tarray.rs:156:68
+    |
+156 |     { let a=STArray::<10,i32>::new(); let mut b=SkTArray::new(); b.assign_from(&a); check!(r,b.capacity()==0); }
+    |                                                                    ^^^^^^^^^^^ method not found in `rust_skia::SkTArray<_>`
+
+error[E0599]: no method named `capacity` found for struct `rust_skia::SkTArray<T>` in the current scope
+   --> tests/m03/tarray.rs:156:96
+    |
+156 |     { let a=STArray::<10,i32>::new(); let mut b=SkTArray::new(); b.assign_from(&a); check!(r,b.capacity()==0); }
+    |                                                                                                ^^^^^^^^ method not found in `rust_skia::SkTArray<_>`
+
+error[E0599]: no method named `capacity` found for struct `rust_skia::SkTArray<T>` in the current scope
+   --> tests/m03/tarray.rs:157:65
+    |
+157 |     { let a=SkTArray::<i32>::new(); let b=a.clone(); check!(r,b.capacity()==0); }
+    |                                                                 ^^^^^^^^ method not found in `rust_skia::SkTArray<i32>`
+
+error[E0599]: no function or associated item named `from_array` found for struct `rust_skia::SkTArray<T>` in the current scope
+   --> tests/m03/tarray.rs:158:55
+    |
+158 |     { let a=STArray::<10,i32>::new(); let b=SkTArray::from_array(&a); check!(r,b.capacity()==0); }
+    |                                                       ^^^^^^^^^^ function or associated item not found in `rust_skia::SkTArray<_>`
+    |
+note: if you're trying to build a new `rust_skia::SkTArray<_>`, consider using `rust_skia::SkTArray::<T>::new` which returns `rust_skia::SkTArray<_>`
+   --> src/containers.rs:149:5
+    |
+149 |     pub fn new() -> Self {
+    |     ^^^^^^^^^^^^^^^^^^^^
+help: there is an associated function `copy_from_array` with a similar name
+    |
+158 |     { let a=STArray::<10,i32>::new(); let b=SkTArray::copy_from_array(&a); check!(r,b.capacity()==0); }
+    |                                                       +++++
+
+error[E0599]: no method named `capacity` found for struct `rust_skia::SkTArray<T>` in the current scope
+   --> tests/m03/tarray.rs:159:57
+    |
+159 |     { let a=SkTArray::<i32>::new(); let b=a; check!(r,b.capacity()==0); }
+    |                                                         ^^^^^^^^ method not found in `rust_skia::SkTArray<i32>`
+
+error[E0599]: no function or associated item named `move_from` found for struct `rust_skia::SkTArray<T>` in the current scope
+   --> tests/m03/tarray.rs:160:55
+    |
+160 |     { let a=STArray::<10,i32>::new(); let b=SkTArray::move_from(a); check!(r,b.capacity()==0); }
+    |                                                       ^^^^^^^^^ function or associated item not found in `rust_skia::SkTArray<_>`
+    |
+note: if you're trying to build a new `rust_skia::SkTArray<_>`, consider using `rust_skia::SkTArray::<T>::new` which returns `rust_skia::SkTArray<_>`
+   --> src/containers.rs:149:5
+    |
+149 |     pub fn new() -> Self {
+    |     ^^^^^^^^^^^^^^^^^^^^
+help: there is a method `clone_from` with a similar name
+    |
+160 -     { let a=STArray::<10,i32>::new(); let b=SkTArray::move_from(a); check!(r,b.capacity()==0); }
+160 +     { let a=STArray::<10,i32>::new(); let b=SkTArray::clone_from(a); check!(r,b.capacity()==0); }
+    |
+
+error[E0599]: no method named `capacity` found for struct `rust_skia::SkTArray<T>` in the current scope
+   --> tests/m03/tarray.rs:161:80
+    |
+161 |     { let a=SkTArray::<i32>::new(); let mut b=SkTArray::new(); b=a; check!(r,b.capacity()==0); }
+    |                                                                                ^^^^^^^^ method not found in `rust_skia::SkTArray<i32>`
+
+error[E0599]: no method named `move_assign` found for struct `rust_skia::SkTArray<T>` in the current scope
+   --> tests/m03/tarray.rs:162:68
+    |
+162 |     { let a=STArray::<10,i32>::new(); let mut b=SkTArray::new(); b.move_assign(a); check!(r,b.capacity()==0); } r.finish();
+    |                                                                    ^^^^^^^^^^^
+    |
+help: there is a method `move_assign_array` with a similar name
+    |
+162 |     { let a=STArray::<10,i32>::new(); let mut b=SkTArray::new(); b.move_assign_array(a); check!(r,b.capacity()==0); } r.finish();
+    |                                                                               ++++++
+
+error[E0599]: no method named `capacity` found for struct `rust_skia::SkTArray<T>` in the current scope
+   --> tests/m03/tarray.rs:162:95
+    |
+162 |     { let a=STArray::<10,i32>::new(); let mut b=SkTArray::new(); b.move_assign(a); check!(r,b.capacity()==0); } r.finish();
+    |                                                                                               ^^^^^^^^ method not found in `rust_skia::SkTArray<_>`
+
+error[E0599]: no function or associated item named `from_array` found for struct `rust_skia::SkTArray<T>` in the current scope
+   --> tests/m03/tarray.rs:206:45
+    |
+206 |     fn copy_from_array(a:&$a)->Self { Self::from_array(a) } fn assign_array(&mut self,a:&$a) { self.assign_from(a); }
+    |                                             ^^^^^^^^^^ function or associated item not found in `rust_skia::SkTArray<i32>`
+...
+209 | compatible!(i32,STArray<1,i32>,SkTArray<i32>); compatible!(i8,STArray<5,i8>,SkTArray<i8>); compatible!(f32,STArray<10,f32>,SkTArray...
+    | --------------------------------------------- in this macro invocation
+    |
+note: if you're trying to build a new `rust_skia::SkTArray<i32>`, consider using `rust_skia::SkTArray::<T>::new` which returns `rust_skia::SkTArray<_>`
+   --> src/containers.rs:149:5
+    |
+149 |     pub fn new() -> Self {
+    |     ^^^^^^^^^^^^^^^^^^^^
+    = note: this error originates in the macro `compatible` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0599]: no method named `assign_from` found for mutable reference `&mut rust_skia::SkTArray<i32>` in the current scope
+   --> tests/m03/tarray.rs:206:101
+    |
+206 |     fn copy_from_array(a:&$a)->Self { Self::from_array(a) } fn assign_array(&mut self,a:&$a) { self.assign_from(a); }
+    |                                                                                                     ^^^^^^^^^^^ method not found in `&mut rust_skia::SkTArray<i32>`
+...
+209 | compatible!(i32,STArray<1,i32>,SkTArray<i32>); compatible!(i8,STArray<5,i8>,SkTArray<i8>); compatible!(f32,STArray<10,f32>,SkTArray...
+    | --------------------------------------------- in this macro invocation
+    |
+    = note: this error originates in the macro `compatible` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0599]: no function or associated item named `move_from` found for struct `rust_skia::SkTArray<T>` in the current scope
+   --> tests/m03/tarray.rs:207:44
+    |
+207 |     fn move_array(a:&mut $a)->Self { Self::move_from(std::mem::take(a)) } fn move_assign_array(&mut self,a:&mut $a) { self.move_ass...
+    |                                            ^^^^^^^^^ function or associated item not found in `rust_skia::SkTArray<i32>`
+208 | } }; }
+209 | compatible!(i32,STArray<1,i32>,SkTArray<i32>); compatible!(i8,STArray<5,i8>,SkTArray<i8>); compatible!(f32,STArray<10,f32>,SkTArray...
+    | --------------------------------------------- in this macro invocation
+    |
+note: if you're trying to build a new `rust_skia::SkTArray<i32>`, consider using `rust_skia::SkTArray::<T>::new` which returns `rust_skia::SkTArray<_>`
+   --> src/containers.rs:149:5
+    |
+149 |     pub fn new() -> Self {
+    |     ^^^^^^^^^^^^^^^^^^^^
+    = note: this error originates in the macro `compatible` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0599]: no method named `move_assign` found for mutable reference `&mut rust_skia::SkTArray<i32>` in the current scope
+   --> tests/m03/tarray.rs:207:124
+    |
+207 |     fn move_array(a:&mut $a)->Self { Self::move_from(std::mem::take(a)) } fn move_assign_array(&mut self,a:&mut $a) { self.move_assign(st...
+    |                                                                                                                            ^^^^^^^^^^^
+208 | } }; }
+209 | compatible!(i32,STArray<1,i32>,SkTArray<i32>); compatible!(i8,STArray<5,i8>,SkTArray<i8>); compatible!(f32,STArray<10,f32>,SkTArray<f32>);
+    | --------------------------------------------- in this macro invocation
+    |
+    = note: this error originates in the macro `compatible` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0599]: no function or associated item named `from_array` found for struct `rust_skia::SkTArray<T>` in the current scope
+   --> tests/m03/tarray.rs:206:45
+    |
+206 |     fn copy_from_array(a:&$a)->Self { Self::from_array(a) } fn assign_array(&mut self,a:&$a) { self.assign_from(a); }
+    |                                             ^^^^^^^^^^ function or associated item not found in `rust_skia::SkTArray<i8>`
+...
+209 | compatible!(i32,STArray<1,i32>,SkTArray<i32>); compatible!(i8,STArray<5,i8>,SkTArray<i8>); compatible!(f32,STArray<10,f32>,SkTArray...
+    |                                                ------------------------------------------ in this macro invocation
+    |
+note: if you're trying to build a new `rust_skia::SkTArray<i8>`, consider using `rust_skia::SkTArray::<T>::new` which returns `rust_skia::SkTArray<_>`
+   --> src/containers.rs:149:5
+    |
+149 |     pub fn new() -> Self {
+    |     ^^^^^^^^^^^^^^^^^^^^
+    = note: this error originates in the macro `compatible` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0599]: no method named `assign_from` found for mutable reference `&mut rust_skia::SkTArray<i8>` in the current scope
+   --> tests/m03/tarray.rs:206:101
+    |
+206 | ...f::from_array(a) } fn assign_array(&mut self,a:&$a) { self.assign_from(a); }
+    |                                                               ^^^^^^^^^^^ method not found in `&mut rust_skia::SkTArray<i8>`
+...
+209 | ...32>); compatible!(i8,STArray<5,i8>,SkTArray<i8>); compatible!(f32,STArray<10,f32>,SkTArray<f32>);
+    |          ------------------------------------------ in this macro invocation
+    |
+    = note: this error originates in the macro `compatible` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0599]: no function or associated item named `move_from` found for struct `rust_skia::SkTArray<T>` in the current scope
+   --> tests/m03/tarray.rs:207:44
+    |
+207 |     fn move_array(a:&mut $a)->Self { Self::move_from(std::mem::take(a)) } fn move_assign_array(&mut self,a:&mut $a) { self.move_ass...
+    |                                            ^^^^^^^^^ function or associated item not found in `rust_skia::SkTArray<i8>`
+208 | } }; }
+209 | compatible!(i32,STArray<1,i32>,SkTArray<i32>); compatible!(i8,STArray<5,i8>,SkTArray<i8>); compatible!(f32,STArray<10,f32>,SkTArray...
+    |                                                ------------------------------------------ in this macro invocation
+    |
+note: if you're trying to build a new `rust_skia::SkTArray<i8>`, consider using `rust_skia::SkTArray::<T>::new` which returns `rust_skia::SkTArray<_>`
+   --> src/containers.rs:149:5
+    |
+149 |     pub fn new() -> Self {
+    |     ^^^^^^^^^^^^^^^^^^^^
+    = note: this error originates in the macro `compatible` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0599]: no method named `move_assign` found for mutable reference `&mut rust_skia::SkTArray<i8>` in the current scope
+   --> tests/m03/tarray.rs:207:124
+    |
+207 | ...)->Self { Self::move_from(std::mem::take(a)) } fn move_assign_array(&mut self,a:&mut $a) { self.move_assign(std::mem::take(a)); }
+    |                                                                                                    ^^^^^^^^^^^
+208 | ...
+209 | ...32>,SkTArray<i32>); compatible!(i8,STArray<5,i8>,SkTArray<i8>); compatible!(f32,STArray<10,f32>,SkTArray<f32>);
+    |                        ------------------------------------------ in this macro invocation
+    |
+    = note: this error originates in the macro `compatible` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0599]: no function or associated item named `from_array` found for struct `rust_skia::SkTArray<T>` in the current scope
+   --> tests/m03/tarray.rs:206:45
+    |
+206 | ...elf::from_array(a) } fn assign_array(&mut self,a:&$a) { self.assign_from(a); }
+    |         ^^^^^^^^^^ function or associated item not found in `rust_skia::SkTArray<f32>`
+...
+209 | ...<i32>); compatible!(i8,STArray<5,i8>,SkTArray<i8>); compatible!(f32,STArray<10,f32>,SkTArray<f32>);
+    |                                                        ---------------------------------------------- in this macro invocation
+    |
+note: if you're trying to build a new `rust_skia::SkTArray<f32>`, consider using `rust_skia::SkTArray::<T>::new` which returns `rust_skia::SkTArray<_>`
+   --> src/containers.rs:149:5
+    |
+149 |     pub fn new() -> Self {
+    |     ^^^^^^^^^^^^^^^^^^^^
+    = note: this error originates in the macro `compatible` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0599]: no method named `assign_from` found for mutable reference `&mut rust_skia::SkTArray<f32>` in the current scope
+   --> tests/m03/tarray.rs:206:101
+    |
+206 | ...assign_array(&mut self,a:&$a) { self.assign_from(a); }
+    |                                         ^^^^^^^^^^^ method not found in `&mut rust_skia::SkTArray<f32>`
+...
+209 | ...TArray<5,i8>,SkTArray<i8>); compatible!(f32,STArray<10,f32>,SkTArray<f32>);
+    |                                ---------------------------------------------- in this macro invocation
+    |
+    = note: this error originates in the macro `compatible` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0599]: no function or associated item named `move_from` found for struct `rust_skia::SkTArray<T>` in the current scope
+   --> tests/m03/tarray.rs:207:44
+    |
+207 | ...lf::move_from(std::mem::take(a)) } fn move_assign_array(&mut self,a:&mut $a) { self.move_assign(std::mem::take(a)); }
+    |        ^^^^^^^^^ function or associated item not found in `rust_skia::SkTArray<f32>`
+208 | ...
+209 | ...<i32>); compatible!(i8,STArray<5,i8>,SkTArray<i8>); compatible!(f32,STArray<10,f32>,SkTArray<f32>);
+    |                                                        ---------------------------------------------- in this macro invocation
+    |
+note: if you're trying to build a new `rust_skia::SkTArray<f32>`, consider using `rust_skia::SkTArray::<T>::new` which returns `rust_skia::SkTArray<_>`
+   --> src/containers.rs:149:5
+    |
+149 |     pub fn new() -> Self {
+    |     ^^^^^^^^^^^^^^^^^^^^
+    = note: this error originates in the macro `compatible` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0599]: no method named `move_assign` found for mutable reference `&mut rust_skia::SkTArray<f32>` in the current scope
+   --> tests/m03/tarray.rs:207:124
+    |
+207 | ...take(a)) } fn move_assign_array(&mut self,a:&mut $a) { self.move_assign(std::mem::take(a)); }
+    |                                                                ^^^^^^^^^^^
+208 | ...
+209 | ...TArray<5,i8>,SkTArray<i8>); compatible!(f32,STArray<10,f32>,SkTArray<f32>);
+    |                                ---------------------------------------------- in this macro invocation
+    |
+    = note: this error originates in the macro `compatible` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0599]: no function or associated item named `new_with_index` found for struct `rust_skia::SkTDPQueue<T>` in the current scope
+   --> tests/m03/tdpqueue.rs:15:17
+    |
+ 15 |     SkTDPQueue::new_with_index(
+    |                 ^^^^^^^^^^^^^^ function or associated item not found in `rust_skia::SkTDPQueue<_>`
+    |
+note: if you're trying to build a new `rust_skia::SkTDPQueue<_>`, consider using `rust_skia::SkTDPQueue::<T>::new` which returns `rust_skia::SkTDPQueue<_>`
+   --> src/extras.rs:184:5
+    |
+184 |     pub fn new<F: Fn(&T, &T) -> Ordering + 'static>(cmp: F) -> Self {
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error[E0599]: no method named `data` found for struct `rust_skia::SkTDArray<T>` in the current scope
+  --> tests/m03/tdpqueue.rs:35:65
+   |
+35 |                 0 => { top=*pq.peek().unwrap(); let begin=array.data(); let end=unsafe { begin.add(count) };
+   |                                                                 ^^^^ private field, not a method
+
+error[E0599]: no method named `remove` found for struct `rust_skia::SkTDPQueue<T>` in the current scope
+  --> tests/m03/tdpqueue.rs:38:88
+   |
+38 |                     let ptr=unsafe { array.as_mut_slice().as_mut_ptr().add(item) }; pq.remove(&ptr); array[item]=sentinel; }
+   |                                                                                        ^^^^^^ method not found in `rust_skia::SkTDPQueue<*mut Mock>`
+
+error[E0599]: no method named `priority_did_change_for` found for struct `rust_skia::SkTDPQueue<T>` in the current scope
+   --> tests/m03/tdpqueue.rs:40:126
+    |
+ 40 | ...{ array.as_mut_slice().as_mut_ptr().add(item) }; pq.priority_did_change_for(&ptr); }
+    |                                                        ^^^^^^^^^^^^^^^^^^^^^^^
+    |
+help: there is a method `priority_did_change` with a similar name, but with different arguments
+   --> src/extras.rs:244:5
+    |
+244 |     pub fn priority_did_change(&mut self) {
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error[E0599]: no method named `sort` found for struct `rust_skia::SkTDPQueue<T>` in the current scope
+  --> tests/m03/tdpqueue.rs:53:10
+   |
+53 |     test.sort(); let mut prev=unsafe { (**test.peek().unwrap()).priority };
+   |          ^^^^ method not found in `rust_skia::SkTDPQueue<*mut Mock>`
+
+error[E0599]: no method named `at` found for struct `rust_skia::SkTDPQueue<T>` in the current scope
+  --> tests/m03/tdpqueue.rs:54:40
+   |
+54 |     for i in 0..count { let item=*test.at(i); check!(r,i as i32<=unsafe {(*item).index}); check!(r,prev<=unsafe {(*item).priority});...
+   |                                        ^^ method not found in `rust_skia::SkTDPQueue<*mut Mock>`
+
+error[E0747]: constant provided when a type was expected
+  --> tests/m03/utils.rs:19:35
+   |
+19 | ...   let mut tmp=AutoSTArray::<2,SkSp<RefClass>>::new(); check!(r,0==tmp.count()); tmp.reset(0); tmp.reset(4); check!(r,4==tmp.coun...
+   |                                 ^
+
+error[E0747]: constant provided when a type was expected
+  --> tests/m03/utils.rs:26:35
+   |
+26 |         let mut tmp=AutoSTArray::<2,SkSp<RefClass>>::with_count(4); check!(r,4==tmp.count());
+   |                                   ^
+
+error[E0282]: type annotations needed
+  --> tests/m03/utils.rs:71:72
+   |
+71 |         for (i,v) in SkEnumerate::new_mut(&mut output).iter_mut() { *v=input[i].take(); }
+   |                                                                        ^^^^^^^^ cannot infer type
+
+error[E0282]: type annotations needed
+  --> tests/m03/utils.rs:78:58
+   |
+78 |         for (_i,(ov,iv)) in zipped.enumerate_mut() { *ov=iv.take(); }
+   |                                                          ^^ cannot infer type
+
+error[E0282]: type annotations needed
+  --> tests/m03/utils.rs:89:64
+   |
+89 |     { let mut i=0; for (av,bv,cv,dv,sv) in z.iter() { check!(r,av.get()==a[i].get()); check!(r,*bv==b[i]); check!(r,cv.get()==c[i].g...
+   |                                                                ^^ cannot infer type
+
+error[E0282]: type annotations needed
+  --> tests/m03/utils.rs:89:117
+   |
+89 | ...,av.get()==a[i].get()); check!(r,*bv==b[i]); check!(r,cv.get()==c[i].get()); check!(r,dv.get()==d[i].get()); check!(r,sv.get()==s...
+   |                                                          ^^ cannot infer type
+
+error[E0282]: type annotations needed
+  --> tests/m03/utils.rs:89:149
+   |
+89 | ...,*bv==b[i]); check!(r,cv.get()==c[i].get()); check!(r,dv.get()==d[i].get()); check!(r,sv.get()==s[i].get()); i+=1; }
+   |                                                          ^^ cannot infer type
+
+error[E0282]: type annotations needed
+  --> tests/m03/utils.rs:89:181
+   |
+89 | ...c[i].get()); check!(r,dv.get()==d[i].get()); check!(r,sv.get()==s[i].get()); i+=1; }
+   |                                                          ^^ cannot infer type
+
+error[E0282]: type annotations needed
+  --> tests/m03/utils.rs:92:73
+   |
+92 |     { let mut i=0; for (av,bv,cv,dv,sv) in z.first(2).iter() { check!(r,av.get()==a[i].get()); check!(r,*bv==b[i]); check!(r,cv.get(...
+   |                                                                         ^^ cannot infer type
+
+error[E0282]: type annotations needed
+  --> tests/m03/utils.rs:92:126
+   |
+92 | ...,av.get()==a[i].get()); check!(r,*bv==b[i]); check!(r,cv.get()==c[i].get()); check!(r,dv.get()==d[i].get()); check!(r,sv.get()==s...
+   |                                                          ^^ cannot infer type
+
+error[E0282]: type annotations needed
+  --> tests/m03/utils.rs:92:158
+   |
+92 | ...,*bv==b[i]); check!(r,cv.get()==c[i].get()); check!(r,dv.get()==d[i].get()); check!(r,sv.get()==s[i].get()); i+=1; } check!(r,{i=...
+   |                                                          ^^ cannot infer type
+
+error[E0282]: type annotations needed
+  --> tests/m03/utils.rs:92:190
+   |
+92 | ...c[i].get()); check!(r,dv.get()==d[i].get()); check!(r,sv.get()==s[i].get()); i+=1; } check!(r,{i=2;i!=0}); }
+   |                                                          ^^ cannot infer type
+
+error[E0282]: type annotations needed for `(_, _, _, _, _)`
+  --> tests/m03/utils.rs:93:52
+   |
+93 |     { let mut i=0; for t in z.last(2).iter() { let (av,bv,cv,dv,sv)=t; check!(r,av.get()==a[i+2].get()); check!(r,*bv==b[i+2]); chec...
+   |                                                    ^^^^^^^^^^^^^^^^             -- type must be known at this point
+   |
+help: consider giving this pattern a type, where the placeholders `_` are specified
+   |
+93 |     { let mut i=0; for t in z.last(2).iter() { let (av,bv,cv,dv,sv): (_, _, _, _, _)=t; check!(r,av.get()==a[i+2].get()); check!(r,*bv==b[i+2]); check!(r,cv.get()==c[i+2].get()); check!(r,dv.get()==d[i+2].get()); check!(r,sv.get()==s[i+2].get()); i+=1; } check!(r,{i=2;i!=0}); }
+   |                                                                    +++++++++++++++++
+
+error[E0282]: type annotations needed for `({type error}, {type error}, _, _, _)`
+  --> tests/m03/utils.rs:93:52
+   |
+93 | ...let (av,bv,cv,dv,sv)=t; check!(r,av.get()==a[i+2].get()); check!(r,*bv==b[i+2]); check!(r,cv.get()==c[i+2].get()); check!(r,dv.ge...
+   |        ^^^^^^^^^^^^^^^^                                                                      -- type must be known at this point
+   |
+help: consider giving this pattern a type, where the placeholders `_` are specified
+   |
+93 |     { let mut i=0; for t in z.last(2).iter() { let (av,bv,cv,dv,sv): (_, _, _, _, _)=t; check!(r,av.get()==a[i+2].get()); check!(r,*bv==b[i+2]); check!(r,cv.get()==c[i+2].get()); check!(r,dv.get()==d[i+2].get()); check!(r,sv.get()==s[i+2].get()); i+=1; } check!(r,{i=2;i!=0}); }
+   |                                                                    +++++++++++++++++
+
+error[E0282]: type annotations needed for `({type error}, {type error}, {type error}, _, _)`
+  --> tests/m03/utils.rs:93:52
+   |
+93 | ...et (av,bv,cv,dv,sv)=t; check!(r,av.get()==a[i+2].get()); check!(r,*bv==b[i+2]); check!(r,cv.get()==c[i+2].get()); check!(r,dv.get...
+   |       ^^^^^^^^^^^^^^^^                                                                                                        -- type must be known at this point
+   |
+help: consider giving this pattern a type, where the placeholders `_` are specified
+   |
+93 |     { let mut i=0; for t in z.last(2).iter() { let (av,bv,cv,dv,sv): (_, _, _, _, _)=t; check!(r,av.get()==a[i+2].get()); check!(r,*bv==b[i+2]); check!(r,cv.get()==c[i+2].get()); check!(r,dv.get()==d[i+2].get()); check!(r,sv.get()==s[i+2].get()); i+=1; } check!(r,{i=2;i!=0}); }
+   |                                                                    +++++++++++++++++
+
+error[E0282]: type annotations needed for `({type error}, {type error}, {type error}, {type error}, _)`
+  --> tests/m03/utils.rs:93:52
+   |
+93 | ...et (av,bv,cv,dv,sv)=t; check!(r,av.get()==a[i+2].get()); check!(r,*bv==b[i+2]); check!(r,cv.get()==c[i+2].get()); check!(r,dv.get()==d[i+2].get()); check!(r,sv.ge...
+   |       ^^^^^^^^^^^^^^^^                                                                                                                                          -- type must be known at this point
+   |
+help: consider giving this pattern a type, where the placeholders `_` are specified
+   |
+93 |     { let mut i=0; for t in z.last(2).iter() { let (av,bv,cv,dv,sv): (_, _, _, _, _)=t; check!(r,av.get()==a[i+2].get()); check!(r,*bv==b[i+2]); check!(r,cv.get()==c[i+2].get()); check!(r,dv.get()==d[i+2].get()); check!(r,sv.get()==s[i+2].get()); i+=1; } check!(r,{i=2;i!=0}); }
+   |                                                                    +++++++++++++++++
+
+error[E0282]: type annotations needed for `(_, _, _, _, _)`
+  --> tests/m03/utils.rs:94:57
+   |
+94 |     { let mut i=0; for t in z.subspan(1,2).iter() { let (av,bv,cv,dv,sv)=t; check!(r,av.get()==a[i+1].get()); check!(r,*bv==b[i+1]);...
+   |                                                         ^^^^^^^^^^^^^^^^             -- type must be known at this point
+   |
+help: consider giving this pattern a type, where the placeholders `_` are specified
+   |
+94 |     { let mut i=0; for t in z.subspan(1,2).iter() { let (av,bv,cv,dv,sv): (_, _, _, _, _)=t; check!(r,av.get()==a[i+1].get()); check!(r,*bv==b[i+1]); check!(r,cv.get()==c[i+1].get()); check!(r,dv.get()==d[i+1].get()); check!(r,sv.get()==s[i+1].get()); i+=1; } check!(r,{i=2;i!=0}); }
+   |                                                                         +++++++++++++++++
+
+error[E0282]: type annotations needed for `({type error}, {type error}, _, _, _)`
+  --> tests/m03/utils.rs:94:57
+   |
+94 | ...let (av,bv,cv,dv,sv)=t; check!(r,av.get()==a[i+1].get()); check!(r,*bv==b[i+1]); check!(r,cv.get()==c[i+1].get()); check!(r,dv.ge...
+   |        ^^^^^^^^^^^^^^^^                                                                      -- type must be known at this point
+   |
+help: consider giving this pattern a type, where the placeholders `_` are specified
+   |
+94 |     { let mut i=0; for t in z.subspan(1,2).iter() { let (av,bv,cv,dv,sv): (_, _, _, _, _)=t; check!(r,av.get()==a[i+1].get()); check!(r,*bv==b[i+1]); check!(r,cv.get()==c[i+1].get()); check!(r,dv.get()==d[i+1].get()); check!(r,sv.get()==s[i+1].get()); i+=1; } check!(r,{i=2;i!=0}); }
+   |                                                                         +++++++++++++++++
+
+error[E0282]: type annotations needed for `({type error}, {type error}, {type error}, _, _)`
+  --> tests/m03/utils.rs:94:57
+   |
+94 | ...et (av,bv,cv,dv,sv)=t; check!(r,av.get()==a[i+1].get()); check!(r,*bv==b[i+1]); check!(r,cv.get()==c[i+1].get()); check!(r,dv.get...
+   |       ^^^^^^^^^^^^^^^^                                                                                                        -- type must be known at this point
+   |
+help: consider giving this pattern a type, where the placeholders `_` are specified
+   |
+94 |     { let mut i=0; for t in z.subspan(1,2).iter() { let (av,bv,cv,dv,sv): (_, _, _, _, _)=t; check!(r,av.get()==a[i+1].get()); check!(r,*bv==b[i+1]); check!(r,cv.get()==c[i+1].get()); check!(r,dv.get()==d[i+1].get()); check!(r,sv.get()==s[i+1].get()); i+=1; } check!(r,{i=2;i!=0}); }
+   |                                                                         +++++++++++++++++
+
+error[E0282]: type annotations needed for `({type error}, {type error}, {type error}, {type error}, _)`
+  --> tests/m03/utils.rs:94:57
+   |
+94 | ...et (av,bv,cv,dv,sv)=t; check!(r,av.get()==a[i+1].get()); check!(r,*bv==b[i+1]); check!(r,cv.get()==c[i+1].get()); check!(r,dv.get()==d[i+1].get()); check!(r,sv.ge...
+   |       ^^^^^^^^^^^^^^^^                                                                                                                                          -- type must be known at this point
+   |
+help: consider giving this pattern a type, where the placeholders `_` are specified
+   |
+94 |     { let mut i=0; for t in z.subspan(1,2).iter() { let (av,bv,cv,dv,sv): (_, _, _, _, _)=t; check!(r,av.get()==a[i+1].get()); check!(r,*bv==b[i+1]); check!(r,cv.get()==c[i+1].get()); check!(r,dv.get()==d[i+1].get()); check!(r,sv.get()==s[i+1].get()); i+=1; } check!(r,{i=2;i!=0}); }
+   |                                                                         +++++++++++++++++
+
+error[E0282]: type annotations needed
+  --> tests/m03/utils.rs:95:83
+   |
+95 |     { let zz=z.clone(); let mut i=0; for (av,bv,cv,dv,sv) in zz.iter() { check!(r,av.get()==a[i].get()); check!(r,*bv==b[i]); check!...
+   |                                                                                   ^^ cannot infer type
+
+error[E0282]: type annotations needed
+  --> tests/m03/utils.rs:95:136
+   |
+95 | ...,av.get()==a[i].get()); check!(r,*bv==b[i]); check!(r,cv.get()==c[i].get()); check!(r,dv.get()==d[i].get()); check!(r,sv.get()==s...
+   |                                                          ^^ cannot infer type
+
+error[E0282]: type annotations needed
+  --> tests/m03/utils.rs:95:168
+   |
+95 | ...,*bv==b[i]); check!(r,cv.get()==c[i].get()); check!(r,dv.get()==d[i].get()); check!(r,sv.get()==s[i].get()); i+=1; } check!(r,{i=...
+   |                                                          ^^ cannot infer type
+
+error[E0282]: type annotations needed
+  --> tests/m03/utils.rs:95:200
+   |
+95 | ...c[i].get()); check!(r,dv.get()==d[i].get()); check!(r,sv.get()==s[i].get()); i+=1; } check!(r,{i=4;i!=0}); }
+   |                                                          ^^ cannot infer type
+
+error[E0282]: type annotations needed
+  --> tests/m03/utils.rs:96:86
+   |
+96 |     { let cz=z.as_const(); let mut i=0; for (av,bv,cv,dv,sv) in cz.iter() { check!(r,av.get()==a[i].get()); check!(r,*bv==b[i]); che...
+   |                                                                                      ^^ cannot infer type
+
+error[E0282]: type annotations needed
+  --> tests/m03/utils.rs:96:139
+   |
+96 | ...,av.get()==a[i].get()); check!(r,*bv==b[i]); check!(r,cv.get()==c[i].get()); check!(r,dv.get()==d[i].get()); check!(r,sv.get()==s...
+   |                                                          ^^ cannot infer type
+
+error[E0282]: type annotations needed
+  --> tests/m03/utils.rs:96:171
+   |
+96 | ...,*bv==b[i]); check!(r,cv.get()==c[i].get()); check!(r,dv.get()==d[i].get()); check!(r,sv.get()==s[i].get()); i+=1; } check!(r,{i=...
+   |                                                          ^^ cannot infer type
+
+error[E0282]: type annotations needed
+  --> tests/m03/utils.rs:96:203
+   |
+96 | ...c[i].get()); check!(r,dv.get()==d[i].get()); check!(r,sv.get()==s[i].get()); i+=1; } check!(r,{i=4;i!=0}); }
+   |                                                          ^^ cannot infer type
+
+error[E0282]: type annotations needed
+   --> tests/m03/utils.rs:100:48
+    |
+100 | ...   let (av,bv,cv,dv,ev)=z.at(1); check!(r,av.get()==2); check!(r,*bv==20.); check!(r,cv.get()==30); check!(r,dv.get()==200); che...
+    |                                              ^^ cannot infer type
+
+error[E0282]: type annotations needed
+   --> tests/m03/utils.rs:100:91
+    |
+100 | ...   let (av,bv,cv,dv,ev)=z.at(1); check!(r,av.get()==2); check!(r,*bv==20.); check!(r,cv.get()==30); check!(r,dv.get()==200); che...
+    |                                                                                         ^^ cannot infer type
+
+error[E0282]: type annotations needed
+   --> tests/m03/utils.rs:100:115
+    |
+100 | ... check!(r,*bv==20.); check!(r,cv.get()==30); check!(r,dv.get()==200); check!(r,ev.get()==30);
+    |                                                          ^^ cannot infer type
+
+error[E0282]: type annotations needed
+   --> tests/m03/utils.rs:100:140
+    |
+100 | ...k!(r,cv.get()==30); check!(r,dv.get()==200); check!(r,ev.get()==30);
+    |                                                          ^^ cannot infer type
+
+error[E0277]: the trait bound `rust_skia::SkBitmask<Flag>: rust_skia::SkBitmaskEnum` is not satisfied
+   --> tests/m03/supplemental.rs:202:130
+    |
+202 | ... check!(r,sk_bitmask_any(mask));
+    |              -------------- ^^^^ the trait `rust_skia::SkBitmaskEnum` is not implemented for `rust_skia::SkBitmask<Flag>`
+    |              |
+    |              required by a bound introduced by this call
+    |
+help: the trait `rust_skia::SkBitmaskEnum` is implemented for `Flag`
+   --> tests/m03/supplemental.rs:199:1
+    |
+199 | impl SkBitmaskEnum for Flag { type Repr=u8; fn to_repr(self)->u8 {self as u8} }
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+note: required by a bound in `rust_skia::sk_bitmask_any`
+   --> src/bitmask_enum.rs:143:26
+    |
+143 | pub fn sk_bitmask_any<E: SkBitmaskEnum>(value: E) -> bool {
+    |                          ^^^^^^^^^^^^^ required by this bound in `sk_bitmask_any`
+
+error[E0277]: the trait bound `supplemental::Owned: Default` is not satisfied
+   --> tests/m03/supplemental.rs:234:34
+    |
+234 | ...   let mut b=std::mem::take(&mut a); check!(r,a.count()==0); check!(r,b.count()==100); check!(r,b[99].value==99); check!(r,drops...
+    |                 -------------- ^^^^^^ the trait `Default` is not implemented for `supplemental::Owned`
+    |                 |
+    |                 required by a bound introduced by this call
+    |
+help: the trait `Default` is implemented for `rust_skia::SkTArray<T>`
+   --> src/containers.rs:143:24
+    |
+143 | #[derive(Clone, Debug, Default)]
+    |                        ^^^^^^^
+    = note: required for `rust_skia::SkTArray<supplemental::Owned>` to implement `Default`
+note: required by a bound in `std::mem::take`
+   --> /Volumes/Data/Users/paul/.rustup/toolchains/stable-aarch64-apple-darwin/lib/rustlib/src/rust/library/core/src/mem/mod.rs:819:22
+    |
+819 | pub const fn take<T: [const] Default>(dest: &mut T) -> T {
+    |                      ^^^^^^^^^^^^^^^ required by this bound in `take`
+help: consider annotating `supplemental::Owned` with `#[derive(Default)]`
+    |
+226 + #[derive(Default)]
+227 | struct Owned { live:Rc<Cell<usize>>, drops:Rc<Cell<usize>>, value:i32 }
+    |
+
+error[E0593]: closure is expected to take 0 arguments, but it takes 1 argument
+   --> tests/m03/supplemental.rs:240:14
+    |
+240 | ...ata=SkData::make_with_proc(vec![1,2,3,4],move |_|{c.fetch_add(1,Ordering::SeqCst);}); let alias=data.clone(); let subset=data.sh...
+    |        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^--------^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |        |                                    |
+    |        |                                    takes 1 argument
+    |        expected closure that takes 0 arguments
+
+Some errors have detailed explanations: E0015, E0277, E0282, E0308, E0369, E0425, E0432, E0593, E0599...
+For more information about an error, try `rustc --explain E0015`.
+warning: `rust-skia` (test "m03_test") generated 5 warnings
+error: could not compile `rust-skia` (test "m03_test") due to 121 previous errors; 5 warnings emitted

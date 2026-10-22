@@ -1,0 +1,7 @@
+COMMAND: ['python3', 'tests/reference/run_m01.py', '--source', '/Volumes/Data/Users/paul/development/src/github/skia', '--output', 'plan/acceptance/M02-evidence/M01-reference']
+reference-build-debug exit 0
+reference-run-debug exit 0
+reference-build-release exit 0
+reference-run-release exit 0
+
+EXIT: 0

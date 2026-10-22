@@ -1,0 +1,43 @@
+COMMAND: ['sw_vers']
+ProductName:		macOS
+ProductVersion:		15.6
+BuildVersion:		24G84
+EXIT: 0
+COMMAND: ['uname', '-a']
+Darwin MacBookPro 24.6.0 Darwin Kernel Version 24.6.0: Mon Jul 14 11:30:29 PDT 2025; root:xnu-11417.140.69~1/RELEASE_ARM64_T6000 arm64
+EXIT: 0
+COMMAND: ['rustc', '-Vv']
+rustc 1.94.1 (e408947bf 2026-03-25)
+binary: rustc
+commit-hash: e408947bfd200af42db322daf0fadfe7e26d3bd1
+commit-date: 2026-03-25
+host: aarch64-apple-darwin
+release: 1.94.1
+LLVM version: 21.1.8
+EXIT: 0
+COMMAND: ['cargo', '-V']
+cargo 1.94.1 (29ea6fb6a 2026-03-24)
+EXIT: 0
+COMMAND: ['xcrun', 'clang++', '--version']
+Apple clang version 17.0.0 (clang-1700.4.4.1)
+Target: arm64-apple-darwin24.6.0
+Thread model: posix
+InstalledDir: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin
+EXIT: 0
+COMMAND: ['xcrun', '--show-sdk-version']
+26.1
+EXIT: 0
+COMMAND: ['xcrun', '--show-sdk-path']
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk
+EXIT: 0
+COMMAND: ['git', 'rev-parse', 'HEAD']
+86a2f7738e74b9b4888498fa5efd54a83ad61ba1
+EXIT: 0
+COMMAND: ['git', '-C', '/Volumes/Data/Users/paul/development/src/github/skia', 'rev-parse', 'HEAD']
+b81c69985fd14bb7bfbd356b7618633ce07dc1a4
+EXIT: 0
+COMMAND: ['git', '-C', '/Volumes/Data/Users/paul/development/src/github/skia', 'status', '--porcelain']
+EXIT: 0
+COMMAND: ['date', '-u', '+%Y-%m-%dT%H:%M:%SZ']
+2026-10-21T20:30:04Z
+EXIT: 0

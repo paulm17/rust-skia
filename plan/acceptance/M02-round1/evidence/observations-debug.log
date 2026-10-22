@@ -1,0 +1,4 @@
+BlockAllocator sizeof=72 prealloc=128 usable=0
+placement requested=1024 actual=1080 usable=952
+inline prealloc=2048 usable=1920 required_min=1976
+AutoTMalloc realloc(0) ptr=0x159605b40 count=0

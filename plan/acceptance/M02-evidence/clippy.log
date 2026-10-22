@@ -1,0 +1,4 @@
+COMMAND: ['cargo', 'clippy', '--all-targets', '--locked', '--', '-D', 'warnings']
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.04s
+
+EXIT: 0

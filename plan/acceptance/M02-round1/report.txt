@@ -1,0 +1,121 @@
+# M02 acceptance report — Codex
+
+- **Decision: NEEDS_FIX. M02 is not accepted; M03 remains NOT_STARTED.**
+- Tested 2026-10-21 on native Apple Silicon macOS 15.6 (24G84), arm64; Rust/Cargo 1.94.1, Apple clang 17.0.0, macOS SDK 26.1. Default CPU Cargo configuration, no optional features; locked dependency `libc 0.2.191`.
+- Implementation: [Deepseek handoff](../handoffs/M02.md), HEAD `86a2f7738e74b9b4888498fa5efd54a83ad61ba1` plus its working tree. All 41 handoff file hashes match [the checked manifest](M02-evidence/handoff-hashes.json). No production code, Cargo configuration, reference checkout or M01 acceptance assertions were edited by Codex.
+- Reference: clean checkout at `b81c69985fd14bb7bfbd356b7618633ce07dc1a4`. [Environment](M02-evidence/environment.log), [reference/source hashes](M02-evidence/reference.sha256), [tested working-tree manifest](M02-evidence/working-tree.sha256).
+
+## Coverage and discovery
+
+The unchanged C++ M02 sources compile, discover **110 enabled CPU registrations**, and pass all 110 in **both debug and release**. There are no additional registrations. The static inventory has 111 sites; `RawPtr_DanglingPointerDetected` is absent in both actual registries because `SK_USE_PARTITION_ALLOC` is undefined. Its nested dangling-check guard is also required. It is NOT_APPLICABLE, never an executed PASS. The other 14 RawPtr sites are enabled in C++.
+
+Rust executes **90 original registrations**. Debug: **79 PASS, 11 FAIL**. Release: **81 PASS, 9 FAIL**. **Twenty additional applicable registrations remain unexecuted owing to required API gaps; they are not passes, skips, or completed translations.** The complete `TCopyOnFirstWrite_copy` body is retained as a compile-failing test; other API probes are minimal diagnostics, not substitutes for complete original bodies. Translation/execution of those bodies and their helpers must be completed after Deepseek supplies the missing contracts. This report does not claim that all 111 translations are finished.
+
+The [111-row correspondence ledger](M02-evidence/correspondence.csv) records source location/hash, Rust mapping or exact gap, both profiles, reference results and adaptation/exclusion reasons. The [216-row source ledger](M02-evidence/source-dispositions.csv) accounts for all assigned rows: 158 production ports, two existing Rust placeholders, 22 build descriptions, 31 test/support files and three preserved metadata files. Deepseek's source/symbol map and deferred integrations remain claims under review, not accepted behavior merely because associated tests pass.
+
+### Translated bodies and helper/fixture handling
+
+- `tests/m02_test.rs` includes translations under `tests/m02/`. Reporter assertions remain nonfatal and evaluate once; unexpected production panics terminate the individual case. Original inputs, loops and expected values are retained for the 90 executable bodies. No tolerance was relaxed and no failing assertion was removed. All individual cases run again in separate processes to obtain unmixed diagnostics and prevent a crash/hang from hiding later cases.
+- Arena construction/destruction counters use per-case shared cells instead of C++ function statics; Foo construction closures preserve distinct default constructions. Stack and supplied-storage constructors are exercised. Placement-new destruction traversal uses unregistered arena storage and explicit recursive traversal; blocks remain live throughout. Rust raw pointers represent the original observable addresses.
+- Block allocator helpers retain allocation sizes, alignment/padding, all four growth policies, release/reset/steal ordering, scratch accounting, and all 9 padding × 8 alignment owning-block combinations. `sizeof(SkBlockAllocator)` maps to the Rust type's native size, preserving the original self-layout observation rather than replacing it with the implementation's unrelated constant. Iteration-and-release snapshots original block pointer order before releases to satisfy borrowing; it does not replace allocator operations.
+- Data tests retain subsets, pointer-vs-content observations, all 6 × 6 empty comparisons, typed and variable data tables, and the alphabet temporary-file fixture. The FD stays owned by the test. Raw allocation/C-string/null-pointer factories adapt to Rust-owned storage and closures; those adaptations do not establish no-copy/release parity, which separate reference-backed checks disprove. File-path adaptation to MakeFromFILE does not claim equivalent cursor/mmap behavior.
+- UTF fixtures preserve all 23 count cases, 11 valid UTF-8 cases, five non-BMP UTF-16 values, and six decode/encode cases, including both invalid `-1` values. Encoding uses a four-byte array view inside the original five-byte zeroed sentinel buffer. Negative expected counts are compared as signed integers; zero is not reinterpreted as the required `-1`.
+- All seven RFC1321 MD5 messages run both whole-buffer and byte-at-a-time paths. C++ initializer-list map construction is represented by inserting the same ordered entries; the original post-construction capacity/search assertions remain, without claiming a separate Rust initializer-list API. String overflow/VAList cases retain widths 2000/1999 and every space assertion; formatting arguments use `SkFormatArg`. The `String_huge` manual crash loop retains its original `false` guard, recorded as a body that executes zero assertions, not large-allocation validation. All original split fixtures and resize assertions remain.
+- Span mutability is expressed by `SkSpanMut`; immutable borrows end and views are recreated around the original backing-store mutation where Rust forbids the C++ alias pattern. Pointer/address comparisons use production RawPtr/SkSp operations. C++ moved-from null observations use the handoff's explicit `take()` adaptation. Base/derived raw pointers use `repr(C)` prefix structs, without dereferencing a freed allocation.
+- LRU instances/destructors and move-only keys retain original observations. MessageBus tests retain original messages, ordering, inbox polling and unique ownership. A per-case explicit bus replaces static-per-message-type state because each original registry case runs in isolation. Immutable string-view fixtures map to `&str`; owning strings remain `SkString`.
+- `IncrTopoSort` includes the original test-local Node/Graph, DFS/shift algorithm, validation calls and four graph fixtures. It still uses production `SkTArray`, `SkTDArray`, sorting, strings and intrusive references. `MetaData` includes reached type/name lookup, head insertion, same-size update, iteration and removal support from `tools/SkMetaData.*`; it tests Codex-owned tool support and is not production coverage.
+- `RefCnt` uses real native threads, preserving 100000-iteration strong/weak loops. `SkOnce_Multithreaded` retains 1021 task-group submissions; shared-mutex tests retain 8 tasks × 100000 iterations and all **5,400,000** reader assertions. Atomic shared cells avoid undefined behavior if synchronization fails; reporter access is synchronized. The production task group runs synchronously, so these PASS results do **not** prove executor concurrency. Both original executor registrations remain failed API obligations.
+- None of these assigned original bodies uses `SkRandom`, `FakeStreams.h` or `tools/Resources.*`; no RNG is substituted or required. FakeStreams' three helpers are nevertheless translated for separately labeled stream checks; Resources, Test/CTS support and OWNERS metadata are hashed. No shader/golden/download is required. The alphabet file is created/read locally and removed. Literal fixtures are covered by the reference/test hashes.
+
+### API failures for Deepseek
+
+[Debug compiler diagnostics](M02-evidence/api-debug-probes.log), [release compiler diagnostics](M02-evidence/api-release-probes.log), [copy-on-write body](M02-evidence/api-debug-cow.log), [polymorphic helper](M02-evidence/api-debug-polymorphic.log). Reproduce both profiles with `python3 tests/reference/check_m02_api.py` (exit 1). The same errors occur in release; the ledger gives every affected registration separately.
+
+| Unexecuted original registration(s) | Required observation / current gap |
+| --- | --- |
+| `Deque` | Original block allocation counts 1 and 10 and mixed bidirectional cursor; Rust fixes block capacity at 64 and exposes no configuring constructor/cursor. |
+| `ExecutorTest_StdFunction`, `ExecutorTest_Callback` | Three original factories per type: 2-list FIFO, 2-list LIFO and 1-list FIFO, four worker threads, borrowing disabled, high/low priorities. Factories, executor-bound task groups and priority submission are missing/incompatible. |
+| `HashMap` | Missing map copy/Clone. |
+| `HashSetCtor`, `HashSetCtorOneElem` | Missing set byte/capacity accounting. |
+| `HashSetWithSkString`, `HashSetWithStdString`, `HashSetWithStdStringView` | Missing set find/Clone; `SkString` also lacks `Hash`. |
+| `HashFindOrNull` | No pointer-entry `THashTable` with key/traits contract. A standard map is not substituted. |
+| `HashTableGrowsAndShrinks` | Missing set reserve and exact byte accounting; the entire original capacity/hysteresis sequence remains required. |
+| `InternalLList` | No forward/reverse traversal or tail node handle for removal; original membership/iterator closure cannot execute. |
+| `RawPtr_Stl` | Missing `Ord` and `Hash` for ordered/unordered containers. |
+| `sk_sp`, `sk_make_sp` | No exposed faithful derived/base/abstract owning conversion; `RefCnt: Sized`/`SkSp<T>` cannot express the probed abstract return. Full `sk_sp` counter/cycle body remains required; the small conversion probe is not that body. Deepseek may provide an equivalent Rust API, but no fixture may implement ownership being tested. |
+| `SkTBlockList` | `concat` only accepts identical const parameters; original helper requires `(5,1)` and `(1,5)` as well as equal-size cases. All reserve/accounting/helper combinations remain required. |
+| `String` | Signed/unsigned 64-bit append omit original `minDigits`, required for width-15 cases. The complete registration, including numeric/scalar formatting, remains outstanding. |
+| `TCopyOnFirstWrite_copy` | Missing `Clone`; full translated assertion body cannot compile. |
+| `TemplateContainerAPIsTrim`, `TemplateContainerAPIs` | Missing allocating count constructor/reset(count)/size for AutoTArray/AutoSTArray; all four original container instantiations remain required. |
+
+These are failed acceptance obligations, not platform exclusions. Some probe names express the required operation in Rust rather than a promised existing spelling; Deepseek must expose/document the behavior, not merely rename a probe to bypass it.
+
+## Runtime failures for Deepseek
+
+For any row below, reproduce with `cargo test --locked --test m02_test MODULE::NAME -- --exact --nocapture`; add `--release` after `test` for release. Exact commands, input observations, translated assertion locations and exit codes are in each linked isolated log. All linked original C++ cases pass in both profiles.
+
+| Original case / original assertion location | Debug / release | Expected versus actual; isolated evidence |
+| --- | --- | --- |
+| `MD5`, `MD5Test.cpp:47` | FAIL / FAIL | Whole-buffer digests pass; five incremental digests fail. For `abc`, expected `900150983cd24fb0d6963f7d28e17f72`, actual `bc1f204202e38035c6bbbae0604526f1`. [utilities::MD5](M02-evidence/rust-debug-utilities-MD5.log) contains every input and both digests. |
+| `SkUTF_CountUTF8`, `SkUTFTest.cpp:98` | FAIL / FAIL | All 11 invalid/truncated byte fixtures require `-1`; actual count is `0`. [utf::SkUTF_CountUTF8](M02-evidence/rust-debug-utf-SkUTF_CountUTF8.log). |
+| `SkUTF_NextUTF8_ToUTF8`, `SkUTFTest.cpp:126` | FAIL / FAIL | Both invalid decoded `-1` values must encode zero bytes; actual length is 4. [utf::SkUTF_NextUTF8_ToUTF8](M02-evidence/rust-debug-utf-SkUTF_NextUTF8_ToUTF8.log). |
+| `Templates`, `TemplatesTest.cpp:21` | FAIL / FAIL | Default `AutoSTMalloc<1,int>` must make element 0 writable. Rust has length 0 and panics on the first write; later body assertions cannot execute. [templates::Templates](M02-evidence/rust-debug-templates-Templates.log). |
+| `AutoReallocToZero`, `TemplatesTest.cpp:180,186` | FAIL / FAIL | Both malloc helpers must return null after realloc(0). Four null assertions fail; pointers remain non-null. [templates::AutoReallocToZero](M02-evidence/rust-debug-templates-AutoReallocToZero.log). |
+| `SkBlockAllocatorPreallocSize`, `SkBlockAllocatorTest.cpp:86,93,103` | FAIL / FAIL | Three self-layout assertions fail: native Rust sizeof=72 versus prealloc=128; placement request 1024 yields 1080; inline usable 1920 is below required 1976. [block::SkBlockAllocatorPreallocSize](M02-evidence/rust-debug-block-SkBlockAllocatorPreallocSize.log), [observations](M02-evidence/observations-debug.log). |
+| `SkBlockAllocatorGrowthPolicy`, `SkBlockAllocatorTest.cpp:320` | FAIL / FAIL | Fixed blocks and first Fibonacci heap block should add 128 bytes; actual 208. Five assertions fail. [block::SkBlockAllocatorGrowthPolicy](M02-evidence/rust-debug-block-SkBlockAllocatorGrowthPolicy.log). |
+| `SkBlockAllocatorOwningBlock`, `SkBlockAllocatorTest.cpp:642` | FAIL / FAIL | All 72 `userPtr - alignedOffset == block` observations fail: Rust separates block object from backing bytes. Other owning-block lookups pass. [block::SkBlockAllocatorOwningBlock](M02-evidence/rust-debug-block-SkBlockAllocatorOwningBlock.log). |
+| `SkBlockAllocatorIterateAndRelease`, `SkBlockAllocatorTest.cpp:432,449` | FAIL / PASS | Debug panics at `src/block_allocator.rs:514`, `attempt to add with overflow`, while releasing blocks. Release passes all six final assertions; it does not clear the debug failure. [debug](M02-evidence/rust-debug-block-SkBlockAllocatorIterateAndRelease.log), [release](M02-evidence/rust-release-block-SkBlockAllocatorIterateAndRelease.log). |
+| `SkBlockAllocatorReleaseBlock`, `SkBlockAllocatorTest.cpp:383,388,393` | FAIL / PASS | Debug hits the same production overflow; release passes 60 assertions. [debug](M02-evidence/rust-debug-block-SkBlockAllocatorReleaseBlock.log), [release](M02-evidence/rust-release-block-SkBlockAllocatorReleaseBlock.log). |
+| `SkBlockAllocatorScratchBlockReserve`, `SkBlockAllocatorTest.cpp:464,480,502` | FAIL / FAIL | Debug hits the same overflow. Release fails scratch rounding to a multiple of 256 and ignored-growth reservation being positive but below 256. [debug](M02-evidence/rust-debug-block-SkBlockAllocatorScratchBlockReserve.log), [release](M02-evidence/rust-release-block-SkBlockAllocatorScratchBlockReserve.log). |
+
+### Separately labeled supplemental failures
+
+The eight supplemental Rust cases are separate from the original 90. **Three pass and five fail in each profile.** The independently compiled [C++ contracts](M02-evidence/reference-contracts-debug.log) pass all eight checked observations and emit checksum vectors, identically in release. These checks exercise production APIs directly; none links C++ as the Rust implementation.
+
+| Supplemental Rust test | Exact observed difference, both profiles |
+| --- | --- |
+| `supplemental_packed_truncation` | Empty, `[fe]`, `[fe,01]`, `[ff,01,02,03]` must reject incomplete packed integers; actual is `Some(0)` in all four cases. [log](M02-evidence/rust-debug-supplemental-supplemental_packed_truncation.log). |
+| `supplemental_checksum_reference_vectors` | All 12 reference vectors differ; empty bytes, seed 0 require 3804095577, actual 0; `abc`, seed 0 require 3411111026, actual 2810448472. [all vectors](M02-evidence/rust-debug-supplemental-supplemental_checksum_reference_vectors.log). |
+| `supplemental_empty_data_release` | Empty MakeWithProc must invoke release once on destruction; actual 0. [log](M02-evidence/rust-debug-supplemental-supplemental_empty_data_release.log). |
+| `supplemental_without_copy_identity` | MakeWithoutCopy must preserve input pointer identity; actual points to copied allocation. [addresses](M02-evidence/rust-debug-supplemental-supplemental_without_copy_identity.log). |
+| `supplemental_arena_external_storage` | An initial int must fit inside supplied 1000-byte arena storage; actual allocation lies outside it. [addresses/range](M02-evidence/rust-debug-supplemental-supplemental_arena_external_storage.log). |
+
+Passing supplemental cases cover seek/rewind/peek/read boundaries and byte order, FakeStreams delegation/halting behavior, and bounded subset/range overflow rejection. They are not exhaustive stream, allocator or ownership validation.
+
+## Configuration, cumulative tests and evidence
+
+C++ reference builds use unchanged upstream test/production/support sources, real `tests/Test.cpp` (including context handling), C++20, `-DSK_DISABLE_TRACING`, `-Wl,-dead_strip`, debug `-O0 -g -DSK_DEBUG`, release `-O3 -DNDEBUG`. Exact source lists and SDK/compiler context are logged. Missing SkThreadID/SkChecksum linkage during harness construction was corrected by adding their actual original translation units; no reference code/macros were replaced. There are no external fetched dependencies in this reached CPU closure. All discovered cases run separately with a 120-second timeout; none times out. Dependency scans/hash manifests cover reached original headers and assigned support/metadata. Fixtures need only ordinary temp-directory access.
+
+| Variant | Debug | Release | Applicability |
+| --- | --- | --- | --- |
+| Native arm64 C++ M02 originals | 110 PASS | 110 PASS | All compiled registrations; exact reconciliation. |
+| Native arm64 Rust M02 originals | 79 PASS / 11 FAIL | 81 PASS / 9 FAIL | 90 executable bodies, plus 20 failed/unexecuted API obligations in each profile. |
+| Original dangling-pointer registration | NOT_APPLICABLE | NOT_APPLICABLE | Upstream PartitionAlloc/dangling-check guards; no such Cargo feature in handoff. |
+| Previously accepted M01 | PASS | PASS | All 15 M01 integration cases (original, reporter and supplemental) and independent C++ six-case registry pass; 42 current library development checks also pass. |
+| Ganesh Metal / macOS OpenGL | NOT_APPLICABLE at M02 | NOT_APPLICABLE at M02 | All assigned built tests are CPU; no M02 backend inventory obligations or optional Cargo backend features. Later M32–M38 backend gates remain required. |
+| Graphite Metal / Dawn-Metal | NOT_APPLICABLE at M02 | NOT_APPLICABLE at M02 | Same CPU-only discovery; later backend gates remain required. |
+| Native Intel | Pending M46 | Pending M46 | Scheduled native architecture gate; no claim of Intel execution. |
+
+| Command (repository root) | Exit / result | Evidence |
+| --- | --- | --- |
+| `cargo test --locked -- --nocapture` | 101: M02 integration failures | [debug](M02-evidence/cargo-test-debug.log) |
+| `cargo test --release --locked -- --nocapture` | 101: M02 integration failures | [release](M02-evidence/cargo-test-release.log) |
+| `cargo test --locked --no-fail-fast -- --nocapture` | 101: 140 PASS / 16 FAIL overall; all binaries run | [cumulative debug](M02-evidence/cargo-cumulative-debug.log) |
+| `cargo test --release --locked --no-fail-fast -- --nocapture` | 101: 142 PASS / 14 FAIL overall; all binaries run | [cumulative release](M02-evidence/cargo-cumulative-release.log) |
+| Isolated M02 binaries, `NAME --exact --nocapture` | 99 discovered/executed per profile: 90 original + 8 supplemental + 1 reporter self-test; no ignored or timed-out cases | [all names/exits](M02-evidence/checks-summary.json); individual `rust-PROFILE-MODULE-NAME.log` files |
+| `python3 tests/reference/check_m02_api.py` | 1; three compile units fail in each profile; no runtime PASS inferred | [API summary](M02-evidence/api-summary.json) |
+| `python3 tests/reference/run_m02.py --source /Volumes/Data/Users/paul/development/src/github/skia` | 0; both builds/discoveries/110 original runs pass | [summary](M02-evidence/reference-summary.json), [debug build](M02-evidence/reference-build-debug.log), [release build](M02-evidence/reference-build-release.log) |
+| `python3 tests/reference/run_m01.py --source /Volumes/Data/Users/paul/development/src/github/skia --output plan/acceptance/M02-evidence/M01-reference` | 0; both six-case registries and contracts pass | [driver](M02-evidence/m01-reference-driver.log), [debug run](M02-evidence/M01-reference/reference-run-debug.log), [release run](M02-evidence/M01-reference/reference-run-release.log) |
+| `cargo fmt --all -- --check` | 0 | [format](M02-evidence/fmt-check.log) |
+| `cargo clippy --all-targets --locked -- -D warnings` | 0 | [Clippy](M02-evidence/clippy.log) |
+| `python3 plan/validate_plan.py --source /Volumes/Data/Users/paul/development/src/github/skia --check-hashes` | 0 | [audit](M02-evidence/validate-plan.log) |
+
+The requested Cargo commands stop after a failing integration binary; additional `--no-fail-fast` runs establish cumulative coverage, rather than treating the earlier stopping point as M01 passage. `tests/reference/run_m02_checks.py` reproduces the Rust runs, isolation, API diagnostics, M01 reference and supporting checks without stopping at the first failed test. Source hash capture is reproducible with `tests/reference/capture_m02_inputs.py`. `observations-debug.log` is generated by compiling `tests/reference/m02_observations.rs` against `target/debug/librust_skia.rlib` with `-L dependency=target/debug/deps`; it diagnoses failures, not additional PASS coverage.
+
+Original-expression lint allowances are local to the new test target and preserve null/equality/width/loop observations; no lint suppression changes production behavior. The negative reporter self-test's caught panic is expected, separate from actual failing cases.
+
+## Gate decision and remaining work
+
+**NEEDS_FIX** follows actual behavior/API failures, not a missing SDK, resource, external service or backend device. M01 remains ACCEPTED. M03 stays NOT_STARTED. `plan/status.json` points here, and only M02 registration inventory rows receive new results.
+
+Deepseek must fix the reported production contracts and provide faithful Rust interfaces for the twenty unexecuted registrations. Codex must then finish those complete test bodies/helper closures (including all executor factories, block-list reserve/concat combinations, hash capacity sequences, smart-pointer lifetime/cycle counters and the full String registration), rerun failures and affected tests, reconcile reference discovery again, and repeat cumulative debug/release validation. Handoff-listed approximations, synchronized cache behavior and deferred integration branches remain outstanding at their published gates. The current subset of passing cases, successful builds and clean supporting checks do not establish M02 acceptance.

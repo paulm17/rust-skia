@@ -1,0 +1,11 @@
+COMMAND: ['/Volumes/Data/Users/paul/development/src/github/rust-skia/target/release/deps/m02_test-f37e1713df482657', 'supplemental::supplemental_without_copy_identity', '--exact', '--nocapture']
+
+running 1 test
+without-copy expected=0x100aefac0 actual=0x100aefac0
+reporter assertions=1 failures=0
+test supplemental::supplemental_without_copy_identity ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 121 filtered out; finished in 0.00s
+
+
+EXIT: 0

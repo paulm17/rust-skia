@@ -54,6 +54,13 @@ pub fn scalar_abs(x: Scalar) -> Scalar {
     x.abs()
 }
 
+pub fn scalar_pin(x: Scalar, lo: Scalar, hi: Scalar) -> Scalar {
+    // C++ `SkTPin` is `std::max(lo, std::min(x, hi))`, which returns `lo`
+    // when `x` is NaN.
+    let min = if hi < x { hi } else { x };
+    if lo < min { min } else { lo }
+}
+
 pub fn scalar_copy_sign(x: Scalar, y: Scalar) -> Scalar {
     x.copysign(y)
 }

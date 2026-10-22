@@ -1,0 +1,4 @@
+COMMAND: ['/Volumes/Data/Users/paul/development/src/github/rust-skia/plan/acceptance/M02-evidence/reference-debug', 'ExecutorTest_StdFunction']
+PASS ExecutorTest_StdFunction failures=0
+
+EXIT: 0

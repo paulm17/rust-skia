@@ -2,7 +2,7 @@
 
 ## Required coverage
 
-- Native CPU rendering and libraries on Apple Silicon and Intel macOS. Current planning/initial-test host: arm64, macOS 15.6. Do not invent a lower deployment target; record and validate deployment versions during packaging.
+- Native CPU rendering and libraries on Apple Silicon macOS only. Intel/x86_64 implementation, builds and validation are excluded by user direction, including M46/M47. Current planning/initial-test host: arm64, macOS 15.6. Do not invent a lower deployment target; record and validate deployment versions during packaging.
 - Ganesh Metal, Ganesh native macOS OpenGL/CGL, Graphite Metal, and Graphite Dawn explicitly using its Metal backend. Test each backend on a Mac that supports it and retain upstream capability guards.
 - CoreText, CoreGraphics, Cocoa/macOS windows, macOS font discovery, and platform-neutral optional modules/backends that build on macOS (including FreeType/Fontations/ICU/HarfBuzz adapters).
 - All macOS-eligible tools, examples, experiments, benchmarks, fuzzers, GMs and documentation. CanvasKit/WebAssembly bindings are retained, but browser tests run on macOS hosts only. They do not add Windows/Linux test coverage.

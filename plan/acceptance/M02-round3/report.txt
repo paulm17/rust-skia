@@ -1,0 +1,106 @@
+# M02 acceptance — complete original registration rerun
+
+**Decision: NEEDS_FIX. All applicable original registrations pass; two additional ownership contracts fail. M01 remains ACCEPTED; M03 remains NOT_STARTED.**
+
+Validated on 2026-10-22 against [Deepseek’s revised handoff](../handoffs/M02.md), Rust HEAD `86a2f7738e74b9b4888498fa5efd54a83ad61ba1` plus the handoff working tree. All **41 production/build handoff hashes match**. Codex changed only tests, reference tooling, correspondence and acceptance records. No production repair was made during acceptance.
+
+Reference checkout: clean, unchanged Skia `b81c69985fd14bb7bfbd356b7618633ce07dc1a4`. Native Apple Silicon arm64, macOS 15.6 (24G84), Rust/Cargo 1.94.1, Apple clang 17.0.0, SDK 26.1. Default CPU Cargo configuration, no optional Cargo features; libc 0.2.191 is the only dependency. Exact environment and commands are in [environment.log](M02-evidence/environment.log).
+
+## Discovery and complete translations
+
+Both independently rebuilt C++ profiles discover exactly **110 enabled CPU registrations**. All 110 pass in each profile. The Rust original-name sets now match these exactly: **110 complete original bodies pass in debug and release**, with no unexecuted enabled registration. There are no missing/additional linked registrations or duplicate names, including serial registrations.
+
+The 111 static sites reconcile as 110 executed PASS plus one NOT_APPLICABLE: `RawPtr_DanglingPointerDetected` requires original PartitionAlloc and dangling-check guards absent from this configuration. All other 14 RawPtr registrations execute. The original false condition inside `String_huge` remains unchanged; it is not a new exclusion. Later-owned registrations remain explicitly deferred in [source accounting](M02-evidence/source-dispositions.csv); this report does not open M03.
+
+The final three translations are now complete:
+
+- `ExecutorTest_StdFunction` and `ExecutorTest_Callback` in `tests/m02/executor.rs`: all three original factories each (two-list FIFO, two-list LIFO, one-list FIFO), four workers, borrowing disabled, 100 high then 100 low tasks, original 50µs/1ms sleeps, priorities, collector capacity/order predicates and final assertions. The collector uses the production SkSpinlock with a test-local RAII guard. Callback contexts retain stable boxed storage through executor destruction; pending accounting preserves relaxed increments, release decrements and acquire observations. Arc supplies Rust lifetime ownership without replacing executor behavior. Both registrations execute six reporter assertions each in each profile.
+- `sk_sp` in `tests/m02/sk_sp.rs`: the complete original Effect/Paint/EffectImpl fixture closure, 24 four-counter checkpoints, size/null/comparison/method observations, converting copy/move/assignment/reset, moved-from observations, self-owning Foo and A/B reference-cycle deletion during reset. **123 reporter assertions pass** per profile. The test fixture preserves its original independent integer reference count and virtual disposal behavior; production SkSp performs ownership operations. A repr(C) prefix represents the original single base. `.cast`/`.clone_as` express C++ implicit conversions; `mem::take` preserves observable moved-from null state. Method allocation uses unread MaybeUninit integer storage. These prefix conversions pass, but the additional nonzero-offset contract below fails.
+
+The [111-row correspondence ledger](M02-evidence/correspondence.csv) records original source/line/hash, Rust location, both configurations, adaptations and all reference results. [Reference/input hashes](M02-evidence/reference.sha256) cover 251 assigned/reached source, fixture, resource metadata and support files; [handoff hashes](M02-evidence/handoff-hashes.json) verify the tested implementation. [Working-tree hashes](M02-evidence/working-tree.sha256) identify final tests and acceptance inputs. Prior evidence is preserved as [round one](M02-round1/report.txt) and [round two](M02-round2/report.txt); their defects/counts describe earlier implementations.
+
+### Helpers, fixtures and language adaptations
+
+- Nonfatal reporter assertions still evaluate once and accumulate failures. Unexpected production panics terminate that case. Individual cases run in separate processes with timeouts; none times out. The reporter's caught negative self-test panic is expected and separate from real failures.
+- The original arena, data/table, UTF, MD5, reference-count, allocator, string splitting/resize/overflow, LRU, message-bus, span, synchronization and utility fixtures are retained. Block tests keep all four growth policies and all 9 padding × 8 alignment owning-block cases. MD5 retains seven RFC1321 messages and both write granularities; UTF retains all invalid/truncated fixtures and negative expectations. Supplied-storage, pointer identity, release callbacks and byte-order checks remain separate supplemental observations.
+- The full String body retains the original scalar records, including signed NaNs, infinities and native-macOS exponent strings, all width-15 integer cases, contains-empty predicate and scalar maximum-size bound 15. Numeric casts preserve the original signed bit patterns. Only the original Windows formatting branch is inapplicable. VAList/printf use typed `SkFormatArg` inputs; no expected string was changed.
+- Hash helpers preserve all eight map iteration/foreach passes, all five set iteration passes, copies, reference releases, colliding copy counters and the entire reserve/shrink/hysteresis sequence. Initializer-list construction uses ordered insertion of the same entries, retaining original post-construction observations. Pointer-entry THashTable explicitly supplies the fixture's extracted key to the Rust key/value API; no separate map replaces it.
+- Template API helpers run all four original container types and retain every null/non-null, data/get identity, fill, move and reset observation. A test-only trait maps calls to the actual production containers. Rust constructors use new/reset or with-count conventions; `mem::take` permits reuse after the original move sites.
+- TBlockList retains its 20-byte C fixture, per-thread constructor/destructor counts, all five initializer paths, forward/reverse const/mutable address observations, seven allocator scenarios per configuration, all five reserve configurations, all four heterogeneous concat pairs for C and trivial D, and the large-increment clamp/alignment case. **9,352 reporter assertions execute and pass** in each profile. No fixture implements reserve/allocation/concat behavior.
+- Deque retains allocation counts 1 and 10, counts/pointer relations, block bounds and forward/reverse/mixed order observations. Rust iterator passes represent the C++ reset/cursor operations. For the mixed pass, the reverse prefix includes the next-unread element, matching the original `prev()` return-before-move semantics.
+- InternalLList uses returned numeric handles for mutations and tail removal. Original external node identity is held with Rc; debug membership is observed through production traversal because numeric handles are list-local, especially after concat. It retains original validation/count assertions and all iteration sequences. It does not claim additional coverage of arbitrary stale/cross-list numeric handles.
+- Span immutable views are recreated around backing-store mutation where Rust borrowing prohibits C++ aliasing. RawPtr uses explicit take for moved-from null state; raw-left relational observations use the exposed production pointer. Base/derived raw fixtures use a repr(C) prefix. Ordered/unordered set observations now use the actual RawPtr keys.
+- IncrTopoSort retains the original test-local Node/Graph DFS/shift algorithm and four fixtures, using production arrays, sorting, strings and intrusive references. Reached SkMetaData lookup/type/update/iteration/removal is Codex-owned tool support; M40 tool packaging is not production completion here. FakeStreams' three helpers are translated for supplemental stream checks. No assigned original body reaches SkRandom or Resources; their resources are not invented or replaced. Relevant Test/CTS/Resources/FakeStreams metadata and OWNERS files are hashed.
+- RefCnt runs native 100000-iteration strong/weak thread loops. Once retains 1021 group submissions and shared mutex retains 8 × 100000 tasks with 5,400,000 reader assertions. Atomic shared cells and synchronized reporter access avoid undefined behavior on failure. The new executor originals additionally exercise the actual bound four-worker pools, with borrowing disabled, rather than relying on the unbound group checks.
+- Required files are local temporary alphabet data and inline literal fixtures; no shader, golden, download or external service is missing. The String_huge manual crash loop retains its original false condition, not a new skip. M03-owned Stream/TArray/Random and other later registrations are not claimed complete.
+
+## Exact remaining defects for Deepseek
+
+These are separately labeled supplemental contracts of the new ownership APIs, not altered upstream assertions. All earlier original failures, the one-pointer size check, worker liveness check and original polymorphic helper now pass. The earlier unsized erasure negative unit now rejects compilation as required. That narrower result does not establish the sized erasure contract below.
+
+### 1. Existing-handle base projection is discarded
+
+`tests/m02/supplemental.rs:221–222,229–230`, case `supplemental::supplemental_smart_pointer_projected_base`, fails **four assertions in both profiles**. Expected `.clone_as(|d| &d.base)` and `.cast(|d| &d.base)` to preserve the supplied base address and read value **42**. Actual pointer is the containing object's start (8 bytes before the requested base) and reads **11** from the other valid Base subobject. Debug observed expected `0x14af042b8`, actual `0x14af042b0`; addresses vary by process. Both subobjects are valid initialized Base values; the check avoids invalid memory access and does not synthesize a production conversion.
+
+Production location: `src/ref_cnt.rs:328–341`. `cast` evaluates the projection then discards its result, retaining the old pointee address. `clone_as` delegates to it. This supplemental case extends the base conversion contract reached by `RefCntTest.cpp::sk_sp`; there is **no direct original assertion for a nonzero-offset Rust projection**, so no upstream assertion location is invented. Original single-base prefix conversion observations pass.
+
+Exact reproductions from the Rust repository:
+
+```sh
+cargo test --locked --test m02_test supplemental::supplemental_smart_pointer_projected_base -- --exact --nocapture
+cargo test --release --locked --test m02_test supplemental::supplemental_smart_pointer_projected_base -- --exact --nocapture
+```
+
+Both exit 101. [Debug diagnostics](M02-evidence/rust-debug-supplemental-supplemental_smart_pointer_projected_base.log), [release diagnostics](M02-evidence/rust-release-supplemental-supplemental_smart_pointer_projected_base.log).
+
+### 2. Sized erasure accepts an unrelated non-Send owner as Send
+
+`tests/m02-api/erasure_sized_type_safety.rs:22–27` constructs `SkSp<Target>` from unrelated `Unrelated { Rc<()> }` through safe `sk_make_sp_as`, then satisfies `requires_send`. Expected: compile rejection, because the actual owner is neither Target nor Send. Actual: **rustc exits 0 in debug and release**, so the expected-rejection contract fails. This program is compiled only, never executed or sent between threads.
+
+Production location: `src/ref_cnt.rs:519`, generic `sk_make_sp_as<U,T>` imposes no relationship between U and T; sized SkSp auto-trait checks consider U while hiding actual T. Restricting Send to sized targets repaired the earlier unsized negative but leaves this sized route open. This is a Rust-specific supplemental type-safety contract; there is no directly corresponding upstream assertion.
+
+Reproduce both profiles with:
+
+```sh
+python3 tests/reference/check_m02_api.py
+```
+
+Driver exits 1. Exact per-profile rustc commands/exit codes: [debug](M02-evidence/api-debug-erasure_sized_type_safety.log), [release](M02-evidence/api-release-erasure_sized_type_safety.log), [API summary](M02-evidence/api-summary.json). Cow, polymorphic and ordinary probes compile/run successfully; the older unsized negative fails compilation as required. Negative units are not included in runtime counts.
+
+## Full execution and supporting checks
+
+| Configuration/result | Debug | Release |
+| --- | --- | --- |
+| C++ M02 originals | 110/110 PASS | 110/110 PASS |
+| Rust M02 originals | 110/110 PASS | 110/110 PASS |
+| Rust M02 supplemental runtime | 10 PASS / 1 FAIL | 10 PASS / 1 FAIL |
+| M02 reporter self-test | 1 PASS | 1 PASS |
+| All isolated M02 cases | 122 executed; 121 PASS / 1 FAIL | Same |
+| Accepted M01 integration cases | 15 PASS | 15 PASS |
+| M01 independent C++ originals/contracts | All PASS | All PASS |
+| Library development checks | 51 PASS | 51 PASS |
+| Complete cumulative Cargo | **187 PASS / 1 FAIL across 188 cases** | Same |
+| Negative sized-erasure contract | FAIL (incorrectly compiles) | Same |
+
+No isolated case crashes, hangs, times out or is ignored. Each Rust case has a separate 60-second timeout; C++ cases have separate 120-second timeouts. Nonfatal reporter failures accumulate before final test failure; the caught reporter self-test panic is expected. Ordinary Cargo stops after the failing M02 binary, so additional `--no-fail-fast` runs execute every previously accepted M01 binary.
+
+| Exact command | Exit | Durable evidence |
+| --- | --- | --- |
+| `cargo test --locked -- --nocapture` | 101 | [debug](M02-evidence/cargo-test-debug.log) |
+| `cargo test --release --locked -- --nocapture` | 101 | [release](M02-evidence/cargo-test-release.log) |
+| `cargo test --locked --no-fail-fast -- --nocapture` | 101 | [cumulative debug](M02-evidence/cargo-cumulative-debug.log) |
+| `cargo test --release --locked --no-fail-fast -- --nocapture` | 101 | [cumulative release](M02-evidence/cargo-cumulative-release.log) |
+| `python3 tests/reference/run_m02_checks.py` | 1 (two ownership contracts) | [all commands and isolated exits](M02-evidence/checks-summary.json), [Rust debug discovery](M02-evidence/rust-discovery-debug.log), [release discovery](M02-evidence/rust-discovery-release.log) |
+| `python3 tests/reference/run_m02.py --source /Volumes/Data/Users/paul/development/src/github/skia` | 0 | [reference summary](M02-evidence/reference-summary.json), [debug build](M02-evidence/reference-build-debug.log), [release build](M02-evidence/reference-build-release.log) |
+| `python3 tests/reference/run_m01.py --source /Volumes/Data/Users/paul/development/src/github/skia --output plan/acceptance/M02-evidence/M01-reference` | 0 | [driver](M02-evidence/m01-reference-driver.log), [debug](M02-evidence/M01-reference/reference-run-debug.log), [release](M02-evidence/M01-reference/reference-run-release.log) |
+| `cargo fmt --all -- --check` | 0 | [format](M02-evidence/fmt-check.log) |
+| `cargo clippy --all-targets --locked -- -D warnings` | 0 | [Clippy](M02-evidence/clippy.log) |
+| `python3 plan/validate_plan.py --source /Volumes/Data/Users/paul/development/src/github/skia --check-hashes` | 0 | [audit](M02-evidence/validate-plan.log) |
+
+C++ builds compile unchanged original test bodies, Test.cpp reporter/context and reached production dependencies with C++20; debug `-O0 -g -DSK_DEBUG`, release `-O3 -DNDEBUG`, both `-DSK_DISABLE_TRACING -Wl,-dead_strip`. Dependency scans, all linked discoveries, individual assertion logs and complete build commands are retained. The Rust runner rejects any partial/empty registry and matches the exact 110-original name set separately in each profile. The source-preserving Clippy allowance in sk_sp retains original local names such as `foo`.
+
+M02 has zero backend-validation inventory rows, no optional Cargo features, and only CPU registrations under reached guards and linked discovery. Ganesh Metal/macOS OpenGL and Graphite Metal/Dawn-Metal variants are **NOT_APPLICABLE to M02**, rather than reported as passes. Their later gates remain open. Native Intel execution remains explicitly pending M46; it does not masquerade as arm64 validation.
+
+Handoff-listed approximations remain risks outside the passing observations: explicit-instance message buses, fd reading without mmap/ownership transfer, simplified ResourceCache/CachedData, copied DataTable array storage and numeric intrusive-list handles. Block/list accounting passes all original tests but does not prove every untested formula. The executor is now a real pool and its original variants pass; arbitrary scheduling behavior is not inferred. No additional resource or hardware blocker prevents the applicable M02 runs. Typed serializers, color APIs, tile-mode integration, discardable-memory pool, global initialization/serialization and tool packaging retain their explicit later owners.
+
+**Gate: NEEDS_FIX for the two production ownership defects above.** All 111 assigned sites are reconciled, and the three formerly missing original translations are complete. M01 is preserved; M03 remains unopened. Deepseek should repair production only and retain these assertions, fixtures, expected values and evidence for the next Codex rerun.

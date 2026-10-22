@@ -1,0 +1,205 @@
+   Compiling rust-skia v0.1.0 (/Volumes/Data/Users/paul/development/src/github/rust-skia)
+warning: unnecessary parentheses around function argument
+  --> tests/m03/floating_point.rs:18:35
+   |
+18 |     check!(r, !double_nearly_zero((f32::EPSILON as f64)));
+   |                                   ^                   ^
+   |
+   = note: `#[warn(unused_parens)]` (part of `#[warn(unused)]`) on by default
+help: remove these parentheses
+   |
+18 -     check!(r, !double_nearly_zero((f32::EPSILON as f64)));
+18 +     check!(r, !double_nearly_zero(f32::EPSILON as f64));
+   |
+
+warning: unnecessary parentheses around function argument
+  --> tests/m03/floating_point.rs:53:42
+   |
+53 |     check!(r, !doubles_nearly_equal_ulps((f32::EPSILON as f64), 0.));
+   |                                          ^                   ^
+   |
+help: remove these parentheses
+   |
+53 -     check!(r, !doubles_nearly_equal_ulps((f32::EPSILON as f64), 0.));
+53 +     check!(r, !doubles_nearly_equal_ulps(f32::EPSILON as f64, 0.));
+   |
+
+warning: unnecessary parentheses around assigned value
+  --> tests/m03/safe_math.rs:17:23
+   |
+17 |     let bits: usize = (std::mem::size_of::<usize>() * 8);
+   |                       ^                                ^
+   |
+help: remove these parentheses
+   |
+17 -     let bits: usize = (std::mem::size_of::<usize>() * 8);
+17 +     let bits: usize = std::mem::size_of::<usize>() * 8;
+   |
+
+warning: unnecessary parentheses around assigned value
+  --> tests/m03/safe_math.rs:42:23
+   |
+42 |     let bits: usize = (std::mem::size_of::<usize>() * 8);
+   |                       ^                                ^
+   |
+help: remove these parentheses
+   |
+42 -     let bits: usize = (std::mem::size_of::<usize>() * 8);
+42 +     let bits: usize = std::mem::size_of::<usize>() * 8;
+   |
+
+warning: unnecessary braces around block return value
+   --> tests/m03/utils.rs:118:5
+    |
+118 |     { for (i,(av,bv,cv,dv,sv)) in sk_make_zip((&a,&B,c.as_slice(),&d,s.as_slice())).enumerate() { check!(r,*av==a[i]); check!(r,*bv==B[i]); check!(r,*cv==c[i]); check!(r,*dv==d[i]); check!(r,*sv==s[i]); } }
+    |     ^^                                                                                                                                                                                                      ^^
+    |
+    = note: `#[warn(unused_braces)]` (part of `#[warn(unused)]`) on by default
+help: remove these braces
+    |
+118 -     { for (i,(av,bv,cv,dv,sv)) in sk_make_zip((&a,&B,c.as_slice(),&d,s.as_slice())).enumerate() { check!(r,*av==a[i]); check!(r,*bv==B[i]); check!(r,*cv==c[i]); check!(r,*dv==d[i]); check!(r,*sv==s[i]); } }
+118 +     for (i,(av,bv,cv,dv,sv)) in sk_make_zip((&a,&B,c.as_slice(),&d,s.as_slice())).enumerate() { check!(r,*av==a[i]); check!(r,*bv==B[i]); check!(r,*cv==c[i]); check!(r,*dv==d[i]); check!(r,*sv==s[i]); }
+    |
+
+error[E0599]: no method named `push` found for type parameter `A` in the current scope
+  --> tests/m03/tarray.rs:96:50
+   |
+94 | fn comparison<T:Value,A:Array<T>>(r:&mut Reporter) {
+   |                       - method `push` not found for this type parameter
+95 |     let mut a=A::default(); let mut b=A::default(); check!(r,a.same(&b)); check!(r,!a.different(&b));
+96 |     for x in 0..10 { a.add_value(T::value(x)); b.push(T::value(x)); check!(r,a.same(&b)); check!(r,!a.different(&b)); }
+   |                                                  ^^^^
+   |
+help: there is a method `push_n` with a similar name, but with different arguments
+  --> tests/m03/tarray.rs:24:68
+   |
+24 |     fn clear_values(&mut self); fn reset_values(&mut self,s:&[T]); fn push_n(&mut self,n:usize,t:T); fn pop_n(&mut self,n:usize);
+   |                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error[E0747]: constant provided when a type was expected
+  --> tests/m03/utils.rs:19:35
+   |
+19 | ...   let mut tmp=AutoSTArray::<2,SkSp<RefClass>>::new(); check!(r,0==tmp.count()); tmp.reset(0); tmp.reset(4); check!(r,4==tmp.coun...
+   |                                 ^
+
+error[E0747]: constant provided when a type was expected
+  --> tests/m03/utils.rs:26:35
+   |
+26 |         let mut tmp=AutoSTArray::<2,SkSp<RefClass>>::with_count(4); check!(r,4==tmp.count());
+   |                                   ^
+
+error[E0599]: no function or associated item named `new_mut` found for struct `SkEnumerate<'a, T>` in the current scope
+   --> tests/m03/utils.rs:63:35
+    |
+ 63 |         for (i,v) in SkEnumerate::new_mut(s.as_mut_slice()).iter_mut() { *v=I{i:i as i32}; }
+    |                                   ^^^^^^^ function or associated item not found in `SkEnumerate<'_, _>`
+    |
+note: if you're trying to build a new `SkEnumerate<'_, _>`, consider using `SkEnumerate::<'a, T>::new` which returns `SkEnumerate<'_, _>`
+   --> src/extras.rs:451:5
+    |
+451 |     pub fn new<D: AsRef<[T]> + ?Sized>(data: &'a D) -> Self {
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error[E0599]: no function or associated item named `new_mut` found for struct `SkEnumerate<'a, T>` in the current scope
+   --> tests/m03/utils.rs:70:35
+    |
+ 70 |         for (i,v) in SkEnumerate::new_mut(&mut input).iter_mut() { *v=Some(Box::new(i as i32)); }
+    |                                   ^^^^^^^ function or associated item not found in `SkEnumerate<'_, _>`
+    |
+note: if you're trying to build a new `SkEnumerate<'_, _>`, consider using `SkEnumerate::<'a, T>::new` which returns `SkEnumerate<'_, _>`
+   --> src/extras.rs:451:5
+    |
+451 |     pub fn new<D: AsRef<[T]> + ?Sized>(data: &'a D) -> Self {
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error[E0599]: no function or associated item named `new_mut` found for struct `SkEnumerate<'a, T>` in the current scope
+   --> tests/m03/utils.rs:71:35
+    |
+ 71 |         for (i,v) in SkEnumerate::new_mut(&mut output).iter_mut() { *v=input[i].take(); }
+    |                                   ^^^^^^^ function or associated item not found in `SkEnumerate<'_, _>`
+    |
+note: if you're trying to build a new `SkEnumerate<'_, _>`, consider using `SkEnumerate::<'a, T>::new` which returns `SkEnumerate<'_, _>`
+   --> src/extras.rs:451:5
+    |
+451 |     pub fn new<D: AsRef<[T]> + ?Sized>(data: &'a D) -> Self {
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error[E0282]: type annotations needed
+  --> tests/m03/utils.rs:71:72
+   |
+71 |         for (i,v) in SkEnumerate::new_mut(&mut output).iter_mut() { *v=input[i].take(); }
+   |                                                                        ^^^^^^^^ cannot infer type
+
+error[E0599]: no function or associated item named `new_mut` found for struct `SkEnumerate<'a, T>` in the current scope
+   --> tests/m03/utils.rs:76:35
+    |
+ 76 |         for (i,v) in SkEnumerate::new_mut(&mut input).iter_mut() { *v=Some(Box::new(i as i32)); }
+    |                                   ^^^^^^^ function or associated item not found in `SkEnumerate<'_, _>`
+    |
+note: if you're trying to build a new `SkEnumerate<'_, _>`, consider using `SkEnumerate::<'a, T>::new` which returns `SkEnumerate<'_, _>`
+   --> src/extras.rs:451:5
+    |
+451 |     pub fn new<D: AsRef<[T]> + ?Sized>(data: &'a D) -> Self {
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error[E0308]: mismatched types
+  --> tests/m03/utils.rs:78:13
+   |
+78 |         for (_i,(ov,iv)) in zipped.enumerate_mut() { *ov=iv.take(); }
+   |             ^^^^^^^^^^^^    ---------------------- this is an iterator with items of type `(usize, &mut Option<Box<i32>>, &mut Option<Box<i32>>)`
+   |             |
+   |             expected a tuple with 3 elements, found one with 2 elements
+   |
+   = note: expected tuple `(usize, &mut Option<Box<i32>>, &mut Option<Box<i32>>)`
+              found tuple `(_, _)`
+
+error[E0282]: type annotations needed
+  --> tests/m03/utils.rs:78:58
+   |
+78 |         for (_i,(ov,iv)) in zipped.enumerate_mut() { *ov=iv.take(); }
+   |                                                          ^^ cannot infer type
+
+error[E0015]: cannot call non-const associated function `SkZip::<(&[u16], &[u16])>::new_const` in constants
+   --> tests/m03/utils.rs:120:87
+    |
+120 |     { const CA:[u16;4]=[1,2,3,4]; const CP:&[u16]=&CA; const Z:SkZip<(&[u16],&[u16])>=SkZip::new_const((&CA,CP)); check!(r,!Z.empty...
+    |                                                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = note: calls in constants are limited to constant functions, tuple structs and tuple variants
+
+error[E0277]: the trait bound `{closure@tests/m03/supplemental.rs:240:51: 240:59}: DataRelease<_>` is not satisfied
+   --> tests/m03/supplemental.rs:240:51
+    |
+240 |     let data=SkData::make_with_proc(vec![1,2,3,4],move |_|{c.fetch_add(1,Ordering::SeqCst);}); let alias=data.clone(); let subset=d...
+    |              ----------------------               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ the trait `DataRelease<_>` is not implemented for closure `{closure@tests/m03/supplemental.rs:240:51: 240:59}`
+    |              |
+    |              required by a bound introduced by this call
+    |
+note: required by a bound in `rust_skia::SkData::make_with_proc`
+   --> src/data.rs:137:12
+    |
+135 |     pub fn make_with_proc<F, A>(bytes: Vec<u8>, release: F) -> Self
+    |            -------------- required by a bound in this associated function
+136 |     where
+137 |         F: DataRelease<A> + Send + Sync + 'static,
+    |            ^^^^^^^^^^^^^^ required by this bound in `SkData::make_with_proc`
+
+warning: function cannot return without recursing
+  --> tests/m03/tarray.rs:33:52
+   |
+33 |             fn size(&self)->usize { self.count() } fn empty(&self)->bool { self.empty() }
+   |                                                    ^^^^^^^^^^^^^^^^^^^^^   ------------ recursive call site
+   |                                                    |
+   |                                                    cannot return without recursing
+...
+47 | dynamic_array!([const N:usize,]; STArray<N,T>);
+   | ---------------------------------------------- in this macro invocation
+   |
+   = help: a `loop` may express intention better if this is on purpose
+   = note: `#[warn(unconditional_recursion)]` on by default
+   = note: this warning originates in the macro `dynamic_array` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+Some errors have detailed explanations: E0015, E0277, E0282, E0308, E0599, E0747.
+For more information about an error, try `rustc --explain E0015`.
+warning: `rust-skia` (test "m03_test") generated 6 warnings
+error: could not compile `rust-skia` (test "m03_test") due to 12 previous errors; 6 warnings emitted

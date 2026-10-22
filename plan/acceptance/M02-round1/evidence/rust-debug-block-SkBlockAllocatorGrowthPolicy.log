@@ -1,0 +1,40 @@
+COMMAND: ['/Volumes/Data/Users/paul/development/src/github/rust-skia/target/debug/deps/m02_test-a997dd6914494635', 'block::SkBlockAllocatorGrowthPolicy', '--exact', '--nocapture']
+
+running 1 test
+policy=0 block=1 expected=128 actual=208
+policy=0 block=2 expected=128 actual=208
+policy=0 block=3 expected=128 actual=208
+policy=0 block=4 expected=128 actual=208
+policy=1 block=1 expected=256 actual=256
+policy=1 block=2 expected=384 actual=384
+policy=1 block=3 expected=512 actual=512
+policy=1 block=4 expected=640 actual=640
+policy=2 block=1 expected=128 actual=208
+policy=2 block=2 expected=256 actual=256
+policy=2 block=3 expected=384 actual=384
+policy=2 block=4 expected=640 actual=640
+policy=3 block=1 expected=256 actual=256
+policy=3 block=2 expected=512 actual=512
+policy=3 block=3 expected=1024 actual=1024
+policy=3 block=4 expected=2048 actual=2048
+reporter assertions=20 failures=5
+
+thread 'block::SkBlockAllocatorGrowthPolicy' (15785771) panicked at tests/support/mod.rs:25:9:
+5 assertion(s) failed:
+tests/m02/block.rs:229: expected[gp][i] * 128 == actual
+tests/m02/block.rs:229: expected[gp][i] * 128 == actual
+tests/m02/block.rs:229: expected[gp][i] * 128 == actual
+tests/m02/block.rs:229: expected[gp][i] * 128 == actual
+tests/m02/block.rs:229: expected[gp][i] * 128 == actual
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+test block::SkBlockAllocatorGrowthPolicy ... FAILED
+
+failures:
+
+failures:
+    block::SkBlockAllocatorGrowthPolicy
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 98 filtered out; finished in 0.00s
+
+
+EXIT: 101

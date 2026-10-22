@@ -1,0 +1,23 @@
+COMMAND: ['/Volumes/Data/Users/paul/development/src/github/rust-skia/plan/acceptance/M02-evidence/reference-debug', '--contracts']
+CONTRACT packed_truncation PASS
+CONTRACT packed_truncation PASS
+CONTRACT packed_truncation PASS
+CONTRACT packed_truncation PASS
+CONTRACT without_copy_identity PASS
+CONTRACT empty_data_release PASS
+CONTRACT arena_external_storage PASS
+CONTRACT byte_order PASS
+CHECKSUM <empty> 0 3804095577
+CHECKSUM <empty> 1 638533687
+CHECKSUM <empty> 4294967295 2821084191
+CHECKSUM a 0 164791601
+CHECKSUM a 1 459268265
+CHECKSUM a 4294967295 4117487878
+CHECKSUM abc 0 3411111026
+CHECKSUM abc 1 2184336823
+CHECKSUM abc 4294967295 1582327983
+CHECKSUM abcdefghijklmnopqrstuvwxyz 0 517385426
+CHECKSUM abcdefghijklmnopqrstuvwxyz 1 3575925044
+CHECKSUM abcdefghijklmnopqrstuvwxyz 4294967295 3468900993
+
+EXIT: 0

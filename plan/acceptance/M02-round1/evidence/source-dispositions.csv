@@ -1,0 +1,217 @@
+path,owner,disposition,codex_disposition
+bazel/external/icu4x/src/lib.rs,Deepseek,deepseek-adapt-rust,Original is a Cargo.lock-generation placeholder; no M02 runtime body. ICU4X/vello consumers retain their later integration gates.
+bazel/external/vello/src/lib.rs,Deepseek,deepseek-adapt-rust,Original is a Cargo.lock-generation placeholder; no M02 runtime body. ICU4X/vello consumers retain their later integration gates.
+include/BUILD.bazel,Deepseek,adapt-build,Cargo replaces these Bazel/GN build descriptions; original source membership/guards inspected. No Bazel/GN runtime PASS claim.
+include/OWNERS,Shared,preserve,Preserved unchanged in pinned reference; SHA-256 in reference.sha256.
+include/config/BUILD.bazel,Deepseek,adapt-build,Cargo replaces these Bazel/GN build descriptions; original source membership/guards inspected. No Bazel/GN runtime PASS claim.
+include/config/MODULE.bazel,Deepseek,adapt-build,Cargo replaces these Bazel/GN build descriptions; original source membership/guards inspected. No Bazel/GN runtime PASS claim.
+include/config/OWNERS,Shared,preserve,Preserved unchanged in pinned reference; SHA-256 in reference.sha256.
+include/config/SkUserConfig.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+include/config/WORKSPACE.bazel,Deepseek,adapt-build,Cargo replaces these Bazel/GN build descriptions; original source membership/guards inspected. No Bazel/GN runtime PASS claim.
+include/config/copts.bzl,Deepseek,adapt-build,Cargo replaces these Bazel/GN build descriptions; original source membership/guards inspected. No Bazel/GN runtime PASS claim.
+include/config/linkopts.bzl,Deepseek,adapt-build,Cargo replaces these Bazel/GN build descriptions; original source membership/guards inspected. No Bazel/GN runtime PASS claim.
+include/core/BUILD.bazel,Deepseek,adapt-build,Cargo replaces these Bazel/GN build descriptions; original source membership/guards inspected. No Bazel/GN runtime PASS claim.
+include/core/SkCoverageMode.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+include/core/SkData.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+include/core/SkDataTable.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+include/core/SkExecutor.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+include/core/SkFourByteTag.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+include/core/SkMilestone.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+include/core/SkRefCnt.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+include/core/SkSpan.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+include/core/SkStream.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+include/core/SkString.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+include/core/SkTraceMemoryDump.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+include/core/SkTypes.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+include/cpu/BUILD.bazel,Deepseek,adapt-build,Cargo replaces these Bazel/GN build descriptions; original source membership/guards inspected. No Bazel/GN runtime PASS claim.
+include/docs/BUILD.bazel,Deepseek,adapt-build,Cargo replaces these Bazel/GN build descriptions; original source membership/guards inspected. No Bazel/GN runtime PASS claim.
+include/ports/BUILD.bazel,Deepseek,adapt-build,Cargo replaces these Bazel/GN build descriptions; original source membership/guards inspected. No Bazel/GN runtime PASS claim.
+include/private/BUILD.bazel,Deepseek,adapt-build,Cargo replaces these Bazel/GN build descriptions; original source membership/guards inspected. No Bazel/GN runtime PASS claim.
+include/private/OWNERS,Shared,preserve,Preserved unchanged in pinned reference; SHA-256 in reference.sha256.
+include/private/SingleOwner.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+include/private/SkAPI.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+include/private/SkASAN.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+include/private/SkAlign.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+include/private/SkAlignedStorage.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+include/private/SkAnySubclass.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+include/private/SkAssert.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+include/private/SkAttributes.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+include/private/SkCPUTypes.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+include/private/SkContainers.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+include/private/SkDebug.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+include/private/SkDeque.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+include/private/SkFeatures.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+include/private/SkIDChangeListener.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+include/private/SkLoadUserConfig.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+include/private/SkLog.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+include/private/SkLogPriority.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+include/private/SkMacros.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+include/private/SkMalloc.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+include/private/SkMutex.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+include/private/SkNoncopyable.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+include/private/SkOnce.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+include/private/SkOnlyStackAllocatable.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+include/private/SkSemaphore.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+include/private/SkTArray.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+include/private/SkTDArray.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+include/private/SkTLogic.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+include/private/SkTPin.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+include/private/SkTemplates.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+include/private/SkThreadID.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+include/private/SkTypeTraits.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+include/private/SkWeakRefCnt.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+include/private/chromium/BUILD.bazel,Deepseek,adapt-build,Cargo replaces these Bazel/GN build descriptions; original source membership/guards inspected. No Bazel/GN runtime PASS claim.
+include/private/chromium/SkDiscardableMemory.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+include/utils/BUILD.bazel,Deepseek,adapt-build,Cargo replaces these Bazel/GN build descriptions; original source membership/guards inspected. No Bazel/GN runtime PASS claim.
+include/utils/SkEventTracer.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+include/utils/SkLogHandler.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+include/utils/SkParse.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+include/utils/SkTraceEventPhase.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+include/utils/mac/BUILD.bazel,Deepseek,adapt-build,Cargo replaces these Bazel/GN build descriptions; original source membership/guards inspected. No Bazel/GN runtime PASS claim.
+src/BUILD.bazel,Deepseek,adapt-build,Cargo replaces these Bazel/GN build descriptions; original source membership/guards inspected. No Bazel/GN runtime PASS claim.
+src/core/BUILD.bazel,Deepseek,adapt-build,Cargo replaces these Bazel/GN build descriptions; original source membership/guards inspected. No Bazel/GN runtime PASS claim.
+src/core/SkATrace.cpp,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+src/core/SkATrace.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+src/core/SkArenaAlloc.cpp,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+src/core/SkArenaAlloc.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+src/core/SkArenaAllocList.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+src/core/SkAutoLocaleSetter.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+src/core/SkAutoMalloc.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+src/core/SkBase64.cpp,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+src/core/SkBase64.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+src/core/SkBlockAllocator.cpp,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+src/core/SkBlockAllocator.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+src/core/SkBuffer.cpp,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+src/core/SkBuffer.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+src/core/SkCachedData.cpp,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+src/core/SkCachedData.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+src/core/SkChecksum.cpp,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+src/core/SkChecksum.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+src/core/SkContainers.cpp,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+src/core/SkData.cpp,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+src/core/SkDataTable.cpp,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+src/core/SkDebug.cpp,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+src/core/SkDebugUtils.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+src/core/SkDeque.cpp,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+src/core/SkEndian.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+src/core/SkEnumerate.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+src/core/SkExecutor.cpp,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+src/core/SkExecutors.cpp,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+src/core/SkExecutors.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+src/core/SkGlobalInitialization_core.cpp,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+src/core/SkIDChangeListener.cpp,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+src/core/SkLRUCache.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+src/core/SkLog.cpp,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+src/core/SkMD5.cpp,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+src/core/SkMD5.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+src/core/SkMSAN.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+src/core/SkMalloc.cpp,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+src/core/SkMessageBus.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+src/core/SkNextID.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+src/core/SkNoDestructor.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+src/core/SkOSFile.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+src/core/SkResourceCache.cpp,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+src/core/SkResourceCache.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+src/core/SkSafeRange.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+src/core/SkSafetyChecks.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+src/core/SkScopeExit.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+src/core/SkSemaphore.cpp,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+src/core/SkSharedMutex.cpp,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+src/core/SkSharedMutex.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+src/core/SkSpanPriv.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+src/core/SkSpinlock.cpp,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+src/core/SkSpinlock.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+src/core/SkStream.cpp,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+src/core/SkStreamPriv.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+src/core/SkString.cpp,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+src/core/SkStringUtils.cpp,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+src/core/SkStringUtils.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+src/core/SkStringView.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+src/core/SkSynchronizedResourceCache.cpp,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+src/core/SkSynchronizedResourceCache.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+src/core/SkTBlockList.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+src/core/SkTDArray.cpp,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+src/core/SkTDPQueue.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+src/core/SkTDynamicHash.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+src/core/SkTHash.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+src/core/SkTInternalLList.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+src/core/SkTLazy.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+src/core/SkTMultiMap.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+src/core/SkTSearch.cpp,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+src/core/SkTSearch.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+src/core/SkTSort.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+src/core/SkTaskGroup.cpp,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+src/core/SkTaskGroup.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+src/core/SkThreadID.cpp,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+src/core/SkTime.cpp,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+src/core/SkTime.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+src/core/SkTraceEvent.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+src/core/SkTraceEventCommon.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+src/core/SkUTF.cpp,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+src/core/SkUTF.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+src/core/SkUtils.cpp,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+src/core/SkUtils.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+src/core/SkValidationUtils.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+src/core/SkWriter32.cpp,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+src/core/SkWriter32.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+src/core/SkZip.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+src/partition_alloc/BUILD.bazel,Deepseek,adapt-build,Cargo replaces these Bazel/GN build descriptions; original source membership/guards inspected. No Bazel/GN runtime PASS claim.
+src/partition_alloc/BUILD.gn,Deepseek,adapt-build,Cargo replaces these Bazel/GN build descriptions; original source membership/guards inspected. No Bazel/GN runtime PASS claim.
+src/partition_alloc/noop/raw_ptr.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+src/partition_alloc/noop/raw_ptr_exclusion.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+src/partition_alloc/noop/raw_ref.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+src/partition_alloc/raw_ptr.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+src/partition_alloc/raw_ptr_exclusion.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+src/partition_alloc/raw_ref.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+src/partition_alloc/safety_checks.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+src/ports/BUILD.bazel,Deepseek,adapt-build,Cargo replaces these Bazel/GN build descriptions; original source membership/guards inspected. No Bazel/GN runtime PASS claim.
+src/ports/SkDiscardableMemory_none.cpp,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+src/ports/SkGlobalInitialization_default.cpp,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+src/ports/SkLog_stdio.cpp,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+src/ports/SkMemory_malloc.cpp,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+src/ports/SkMemory_mozalloc.cpp,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+src/ports/SkOSFile_posix.cpp,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+src/ports/SkOSFile_stdio.cpp,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+src/utils/BUILD.bazel,Deepseek,adapt-build,Cargo replaces these Bazel/GN build descriptions; original source membership/guards inspected. No Bazel/GN runtime PASS claim.
+src/utils/SkBitSet.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+src/utils/SkCallableTraits.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+src/utils/SkEventTracer.cpp,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+src/utils/SkJSONWriter.cpp,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+src/utils/SkJSONWriter.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+src/utils/SkLogHandler.cpp,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+src/utils/SkOSPath.cpp,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+src/utils/SkOSPath.h,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+src/utils/SkParse.cpp,Deepseek,deepseek-port,Handoff cluster/symbol map retained; NOT ACCEPTED: runtime/API failures and incomplete coverage remain.
+src/utils/mac/BUILD.bazel,Deepseek,adapt-build,Cargo replaces these Bazel/GN build descriptions; original source membership/guards inspected. No Bazel/GN runtime PASS claim.
+tests/ArenaAllocTest.cpp,Codex,codex-test,See correspondence.csv and report helper dispositions; no whole-file completion inferred.
+tests/BUILD.bazel,Deepseek,adapt-build,Cargo replaces these Bazel/GN build descriptions; original source membership/guards inspected. No Bazel/GN runtime PASS claim.
+tests/CtsEnforcement.h,Codex,codex-test,See correspondence.csv and report helper dispositions; no whole-file completion inferred.
+tests/DataRefTest.cpp,Codex,codex-test,See correspondence.csv and report helper dispositions; no whole-file completion inferred.
+tests/DequeTest.cpp,Codex,codex-test,See correspondence.csv and report helper dispositions; no whole-file completion inferred.
+tests/ExecutorTest.cpp,Codex,codex-test,See correspondence.csv and report helper dispositions; no whole-file completion inferred.
+tests/FakeStreams.h,Codex,codex-test,See correspondence.csv and report helper dispositions; no whole-file completion inferred.
+tests/HashTest.cpp,Codex,codex-test,See correspondence.csv and report helper dispositions; no whole-file completion inferred.
+tests/IncrTopoSortTest.cpp,Codex,codex-test,See correspondence.csv and report helper dispositions; no whole-file completion inferred.
+tests/LListTest.cpp,Codex,codex-test,See correspondence.csv and report helper dispositions; no whole-file completion inferred.
+tests/LRUCacheTest.cpp,Codex,codex-test,See correspondence.csv and report helper dispositions; no whole-file completion inferred.
+tests/MD5Test.cpp,Codex,codex-test,See correspondence.csv and report helper dispositions; no whole-file completion inferred.
+tests/MemoryTest.cpp,Codex,codex-test,See correspondence.csv and report helper dispositions; no whole-file completion inferred.
+tests/MessageBusTest.cpp,Codex,codex-test,See correspondence.csv and report helper dispositions; no whole-file completion inferred.
+tests/MetaDataTest.cpp,Codex,codex-test,See correspondence.csv and report helper dispositions; no whole-file completion inferred.
+tests/OnceTest.cpp,Codex,codex-test,See correspondence.csv and report helper dispositions; no whole-file completion inferred.
+tests/RawPtrTest.cpp,Codex,codex-test,See correspondence.csv and report helper dispositions; no whole-file completion inferred.
+tests/RefCntTest.cpp,Codex,codex-test,See correspondence.csv and report helper dispositions; no whole-file completion inferred.
+tests/SkBlockAllocatorTest.cpp,Codex,codex-test,See correspondence.csv and report helper dispositions; no whole-file completion inferred.
+tests/SkContainersTest.cpp,Codex,codex-test,See correspondence.csv and report helper dispositions; no whole-file completion inferred.
+tests/SkMallocTest.cpp,Codex,codex-test,See correspondence.csv and report helper dispositions; no whole-file completion inferred.
+tests/SkSharedMutexTest.cpp,Codex,codex-test,See correspondence.csv and report helper dispositions; no whole-file completion inferred.
+tests/SkSpanTest.cpp,Codex,codex-test,See correspondence.csv and report helper dispositions; no whole-file completion inferred.
+tests/SkStringViewTest.cpp,Codex,codex-test,See correspondence.csv and report helper dispositions; no whole-file completion inferred.
+tests/SkTBlockListTest.cpp,Codex,codex-test,See correspondence.csv and report helper dispositions; no whole-file completion inferred.
+tests/SkUTFTest.cpp,Codex,codex-test,See correspondence.csv and report helper dispositions; no whole-file completion inferred.
+tests/StringTest.cpp,Codex,codex-test,See correspondence.csv and report helper dispositions; no whole-file completion inferred.
+tests/TLazyTest.cpp,Codex,codex-test,See correspondence.csv and report helper dispositions; no whole-file completion inferred.
+tests/TemplatesTest.cpp,Codex,codex-test,See correspondence.csv and report helper dispositions; no whole-file completion inferred.
+tests/Test.cpp,Codex,codex-test,See correspondence.csv and report helper dispositions; no whole-file completion inferred.
+tools/Resources.cpp,Codex,codex-test,See correspondence.csv and report helper dispositions; no whole-file completion inferred.
+tools/Resources.h,Codex,codex-test,See correspondence.csv and report helper dispositions; no whole-file completion inferred.

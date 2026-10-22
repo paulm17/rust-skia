@@ -1,0 +1,23 @@
+COMMAND: ['/Volumes/Data/Users/paul/development/src/github/rust-skia/target/release/deps/m02_test-f37e1713df482657', 'block::SkBlockAllocatorPreallocSize', '--exact', '--nocapture']
+
+running 1 test
+reporter assertions=6 failures=3
+
+thread 'block::SkBlockAllocatorPreallocSize' (15786772) panicked at tests/support/mod.rs:25:9:
+3 assertion(s) failed:
+tests/m02/block.rs:29: p.prealloc_size() == std::mem::size_of::<BlockAllocator>()
+tests/m02/block.rs:42: p.prealloc_size() == 1024
+tests/m02/block.rs:51: p.prealloc_usable_space() < 2048 && p.prealloc_usable_space() >= 2048 -
+std::mem::size_of::<BlockAllocator>()
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+test block::SkBlockAllocatorPreallocSize ... FAILED
+
+failures:
+
+failures:
+    block::SkBlockAllocatorPreallocSize
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 98 filtered out; finished in 0.00s
+
+
+EXIT: 101

@@ -1,0 +1,13 @@
+COMMAND: ['/Volumes/Data/Users/paul/development/src/github/rust-skia/target/release/deps/m02_test-f37e1713df482657', 'executor::ExecutorTest_Callback', '--exact', '--nocapture']
+
+running 1 test
+original callback factory=0 lists=2 threads=4 borrowing=false
+original callback factory=1 lists=2 threads=4 borrowing=false
+original callback factory=2 lists=1 threads=4 borrowing=false
+reporter assertions=6 failures=0
+test executor::ExecutorTest_Callback ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 121 filtered out; finished in 0.10s
+
+
+EXIT: 0

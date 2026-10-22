@@ -61,6 +61,14 @@ pub fn is_finite4(a: f32, b: f32, c: f32, d: f32) -> bool {
     prod == prod
 }
 
+pub fn is_finite2_f64(x: f64, y: f64) -> bool {
+    ((x - x) * y) == 0.0
+}
+
+pub fn is_finite3_f64(x: f64, y: f64, z: f64) -> bool {
+    ((x - x) * y * z) == 0.0
+}
+
 pub fn is_finite_slice(values: &[f32]) -> bool {
     let Some((&first, rest)) = values.split_first() else {
         return true;

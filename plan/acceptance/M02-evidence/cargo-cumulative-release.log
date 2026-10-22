@@ -1,0 +1,623 @@
+COMMAND: ['cargo', 'test', '--release', '--locked', '--no-fail-fast', '--', '--nocapture']
+    Finished `release` profile [optimized] target(s) in 0.00s
+     Running unittests src/lib.rs (target/release/deps/rust_skia-578c0e97d2d464e4)
+
+running 51 tests
+test arena::tests::dev_fib_block_sizes ... ok
+test arena::tests::dev_arena_runs_destructors_in_reverse_order ... ok
+test block_allocator::tests::dev_block_allocator_growth_and_reset ... ok
+test block_allocator::tests::dev_block_allocator_allocate_resize_release ... ok
+test config::tests::dev_core_contracts_and_tags ... ok
+test codec::tests::dev_base64_round_trip ... ok
+test containers::tests::dev_deque_retains_boundary_block ... ok
+test codec::tests::dev_md5_rfc1321 ... ok
+test containers::tests::dev_deque_configured_blocks ... ok
+test containers::tests::dev_hash_capacity_sequence ... ok
+test containers::tests::dev_hashset_capacity_bytes_and_hysteresis ... ok
+test containers::tests::dev_internal_list_iterators_and_handles ... ok
+test containers::tests::dev_lru_recency ... ok
+test containers::tests::dev_message_bus_inboxes_and_filtering ... ok
+test extras::tests::dev_extras_safe_range_heap_and_next_id ... ok
+test float_bits::tests::dev_sign_bit_conversions_round_trip ... ok
+test floating_point::tests::dev_floating_point_classification_and_ulps ... ok
+test float_bits::tests::dev_sign_bit_conversions_match_reference_cases ... ok
+test floating_point::tests::dev_floating_point_rounding_and_saturation ... ok
+test ipoint::tests::dev_ipoint_arithmetic_is_saturating ... ok
+test ipoint::tests::dev_ipoint_layout_and_accessors ... ok
+test math::tests::dev_sk_math_limits_and_left_shift ... ok
+test math_priv::tests::dev_math_priv_logs_and_power_of_two ... ok
+test memory::tests::dev_container_capacity_rounding ... ok
+test memory::tests::dev_malloc_and_calloc_contract ... ok
+test memory::tests::dev_raw_ptr_arithmetic_and_comparisons ... ok
+test point::tests::dev_point_accessors_and_conversions ... ok
+test point::tests::dev_point_arithmetic_and_products ... ok
+test point::tests::dev_point_scale_offset_and_normalize ... ok
+test point_priv::tests::dev_point_priv_finite_and_distances ... ok
+test point_priv::tests::dev_point_priv_rotation_and_rect_helpers ... ok
+test ref_cnt::tests::dev_refcnt_adopts_clones_and_disposes_once ... ok
+test ref_cnt::tests::dev_sk_sp_casts_existing_handle_without_ref_changes ... ok
+test ref_cnt::tests::dev_sk_sp_is_one_pointer_and_erases_unsized ... ok
+test ref_cnt::tests::dev_sk_sp_null_and_take ... ok
+test safe32::tests::dev_safe32_saturates_at_sk_limits ... ok
+test safe_math::tests::dev_safe_math_detects_overflow_and_aligns ... ok
+test scalar::tests::dev_float_interp_func_matches_table_walk ... ok
+test scalar::tests::dev_scalar_rounding_and_sign_helpers ... ok
+test scalar::tests::dev_scalars_equal_and_interp ... ok
+test sk_to::tests::dev_sk_to_checks_boundaries ... ok
+test string::tests::dev_string_format_and_split ... ok
+test string::tests::dev_string_scalar_and_resize ... ok
+test string_utf::tests::dev_utf8_and_utf16 ... ok
+test tblocklist::tests::dev_tblocklist_pointer_stability_and_concat ... ok
+test tblocklist::tests::dev_tblocklist_reserve_accounting ... ok
+test tblocklist::tests::dev_tblocklist_runtime_block_size_and_iterators ... ok
+test templates::tests::dev_auto_arrays_expose_null_storage_when_empty ... ok
+test tfits_in::tests::dev_sk_tfits_in_matches_checked_conversion ... ok
+test executor::tests::dev_callback_pools_run_background_priority_work ... ok
+test executor::tests::dev_functional_pools_run_background_priority_work ... ok
+
+test result: ok. 51 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.10s
+
+     Running unittests src/main.rs (target/release/deps/rust_skia-d4ba01dcbc6edd80)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/harness_test.rs (target/release/deps/harness_test-c90fcca87ef25b59)
+
+running 5 tests
+reporter assertions=12 failures=0
+reporter assertions=3 failures=2
+reporter assertions=1 failures=0
+
+thread 'support::tests::reporter_collects_failures_and_evaluates_once' (16043109) panicked at tests/support/mod.rs:25:9:
+2 assertion(s) failed:
+tests/support/mod.rs:49: { evaluations += 1; false }
+tests/support/mod.rs:53: false
+reporter assertions=note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+1 failures=0
+reporter assertions=1 failures=1
+
+thread 'supplemental_registry_excludes_false_condition_and_preserves_head_order' (16043108) panicked at tests/support/mod.rs:25:9:
+1 assertion(s) failed:
+tests/harness_test.rs:19: DEF_CONDITIONAL_TEST executed a test with a false condition
+test TestCtsEnforcement ... ok
+test TestNormal ... ok
+reporter assertions=0 failures=0
+test TestTrueCondition ... ok
+test support::tests::reporter_collects_failures_and_evaluates_once ... ok
+test supplemental_registry_excludes_false_condition_and_preserves_head_order ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/m02_test.rs (target/release/deps/m02_test-f37e1713df482657)
+
+running 122 tests
+reporter assertions=63 failures=0
+reporter assertions=10 failures=0
+reporter assertions=323 failures=0
+reporter assertions=384 failures=0
+reporter assertions=1 failures=0
+reporter assertions=62 failures=0
+reporter assertions=2 failures=0
+test arena::ArenaAlloc ... ok
+reporter assertions=4 failures=0
+policy=0 block=1 expected=test arena::ArenaAllocDestructionOrder ... 128ok actual=
+128
+policy=0 block=2 expected=128 actual=128
+policy=0 block=3 expected=128 actual=128
+policy=0 block=4 expected=128 actual=128
+test arena::ArenaAllocReset ... ok
+policy=1 block=1 expected=256 actual=256
+test arena::SkFibBlockSizes ... reporter assertions=ok6
+ failures=0
+test arena::ArenaAllocIsEmpty ... ok
+reporter assertions=8 failures=0
+policy=1 block=2 expected=384 actual=384
+policy=1 block=3 expected=512 actual=512
+policy=1 block=4 expected=test arena::ArenaAllocUnusualAlignment ... ok
+640 actual=640
+test block::SkBlockAllocatorAlloc ... ok
+policy=2 block=1 expected=128 actual=128
+policy=2 block=2 expected=256 actual=256
+test arena::ArenaAllocWithMultipleBlocks ... ok
+policy=2 block=3 expected=384 actual=384
+policy=2 block=4 expected=640 actual=640
+test block::SkBlockAllocatorAllocatorMetadata ... policy=3 block=1 expected=256 actual=256
+ok
+policy=3 block=2 expected=512 actual=512
+policy=3 block=3 expected=1024 actual=1024
+policy=test block::SkBlockAllocatorIterateAndRelease ... 3ok
+ block=4 expected=2048 actual=2048
+reporter assertions=20 failures=0
+test block::SkBlockAllocatorMetadata ... ok
+reporter assertions=9test block::SkBlockAllocatorGrowthPolicy ...  failures=ok0
+
+reporter assertions=11 failures=0
+reporter assertions=6 failures=0
+reporter assertions=test block::SkBlockAllocatorRelease ... ok
+13 failures=0
+reporter assertions=60 failures=0test block::SkBlockAllocatorStealBlocks ... 
+ok
+reporter assertions=33 failures=0
+test block::SkBlockAllocatorPreallocSize ... ok
+reporter assertions=7 failures=0
+test containers::LRUCacheRandom ... reporter assertions=ok9 failures=0
+
+reporter assertions=14 failures=0
+reporter assertions=216 failures=0
+reporter assertions=1095 failures=0
+reporter assertions=10 failures=0
+reporter assertions=14 failures=0
+test block::SkBlockAllocatorReleaseBlock ... ok
+reporter assertions=6 failures=0
+test block::SkBlockAllocatorRewind ... ok
+reporter assertions=18 failures=0
+test block::SkBlockAllocatorReset ... ok
+reporter assertions=8 failures=0
+test containers::MessageBusSp ... ok
+reporter assertions=3 failures=0
+test block::SkBlockAllocatorResize ... ok
+reporter assertions=20 failures=0
+test block::SkBlockAllocatorOwningBlock ... ok
+test containers::LRUCacheSequential ... ok
+reporter assertions=108 failures=0
+test containers::MessageBus ... ok
+reporter assertions=42 failures=test block::SkBlockAllocatorScratchBlockReserve ... ok
+0
+reporter assertions=368 failures=0
+test containers::MessageBus_SkShouldPostMessageToBus ... ok
+original callback factory=0 lists=2 threads=4 borrowing=false
+test containers::SkSpanBasicTemplateGuide ... ok
+test containers::SkSpanDeduceParam ... ok
+test containers::SkSpanDeduceSize ... original functional factory=ok0
+ lists=2 threads=4 borrowing=false
+test cow::TCopyOnFirstWrite_copy ... ok
+reporter assertions=61 failures=0
+test data::DataTable ... ok
+reporter assertions=2 failures=0
+reporter assertions=340 failures=0
+test data::Data_empty ... ok
+reporter assertions=12 failures=0
+test deque::Deque ... ok
+reporter assertions=8 failures=0test full_string::String ... ok
+
+reporter assertions=test hash::HashFindOrNull ... 1547ok failures=
+0
+reporter assertions=10 failures=0
+reporter assertions=10 failures=0
+test hash::HashMap ... ok
+reporter assertions=8 failures=0
+test hash::HashMapCtor ... ok
+reporter assertions=7 failures=0
+test hash::HashMapCtorOneElem ... ok
+reporter assertions=10 failures=0
+test graph::IncrTopoSort ... ok
+reporter assertions=28 failures=0
+test hash::HashSetCopyCounter ... ok
+reporter assertions=28 failures=0
+test hash::HashMapSwap ... ok
+reporter assertions=28 failures=0
+test hash::HashSetCtor ... ok
+hash expected count=0 capacity=0 actual count=0 bytes=0
+hash expected count=1 capacity=4 actual count=1 bytes=test hash::HashSetCtorOneElem ... 32ok
+
+hash expected count=2 capacity=4 actual count=2 bytes=32
+hash expected count=3 capacity=4test hash::HashSetSwap ...  actual count=ok3
+ bytes=32
+hash expected count=4 capacity=8 actual count=4 bytes=64
+hash expected count=3 capacity=8 actual count=3 bytes=64
+test hash::HashSetWithSkString ... ok
+hash expected count=2 capacity=4 actual count=2 bytes=32
+hash expected count=1test hash::HashSetWithStdString ...  capacity=ok4
+ actual count=1 bytes=32
+hash expected count=test hash::HashSetWithStdStringView ... ok
+0 capacity=4 actual count=0 bytes=32
+hash expected count=1 capacity=4 actual count=1 bytes=test polymorphic::sk_make_sp ... ok32
+
+hash expected count=2 capacity=4 actual count=2 bytes=32
+hash expected count=3 capacity=4 actual count=3 bytes=32
+reporter assertions=4 failures=0
+reporter assertions=96 failures=0
+test raw::RawPtr_CopyAndMove ... ok
+reporter assertions=3 failures=0
+reporter assertions=54 failures=0
+reporter assertions=7 failures=0
+test more_templates::TemplateContainerAPIs ... ok
+reporter assertions=2 failures=0
+reporter assertions=test raw::RawPtr_Assignment ... ok
+32 failures=0
+test more_templates::TemplateContainerAPIsTrim ... ok
+reporter assertions=36 failures=0
+hash expected count=4 capacity=8 actual count=4 bytes=64
+hash expected count=4 capacity=64 actual count=4 bytes=512test data::Data ... 
+okhash expected count=
+4 capacity=64 actual count=4 bytes=512
+hash expected count=4 capacity=128 actual count=4 bytes=1024
+hash expected count=4 capacity=128test raw::RawPtr_DefaultConstructor ...  actual count=ok4
+ bytes=1024
+hash expected count=4 capacity=128 actual count=4 bytes=1024
+hash expected count=test metadata::MetaData ... 4 capacity=128 actual count=4ok
+ bytes=1024
+hash expected count=5 capacity=128 actual count=5 bytes=1024
+hash expected count=6 capacity=128 actual count=6 bytes=1024test llist::InternalLList ... ok
+
+hash expected count=7 capacity=128 actual count=7 bytes=1024
+reporter assertions=3 failures=test raw::RawPtr_DisableDanglingPtrDetection ... 0
+ok
+reporter assertions=14 failures=0
+reporter assertions=2 failures=0
+test raw::RawPtr_DereferenceAndMemberAccess ... ok
+reporter assertions=3 failures=0
+hash expected count=8 capacity=128 actual count=8 bytes=test raw::RawPtr_PointerArithmetic ... 1024ok
+
+hash expected count=7 capacity=64 actual count=7 bytes=512
+reporter assertions=6 failures=0
+test raw::RawPtr_SelfAssignment ... ok
+reporter assertions=2 failures=0
+reporter assertions=12 failures=0
+hash expected count=6test raw::RawPtr_RawPointerConstructor ... ok
+ capacity=32 actual count=6 bytes=256
+hash expected count=5 capacity=16 actual count=5test raw::RawPtr_Stl ...  bytes=ok
+128
+hash expected count=4 capacity=test raw::RawPtr_NullptrConstructor ... 8ok
+ actual count=4 bytes=64
+test raw::RawPtr_RelationalComparisons ... ok
+hash expected count=3 capacity=8 actual count=3 bytes=64
+hash expected count=4 capacity=8 actual count=4 bytes=64
+hash expected count=5 capacity=8 actual count=5 bytes=64
+hash expected count=4 capacity=8 actual count=4 bytes=64
+hash expected count=5 capacity=8 actual count=5 bytes=64
+reporter assertions=3 failures=0
+hash expected count=4 capacity=8 actual count=4 bytes=64
+hash expected count=5 capacity=8 actual count=5 bytes=64
+hash expected count=4 capacity=8 actual count=4 bytes=64
+hash expected count=5 capacity=8 actual count=5 bytes=64
+hash expected count=4 capacity=8 actual count=4 bytes=64
+reporter assertions=4 failures=0
+test raw::RawPtr_Void ... ok
+refcount expected=[0, 0, 0, 0] actual=[0, 0, 0, 0]
+refcount expected=[0, 0, 1, 0] actual=[0, 0, 1, 0]
+test refcount::sk_sp_reset ... refcount expected=ok
+[0, 1, 1, 1] actual=[0, 1, 1, 1]
+refcount expected=[0, 1, 2, 1] actual=[0, 1, 2, 1]
+reporter assertions=29 failures=0
+reporter assertions=7 failures=0
+reporter assertions=11 failures=0
+reporter assertions=3 failures=0
+test strings::String_SkStrSplit_All ... hash expected count=ok5
+ capacity=8 actual count=5 bytes=64
+hash expected count=4 capacity=8 actual count=4 bytes=64
+hash expected count=5 capacity=8 actual count=5 bytes=64
+hash expected count=test raw::RawPtr_Upcasting ... ok
+4 capacity=8 actual count=4 bytes=64
+hash expected count=5test strings::String_SkStrSplit ...  capacity=8 actual count=5 bytes=64
+hash expected count=4 capacity=ok8 actual count=4 bytes=
+64
+hash expected count=5 capacity=8 actual count=5test refcount::sk_sp_ref ...  bytes=ok64
+
+hash expected count=4 capacity=8 actual count=4 bytes=64
+hash expected count=5 capacity=8 actual count=5 bytes=64
+hash expected count=4 capacity=8 actual count=4 bytes=64
+hash expected count=5 capacity=8 actual count=5 bytes=64
+hash expected count=4 capacity=8 actual count=4 bytes=64
+hash expected count=3 capacity=8 actual count=3 bytes=64
+hash expected count=4 capacity=8 actual count=4 bytes=64
+hash expected count=3 capacity=8 actual count=3 bytes=64
+hash expected count=4 capacity=8 actual count=4 bytes=64
+reporter assertions=11 failures=0
+refcount expected=[1, 1, 2, 1] actual=[1, 1, 2, 1]
+refcount expected=[2, 1, 2, 1] actual=[2test raw::RawPtr_EqualityComparisons ... , ok1
+, 2, 1]
+refcount expected=[2, 1, 2, 1] actual=[2, 1, 2, 1]
+refcount expected=[2, 1test strings::String_Threaded ... ok
+, 2, 1] actual=[2, 1, 2, 1]
+test strings::String_huge ... ok
+refcount expected=[2, 4, 2, 2] actual=[2, 4, 2, 2]
+hash expected count=3 capacity=8 actual count=3 bytes=64
+hash expected count=4 capacity=8 actual count=4 bytes=64
+hash expected count=3 capacity=8 actual count=3 bytes=64
+hash expected count=4 capacity=8 actual count=4 bytes=64
+reporter assertions=6005 failures=0
+reporter assertions=3 failures=0
+test strings::String_VAList_overflow ... ok
+reporter assertions=8006 failures=0
+reporter assertions=4 failures=0
+test strings::String_fromUTF16 ... okreporter assertions=
+4 failures=0
+hash expected count=3 capacity=8 actual count=3 bytes=64
+hash expected count=4 capacity=8 actual count=4test strings::String_overflow ...  bytes=64
+hash expected count=3 capacity=8 actual count=3 bytes=ok64
+
+hash expected count=4 capacity=8test strings::String_resize_after_assignment ...  actual count=ok4
+ bytes=64
+hash expected count=3 capacity=8 actual count=test strings::String_resize_after_copy_construction ... 3ok bytes=
+64
+hash expected count=4 capacity=8 actual count=4 bytes=64
+external storage range=0x16d162190..0x16d162578 actual=0x16d162190
+reporter assertions=3 failures=0
+reporter assertions=1 failures=0
+reporter assertions=2 failures=0
+reporter assertions=2 failures=0
+reporter assertions=test strings::String_VAList ... 3ok failures=
+0
+refcount expected=[0, 0, 0, 0] actual=[0, 0, 0, 0]
+test supplemental::supplemental_arena_external_storage ... ok
+checksum bytes=[] seed=0 expected=3804095577 actual=3804095577
+checksum bytes=[] seed=1 expected=638533687 actual=638533687
+checksum bytes=test strings::String_resize_shrink ... [] seed=4294967295ok expected=
+2821084191 actual=2821084191
+checksum bytes=[97] seed=0 expected=164791601 actual=164791601
+checksum bytes=[97] seed=1 expected=459268265 actual=test strings::String_resize_to_nothing ... 459268265ok
+checksum bytes=[97] seed=4294967295 expected=4117487878 actual=4117487878
+empty data release expected=1 actual=1
+checksum bytes=[97, 98
+, 99] seed=0 expected=3411111026 actual=3411111026
+checksum bytes=[97, 98, 99] seed=1 expected=2184336823 actual=2184336823
+checksum bytes=[97, 98, test strings::String_resize_grow ... 99ok]
+ seed=4294967295 expected=1582327983 actual=1582327983
+checksum bytes=[97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122] seed=0 expected=517385426 actual=517385426
+checksum bytes=[97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122] seed=1 expected=3575925044 actual=3575925044
+checksum bytes=[97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122] seed=4294967295 expected=3468900993 actual=3468900993
+reporter assertions=12 failures=0
+refcount expected=[0, 0, 1, 0] actual=[0, 0, 1, 0]
+refcount expected=[test supplemental::supplemental_checksum_reference_vectors ... 0, 1, 1, 1] actual=[0, 1, 1, 1ok]
+
+refcount expected=[0, 0, 1, 0] actual=[0, 0, 1, 0]
+packed input=[] expected=None actual=None
+packed input=[fe] expected=None actual=None
+reporter assertions=3 failures=0
+packed input=[fe, 01] expected=None actual=None
+reporter assertions=13 failures=0
+refcount expected=test supplemental::supplemental_data_overflow_rejection ... [ok0
+, 1, 1, 1] actual=[0, 1, 1, 1]
+refcount expected=[0, 0, 1, 0] actual=[0, 0, 1, 0]
+test supplemental::supplemental_fake_streams ... okrefcount expected=
+[0, 0, 1, 0] actual=[0, 0, 1, 0]
+refcount expected=[0, 1, 1, 1] actual=[0, 1, 1, 1]
+refcount expected=[1, 0, 1, 0] actual=[1, 0, 1, 0]
+refcount expected=[2, 0, 1, 0] actual=[2, 0, 1, 0]
+refcount expected=[2, 3, 1, 1] actual=[2, 3, 1, 1]
+refcount expected=[0, 0, 1, 0] actual=[0, 0, 1, 0]
+refcount expected=[1, 0, 1, 0] actual=[1, 0, 1, 0]
+refcount expected=[1, 1, 1, 0] actual=[1, 1, 1, 0]
+refcount expected=[1, 2, 1, 1] actual=[1, 2, 1, 1]
+reporter assertions=123 failures=0
+hash expected count=3 capacity=8 actual count=3 bytes=64
+hash expected count=4 capacity=8 actual count=4 bytes=64test smart_pointer::sk_sp ... ok
+
+hash expected count=3 capacity=8 actual count=3 bytes=64
+reporter assertions=14 failures=0
+factory 0 workers=4 allow_borrowing=false completed_without_borrow=true
+clone_as expected base=0x600000c91698 value=42 actual=0xtest supplemental::supplemental_stream_boundaries_and_byte_order ... 600000c91698ok value=
+42
+cast expected base=0x600000c91698 value=42 actual=0x600000c91698 value=42
+reporter assertions=4 failures=0
+packed input=[ff, 01, 02, 03] expected=None actual=None
+reporter assertions=4 failures=0
+RefCntTest.cpp:190 owning-pointer width expected=8 actual=8
+test supplemental::supplemental_smart_pointer_projected_base ... reporter assertions=ok1
+ failures=0
+reporter assertions=1 failures=0
+hash expected count=4 capacity=8 actual count=4 bytes=64
+hash expected count=3 capacity=8 actual count=test supplemental::supplemental_packed_truncation ... 3ok bytes=
+64
+reporter assertions=3 failures=2
+
+thread 'support::tests::reporter_collects_failures_and_evaluates_once' (16043229) panicked at tests/support/mod.rs:25:9:
+2 assertion(s) failed:
+tests/support/mod.rs:49: { evaluations += 1; false }
+tests/support/mod.rs:53: false
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+without-copy expected=0x104227ac0 actual=0x104227ac0
+reporter assertions=1 failures=0
+test supplemental::supplemental_smart_pointer_size ... ok
+hash expected count=4 capacity=8 actual count=4 bytes=64
+hash expected count=3 capacity=8 actual count=3 bytes=64
+hash expected count=2 capacity=4 actual count=2 bytes=32
+hash expected count=3 capacity=4 actual count=test supplemental::supplemental_empty_data_release ... 3ok bytes=32
+hash expected count=2 capacity=4 actual count=2 bytes=32
+
+hash expected count=3 capacity=4 actual count=3 bytes=32
+test supplemental::supplemental_without_copy_identity ... ok
+hash expected count=2 capacity=4 actual count=2 bytes=32
+hash expected count=3 capacity=4 actual count=3 bytes=32
+hash expected count=2 capacity=4 actual count=2 bytes=32
+reporter assertions=10 failures=0
+reporter assertions=0 failures=0
+factory 1 workers=4 allow_borrowing=false completed_without_borrow=true
+test templates::AutoReallocToZero ... reserve N=1 initial=148 reserved=348 min=348
+ok
+reserve N=2 initial=168 reserved=408 min=408
+reporter assertions=2 failures=0
+reporter assertions=28 failures=0
+test support::tests::reporter_collects_failures_and_evaluates_once ... ok
+CountUTF8 input=[] expected=0 actual=0
+CountUTF8 input=[58] expected=1 actual=1
+CountUTF8 input=[58, test templates::AutoTMallocSelfMove ... ok
+58] expected=2 actual=2
+test templates::Templates ... ok
+CountUTF8 input=[c2, a1] expected=1 actual=1
+reserve N=3 initial=188 reserved=468 min=468
+factory 2 workers=4 allow_borrowing=false completed_without_borrow=true
+reporter assertions=33 failures=0
+reserve N=4 initial=208 reserved=528 min=528
+hash expected count=3 capacity=4 actual count=3 bytes=32
+hash expected count=2 capacity=4 actual count=2 bytes=32
+hash expected count=3 capacity=4 actual count=3 bytes=32
+hash expected count=2 capacity=4 actual count=2 bytes=32
+hash expected count=test utf::SkUTF_UTF8 ... 3ok capacity=
+4 actual count=3 bytes=32
+reporter assertions=20 failures=0
+reporter assertions=3 failures=0
+reserve N=5 initial=228 reserved=588 min=588
+test utf::SkUTF_UTF16 ... ok
+MD5 input=[] expected=[d4, 1d, 8c, d9, 8f, 00, b2, 04, e9, 80, 09, 98, ec, f8test supplemental::supplemental_executor_background_workers ... , 42, 7e] actual=[d4, 1d, 8c, d9, 8f, ok
+00, b2, 04, e9, 80, 09, 98, ec, f8, 42, 7e]
+MD5 input=[] expected=[d4, 1d, 8c, d9, 8f, 00, b2, 04, e9, 80, 09, 98, ec, f8, 42, 7e] actual=[d4, 1d, 8c, d9, 8f, 00, b2, 04, e9, 80, 09, 98, ec, f8, 42, 7e]
+MD5 input=[97] expected=[0c, c1, 75, b9, c0, f1, b6, a8, 31, c3, 99, e2, 69, 77, 26, 61] actual=[0c, c1, 75, b9, c0, f1, b6, a8, 31, c3, 99, e2, 69, 77, 26, 61]
+MD5 input=[97] expected=[0c, c1, 75, b9, c0, f1, b6, a8, 31, c3, 99, e2, 69, 77, 26, 61] actual=[0c, c1, 75, b9, c0, f1, b6, a8, 31, c3, 99, e2, 69, 77, 26, 61]
+MD5 input=[97, 98, 99] expected=[90, 01, 50, 98, 3c, d2, 4f, b0, d6, 96, 3f, 7d, 28, e1, 7f, 72] actual=[90, 01, 50, 98, 3c, d2, 4f, b0, d6, 96, 3f, 7d, 28, e1, 7f, 72]
+MD5 input=[97, 98, 99] expected=[90, 01, 50, 98, 3c, d2, 4f, b0, d6, 96, 3f, 7d, 28, e1, 7f, 72] actual=[90, 01, 50, 98, 3c, d2, 4f, b0, d6, 96, 3f, 7d, 28, e1, 7f, 72]
+MD5 input=[109, 101, 115, 115, 97, 103, 101, 32, 100, 105, 103, 101, 115, 116] expected=[f9, 6b, 69, 7d, 7c, b7, 93, 8d, 52, 5a, 2f, 31, aa, f1, 61, d0] actual=[f9, 6b, 69, 7d, 7c, b7, 93, 8d, 52, 5a, 2f, 31, aa, f1, 61, d0]
+MD5 input=[109, 101, 115, 115, 97, 103, 101, 32, 100, 105, 103, 101, 115, 116] expected=[f9, 6b, 69, 7d, 7c, b7, 93, 8d, 52, 5a, 2f, 31, aa, f1, 61, d0] actual=[f9, 6b, 69, 7d, 7c, b7, 93, 8d, 52, 5a, 2f, 31, aa, f1, 61, d0]
+MD5 input=[97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122] expected=[c3, fc, d3, d7, 61, 92, e4, 00, 7d, fb, 49, 6c, ca, 67, e1, 3b] actual=[c3, fc, d3, d7, 61, 92, e4, 00, 7d, fb, 49, 6c, ca, 67, e1, 3b]
+MD5 input=[97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122] expected=[c3, fc, d3, d7, 61, 92, e4, 00, 7d, fb, 49, 6c, ca, 67, e1, 3b] actual=[c3, fc, d3, d7, 61, 92, e4, 00, 7d, fb, 49, 6c, ca, 67, e1, 3b]
+MD5 input=[65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57] expected=[d1, 74, ab, 98, d2, 77, d9, f5, a5, 61, 1c, 2c, 9f, 41, 9d, 9f] actual=[d1, 74, ab, 98, d2, 77, d9, f5, a5, 61, 1c, 2c, 9f, 41, 9d, 9f]
+MD5 input=[65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57] expected=[d1, 74, ab, 98, d2, 77, d9, f5, a5, 61, 1c, 2c, 9f, 41, 9d, 9f] actual=[d1, 74, ab, 98, d2, 77, d9, f5, a5, 61, 1c, 2c, 9f, 41, 9d, 9f]
+MD5 input=[49, 50, 51, 52, 53, 54, 55, 56, 57, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 48] expected=[57, ed, f4, a2, 2b, e3, c9, 55, ac, 49, da, 2e, 21, 07, b6, 7a] actual=[57, ed, f4, a2, 2b, e3, c9, 55, ac, 49, da, 2e, 21, 07, b6, 7a]
+MD5 input=[49, 50, 51, 52, 53, 54, 55, 56, 57, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 48] expected=[57, ed, f4, a2, 2b, e3, c9, 55, ac, 49, da, 2e, 21, 07, b6, 7a] actual=[57, ed, f4, a2, 2b, e3, c9, 55, ac, 49, da, 2e, 21, 07, b6, 7a]
+reporter assertions=14 failures=0
+hash expected count=2 capacity=4 actual count=2 bytes=32
+hash expected count=test utilities::MD5 ... 3ok capacity=
+4 actual count=3 bytes=32
+hash expected count=2 capacity=4 actual count=2 bytes=32
+hash expected count=3 capacity=4 actual count=3 bytes=32
+hash expected count=2 capacity=4 actual count=2 bytes=32
+hash expected count=3 capacity=4 actual count=3 bytes=32
+test utilities::SkFree_SafeToPassNull ... ok
+hash expected count=2 capacity=4 actual count=2 bytes=32
+hash expected count=3 capacity=4 actual count=3 bytes=32
+hash expected count=2 capacity=4 actual count=2 bytes=32
+hash expected count=1 capacity=4 actual count=1 bytes=32
+CountUTF8 input=[test utilities::SkMalloc_DataIsWriteable ... ok
+58, c2, a1] expected=2 actual=2
+CountUTF8 input=[58, 58, c2, a1] expected=3 actual=3
+CountUTF8 input=[e1, a1, a1] expected=1 actual=1
+CountUTF8 input=[58, e1, a1, a1] expected=2 actual=2
+CountUTF8 input=[58, 58, e1, a1, a1] expected=3 actual=3
+CountUTF8 input=[f0, a1, a1, a1] expected=1 actual=1
+CountUTF8 input=[58, f0, a1, a1, a1] expected=2 actual=2
+hash expected count=2 capacity=4 actual count=2 bytes=32
+reporter assertions=200 failures=0
+hash expected count=1 capacity=4 actual count=1 bytes=32
+hash expected count=2 capacity=4 actual count=2 bytes=32
+reporter assertions=1 failures=0
+test utilities::SkCalloc_DataIsZeroInitializedAndWriteable ... ok
+CountUTF8 input=[58, 58, f0, a1, a1, a1] expected=3 actual=3
+CountUTF8 input=[fc]test utilities::SkOnce_Multithreaded ... ok
+ expected=-1 actual=-1
+CountUTF8 input=[fc, a1] expected=-1 actual=-1
+CountUTF8 input=[fc, a1, a1] expected=-1 actual=-1
+CountUTF8 input=[fc, a1, a1, a1] expected=-1 actual=-1
+CountUTF8 input=[c2] expected=-1 actual=-1
+reporter assertions=9352 failures=0
+reporter assertions=1 failures=0
+reporter assertions=192 failures=0
+test tblocklist::SkTBlockList ... ok
+ToUTF8(-1) expected=0 actual=0
+test utilities::SkOnce_Singlethreaded ... ok
+ToUTF8(-1) expected=0 actual=0
+reporter assertions=test utilities::SkContainerAllocatorBasic ... 26ok failures=
+0
+test utilities::SkSharedMutexBasic ... ok
+hash expected count=1 capacity=4test utf::SkUTF_NextUTF8_ToUTF8 ...  actual count=ok1
+ bytes=32
+hash expected count=2 capacity=4 actual count=2 bytes=32
+hash expected count=1 capacity=4 actual count=1 bytes=32
+reporter assertions=15 failures=0
+CountUTF8 input=[a1] expected=-1 actual=-1
+CountUTF8 input=[a1, a1] expected=-1 actual=-1
+CountUTF8 input=[e1, a1] expected=-1 actual=-1
+CountUTF8 input=[a1, a1, a1] expected=-1 actual=-1
+test utilities::SkStringViewContains ... ok
+CountUTF8 input=[f0, a1] expected=-1 actual=-1
+CountUTF8 input=[a1, a1, a1, a1] expected=-1 actual=-1
+reporter assertions=23 failures=0
+reporter assertions=1 failures=0
+test utf::SkUTF_CountUTF8 ... ok
+test utilities::SkOnce_NoArg ... ok
+reporter assertions=200 failures=0
+reporter assertions=29 failures=0
+hash expected count=2 capacity=4 actual count=2 bytes=32
+hash expected count=1test utilities::memory_calloc ...  capacity=ok
+test utilities::SkStringViewStartsAndEnds ... ok
+4 actual count=1 bytes=32
+hash expected count=2 capacity=4 actual count=2 bytes=32
+hash expected count=1 capacity=4 actual count=1 bytes=32
+hash expected count=2 capacity=4 actual count=2 bytes=32
+hash expected count=1 capacity=4 actual count=1 bytes=32
+hash expected count=2 capacity=4 actual count=2 bytes=32
+hash expected count=1 capacity=4 actual count=1 bytes=32
+hash expected count=2 capacity=4 actual count=2 bytes=32
+hash expected count=1 capacity=4 actual count=1 bytes=32
+hash expected count=2 capacity=4 actual count=2 bytes=32
+hash expected count=1 capacity=4 actual count=1 bytes=32
+hash expected count=2 capacity=4 actual count=2 bytes=32
+hash expected count=1 capacity=4 actual count=1 bytes=32
+reporter assertions=224 failures=0
+reporter assertions=9 failures=0
+reporter assertions=11 failures=0
+test hash::HashTableGrowsAndShrinks ... ok
+test utilities::TLazy_copy ... ok
+test utilities::SkRealloc_DataIsWriteableAndEventuallyFreed ... ok
+reporter assertions=5400000 failures=0
+test utilities::SkSharedMutexMultiThreaded ... ok
+original callback factory=1 lists=2 threads=4 borrowing=false
+original functional factory=1 lists=2 threads=4 borrowing=false
+reporter assertions=2 failures=0
+test refcount::RefCnt ... ok
+original functional factory=2 lists=1 threads=4 borrowing=false
+original callback factory=2 lists=1 threads=4 borrowing=false
+reporter assertions=6 failures=0
+test executor::ExecutorTest_StdFunction ... ok
+reporter assertions=6 failures=0
+test executor::ExecutorTest_Callback ... ok
+
+test result: ok. 122 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.10s
+
+     Running tests/point_test.rs (target/release/deps/point_test-6fd9c0c94f3ed5ba)
+
+running 3 tests
+reporter assertions=8 failures=0
+reporter assertions=132 failures=0
+reporter assertions=3 failures=2
+
+thread 'support::tests::reporter_collects_failures_and_evaluates_once' (16043283) panicked at tests/support/mod.rs:25:9:
+2 assertion(s) failed:
+tests/support/mod.rs:49: { evaluations += 1; false }
+tests/support/mod.rs:53: false
+test Point_setLengthFast ... ok
+test Point ... ok
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+reporter assertions=0 failures=0
+test support::tests::reporter_collects_failures_and_evaluates_once ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/scalar_test.rs (target/release/deps/scalar_test-3965b042505793cf)
+
+running 2 tests
+reporter assertions=661 failures=0
+reporter assertions=3 failures=2
+
+thread 'support::tests::reporter_collects_failures_and_evaluates_once' (16043286) panicked at tests/support/mod.rs:25:9:
+2 assertion(s) failed:
+tests/support/mod.rs:49: { evaluations += 1; false }
+tests/support/mod.rs:53: false
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+test Scalar ... ok
+reporter assertions=0 failures=0
+test support::tests::reporter_collects_failures_and_evaluates_once ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/supplemental_m01.rs (target/release/deps/supplemental_m01-789901ed82ea5d7e)
+
+running 5 tests
+test supplemental_saturation_rounding_and_midpoint ... ok
+test supplemental_float_bit_encodings ... ok
+test supplemental_interpolation_and_equality ... ok
+test supplemental_ulp_boundaries ... ok
+test supplemental_point_distances_and_saturation ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests rust_skia
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+EXIT: 0

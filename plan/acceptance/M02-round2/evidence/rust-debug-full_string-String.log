@@ -1,0 +1,27 @@
+COMMAND: ['/Volumes/Data/Users/paul/development/src/github/rust-skia/target/debug/deps/m02_test-a997dd6914494635', 'full_string::String', '--exact', '--nocapture']
+
+running 1 test
+received <0.5f> expected <0.5>
+received <3.40282347e+38f> expected <3.4028235e+38>
+received <-3.40282347e+38f> expected <-3.4028235e+38>
+reporter assertions=64 failures=5
+
+thread 'full_string::String' (15868397) panicked at tests/support/mod.rs:25:9:
+5 assertion(s) failed:
+tests/m02/full_string.rs:43: a.contains("")
+tests/m02/full_string.rs:154: false
+tests/m02/full_string.rs:154: false
+tests/m02/full_string.rs:151: a.size() <= 15
+tests/m02/full_string.rs:154: false
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+test full_string::String ... FAILED
+
+failures:
+
+failures:
+    full_string::String
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 117 filtered out; finished in 0.00s
+
+
+EXIT: 101

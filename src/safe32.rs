@@ -21,6 +21,26 @@ pub const fn sat_sub(a: i32, b: i32) -> i32 {
     pin_to_s32(a as i64 - b as i64)
 }
 
+/// C++ `Sk32_can_overflow_add` returns the wrapped sum; despite its name it is
+/// not a predicate. Used by `SkRect::width()`.
+pub const fn sk32_can_overflow_add(a: i32, b: i32) -> i32 {
+    (a as u32).wrapping_add(b as u32) as i32
+}
+
+/// C++ `Sk32_can_overflow_sub` returns the wrapped difference.
+pub const fn sk32_can_overflow_sub(a: i32, b: i32) -> i32 {
+    (a as u32).wrapping_sub(b as u32) as i32
+}
+
+pub const fn sk_abs32(value: i32) -> i32 {
+    debug_assert!(value != crate::math::SK_NAN32);
+    if value < 0 {
+        value.wrapping_neg()
+    } else {
+        value
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;

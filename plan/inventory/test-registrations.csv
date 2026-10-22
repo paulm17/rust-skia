@@ -132,13 +132,13 @@ tests/AnnotationTest.cpp,74,DEF_TEST,Annotation_PdfDefineNamedDestination,27,CPU
 tests/AnnotationTest.cpp,97,DEF_TEST,Annotation_SvgLink,27,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/AnnotationTest.cpp,114,DEF_TEST,Annotation_SvgLinkNamedDestination,27,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/ApplyGammaTest.cpp,107,DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS,ApplyGamma,38,Ganesh,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/ArenaAllocTest.cpp,19,DEF_TEST,ArenaAlloc,2,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/ArenaAllocTest.cpp,115,DEF_TEST,ArenaAllocReset,2,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/ArenaAllocTest.cpp,122,DEF_TEST,ArenaAllocIsEmpty,2,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/ArenaAllocTest.cpp,143,DEF_TEST,ArenaAllocWithMultipleBlocks,2,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/ArenaAllocTest.cpp,165,DEF_TEST,ArenaAllocDestructionOrder,2,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/ArenaAllocTest.cpp,202,DEF_TEST,ArenaAllocUnusualAlignment,2,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/ArenaAllocTest.cpp,211,DEF_TEST,SkFibBlockSizes,2,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
+tests/ArenaAllocTest.cpp,19,DEF_TEST,ArenaAlloc,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
+tests/ArenaAllocTest.cpp,115,DEF_TEST,ArenaAllocReset,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
+tests/ArenaAllocTest.cpp,122,DEF_TEST,ArenaAllocIsEmpty,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
+tests/ArenaAllocTest.cpp,143,DEF_TEST,ArenaAllocWithMultipleBlocks,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
+tests/ArenaAllocTest.cpp,165,DEF_TEST,ArenaAllocDestructionOrder,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
+tests/ArenaAllocTest.cpp,202,DEF_TEST,ArenaAllocUnusualAlignment,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
+tests/ArenaAllocTest.cpp,211,DEF_TEST,SkFibBlockSizes,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
 tests/AsADashTest.cpp,19,DEF_TEST,AsADashTest_noneDash,8,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/AsADashTest.cpp,27,DEF_TEST,AsADashTest_nullInfo,8,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/AsADashTest.cpp,36,DEF_TEST,AsADashTest_usingDash,8,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
@@ -173,9 +173,9 @@ tests/BigImageTest.cpp,578,DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS,BigImageTest_G
 tests/BigImageTest.cpp,588,DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS,TiledDrawCacheTest_Ganesh,38,Ganesh,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/BigImageTest.cpp,602,DEF_GRAPHITE_TEST_FOR_RENDERING_CONTEXTS,BigImageTest_Graphite,38,Graphite,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/BigImageTest.cpp,612,DEF_GRAPHITE_TEST_FOR_RENDERING_CONTEXTS,TiledDrawCacheTest_Graphite,38,Graphite,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/BitSetTest.cpp,14,DEF_TEST,BitSet,3,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/BitSetTest.cpp,65,DEF_TEST,BitSetComparisonSizeMatching,3,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/BitSetTest.cpp,81,DEF_TEST,BitSetComparisonBitMatching,3,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
+tests/BitSetTest.cpp,14,DEF_TEST,BitSet,3,CPU,PASS,M03 accepted: original registration passes in debug+release; see plan/acceptance/M03.md
+tests/BitSetTest.cpp,65,DEF_TEST,BitSetComparisonSizeMatching,3,CPU,PASS,M03 accepted: original registration passes in debug+release; see plan/acceptance/M03.md
+tests/BitSetTest.cpp,81,DEF_TEST,BitSetComparisonBitMatching,3,CPU,PASS,M03 accepted: original registration passes in debug+release; see plan/acceptance/M03.md
 tests/BitmapCopyTest.cpp,89,DEF_TEST,BitmapCopy_extractSubset,12,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/BitmapCopyTest.cpp,164,DEF_TEST,BitmapReadPixels,12,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/BitmapGetColorTest.cpp,21,DEF_TEST,GetColor,11,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
@@ -248,11 +248,11 @@ tests/CappedHairlinesTest.cpp,185,DEF_TEST,DrawAntialiasHairline_SquareCappedHal
 tests/CappedHairlinesTest.cpp,190,DEF_TEST,DrawAntialiasHairline_RoundCappedHalfPixelOffsetClosedContour_SinglePixelWideOutput,14,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/CappedHairlinesTest.cpp,195,DEF_TEST,DrawAntialiasHairline_ButtCappedHalfPixelOffsetClosedContour_SinglePixelWideOutput,14,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/CharToGlyphCache.cpp,30,DEF_TEST,chartoglyph_cache,18,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/ChecksumTest.cpp,21,DEF_TEST,Checksum,3,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/ChecksumTest.cpp,45,DEF_TEST,GoodHash,3,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/ChecksumTest.cpp,51,DEF_TEST,ChecksumCollisions,3,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/ChecksumTest.cpp,79,DEF_TEST,ChecksumConsistent,3,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/ChecksumTest.cpp,98,DEF_TEST,ChecksumStrings,3,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
+tests/ChecksumTest.cpp,21,DEF_TEST,Checksum,3,CPU,PASS,M03 accepted: original registration passes in debug+release; see plan/acceptance/M03.md
+tests/ChecksumTest.cpp,45,DEF_TEST,GoodHash,3,CPU,PASS,M03 accepted: original registration passes in debug+release; see plan/acceptance/M03.md
+tests/ChecksumTest.cpp,51,DEF_TEST,ChecksumCollisions,3,CPU,PASS,M03 accepted: original registration passes in debug+release; see plan/acceptance/M03.md
+tests/ChecksumTest.cpp,79,DEF_TEST,ChecksumConsistent,3,CPU,PASS,M03 accepted: original registration passes in debug+release; see plan/acceptance/M03.md
+tests/ChecksumTest.cpp,98,DEF_TEST,ChecksumStrings,3,CPU,PASS,M03 accepted: original registration passes in debug+release; see plan/acceptance/M03.md
 tests/ClearTest.cpp,338,DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS,ClearOp,38,Ganesh,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/ClearTest.cpp,404,DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS,FullScreenClearWithLayers,38,Ganesh,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/ClipCubicTest.cpp,80,DEF_TEST,ClipCubic,14,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
@@ -391,9 +391,9 @@ tests/DashPathEffectTest.cpp,100,DEF_TEST,DashPath_bug4871,14,CPU,pending-runtim
 tests/DashPathEffectTest.cpp,118,DEF_TEST,DashPathEffectTest_asPoints_limit,14,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/DashPathEffectTest.cpp,133,DEF_TEST,DashCrazy_crbug_875494,14,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/DashPathEffectTestGanesh.cpp,20,DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS,DashPathEffectTest_2PiInterval,38,Ganesh,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/DataRefTest.cpp,113,DEF_TEST,DataTable,2,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/DataRefTest.cpp,260,DEF_TEST,Data,2,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/DataRefTest.cpp,289,DEF_TEST,Data_empty,2,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
+tests/DataRefTest.cpp,113,DEF_TEST,DataTable,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
+tests/DataRefTest.cpp,260,DEF_TEST,Data,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
+tests/DataRefTest.cpp,289,DEF_TEST,Data_empty,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
 tests/DebugLayerManagerTest.cpp,87,DEF_TEST,DebugLayerManagerTest,40,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/DefaultPathRendererTest.cpp,139,DEF_GANESH_TEST_FOR_CONTEXTS,DefaultPathRendererTest,38,Ganesh,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/DeferredDisplayListTest.cpp,397,DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS,DDLOperatorEqTest,38,Ganesh,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
@@ -411,7 +411,7 @@ tests/DeferredDisplayListTest.cpp,1183,DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS,DD
 tests/DeferredDisplayListTest.cpp,1262,DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS,DDLMultipleDDLs,38,Ganesh,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/DeferredDisplayListTest.cpp,1325,DEF_GANESH_TEST_FOR_GL_CONTEXT,DDLTextureFlagsTest,34,Ganesh,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/DeferredDisplayListTest.cpp,1377,DEF_GANESH_TEST_FOR_GL_CONTEXT,DDLCompatibilityTest,34,Ganesh,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/DequeTest.cpp,164,DEF_TEST,Deque,2,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
+tests/DequeTest.cpp,164,DEF_TEST,Deque,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
 tests/DescriptorTest.cpp,29,DEF_TEST,Descriptor_empty,22,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/DescriptorTest.cpp,37,DEF_TEST,Descriptor_valid_simple,22,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/DescriptorTest.cpp,51,DEF_TEST,Descriptor_valid_simple_extra_space,22,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
@@ -462,8 +462,8 @@ tests/EncodeTest.cpp,785,DEF_TEST,Encode_Alpha,17,CPU,pending-runtime-discovery,
 tests/EncodeTest.cpp,818,DEF_TEST,Encode_jpeg_blend_to_black,17,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/EncodeTest.cpp,958,DEF_TEST,Encode_HdrMetadata,17,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/EncodedInfoTest.cpp,22,DEF_TEST,AlphaEncodedInfo,17,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/ExecutorTest.cpp,202,DEF_TEST,ExecutorTest_StdFunction,2,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/ExecutorTest.cpp,206,DEF_TEST,ExecutorTest_Callback,2,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
+tests/ExecutorTest.cpp,202,DEF_TEST,ExecutorTest_StdFunction,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
+tests/ExecutorTest.cpp,206,DEF_TEST,ExecutorTest_Callback,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
 tests/ExifTest.cpp,24,DEF_TEST,ExifOrientation,17,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/ExifTest.cpp,42,DEF_TEST,GetImageRespectsExif,17,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/ExifTest.cpp,65,DEF_TEST,ExifOrientationInExif,17,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
@@ -517,20 +517,20 @@ tests/FilterResultTest.cpp,2575,DEF_TEST_SUITE,RescaleWithTransform,35,CPU,pendi
 tests/FilterResultTest.cpp,2676,DEF_TEST_SUITE,RescaleWithColorFilter,35,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/FilterResultTest.cpp,2722,DEF_TEST_SUITE,MakeFromImage,35,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/FindCubicConvex180ChopsTest.cpp,76,DEF_TEST,FindCubicConvex180Chops,31,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/FitsInTest.cpp,23,DEF_TEST,FitsIn,3,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
+tests/FitsInTest.cpp,23,DEF_TEST,FitsIn,3,CPU,PASS,M03 accepted: original registration passes in debug+release; see plan/acceptance/M03.md
 tests/FlattenDrawableTest.cpp,222,DEF_TEST,FlattenDrawable,22,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/FlattenDrawableTest.cpp,263,DEF_TEST,FlattenRecordedDrawable,22,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/FlattenDrawableTest.cpp,302,DEF_TEST,Flattenable_EmptyDeserialze,22,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/FlattenableFactoryToName.cpp,33,DEF_TEST,FlattenableFactoryToName,22,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/FlattenableNameToFactory.cpp,11,DEF_TEST,FlattenableNameToFactory,22,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/Float16Test.cpp,29,DEF_TEST,FloatToHalf,3,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/Float16Test.cpp,119,DEF_TEST,FloatToHalf_Constants,3,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/Float16Test.cpp,129,DEF_TEST,HalfToFloat,3,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/FloatingPointTest.cpp,20,DEF_TEST,DoubleNearlyZero,3,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/FloatingPointTest.cpp,47,DEF_TEST,DoubleNearlyEqualUlps,3,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/FloatingPointTest.cpp,111,DEF_TEST,BitCastDoubleRoundTrip,3,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/FloatingPointTest.cpp,133,DEF_TEST,FMA,3,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/FloatingPointTest.cpp,152,DEF_TEST,Midpoint,3,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
+tests/Float16Test.cpp,29,DEF_TEST,FloatToHalf,3,CPU,PASS,M03 accepted: original registration passes in debug+release; see plan/acceptance/M03.md
+tests/Float16Test.cpp,119,DEF_TEST,FloatToHalf_Constants,3,CPU,PASS,M03 accepted: original registration passes in debug+release; see plan/acceptance/M03.md
+tests/Float16Test.cpp,129,DEF_TEST,HalfToFloat,3,CPU,PASS,M03 accepted: original registration passes in debug+release; see plan/acceptance/M03.md
+tests/FloatingPointTest.cpp,20,DEF_TEST,DoubleNearlyZero,3,CPU,PASS,M03 accepted: original registration passes in debug+release; see plan/acceptance/M03.md
+tests/FloatingPointTest.cpp,47,DEF_TEST,DoubleNearlyEqualUlps,3,CPU,PASS,M03 accepted: original registration passes in debug+release; see plan/acceptance/M03.md
+tests/FloatingPointTest.cpp,111,DEF_TEST,BitCastDoubleRoundTrip,3,CPU,PASS,M03 accepted: original registration passes in debug+release; see plan/acceptance/M03.md
+tests/FloatingPointTest.cpp,133,DEF_TEST,FMA,3,CPU,PASS,M03 accepted: original registration passes in debug+release; see plan/acceptance/M03.md
+tests/FloatingPointTest.cpp,152,DEF_TEST,Midpoint,3,CPU,PASS,M03 accepted: original registration passes in debug+release; see plan/acceptance/M03.md
 tests/FloatingPointTextureTest.cpp,90,DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS,HalfFloatAlphaTextureTest,38,Ganesh,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/FloatingPointTextureTest.cpp,103,DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS,HalfFloatRGBATextureTest,38,Ganesh,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/FontHostStreamTest.cpp,72,DEF_TEST,FontHostStream,19,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
@@ -763,19 +763,19 @@ tests/GradientTest.cpp,657,DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS,TestSweepGradi
 tests/GradientTest.cpp,669,DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS,TestManyStopLinearHardstopsGanesh,38,Ganesh,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/GradientTest.cpp,709,DEF_TEST,Gradient,32,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/HSVRoundTripTest.cpp,14,DEF_TEST,ColorToHSVRoundTrip,10,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/HashTest.cpp,29,DEF_TEST,HashMap,2,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/HashTest.cpp,152,DEF_TEST,HashMapCtor,2,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/HashTest.cpp,180,DEF_TEST,HashMapCtorOneElem,2,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/HashTest.cpp,204,DEF_TEST,HashSetCtor,2,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/HashTest.cpp,217,DEF_TEST,HashSetCtorOneElem,2,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/HashTest.cpp,294,DEF_TEST,HashSetWithSkString,2,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/HashTest.cpp,298,DEF_TEST,HashSetWithStdString,2,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/HashTest.cpp,302,DEF_TEST,HashSetWithStdStringView,2,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/HashTest.cpp,351,DEF_TEST,HashSetCopyCounter,2,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/HashTest.cpp,378,DEF_TEST,HashFindOrNull,2,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/HashTest.cpp,399,DEF_TEST,HashTableGrowsAndShrinks,2,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/HashTest.cpp,477,DEF_TEST,HashMapSwap,2,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/HashTest.cpp,499,DEF_TEST,HashSetSwap,2,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
+tests/HashTest.cpp,29,DEF_TEST,HashMap,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
+tests/HashTest.cpp,152,DEF_TEST,HashMapCtor,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
+tests/HashTest.cpp,180,DEF_TEST,HashMapCtorOneElem,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
+tests/HashTest.cpp,204,DEF_TEST,HashSetCtor,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
+tests/HashTest.cpp,217,DEF_TEST,HashSetCtorOneElem,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
+tests/HashTest.cpp,294,DEF_TEST,HashSetWithSkString,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
+tests/HashTest.cpp,298,DEF_TEST,HashSetWithStdString,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
+tests/HashTest.cpp,302,DEF_TEST,HashSetWithStdStringView,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
+tests/HashTest.cpp,351,DEF_TEST,HashSetCopyCounter,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
+tests/HashTest.cpp,378,DEF_TEST,HashFindOrNull,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
+tests/HashTest.cpp,399,DEF_TEST,HashTableGrowsAndShrinks,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
+tests/HashTest.cpp,477,DEF_TEST,HashMapSwap,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
+tests/HashTest.cpp,499,DEF_TEST,HashSetSwap,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
 tests/HdrMetadataTest.cpp,20,DEF_TEST,HdrMetadata_ParseSerialize_ContentLightLevelInformation,16,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/HdrMetadataTest.cpp,49,DEF_TEST,HdrMetadata_ParseSerialize_MasteringDisplayColorVolume,16,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/HdrMetadataTest.cpp,75,DEF_TEST,HdrMetadata_Agtm_Cubic,16,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
@@ -907,7 +907,7 @@ tests/ImageTest.cpp,1543,DEF_TEST,Image_nonfinite_dst,32,CPU,pending-runtime-dis
 tests/ImageTest.cpp,1580,DEF_GANESH_TEST_FOR_ALL_CONTEXTS,ImageFlush,38,Ganesh,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/ImageTest.cpp,1671,DEF_TEST,image_cubicresampler,32,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/ImageTest.cpp,1687,DEF_TEST,image_subset_encode_skbug_7752,32,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/IncrTopoSortTest.cpp,493,DEF_TEST,IncrTopoSort,2,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
+tests/IncrTopoSortTest.cpp,493,DEF_TEST,IncrTopoSort,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
 tests/IndexedPngOverflowTest.cpp,32,DEF_TEST,IndexedPngOverflow,16,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/InfRectTest.cpp,26,DEF_TEST,InfRect,14,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/InsetConvexPolyTest.cpp,14,DEF_TEST,InsetConvexPoly,6,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
@@ -932,9 +932,9 @@ tests/JpegGainmapTest.cpp,1072,DEF_TEST,AndroidCodec_gainmapInfoParseInvalidRati
 tests/JpegxlTest.cpp,27,DEF_TEST,Jpegxl_DecodeP3,16,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/JpegxlTest.cpp,83,DEF_TEST,Jpegxl_Decode1010102,16,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/JpegxlTest.cpp,111,DEF_TEST,Jpegxl_AlphaPremulAndUnpremul,16,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/LListTest.cpp,44,DEF_TEST,InternalLList,2,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/LRUCacheTest.cpp,29,DEF_TEST,LRUCacheSequential,2,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/LRUCacheTest.cpp,51,DEF_TEST,LRUCacheRandom,2,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
+tests/LListTest.cpp,44,DEF_TEST,InternalLList,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
+tests/LRUCacheTest.cpp,29,DEF_TEST,LRUCacheSequential,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
+tests/LRUCacheTest.cpp,51,DEF_TEST,LRUCacheRandom,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
 tests/LazyProxyTest.cpp,251,DEF_GANESH_TEST,LazyProxyTest,32,Ganesh,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/LazyProxyTest.cpp,286,DEF_GANESH_TEST,LazyProxyReleaseTest,32,Ganesh,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/LazyProxyTest.cpp,466,DEF_GANESH_TEST,LazyProxyFailedInstantiationTest,32,Ganesh,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
@@ -946,27 +946,27 @@ tests/M44Test.cpp,144,DEF_TEST,M44_rotate,5,CPU,pending-runtime-discovery,Preser
 tests/M44Test.cpp,198,DEF_TEST,M44_rectToRect,5,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/M44Test.cpp,262,DEF_TEST,M44_mapRect,7,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/M44Test.cpp,374,DEF_TEST,M44_mapRect_skbug12335,5,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/MD5Test.cpp,67,DEF_TEST,MD5,2,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
+tests/MD5Test.cpp,67,DEF_TEST,MD5,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
 tests/MallocPixelRefTest.cpp,28,DEF_TEST,MallocPixelRef,11,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/MaskCacheTest.cpp,39,DEF_TEST,RRectMaskCache,15,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/MaskCacheTest.cpp,80,DEF_TEST,RectsMaskCache,15,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/MathTest.cpp,369,DEF_TEST,PopCount,3,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/MathTest.cpp,421,DEF_TEST,Math,3,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/MathTest.cpp,525,DEF_TEST,TestEndian,3,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/MathTest.cpp,598,DEF_TEST,divmod_u8,3,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/MathTest.cpp,602,DEF_TEST,divmod_u16,3,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/MathTest.cpp,606,DEF_TEST,divmod_u32,3,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/MathTest.cpp,610,DEF_TEST,divmod_u64,3,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/MathTest.cpp,614,DEF_TEST,divmod_s8,3,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/MathTest.cpp,618,DEF_TEST,divmod_s16,3,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/MathTest.cpp,622,DEF_TEST,divmod_s32,3,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/MathTest.cpp,626,DEF_TEST,divmod_s64,3,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/MathTest.cpp,637,DEF_TEST,SkNextSizePow2,3,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/MathTest.cpp,668,DEF_TEST,FloatSaturate32,3,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/MathTest.cpp,694,DEF_TEST,FloatSaturate64,3,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/MathTest.cpp,716,DEF_TEST,SkNextPow2,3,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/MathTest.cpp,750,DEF_TEST,DoubleSaturate32,3,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/MathTest.cpp,777,DEF_TEST,NeonU16Div255,3,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
+tests/MathTest.cpp,369,DEF_TEST,PopCount,3,CPU,PASS,M03 accepted: original registration passes in debug+release; see plan/acceptance/M03.md
+tests/MathTest.cpp,421,DEF_TEST,Math,3,CPU,PASS,M03 accepted: original registration passes in debug+release; see plan/acceptance/M03.md
+tests/MathTest.cpp,525,DEF_TEST,TestEndian,3,CPU,PASS,M03 accepted: original registration passes in debug+release; see plan/acceptance/M03.md
+tests/MathTest.cpp,598,DEF_TEST,divmod_u8,3,CPU,PASS,M03 accepted: original registration passes in debug+release; see plan/acceptance/M03.md
+tests/MathTest.cpp,602,DEF_TEST,divmod_u16,3,CPU,PASS,M03 accepted: original registration passes in debug+release; see plan/acceptance/M03.md
+tests/MathTest.cpp,606,DEF_TEST,divmod_u32,3,CPU,PASS,M03 accepted: original registration passes in debug+release; see plan/acceptance/M03.md
+tests/MathTest.cpp,610,DEF_TEST,divmod_u64,3,CPU,PASS,M03 accepted: original registration passes in debug+release; see plan/acceptance/M03.md
+tests/MathTest.cpp,614,DEF_TEST,divmod_s8,3,CPU,PASS,M03 accepted: original registration passes in debug+release; see plan/acceptance/M03.md
+tests/MathTest.cpp,618,DEF_TEST,divmod_s16,3,CPU,PASS,M03 accepted: original registration passes in debug+release; see plan/acceptance/M03.md
+tests/MathTest.cpp,622,DEF_TEST,divmod_s32,3,CPU,PASS,M03 accepted: original registration passes in debug+release; see plan/acceptance/M03.md
+tests/MathTest.cpp,626,DEF_TEST,divmod_s64,3,CPU,PASS,M03 accepted: original registration passes in debug+release; see plan/acceptance/M03.md
+tests/MathTest.cpp,637,DEF_TEST,SkNextSizePow2,3,CPU,PASS,M03 accepted: original registration passes in debug+release; see plan/acceptance/M03.md
+tests/MathTest.cpp,668,DEF_TEST,FloatSaturate32,3,CPU,PASS,M03 accepted: original registration passes in debug+release; see plan/acceptance/M03.md
+tests/MathTest.cpp,694,DEF_TEST,FloatSaturate64,3,CPU,PASS,M03 accepted: original registration passes in debug+release; see plan/acceptance/M03.md
+tests/MathTest.cpp,716,DEF_TEST,SkNextPow2,3,CPU,PASS,M03 accepted: original registration passes in debug+release; see plan/acceptance/M03.md
+tests/MathTest.cpp,750,DEF_TEST,DoubleSaturate32,3,CPU,PASS,M03 accepted: original registration passes in debug+release; see plan/acceptance/M03.md
+tests/MathTest.cpp,777,DEF_TEST,NeonU16Div255,3,CPU,PASS,M03 accepted: original registration passes in debug+release; see plan/acceptance/M03.md
 tests/MatrixColorFilterTest.cpp,35,DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS,MatrixColorFilter_TransparentBlack,38,Ganesh,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/MatrixProcsTest.cpp,31,DEF_TEST,MatrixProcs_pack_clamp,12,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/MatrixProcsTest.cpp,83,DEF_TEST,MatrixProcs_pack_clamp_out_of_range,12,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
@@ -981,7 +981,7 @@ tests/MatrixTest.cpp,1104,DEF_TEST,Matrix_Ctor,5,CPU,pending-runtime-discovery,P
 tests/MatrixTest.cpp,1108,DEF_TEST,Matrix_LookAt,5,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/MatrixTest.cpp,1114,DEF_TEST,Matrix_SetRotateSnap,5,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/MatrixTest.cpp,1133,DEF_TEST,Matrix_rectStaysRect_zeroScale,5,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/MemoryTest.cpp,12,DEF_TEST,memory_calloc,2,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
+tests/MemoryTest.cpp,12,DEF_TEST,memory_calloc,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
 tests/MemsetTest.cpp,88,DEF_TEST,Memset,12,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/MeshTest.cpp,167,DEF_TEST,MeshSpec_Valid,26,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/MeshTest.cpp,180,DEF_TEST,MeshSpec_InvalidSignature,26,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
@@ -1009,10 +1009,10 @@ tests/MeshTest.cpp,951,DEF_TEST,MeshSpec_EmptyAttributeName,26,CPU,pending-runti
 tests/MeshTest.cpp,963,DEF_TEST,MeshSpec_EmptyVaryingName,26,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/MeshTest.cpp,975,DEF_TEST,MeshSpecVaryingPassthrough,26,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/MeshTest.cpp,1091,DEF_TEST,MeshSpecUnusedVaryings,26,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/MessageBusTest.cpp,36,DEF_TEST,MessageBus,2,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/MessageBusTest.cpp,90,DEF_TEST,MessageBusSp,2,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/MessageBusTest.cpp,144,DEF_TEST,MessageBus_SkShouldPostMessageToBus,2,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/MetaDataTest.cpp,17,DEF_TEST,MetaData,2,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
+tests/MessageBusTest.cpp,36,DEF_TEST,MessageBus,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
+tests/MessageBusTest.cpp,90,DEF_TEST,MessageBusSp,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
+tests/MessageBusTest.cpp,144,DEF_TEST,MessageBus_SkShouldPostMessageToBus,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
+tests/MetaDataTest.cpp,17,DEF_TEST,MetaData,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
 tests/MipMapTest.cpp,35,DEF_TEST,MipMap,14,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/MipMapTest.cpp,111,DEF_TEST,MipMap_DirectLevelAccess,14,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/MipMapTest.cpp,140,DEF_TEST,MipMap_ComputeLevelCount,14,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
@@ -1050,11 +1050,11 @@ tests/NdkEncodeTest.cpp,339,DEF_TEST,NdkEncode_unsupportedColorSpace,0,CPU,exclu
 tests/NonlinearBlendingTest.cpp,18,DEF_TEST,SkColorSpaceXformSteps_vs_skcms,13,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/OSPathTest.cpp,69,DEF_TEST,OSPath,7,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/OffsetSimplePolyTest.cpp,15,DEF_TEST,OffsetSimplePoly,6,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/OnceTest.cpp,18,DEF_TEST,SkOnce_Singlethreaded,2,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/OnceTest.cpp,32,DEF_TEST,SkOnce_Multithreaded,2,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/OnceTest.cpp,52,DEF_TEST,SkOnce_NoArg,2,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
+tests/OnceTest.cpp,18,DEF_TEST,SkOnce_Singlethreaded,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
+tests/OnceTest.cpp,32,DEF_TEST,SkOnce_Multithreaded,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
+tests/OnceTest.cpp,52,DEF_TEST,SkOnce_NoArg,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
 tests/OpChainTest.cpp,211,DEF_GANESH_TEST,OpChainTest,32,Ganesh,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/OverAlignedTest.cpp,18,DEF_TEST,OverAligned,3,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
+tests/OverAlignedTest.cpp,18,DEF_TEST,OverAligned,3,CPU,PASS,M03 accepted: original registration passes in debug+release; see plan/acceptance/M03.md
 tests/PDFDeflateWStreamTest.cpp,120,DEF_TEST,SkPDF_DeflateWStream,27,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/PDFDocumentTest.cpp,136,DEF_TEST,SkPDF_document_tests,27,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/PDFDocumentTest.cpp,145,DEF_TEST,SkPDF_document_skbug_4734,27,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
@@ -1381,7 +1381,7 @@ tests/QuickRejectTest.cpp,111,DEF_TEST,QuickReject_MatrixState,15,CPU,pending-ru
 tests/RRectInPathTest.cpp,380,DEF_TEST,RoundRectInPath,7,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/RRectInPathTest.cpp,393,DEF_TEST,RRect_fragile,7,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/RTreeTest.cpp,65,DEF_TEST,RTree,9,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/RandomTest.cpp,186,DEF_TEST,Random,3,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
+tests/RandomTest.cpp,186,DEF_TEST,Random,3,CPU,PASS,M03 accepted: original registration passes in debug+release; see plan/acceptance/M03.md
 tests/RasterPipelineBuilderTest.cpp,58,DEF_TEST,RasterPipelineBuilder,25,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/RasterPipelineBuilderTest.cpp,90,DEF_TEST,RasterPipelineBuilderPushPopMaskRegisters,25,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/RasterPipelineBuilderTest.cpp,137,DEF_TEST,RasterPipelineBuilderCaseOp,25,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
@@ -1417,21 +1417,21 @@ tests/RasterPipelineCodeGeneratorTest.cpp,207,DEF_TEST,SkSLRasterPipelineCodeGen
 tests/RasterPipelineCodeGeneratorTest.cpp,255,DEF_TEST,SkSLRasterPipelineCodeGeneratorReturnComplexityKeyMismatchTest,25,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/RasterPipelineCodeGeneratorTest.cpp,279,DEF_TEST,SkSLRasterPipelineSlotOverflow_355465305,25,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/RasterPipelineCodeGeneratorTest.cpp,356,DEF_TEST,SkSLRasterPipeline_ConvertProgram_b540157141,25,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/RawPtrTest.cpp,57,DEF_SERIAL_TEST,RawPtr_DanglingPointerDetected,2,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/RawPtrTest.cpp,87,DEF_TEST,RawPtr_DisableDanglingPtrDetection,2,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/RawPtrTest.cpp,98,DEF_TEST,RawPtr_DefaultConstructor,2,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/RawPtrTest.cpp,104,DEF_TEST,RawPtr_NullptrConstructor,2,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/RawPtrTest.cpp,110,DEF_TEST,RawPtr_RawPointerConstructor,2,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/RawPtrTest.cpp,118,DEF_TEST,RawPtr_CopyAndMove,2,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/RawPtrTest.cpp,133,DEF_TEST,RawPtr_Assignment,2,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/RawPtrTest.cpp,149,DEF_TEST,RawPtr_SelfAssignment,2,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/RawPtrTest.cpp,163,DEF_TEST,RawPtr_Upcasting,2,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/RawPtrTest.cpp,191,DEF_TEST,RawPtr_DereferenceAndMemberAccess,2,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/RawPtrTest.cpp,202,DEF_TEST,RawPtr_PointerArithmetic,2,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/RawPtrTest.cpp,248,DEF_TEST,RawPtr_EqualityComparisons,2,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/RawPtrTest.cpp,270,DEF_TEST,RawPtr_RelationalComparisons,2,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/RawPtrTest.cpp,291,DEF_TEST,RawPtr_Void,2,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/RawPtrTest.cpp,301,DEF_TEST,RawPtr_Stl,2,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
+tests/RawPtrTest.cpp,57,DEF_SERIAL_TEST,RawPtr_DanglingPointerDetected,2,CPU,NOT_APPLICABLE,Original PartitionAlloc/dangling-check guard disabled; absent in independent debug/release discovery; see acceptance/M02.md.
+tests/RawPtrTest.cpp,87,DEF_TEST,RawPtr_DisableDanglingPtrDetection,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
+tests/RawPtrTest.cpp,98,DEF_TEST,RawPtr_DefaultConstructor,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
+tests/RawPtrTest.cpp,104,DEF_TEST,RawPtr_NullptrConstructor,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
+tests/RawPtrTest.cpp,110,DEF_TEST,RawPtr_RawPointerConstructor,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
+tests/RawPtrTest.cpp,118,DEF_TEST,RawPtr_CopyAndMove,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
+tests/RawPtrTest.cpp,133,DEF_TEST,RawPtr_Assignment,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
+tests/RawPtrTest.cpp,149,DEF_TEST,RawPtr_SelfAssignment,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
+tests/RawPtrTest.cpp,163,DEF_TEST,RawPtr_Upcasting,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
+tests/RawPtrTest.cpp,191,DEF_TEST,RawPtr_DereferenceAndMemberAccess,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
+tests/RawPtrTest.cpp,202,DEF_TEST,RawPtr_PointerArithmetic,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
+tests/RawPtrTest.cpp,248,DEF_TEST,RawPtr_EqualityComparisons,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
+tests/RawPtrTest.cpp,270,DEF_TEST,RawPtr_RelationalComparisons,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
+tests/RawPtrTest.cpp,291,DEF_TEST,RawPtr_Void,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
+tests/RawPtrTest.cpp,301,DEF_TEST,RawPtr_Stl,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
 tests/ReadPixelsTest.cpp,397,DEF_TEST,ReadPixels,14,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/ReadPixelsTest.cpp,500,DEF_TEST,ReadPixels_ValidConversion,14,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/ReadPixelsTest.cpp,541,DEF_TEST,ReadPixels_InvalidRowBytes,14,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
@@ -1496,11 +1496,11 @@ tests/RectTest.cpp,281,DEF_TEST,Rect_QuadContainsRect,5,CPU,pending-runtime-disc
 tests/RectTest.cpp,398,DEF_TEST,Rect_ClosestDisjointEdge,4,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/RectTest.cpp,440,DEF_TEST,big_tiled_rect_crbug_927075,14,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/RectangleTextureTest.cpp,155,DEF_GANESH_TEST_FOR_GL_CONTEXT,RectangleTexture,34,Ganesh,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/RefCntTest.cpp,73,DEF_TEST,RefCnt,2,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/RefCntTest.cpp,152,DEF_TEST,sk_sp,2,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/RefCntTest.cpp,346,DEF_TEST,sk_make_sp,2,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/RefCntTest.cpp,352,DEF_TEST,sk_sp_reset,2,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/RefCntTest.cpp,368,DEF_TEST,sk_sp_ref,2,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
+tests/RefCntTest.cpp,73,DEF_TEST,RefCnt,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
+tests/RefCntTest.cpp,152,DEF_TEST,sk_sp,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
+tests/RefCntTest.cpp,346,DEF_TEST,sk_make_sp,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
+tests/RefCntTest.cpp,352,DEF_TEST,sk_sp_reset,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
+tests/RefCntTest.cpp,368,DEF_TEST,sk_sp_ref,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
 tests/RegionTest.cpp,220,DEF_TEST,Region,14,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/RegionTest.cpp,241,DEF_TEST,Region_writeToMemory,14,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/RegionTest.cpp,271,DEF_TEST,Region_readFromMemory_bad,14,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
@@ -1587,10 +1587,10 @@ tests/SVGDeviceTest.cpp,705,DEF_TEST,SVGDevice_path_effect,27,CPU,pending-runtim
 tests/SVGDeviceTest.cpp,743,DEF_TEST,SVGDevice_relative_path_encoding,27,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/SVGDeviceTest.cpp,765,DEF_TEST,SVGDevice_color_shader,27,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/SVGDeviceTest.cpp,785,DEF_TEST,SVGDevice_parse_minmax,27,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/SafeMathTest.cpp,14,DEF_TEST,SafeMath_SizeT_Success,3,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/SafeMathTest.cpp,34,DEF_TEST,SafeMath_SizeT_Failure,3,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/SafeMathTest.cpp,58,DEF_TEST,SafeMath_Int_Success,3,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/SafeMathTest.cpp,75,DEF_TEST,SafeMath_Int_Failure,3,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
+tests/SafeMathTest.cpp,14,DEF_TEST,SafeMath_SizeT_Success,3,CPU,PASS,M03 accepted: original registration passes in debug+release; see plan/acceptance/M03.md
+tests/SafeMathTest.cpp,34,DEF_TEST,SafeMath_SizeT_Failure,3,CPU,PASS,M03 accepted: original registration passes in debug+release; see plan/acceptance/M03.md
+tests/SafeMathTest.cpp,58,DEF_TEST,SafeMath_Int_Success,3,CPU,PASS,M03 accepted: original registration passes in debug+release; see plan/acceptance/M03.md
+tests/SafeMathTest.cpp,75,DEF_TEST,SafeMath_Int_Failure,3,CPU,PASS,M03 accepted: original registration passes in debug+release; see plan/acceptance/M03.md
 tests/SamplingTest.cpp,26,DEF_TEST,sampling_with_identity_matrix,14,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/SaveLayerOriginTest.cpp,125,DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS,SaveLayerOrigin,38,Ganesh,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/ScalarTest.cpp,212,DEF_TEST,Scalar,1,CPU,PASS,M01 CPU debug/release compiled reference registry reconciled; see plan/acceptance/M01.md. Original body and helper closure translated; C++ and Rust pass.
@@ -1624,21 +1624,21 @@ tests/SimplifyPaintTest.cpp,217,DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS,SimplifyP
 tests/SimplifyPaintTest.cpp,230,DEF_TEST,SimplifyPaintTest_Raster,35,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/SizeTest.cpp,12,DEF_TEST,ISize,4,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/SizeTest.cpp,34,DEF_TEST,Size,4,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/SkBase64Test.cpp,18,DEF_TEST,SkBase64,3,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/SkBlockAllocatorTest.cpp,81,DEF_TEST,SkBlockAllocatorPreallocSize,2,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/SkBlockAllocatorTest.cpp,107,DEF_TEST,SkBlockAllocatorAlloc,2,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/SkBlockAllocatorTest.cpp,188,DEF_TEST,SkBlockAllocatorResize,2,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/SkBlockAllocatorTest.cpp,241,DEF_TEST,SkBlockAllocatorRelease,2,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/SkBlockAllocatorTest.cpp,273,DEF_TEST,SkBlockAllocatorRewind,2,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/SkBlockAllocatorTest.cpp,298,DEF_TEST,SkBlockAllocatorGrowthPolicy,2,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/SkBlockAllocatorTest.cpp,327,DEF_TEST,SkBlockAllocatorReset,2,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/SkBlockAllocatorTest.cpp,360,DEF_TEST,SkBlockAllocatorReleaseBlock,2,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/SkBlockAllocatorTest.cpp,421,DEF_TEST,SkBlockAllocatorIterateAndRelease,2,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/SkBlockAllocatorTest.cpp,458,DEF_TEST,SkBlockAllocatorScratchBlockReserve,2,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/SkBlockAllocatorTest.cpp,521,DEF_TEST,SkBlockAllocatorStealBlocks,2,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/SkBlockAllocatorTest.cpp,571,DEF_TEST,SkBlockAllocatorMetadata,2,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/SkBlockAllocatorTest.cpp,609,DEF_TEST,SkBlockAllocatorAllocatorMetadata,2,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/SkBlockAllocatorTest.cpp,657,DEF_TEST,SkBlockAllocatorOwningBlock,2,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
+tests/SkBase64Test.cpp,18,DEF_TEST,SkBase64,3,CPU,PASS,M03 accepted: original registration passes in debug+release; see plan/acceptance/M03.md
+tests/SkBlockAllocatorTest.cpp,81,DEF_TEST,SkBlockAllocatorPreallocSize,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
+tests/SkBlockAllocatorTest.cpp,107,DEF_TEST,SkBlockAllocatorAlloc,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
+tests/SkBlockAllocatorTest.cpp,188,DEF_TEST,SkBlockAllocatorResize,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
+tests/SkBlockAllocatorTest.cpp,241,DEF_TEST,SkBlockAllocatorRelease,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
+tests/SkBlockAllocatorTest.cpp,273,DEF_TEST,SkBlockAllocatorRewind,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
+tests/SkBlockAllocatorTest.cpp,298,DEF_TEST,SkBlockAllocatorGrowthPolicy,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
+tests/SkBlockAllocatorTest.cpp,327,DEF_TEST,SkBlockAllocatorReset,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
+tests/SkBlockAllocatorTest.cpp,360,DEF_TEST,SkBlockAllocatorReleaseBlock,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
+tests/SkBlockAllocatorTest.cpp,421,DEF_TEST,SkBlockAllocatorIterateAndRelease,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
+tests/SkBlockAllocatorTest.cpp,458,DEF_TEST,SkBlockAllocatorScratchBlockReserve,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
+tests/SkBlockAllocatorTest.cpp,521,DEF_TEST,SkBlockAllocatorStealBlocks,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
+tests/SkBlockAllocatorTest.cpp,571,DEF_TEST,SkBlockAllocatorMetadata,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
+tests/SkBlockAllocatorTest.cpp,609,DEF_TEST,SkBlockAllocatorAllocatorMetadata,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
+tests/SkBlockAllocatorTest.cpp,657,DEF_TEST,SkBlockAllocatorOwningBlock,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
 tests/SkBmpRustDecoderTest.cpp,123,DEF_TEST,RustBmpCodec_decode_valid_bmp,16,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/SkBmpRustDecoderTest.cpp,161,DEF_TEST,RustBmpCodec_nullptr_result,16,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/SkBmpRustDecoderTest.cpp,173,DEF_TEST,RustBmpCodec_reject_non_bmp,16,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
@@ -1661,7 +1661,7 @@ tests/SkColorSpaceXformStepsTest.cpp,416,DEF_TEST,SkColorSpaceXform_Apply,35,CPU
 tests/SkColorSpaceXformStepsTest.cpp,421,DEF_TEST,SkColorSpaceXform_Raster,35,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/SkColorSpaceXformStepsTest.cpp,430,DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS,SkColorSpaceXform_Ganesh,38,Ganesh,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/SkColorSpaceXformStepsTest.cpp,448,DEF_GRAPHITE_TEST_FOR_RENDERING_CONTEXTS,SkColorSpaceXform_Graphite,38,Graphite,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/SkContainersTest.cpp,30,DEF_TEST,SkContainerAllocatorBasic,2,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
+tests/SkContainersTest.cpp,30,DEF_TEST,SkContainerAllocatorBasic,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
 tests/SkDOMTest.cpp,26,DEF_TEST,SkDOM_test,27,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/SkEnumBitMaskTest.cpp,19,DEF_TEST,skgpu_Mask,14,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/SkFontMetricsPrivTest.cpp,22,DEF_TEST,SkFontMetricsPriv_Basic,22,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
@@ -1736,10 +1736,10 @@ tests/SkJpegRustCodecTest.cpp,2061,DEF_TEST,RustJpeg_vs_CppJpeg_ICCProfile,17,CP
 tests/SkJpegXmpTest.cpp,19,DEF_TEST,SkJpegXmp_standardXmp,16,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/SkJpegXmpTest.cpp,46,DEF_TEST,SkJpegXmp_defaultValues,16,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/SkJpegXmpTest.cpp,107,DEF_TEST,SkJpegXmp_readExtendedXmp,16,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/SkMallocTest.cpp,15,DEF_TEST,SkFree_SafeToPassNull,2,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/SkMallocTest.cpp,20,DEF_TEST,SkCalloc_DataIsZeroInitializedAndWriteable,2,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/SkMallocTest.cpp,40,DEF_TEST,SkMalloc_DataIsWriteable,2,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/SkMallocTest.cpp,58,DEF_TEST,SkRealloc_DataIsWriteableAndEventuallyFreed,2,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
+tests/SkMallocTest.cpp,15,DEF_TEST,SkFree_SafeToPassNull,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
+tests/SkMallocTest.cpp,20,DEF_TEST,SkCalloc_DataIsZeroInitializedAndWriteable,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
+tests/SkMallocTest.cpp,40,DEF_TEST,SkMalloc_DataIsWriteable,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
+tests/SkMallocTest.cpp,58,DEF_TEST,SkRealloc_DataIsWriteableAndEventuallyFreed,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
 tests/SkPathRangeIterTest.cpp,17,DEF_TEST,SkPath_RangeIter,7,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/SkPngRustDecoderTest.cpp,750,DEF_TEST,RustPngCodec_apng_basic_trivial_static_image,16,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/SkPngRustDecoderTest.cpp,756,DEF_TEST,RustPngCodec_apng_basic_using_default_image,16,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
@@ -1999,11 +1999,11 @@ tests/SkSLTest.cpp,1031,DEF_GANESH_SKSL_TEST,flags,38,Ganesh,pending-runtime-dis
 tests/SkSLTest.cpp,1032,DEF_GRAPHITE_SKSL_TEST,flags,38,Graphite,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/SkSLTypeTest.cpp,16,DEF_TEST,SkSLTypeLimits,24,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/SkSLWGSLTestbed.cpp,39,DEF_TEST,SkSLWGSLTestbed,25,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/SkSharedMutexTest.cpp,15,DEF_TEST,SkSharedMutexBasic,2,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/SkSharedMutexTest.cpp,25,DEF_TEST,SkSharedMutexMultiThreaded,2,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/SkSpanTest.cpp,17,DEF_TEST,SkSpanBasicTemplateGuide,2,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/SkSpanTest.cpp,81,DEF_TEST,SkSpanDeduceParam,2,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/SkSpanTest.cpp,113,DEF_TEST,SkSpanDeduceSize,2,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
+tests/SkSharedMutexTest.cpp,15,DEF_TEST,SkSharedMutexBasic,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
+tests/SkSharedMutexTest.cpp,25,DEF_TEST,SkSharedMutexMultiThreaded,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
+tests/SkSpanTest.cpp,17,DEF_TEST,SkSpanBasicTemplateGuide,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
+tests/SkSpanTest.cpp,81,DEF_TEST,SkSpanDeduceParam,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
+tests/SkSpanTest.cpp,113,DEF_TEST,SkSpanDeduceSize,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
 tests/SkStrikeCacheTest.cpp,59,DEF_TEST,SkStrikeCache_CachePurge,22,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/SkStrikeCacheTest.cpp,91,DEF_TEST,SkStrikeCache_ContextOptionsAndLimits,22,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/SkStrikeCacheTest.cpp,125,DEF_TEST,SkStrikeCache_ContextPurgeAndEviction,22,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
@@ -2013,24 +2013,24 @@ tests/SkStrikeCacheTest.cpp,261,DEF_TEST,SkStrikeCache_ClientDrawTextPopulatesCo
 tests/SkStrikeTest.cpp,115,DEF_TEST,SkStrikeMultiThread,22,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/SkStrikeTest.cpp,206,DEF_TEST,SkStrike_FlattenByType,22,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/SkStrikeTest.cpp,303,DEF_TEST,SkScalerContext_GetImageNonDeterministicBounds,22,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/SkStringViewTest.cpp,14,DEF_TEST,SkStringViewStartsAndEnds,2,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/SkStringViewTest.cpp,53,DEF_TEST,SkStringViewContains,2,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/SkTBlockListTest.cpp,330,DEF_TEST,SkTBlockList,2,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/SkUTFTest.cpp,13,DEF_TEST,SkUTF_UTF16,2,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/SkUTFTest.cpp,31,DEF_TEST,SkUTF_UTF8,2,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/SkUTFTest.cpp,66,DEF_TEST,SkUTF_CountUTF8,2,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/SkUTFTest.cpp,102,DEF_TEST,SkUTF_NextUTF8_ToUTF8,2,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/SkVxTest.cpp,18,DEF_TEST,SkVx,3,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/SkVxTest.cpp,159,DEF_TEST,SkVx_xy,3,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/SkVxTest.cpp,190,DEF_TEST,SkVx_xyzw,3,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/SkVxTest.cpp,246,DEF_TEST,SkVx_cross_dot,3,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/SkVxTest.cpp,306,DEF_TEST,SkVx_strided_loads,3,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/SkVxTest.cpp,316,DEF_TEST,SkVx_ScaledDividerU32,3,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/SkVxTest.cpp,354,DEF_TEST,SkVx_saturated_add,3,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/SkVxTest.cpp,366,DEF_TEST,SkVx_length,3,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/SkVxTest.cpp,385,DEF_TEST,SkVx_normalize,3,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/SkVxTest.cpp,408,DEF_TEST,SkVx_normalize_infinity_and_nan,3,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/SkVxTest.cpp,425,DEF_TEST,SkVx_isfinite,3,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
+tests/SkStringViewTest.cpp,14,DEF_TEST,SkStringViewStartsAndEnds,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
+tests/SkStringViewTest.cpp,53,DEF_TEST,SkStringViewContains,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
+tests/SkTBlockListTest.cpp,330,DEF_TEST,SkTBlockList,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
+tests/SkUTFTest.cpp,13,DEF_TEST,SkUTF_UTF16,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
+tests/SkUTFTest.cpp,31,DEF_TEST,SkUTF_UTF8,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
+tests/SkUTFTest.cpp,66,DEF_TEST,SkUTF_CountUTF8,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
+tests/SkUTFTest.cpp,102,DEF_TEST,SkUTF_NextUTF8_ToUTF8,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
+tests/SkVxTest.cpp,18,DEF_TEST,SkVx,3,CPU,PASS,M03 accepted: original registration passes in debug+release; see plan/acceptance/M03.md
+tests/SkVxTest.cpp,159,DEF_TEST,SkVx_xy,3,CPU,PASS,M03 accepted: original registration passes in debug+release; see plan/acceptance/M03.md
+tests/SkVxTest.cpp,190,DEF_TEST,SkVx_xyzw,3,CPU,PASS,M03 accepted: original registration passes in debug+release; see plan/acceptance/M03.md
+tests/SkVxTest.cpp,246,DEF_TEST,SkVx_cross_dot,3,CPU,PASS,M03 accepted: original registration passes in debug+release; see plan/acceptance/M03.md
+tests/SkVxTest.cpp,306,DEF_TEST,SkVx_strided_loads,3,CPU,PASS,M03 accepted: original registration passes in debug+release; see plan/acceptance/M03.md
+tests/SkVxTest.cpp,316,DEF_TEST,SkVx_ScaledDividerU32,3,CPU,PASS,M03 accepted: original registration passes in debug+release; see plan/acceptance/M03.md
+tests/SkVxTest.cpp,354,DEF_TEST,SkVx_saturated_add,3,CPU,PASS,M03 accepted: original registration passes in debug+release; see plan/acceptance/M03.md
+tests/SkVxTest.cpp,366,DEF_TEST,SkVx_length,3,CPU,PASS,M03 accepted: original registration passes in debug+release; see plan/acceptance/M03.md
+tests/SkVxTest.cpp,385,DEF_TEST,SkVx_normalize,3,CPU,PASS,M03 accepted: original registration passes in debug+release; see plan/acceptance/M03.md
+tests/SkVxTest.cpp,408,DEF_TEST,SkVx_normalize_infinity_and_nan,3,CPU,PASS,M03 accepted: original registration passes in debug+release; see plan/acceptance/M03.md
+tests/SkVxTest.cpp,425,DEF_TEST,SkVx_isfinite,3,CPU,PASS,M03 accepted: original registration passes in debug+release; see plan/acceptance/M03.md
 tests/SkXmpTest.cpp,21,DEF_TEST,SkXmp_invalidXml,16,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/SkXmpTest.cpp,34,DEF_TEST,SkXmp_xmpHdrgmAsFieldValue,16,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/SkXmpTest.cpp,59,DEF_TEST,SkXmp_xmpHdrgmRequiresVersion,16,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
@@ -2054,7 +2054,7 @@ tests/SlugTest.cpp,357,DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS,Slug_draw_then_ser
 tests/SmallPathRendererTest.cpp,19,DEF_GANESH_TEST_FOR_CONTEXTS,SmallPathRenderer_crbug505876830,38,Ganesh,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/SmallPathRendererTest.cpp,58,DEF_TEST,SmallPathShapeDataKey_DomainSeparation,32,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/SmallPathRendererTest.cpp,71,DEF_TEST,SmallPathShapeDataKey_CollisionReproduction,32,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/SortTest.cpp,38,DEF_TEST,Sort,3,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
+tests/SortTest.cpp,38,DEF_TEST,Sort,3,CPU,PASS,M03 accepted: original registration passes in debug+release; see plan/acceptance/M03.md
 tests/SpecialImageTest.cpp,147,DEF_TEST,SpecialImage_Raster,32,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/SpecialImageTest.cpp,189,DEF_TEST,SpecialImage_Image_Legacy,32,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/SpecialImageTest.cpp,194,DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS,SpecialImage_Gpu,38,Ganesh,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
@@ -2062,31 +2062,31 @@ tests/SrcOverTest.cpp,29,DEF_TEST,SrcOver,14,CPU,pending-runtime-discovery,Prese
 tests/SrcSrcOverBatchTest.cpp,32,DEF_GANESH_TEST_FOR_RENDERING_CONTEXTS,SrcSrcOverBatchTest,38,Ganesh,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/StencilClearTest.cpp,65,DEF_GANESH_TEST_FOR_CONTEXTS,StencilClearTest,38,Ganesh,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/StencilClearTest.cpp,142,DEF_GANESH_TEST_FOR_CONTEXTS,StencilClearTest_PreservedAcrossSplit,38,Ganesh,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/StreamTest.cpp,207,DEF_TEST,Stream,3,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/StreamTest.cpp,310,DEF_TEST,StreamPeek,3,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/StreamTest.cpp,390,DEF_TEST,StreamPeek_BlockMemoryStream,3,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/StreamTest.cpp,420,DEF_TEST,RemainingLengthIsBelow_MemoryStream,3,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/StreamTest.cpp,482,DEF_TEST,DynamicMemoryWStream_detachAsData,3,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/StreamTest.cpp,502,DEF_TEST,DynamicMemoryWStream_detachAsVector,3,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/StreamTest.cpp,520,DEF_TEST,StreamCopy,3,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/StreamTest.cpp,534,DEF_TEST,StreamEmptyStreamMemoryBase,3,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/StreamTest.cpp,540,DEF_TEST,FILEStreamWithOffset,3,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/StreamTest.cpp,701,DEF_TEST,RBuffer,3,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
+tests/StreamTest.cpp,207,DEF_TEST,Stream,3,CPU,PASS,M03 accepted: original registration passes in debug+release; see plan/acceptance/M03.md
+tests/StreamTest.cpp,310,DEF_TEST,StreamPeek,3,CPU,PASS,M03 accepted: original registration passes in debug+release; see plan/acceptance/M03.md
+tests/StreamTest.cpp,390,DEF_TEST,StreamPeek_BlockMemoryStream,3,CPU,PASS,M03 accepted: original registration passes in debug+release; see plan/acceptance/M03.md
+tests/StreamTest.cpp,420,DEF_TEST,RemainingLengthIsBelow_MemoryStream,3,CPU,PASS,M03 accepted: original registration passes in debug+release; see plan/acceptance/M03.md
+tests/StreamTest.cpp,482,DEF_TEST,DynamicMemoryWStream_detachAsData,3,CPU,PASS,M03 accepted: original registration passes in debug+release; see plan/acceptance/M03.md
+tests/StreamTest.cpp,502,DEF_TEST,DynamicMemoryWStream_detachAsVector,3,CPU,PASS,M03 accepted: original registration passes in debug+release; see plan/acceptance/M03.md
+tests/StreamTest.cpp,520,DEF_TEST,StreamCopy,3,CPU,PASS,M03 accepted: original registration passes in debug+release; see plan/acceptance/M03.md
+tests/StreamTest.cpp,534,DEF_TEST,StreamEmptyStreamMemoryBase,3,CPU,PASS,M03 accepted: original registration passes in debug+release; see plan/acceptance/M03.md
+tests/StreamTest.cpp,540,DEF_TEST,FILEStreamWithOffset,3,CPU,PASS,M03 accepted: original registration passes in debug+release; see plan/acceptance/M03.md
+tests/StreamTest.cpp,701,DEF_TEST,RBuffer,3,CPU,PASS,M03 accepted: original registration passes in debug+release; see plan/acceptance/M03.md
 tests/StrikeForGPUTest.cpp,27,DEF_TEST,SkStrikePromise_Basic,38,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/StringTest.cpp,25,DEF_TEST,String,2,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/StringTest.cpp,197,DEF_TEST,String_overflow,2,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/StringTest.cpp,219,DEF_TEST,String_SkStrSplit,2,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/StringTest.cpp,244,DEF_TEST,String_SkStrSplit_All,2,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/StringTest.cpp,294,DEF_TEST,String_Threaded,2,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/StringTest.cpp,311,DEF_TEST,String_huge,2,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/StringTest.cpp,331,DEF_TEST,String_fromUTF16,2,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/StringTest.cpp,392,DEF_TEST,String_VAList,2,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/StringTest.cpp,444,DEF_TEST,String_VAList_overflow,2,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/StringTest.cpp,450,DEF_TEST,String_resize_to_nothing,2,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/StringTest.cpp,457,DEF_TEST,String_resize_shrink,2,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/StringTest.cpp,464,DEF_TEST,String_resize_grow,2,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/StringTest.cpp,472,DEF_TEST,String_resize_after_assignment,2,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/StringTest.cpp,493,DEF_TEST,String_resize_after_copy_construction,2,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
+tests/StringTest.cpp,25,DEF_TEST,String,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
+tests/StringTest.cpp,197,DEF_TEST,String_overflow,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
+tests/StringTest.cpp,219,DEF_TEST,String_SkStrSplit,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
+tests/StringTest.cpp,244,DEF_TEST,String_SkStrSplit_All,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
+tests/StringTest.cpp,294,DEF_TEST,String_Threaded,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
+tests/StringTest.cpp,311,DEF_TEST,String_huge,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
+tests/StringTest.cpp,331,DEF_TEST,String_fromUTF16,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
+tests/StringTest.cpp,392,DEF_TEST,String_VAList,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
+tests/StringTest.cpp,444,DEF_TEST,String_VAList_overflow,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
+tests/StringTest.cpp,450,DEF_TEST,String_resize_to_nothing,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
+tests/StringTest.cpp,457,DEF_TEST,String_resize_shrink,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
+tests/StringTest.cpp,464,DEF_TEST,String_resize_grow,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
+tests/StringTest.cpp,472,DEF_TEST,String_resize_after_assignment,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
+tests/StringTest.cpp,493,DEF_TEST,String_resize_after_copy_construction,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
 tests/StrokeTest.cpp,191,DEF_TEST,Stroke,13,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/StrokerTest.cpp,135,DEF_TEST,QuadStrokerSet,23,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/StrokerTest.cpp,142,DEF_TEST,CubicStrokerSet,23,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
@@ -2142,32 +2142,32 @@ tests/SwizzlerTest.cpp,154,DEF_TEST,PublicSwizzleOpts,16,CPU,pending-runtime-dis
 tests/SwizzlerTest.cpp,187,DEF_TEST,ReciprocalAlphaOptimized,16,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/SwizzlerTest.cpp,193,DEF_TEST,ReciprocalAlphaPortable,16,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/SwizzlerTest.cpp,234,DEF_TEST,UnpremulSimulatingRP,16,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/TArrayTest.cpp,261,DEF_TEST,TArray_Swap,3,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/TArrayTest.cpp,320,DEF_TEST,TArray_Move,3,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/TArrayTest.cpp,338,DEF_TEST,TArray_NoUnnecessaryAllocs,3,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/TArrayTest.cpp,410,DEF_TEST,TArray_SelfAssignment,3,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/TArrayTest.cpp,415,DEF_TEST,FixedArray_SelfAssignment,3,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/TArrayTest.cpp,458,DEF_TEST,TArray_Comparison,3,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/TArrayTest.cpp,468,DEF_TEST,FixedArray_Comparison,3,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/TArrayTest.cpp,557,DEF_TEST,TArray_Basic,3,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/TArrayTest.cpp,566,DEF_TEST,FixedArray_Basic,3,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/TArrayTest.cpp,572,DEF_TEST,TArray_Reserve,3,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/TArrayTest.cpp,584,DEF_TEST,TArray_Construction,3,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/TArrayTest.cpp,594,DEF_TEST,FixedArray_Construction,3,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/TArrayTest.cpp,600,DEF_TEST,TArray_InnerPush,3,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/TArrayTest.cpp,607,DEF_TEST,FixedArray_InnerPush,3,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/TArrayTest.cpp,613,DEF_TEST,TArray_InnerEmplace,3,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/TArrayTest.cpp,620,DEF_TEST,TArray_STArrayCompatibility,3,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/TArrayTest.cpp,633,DEF_TEST,TArray_BoundsCheck,3,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/TArrayTest.cpp,684,DEF_TEST,TArray_ASANPoisoning,3,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/TDPQueueTest.cpp,202,DEF_TEST,TDPQueueTest,3,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/TLazyTest.cpp,11,DEF_TEST,TLazy_copy,2,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/TLazyTest.cpp,36,DEF_TEST,TCopyOnFirstWrite_copy,2,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/TemplatesTest.cpp,75,DEF_TEST,Templates,2,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/TemplatesTest.cpp,148,DEF_TEST,TemplateContainerAPIsTrim,2,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/TemplatesTest.cpp,167,DEF_TEST,TemplateContainerAPIs,2,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/TemplatesTest.cpp,192,DEF_TEST,AutoReallocToZero,2,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/TemplatesTest.cpp,197,DEF_TEST,AutoTMallocSelfMove,2,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
+tests/TArrayTest.cpp,261,DEF_TEST,TArray_Swap,3,CPU,PASS,M03 accepted: original registration passes in debug+release; see plan/acceptance/M03.md
+tests/TArrayTest.cpp,320,DEF_TEST,TArray_Move,3,CPU,PASS,M03 accepted: original registration passes in debug+release; see plan/acceptance/M03.md
+tests/TArrayTest.cpp,338,DEF_TEST,TArray_NoUnnecessaryAllocs,3,CPU,PASS,M03 accepted: original registration passes in debug+release; see plan/acceptance/M03.md
+tests/TArrayTest.cpp,410,DEF_TEST,TArray_SelfAssignment,3,CPU,PASS,M03 accepted: original registration passes in debug+release; see plan/acceptance/M03.md
+tests/TArrayTest.cpp,415,DEF_TEST,FixedArray_SelfAssignment,3,CPU,PASS,M03 accepted: original registration passes in debug+release; see plan/acceptance/M03.md
+tests/TArrayTest.cpp,458,DEF_TEST,TArray_Comparison,3,CPU,PASS,M03 accepted: original registration passes in debug+release; see plan/acceptance/M03.md
+tests/TArrayTest.cpp,468,DEF_TEST,FixedArray_Comparison,3,CPU,PASS,M03 accepted: original registration passes in debug+release; see plan/acceptance/M03.md
+tests/TArrayTest.cpp,557,DEF_TEST,TArray_Basic,3,CPU,PASS,M03 accepted: original registration passes in debug+release; see plan/acceptance/M03.md
+tests/TArrayTest.cpp,566,DEF_TEST,FixedArray_Basic,3,CPU,PASS,M03 accepted: original registration passes in debug+release; see plan/acceptance/M03.md
+tests/TArrayTest.cpp,572,DEF_TEST,TArray_Reserve,3,CPU,PASS,M03 accepted: original registration passes in debug+release; see plan/acceptance/M03.md
+tests/TArrayTest.cpp,584,DEF_TEST,TArray_Construction,3,CPU,PASS,M03 accepted: original registration passes in debug+release; see plan/acceptance/M03.md
+tests/TArrayTest.cpp,594,DEF_TEST,FixedArray_Construction,3,CPU,PASS,M03 accepted: original registration passes in debug+release; see plan/acceptance/M03.md
+tests/TArrayTest.cpp,600,DEF_TEST,TArray_InnerPush,3,CPU,PASS,M03 accepted: original registration passes in debug+release; see plan/acceptance/M03.md
+tests/TArrayTest.cpp,607,DEF_TEST,FixedArray_InnerPush,3,CPU,PASS,M03 accepted: original registration passes in debug+release; see plan/acceptance/M03.md
+tests/TArrayTest.cpp,613,DEF_TEST,TArray_InnerEmplace,3,CPU,PASS,M03 accepted: original registration passes in debug+release; see plan/acceptance/M03.md
+tests/TArrayTest.cpp,620,DEF_TEST,TArray_STArrayCompatibility,3,CPU,PASS,M03 accepted: original registration passes in debug+release; see plan/acceptance/M03.md
+tests/TArrayTest.cpp,633,DEF_TEST,TArray_BoundsCheck,3,CPU,PASS,M03 accepted: original registration passes in debug+release; see plan/acceptance/M03.md
+tests/TArrayTest.cpp,684,DEF_TEST,TArray_ASANPoisoning,3,CPU,PASS,M03 accepted: original registration passes in debug+release; see plan/acceptance/M03.md
+tests/TDPQueueTest.cpp,202,DEF_TEST,TDPQueueTest,3,CPU,PASS,M03 accepted: original registration passes in debug+release; see plan/acceptance/M03.md
+tests/TLazyTest.cpp,11,DEF_TEST,TLazy_copy,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
+tests/TLazyTest.cpp,36,DEF_TEST,TCopyOnFirstWrite_copy,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
+tests/TemplatesTest.cpp,75,DEF_TEST,Templates,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
+tests/TemplatesTest.cpp,148,DEF_TEST,TemplateContainerAPIsTrim,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
+tests/TemplatesTest.cpp,167,DEF_TEST,TemplateContainerAPIs,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
+tests/TemplatesTest.cpp,192,DEF_TEST,AutoReallocToZero,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
+tests/TemplatesTest.cpp,197,DEF_TEST,AutoTMallocSelfMove,2,CPU,PASS,Complete original body PASS in Rust and unchanged pinned C++ debug/release; accepted in acceptance/M02.md with correspondence.csv evidence.
 tests/Test.h,262,DEF_TEST,TestName,32,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/TestTest.cpp,15,DEF_TEST,TestNormal,1,CPU,PASS,M01 CPU debug/release compiled reference registry reconciled; see plan/acceptance/M01.md. Original body and helper closure translated; C++ and Rust pass.
 tests/TestTest.cpp,20,DEF_CONDITIONAL_TEST,TestTrueCondition,1,CPU,PASS,M01 CPU debug/release compiled reference registry reconciled; see plan/acceptance/M01.md. Original body and helper closure translated; C++ and Rust pass.
@@ -2244,11 +2244,11 @@ tests/TypefaceTest.cpp,762,DEF_TEST,LegacyMakeTypeface,19,CPU,pending-runtime-di
 tests/TypefaceTest.cpp,786,DEF_TEST,CustomTypeface_invalid_glyphid,19,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/UnicodeTest.cpp,22,DEF_TEST,Unicode_textencodings,18,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/UnicodeTest.cpp,53,DEF_TEST,glyphs_to_unichars,18,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/UtilsTest.cpp,181,DEF_TEST,Utils,3,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/UtilsTest.cpp,187,DEF_TEST,SkEnumerate,3,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/UtilsTest.cpp,306,DEF_TEST,SkZip,3,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/UtilsTest.cpp,479,DEF_TEST,SkMakeZip,3,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
-tests/UtilsTest.cpp,615,DEF_TEST,UtilsPreserveBitPatterns,3,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
+tests/UtilsTest.cpp,181,DEF_TEST,Utils,3,CPU,PASS,M03 accepted: original registration passes in debug+release; see plan/acceptance/M03.md
+tests/UtilsTest.cpp,187,DEF_TEST,SkEnumerate,3,CPU,PASS,M03 accepted: original registration passes in debug+release; see plan/acceptance/M03.md
+tests/UtilsTest.cpp,306,DEF_TEST,SkZip,3,CPU,PASS,M03 accepted: original registration passes in debug+release; see plan/acceptance/M03.md
+tests/UtilsTest.cpp,479,DEF_TEST,SkMakeZip,3,CPU,PASS,M03 accepted: original registration passes in debug+release; see plan/acceptance/M03.md
+tests/UtilsTest.cpp,615,DEF_TEST,UtilsPreserveBitPatterns,3,CPU,PASS,M03 accepted: original registration passes in debug+release; see plan/acceptance/M03.md
 tests/VerticesTest.cpp,86,DEF_TEST,Vertices,22,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/VerticesTest.cpp,155,DEF_TEST,Vertices_clipping,22,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery
 tests/VerticesTest.cpp,176,DEF_TEST,Vertices_invalid,22,CPU,pending-runtime-discovery,Preserve conditional expression and expand eligible macOS variants from C++ discovery

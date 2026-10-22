@@ -1,0 +1,52 @@
+    Checking rust-skia v0.1.0 (/Volumes/Data/Users/paul/development/src/github/rust-skia)
+error: unnecessary parentheses around function argument
+  --> tests/m03/floating_point.rs:18:35
+   |
+18 |     check!(r, !double_nearly_zero((f32::EPSILON as f64)));
+   |                                   ^                   ^
+   |
+   = note: `-D unused-parens` implied by `-D warnings`
+   = help: to override `-D warnings` add `#[allow(unused_parens)]`
+help: remove these parentheses
+   |
+18 -     check!(r, !double_nearly_zero((f32::EPSILON as f64)));
+18 +     check!(r, !double_nearly_zero(f32::EPSILON as f64));
+   |
+
+error: unnecessary parentheses around function argument
+  --> tests/m03/floating_point.rs:65:42
+   |
+65 |     check!(r, !doubles_nearly_equal_ulps((f32::EPSILON as f64), 0.));
+   |                                          ^                   ^
+   |
+help: remove these parentheses
+   |
+65 -     check!(r, !doubles_nearly_equal_ulps((f32::EPSILON as f64), 0.));
+65 +     check!(r, !doubles_nearly_equal_ulps(f32::EPSILON as f64, 0.));
+   |
+
+error: unnecessary parentheses around assigned value
+  --> tests/m03/safe_math.rs:17:23
+   |
+17 |     let bits: usize = (std::mem::size_of::<usize>() * 8);
+   |                       ^                                ^
+   |
+help: remove these parentheses
+   |
+17 -     let bits: usize = (std::mem::size_of::<usize>() * 8);
+17 +     let bits: usize = std::mem::size_of::<usize>() * 8;
+   |
+
+error: unnecessary parentheses around assigned value
+  --> tests/m03/safe_math.rs:42:23
+   |
+42 |     let bits: usize = (std::mem::size_of::<usize>() * 8);
+   |                       ^                                ^
+   |
+help: remove these parentheses
+   |
+42 -     let bits: usize = (std::mem::size_of::<usize>() * 8);
+42 +     let bits: usize = std::mem::size_of::<usize>() * 8;
+   |
+
+error: could not compile `rust-skia` (test "m03_test") due to 4 previous errors

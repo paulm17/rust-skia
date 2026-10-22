@@ -1,0 +1,46 @@
+{
+  "debug-cow": {
+    "compile_exit": 0,
+    "run_exit": 0
+  },
+  "debug-erasure_sized_type_safety": {
+    "compile_exit": 1,
+    "expected_compile_rejection": true,
+    "contract_failed": false
+  },
+  "debug-erasure_type_safety": {
+    "compile_exit": 1,
+    "expected_compile_rejection": true,
+    "contract_failed": false
+  },
+  "debug-polymorphic": {
+    "compile_exit": 0,
+    "run_exit": 0
+  },
+  "debug-probes": {
+    "compile_exit": 0,
+    "run_exit": 0
+  },
+  "release-cow": {
+    "compile_exit": 0,
+    "run_exit": 0
+  },
+  "release-erasure_sized_type_safety": {
+    "compile_exit": 1,
+    "expected_compile_rejection": true,
+    "contract_failed": false
+  },
+  "release-erasure_type_safety": {
+    "compile_exit": 1,
+    "expected_compile_rejection": true,
+    "contract_failed": false
+  },
+  "release-polymorphic": {
+    "compile_exit": 0,
+    "run_exit": 0
+  },
+  "release-probes": {
+    "compile_exit": 0,
+    "run_exit": 0
+  }
+}

@@ -1,0 +1,19 @@
+COMMAND: ['rustc', '--edition=2024', '--test', 'tests/m02-api/probes.rs', '--extern', 'rust_skia=/Volumes/Data/Users/paul/development/src/github/rust-skia/target/release/librust_skia.rlib', '-L', 'dependency=/Volumes/Data/Users/paul/development/src/github/rust-skia/target/release/deps', '-L', 'dependency=/Volumes/Data/Users/paul/development/src/github/rust-skia/target/release', '-o', 'plan/acceptance/M02-evidence/api-release-probes', '-C', 'opt-level=3', '-C', 'debug-assertions=no']
+warning: function `pointer_table` is never used
+  --> tests/m02-api/probes.rs:34:4
+   |
+34 | fn pointer_table() {
+   |    ^^^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: function `skstring_hash_set` is never used
+  --> tests/m02-api/probes.rs:37:4
+   |
+37 | fn skstring_hash_set() {
+   |    ^^^^^^^^^^^^^^^^^
+
+warning: 2 warnings emitted
+
+
+EXIT: 0

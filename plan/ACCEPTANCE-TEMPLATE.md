@@ -23,4 +23,4 @@ For each failure: test name/context, assertion/source location, expected/actual 
 
 ## Gate decision
 
-Explain whether every assigned requirement passed, all earlier tests remain green, source/symbol mapping is complete and pending integrations remain explicitly scheduled. Record Intel as pending until its M46 gate if applicable. Update status.json only from this decision. ACCEPTED unlocks the next milestone for the user to hand over; FAIL/BLOCKED does not.
+Explain whether every assigned requirement passed, all earlier tests remain green, source/symbol mapping is complete and pending integrations remain explicitly scheduled. Intel/x86_64 is excluded by user direction; do not record it as pending or as a blocker. Update status.json only from this decision. ACCEPTED unlocks the next milestone for the user to hand over; FAIL/BLOCKED does not.

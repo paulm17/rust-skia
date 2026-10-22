@@ -1,0 +1,23 @@
+COMMAND: ['/Volumes/Data/Users/paul/development/src/github/rust-skia/target/debug/deps/m02_test-a997dd6914494635', 'templates::AutoReallocToZero', '--exact', '--nocapture']
+
+running 1 test
+reporter assertions=10 failures=4
+
+thread 'templates::AutoReallocToZero' (15785989) panicked at tests/support/mod.rs:25:9:
+4 assertion(s) failed:
+tests/m02/templates.rs:53: a.get().is_null()
+tests/m02/templates.rs:57: a.get().is_null()
+tests/m02/templates.rs:64: a.get().is_null()
+tests/m02/templates.rs:68: a.get().is_null()
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+test templates::AutoReallocToZero ... FAILED
+
+failures:
+
+failures:
+    templates::AutoReallocToZero
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 98 filtered out; finished in 0.00s
+
+
+EXIT: 101

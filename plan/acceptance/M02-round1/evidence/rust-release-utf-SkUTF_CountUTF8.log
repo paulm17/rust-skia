@@ -1,0 +1,53 @@
+COMMAND: ['/Volumes/Data/Users/paul/development/src/github/rust-skia/target/release/deps/m02_test-f37e1713df482657', 'utf::SkUTF_CountUTF8', '--exact', '--nocapture']
+
+running 1 test
+CountUTF8 input=[] expected=0 actual=0
+CountUTF8 input=[58] expected=1 actual=1
+CountUTF8 input=[58, 58] expected=2 actual=2
+CountUTF8 input=[c2, a1] expected=1 actual=1
+CountUTF8 input=[58, c2, a1] expected=2 actual=2
+CountUTF8 input=[58, 58, c2, a1] expected=3 actual=3
+CountUTF8 input=[e1, a1, a1] expected=1 actual=1
+CountUTF8 input=[58, e1, a1, a1] expected=2 actual=2
+CountUTF8 input=[58, 58, e1, a1, a1] expected=3 actual=3
+CountUTF8 input=[f0, a1, a1, a1] expected=1 actual=1
+CountUTF8 input=[58, f0, a1, a1, a1] expected=2 actual=2
+CountUTF8 input=[58, 58, f0, a1, a1, a1] expected=3 actual=3
+CountUTF8 input=[fc] expected=-1 actual=0
+CountUTF8 input=[fc, a1] expected=-1 actual=0
+CountUTF8 input=[fc, a1, a1] expected=-1 actual=0
+CountUTF8 input=[fc, a1, a1, a1] expected=-1 actual=0
+CountUTF8 input=[c2] expected=-1 actual=0
+CountUTF8 input=[a1] expected=-1 actual=0
+CountUTF8 input=[a1, a1] expected=-1 actual=0
+CountUTF8 input=[e1, a1] expected=-1 actual=0
+CountUTF8 input=[a1, a1, a1] expected=-1 actual=0
+CountUTF8 input=[f0, a1] expected=-1 actual=0
+CountUTF8 input=[a1, a1, a1, a1] expected=-1 actual=0
+reporter assertions=23 failures=11
+
+thread 'utf::SkUTF_CountUTF8' (15786992) panicked at tests/support/mod.rs:25:9:
+11 assertion(s) failed:
+tests/m02/utf.rs:73: *e as i64 == actual
+tests/m02/utf.rs:73: *e as i64 == actual
+tests/m02/utf.rs:73: *e as i64 == actual
+tests/m02/utf.rs:73: *e as i64 == actual
+tests/m02/utf.rs:73: *e as i64 == actual
+tests/m02/utf.rs:73: *e as i64 == actual
+tests/m02/utf.rs:73: *e as i64 == actual
+tests/m02/utf.rs:73: *e as i64 == actual
+tests/m02/utf.rs:73: *e as i64 == actual
+tests/m02/utf.rs:73: *e as i64 == actual
+tests/m02/utf.rs:73: *e as i64 == actual
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+test utf::SkUTF_CountUTF8 ... FAILED
+
+failures:
+
+failures:
+    utf::SkUTF_CountUTF8
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 98 filtered out; finished in 0.00s
+
+
+EXIT: 101

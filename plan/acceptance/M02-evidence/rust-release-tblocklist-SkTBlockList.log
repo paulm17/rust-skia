@@ -1,0 +1,15 @@
+COMMAND: ['/Volumes/Data/Users/paul/development/src/github/rust-skia/target/release/deps/m02_test-f37e1713df482657', 'tblocklist::SkTBlockList', '--exact', '--nocapture']
+
+running 1 test
+reserve N=1 initial=148 reserved=348 min=348
+reserve N=2 initial=168 reserved=408 min=408
+reserve N=3 initial=188 reserved=468 min=468
+reserve N=4 initial=208 reserved=528 min=528
+reserve N=5 initial=228 reserved=588 min=588
+reporter assertions=9352 failures=0
+test tblocklist::SkTBlockList ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 121 filtered out; finished in 0.00s
+
+
+EXIT: 0

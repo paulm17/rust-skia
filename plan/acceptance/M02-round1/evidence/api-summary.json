@@ -1,0 +1,22 @@
+{
+  "debug-cow": {
+    "compile_exit": 0,
+    "run_exit": 0
+  },
+  "debug-polymorphic": {
+    "compile_exit": 1
+  },
+  "debug-probes": {
+    "compile_exit": 1
+  },
+  "release-cow": {
+    "compile_exit": 0,
+    "run_exit": 0
+  },
+  "release-polymorphic": {
+    "compile_exit": 1
+  },
+  "release-probes": {
+    "compile_exit": 1
+  }
+}

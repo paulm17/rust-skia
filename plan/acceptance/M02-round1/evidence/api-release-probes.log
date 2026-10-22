@@ -1,0 +1,23 @@
+COMMAND: ['rustc', '--edition=2024', '--test', 'tests/m02-api/probes.rs', '--extern', 'rust_skia=/Volumes/Data/Users/paul/development/src/github/rust-skia/target/release/librust_skia.rlib', '-L', 'dependency=/Volumes/Data/Users/paul/development/src/github/rust-skia/target/release/deps', '-L', 'dependency=/Volumes/Data/Users/paul/development/src/github/rust-skia/target/release', '-o', 'plan/acceptance/M02-evidence/api-release-probes', '-C', 'opt-level=3', '-C', 'debug-assertions=no']
+error[E0061]: this method takes 1 argument but 2 arguments were supplied
+   --> tests/m02-api/probes.rs:32:11
+    |
+ 32 |     group.add(|| {}, 0);
+    |           ^^^        - unexpected argument #2 of type `{integer}`
+    |
+note: method defined here
+   --> src/executor.rs:198:12
+    |
+198 |     pub fn add<F: FnOnce() + Send + 'static>(&self, f: F) {
+    |            ^^^
+help: remove the extra argument
+    |
+ 32 -     group.add(|| {}, 0);
+ 32 +     group.add(|| {});
+    |
+
+error: aborting due to 1 previous error
+
+For more information about this error, try `rustc --explain E0061`.
+
+EXIT: 1

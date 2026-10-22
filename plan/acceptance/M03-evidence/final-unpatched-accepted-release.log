@@ -1,0 +1,18 @@
+=== harness_test ===
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+=== m02_test ===
+test result: ok. 122 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.12s
+=== point_test ===
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+=== scalar_test ===
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+=== supplemental_m01 ===
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+=== lib ===
+test result: ok. 61 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.10s
+=== m03 compile ===
+error[E0599]: no method named `push` found for type parameter `A` in the current scope
+error[E0747]: constant provided when a type was expected
+error[E0747]: constant provided when a type was expected
+error[E0277]: the trait bound `{closure@tests/m03/supplemental.rs:240:51: 240:59}: DataRelease<_>` is not satisfied
+error: could not compile `rust-skia` (test "m03_test") due to 4 previous errors; 5 warnings emitted

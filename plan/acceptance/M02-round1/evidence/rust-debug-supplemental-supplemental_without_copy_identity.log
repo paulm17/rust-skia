@@ -1,0 +1,21 @@
+COMMAND: ['/Volumes/Data/Users/paul/development/src/github/rust-skia/target/debug/deps/m02_test-a997dd6914494635', 'supplemental::supplemental_without_copy_identity', '--exact', '--nocapture']
+
+running 1 test
+without-copy expected=0x1044e19a0 actual=0x12df04290
+reporter assertions=1 failures=1
+
+thread 'supplemental::supplemental_without_copy_identity' (15785983) panicked at tests/support/mod.rs:25:9:
+1 assertion(s) failed:
+tests/m02/supplemental.rs:48: d.data() == INPUT.as_ptr()
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+test supplemental::supplemental_without_copy_identity ... FAILED
+
+failures:
+
+failures:
+    supplemental::supplemental_without_copy_identity
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 98 filtered out; finished in 0.00s
+
+
+EXIT: 101

@@ -1,0 +1,21 @@
+COMMAND: ['/Volumes/Data/Users/paul/development/src/github/rust-skia/target/release/deps/m02_test-f37e1713df482657', 'block::SkBlockAllocatorScratchBlockReserve', '--exact', '--nocapture']
+
+running 1 test
+reporter assertions=14 failures=2
+
+thread 'block::SkBlockAllocatorScratchBlockReserve' (15786795) panicked at tests/support/mod.rs:25:9:
+2 assertion(s) failed:
+tests/m02/block.rs:370: p.scratch_block_size() >= reserve && p.scratch_block_size() % 256 == 0
+tests/m02/block.rs:385: p.scratch_block_size() > 0 && p.scratch_block_size() < 256
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+test block::SkBlockAllocatorScratchBlockReserve ... FAILED
+
+failures:
+
+failures:
+    block::SkBlockAllocatorScratchBlockReserve
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 98 filtered out; finished in 0.00s
+
+
+EXIT: 101

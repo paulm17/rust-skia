@@ -1,0 +1,602 @@
+COMMAND: ['cargo', 'test', '--release', '--locked', '--no-fail-fast', '--', '--nocapture']
+    Finished `release` profile [optimized] target(s) in 0.00s
+     Running unittests src/lib.rs (target/release/deps/rust_skia-578c0e97d2d464e4)
+
+running 42 tests
+test arena::tests::dev_arena_runs_destructors_in_reverse_order ... ok
+test block_allocator::tests::dev_block_allocator_growth_and_reset ... ok
+test arena::tests::dev_fib_block_sizes ... ok
+test block_allocator::tests::dev_block_allocator_allocate_resize_release ... ok
+test codec::tests::dev_base64_round_trip ... ok
+test containers::tests::dev_deque_retains_boundary_block ... ok
+test codec::tests::dev_md5_rfc1321 ... ok
+test config::tests::dev_core_contracts_and_tags ... ok
+test containers::tests::dev_hash_capacity_sequence ... ok
+test containers::tests::dev_lru_recency ... ok
+test containers::tests::dev_message_bus_inboxes_and_filtering ... ok
+test extras::tests::dev_extras_safe_range_heap_and_next_id ... ok
+test float_bits::tests::dev_sign_bit_conversions_match_reference_cases ... ok
+test float_bits::tests::dev_sign_bit_conversions_round_trip ... ok
+test floating_point::tests::dev_floating_point_classification_and_ulps ... ok
+test floating_point::tests::dev_floating_point_rounding_and_saturation ... ok
+test ipoint::tests::dev_ipoint_arithmetic_is_saturating ... ok
+test ipoint::tests::dev_ipoint_layout_and_accessors ... ok
+test math::tests::dev_sk_math_limits_and_left_shift ... ok
+test math_priv::tests::dev_math_priv_logs_and_power_of_two ... ok
+test memory::tests::dev_container_capacity_rounding ... ok
+test memory::tests::dev_malloc_and_calloc_contract ... ok
+test memory::tests::dev_raw_ptr_arithmetic_and_comparisons ... ok
+test point::tests::dev_point_accessors_and_conversions ... ok
+test point::tests::dev_point_arithmetic_and_products ... ok
+test point::tests::dev_point_scale_offset_and_normalize ... ok
+test point_priv::tests::dev_point_priv_finite_and_distances ... ok
+test point_priv::tests::dev_point_priv_rotation_and_rect_helpers ... ok
+test ref_cnt::tests::dev_refcnt_adopts_clones_and_disposes_once ... ok
+test ref_cnt::tests::dev_sk_sp_null_and_take ... ok
+test safe32::tests::dev_safe32_saturates_at_sk_limits ... ok
+test safe_math::tests::dev_safe_math_detects_overflow_and_aligns ... ok
+test scalar::tests::dev_float_interp_func_matches_table_walk ... ok
+test scalar::tests::dev_scalar_rounding_and_sign_helpers ... ok
+test scalar::tests::dev_scalars_equal_and_interp ... ok
+test sk_to::tests::dev_sk_to_checks_boundaries ... ok
+test string::tests::dev_string_format_and_split ... ok
+test string::tests::dev_string_scalar_and_resize ... ok
+test string_utf::tests::dev_utf8_and_utf16 ... ok
+test tblocklist::tests::dev_tblocklist_pointer_stability_and_concat ... ok
+test tblocklist::tests::dev_tblocklist_runtime_block_size_and_iterators ... ok
+test tfits_in::tests::dev_sk_tfits_in_matches_checked_conversion ... ok
+
+test result: ok. 42 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/main.rs (target/release/deps/rust_skia-d4ba01dcbc6edd80)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/harness_test.rs (target/release/deps/harness_test-c90fcca87ef25b59)
+
+running 5 tests
+reporter assertions=12 failures=0
+reporter assertions=1 failures=1
+reporter assertions=1 failures=
+thread 'supplemental_registry_excludes_false_condition_and_preserves_head_order' (15786524) panicked at tests/support/mod.rs:25:9:
+1 assertion(s) failed:
+tests/harness_test.rs:19: DEF_CONDITIONAL_TEST executed a test with a false condition
+0note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+reporter assertions=1 failures=0
+reporter assertions=3 failures=2test TestCtsEnforcement ... ok
+
+
+thread 'support::tests::reporter_collects_failures_and_evaluates_once' (15786525) panicked at tests/support/mod.rs:25:9:
+2 assertion(s) failed:
+tests/support/mod.rs:49: { evaluations += 1; false }
+tests/support/mod.rs:53: false
+test TestTrueCondition ... ok
+test TestNormal ... ok
+reporter assertions=0 failures=0
+test supplemental_registry_excludes_false_condition_and_preserves_head_order ... ok
+test support::tests::reporter_collects_failures_and_evaluates_once ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/m02_test.rs (target/release/deps/m02_test-f37e1713df482657)
+
+running 99 tests
+reporter assertions=10 failures=0
+reporter assertions=323 failures=0
+reporter assertions=63 failures=0
+reporter assertions=384 failures=0
+reporter assertions=4 failures=0
+reporter assertions=62 failures=0
+test arena::ArenaAllocReset ... ok
+policy=0 block=1 expected=128 actual=208
+reporter assertions=2 failures=0
+reporter assertions=1test arena::ArenaAllocDestructionOrder ...  failures=ok0
+
+reporter assertions=6 failures=0
+test arena::SkFibBlockSizes ... ok
+reporter assertions=8 failures=0
+policy=0 block=2 expected=128 actual=208
+policy=0 block=3 expected=128 actual=208test arena::ArenaAlloc ... 
+ok
+policy=0 block=4 expected=128 actual=208
+policy=1 block=1 expected=256 actual=256
+policy=1 block=2 expected=384 actual=384
+policy=test arena::ArenaAllocIsEmpty ... 1ok block=
+3 expected=512 actual=512
+policy=1 block=4 expected=640 actual=640
+policy=2 block=1 expected=128 actual=208
+policy=2 block=2 expected=256 actual=256test block::SkBlockAllocatorAllocatorMetadata ... 
+ok
+reporter assertions=6 failures=3
+test block::SkBlockAllocatorAlloc ... ok
+
+thread 'block::SkBlockAllocatorPreallocSize' (15786540) panicked at tests/support/mod.rs:25:9:
+3 assertion(s) failed:
+tests/m02/block.rs:29: p.prealloc_size() == std::mem::size_of::<BlockAllocator>()
+tests/m02/block.rs:42: p.prealloc_size() == 1024
+tests/m02/block.rs:51: p.prealloc_usable_space() < 2048 && p.prealloc_usable_space() >= 2048 -
+std::mem::size_of::<BlockAllocator>()
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+test arena::ArenaAllocWithMultipleBlocks ... ok
+reporter assertions=60 failures=0
+test arena::ArenaAllocUnusualAlignment ... ok
+policy=2 block=3 expected=384 actual=384
+policy=2 block=4 expected=test block::SkBlockAllocatorIterateAndRelease ... 640ok actual=
+640
+policy=3 block=1 expected=256 actual=256
+policy=3 block=2 expected=512 actual=512
+policy=test block::SkBlockAllocatorMetadata ... 3ok block=
+3 expected=1024 actual=1024
+policy=3 block=4 expected=2048 actual=2048
+reporter assertions=20 failures=5
+test block::SkBlockAllocatorReleaseBlock ... ok
+reporter assertions=11 failures=0
+
+thread 'block::SkBlockAllocatorGrowthPolicy' (15786536) panicked at tests/support/mod.rs:25:9:
+5 assertion(s) failed:
+tests/m02/block.rs:229: expected[gp][i] * 128 == actual
+tests/m02/block.rs:229: expected[gp][i] * 128 == actual
+tests/m02/block.rs:229: expected[gp][i] * 128 == actual
+tests/m02/block.rs:229: expected[gp][i] * 128 == actual
+tests/m02/block.rs:229: expected[gp][i] * 128 == actual
+test block::SkBlockAllocatorPreallocSize ... FAILED
+reporter assertions=14 failures=0
+reporter assertions=13 failures=0
+test block::SkBlockAllocatorStealBlocks ... ok
+reporter assertions=7 failures=0
+reporter assertions=14 failures=2
+
+thread 'block::SkBlockAllocatorScratchBlockReserve' (15786546) panicked at tests/support/mod.rs:25:9:
+2 assertion(s) failed:
+tests/m02/block.rs:370: p.scratch_block_size() >= reserve && p.scratch_block_size() % 256 == 0
+tests/m02/block.rs:385: p.scratch_block_size() > 0 && p.scratch_block_size() < 256
+test block::SkBlockAllocatorResize ... reporter assertions=ok216
+ failures=72
+reporter assertions=10 failures=0
+
+thread 'block::SkBlockAllocatorOwningBlock' (15786539) panicked at tests/support/mod.rs:25:9:
+72 assertion(s) failed:
+tests/m02/block.rs:494: computed == b.block
+tests/m02/block.rs:494: computed == b.block
+tests/m02/block.rs:494: computed == b.block
+tests/m02/block.rs:494: computed == b.block
+tests/m02/block.rs:494: computed == b.block
+tests/m02/block.rs:494: computed == b.block
+tests/m02/block.rs:494: computed == b.block
+tests/m02/block.rs:494: computed == b.block
+tests/m02/block.rs:494: computed == b.block
+tests/m02/block.rs:494: computed == b.block
+tests/m02/block.rs:494: computed == b.block
+tests/m02/block.rs:494: computed == b.block
+tests/m02/block.rs:494: computed == b.block
+tests/m02/block.rs:494: computed == b.block
+tests/m02/block.rs:494: computed == b.block
+tests/m02/block.rs:494: computed == b.block
+tests/m02/block.rs:494: computed == b.block
+tests/m02/block.rs:494: computed == b.block
+tests/m02/block.rs:494: computed == b.block
+tests/m02/block.rs:494: computed == b.block
+tests/m02/block.rs:494: computed == b.block
+tests/m02/block.rs:494: computed == b.block
+tests/m02/block.rs:494: computed == b.block
+tests/m02/block.rs:494: computed == b.block
+tests/m02/block.rs:494: computed == b.block
+tests/m02/block.rs:494: computed == b.block
+tests/m02/block.rs:494: computed == b.block
+tests/m02/block.rs:494: computed == b.block
+tests/m02/block.rs:494: computed == b.block
+tests/m02/block.rs:494: computed == b.block
+tests/m02/block.rs:494: computed == b.block
+tests/m02/block.rs:494: computed == b.block
+tests/m02/block.rs:494: computed == b.block
+tests/m02/block.rs:494: computed == b.block
+tests/m02/block.rs:494: computed == b.block
+tests/m02/block.rs:494: computed == b.block
+tests/m02/block.rs:494: computed == b.block
+tests/m02/block.rs:494: computed == b.block
+tests/m02/block.rs:494: computed == b.block
+tests/m02/block.rs:494: computed == b.block
+tests/m02/block.rs:494: computed == b.block
+tests/m02/block.rs:494: computed == b.block
+tests/m02/block.rs:494: computed == b.block
+tests/m02/block.rs:494: computed == b.block
+tests/m02/block.rs:494: computed == b.block
+tests/m02/block.rs:494: computed == b.block
+tests/m02/block.rs:494: computed == b.block
+tests/m02/block.rs:494: computed == b.block
+tests/m02/block.rs:494: computed == b.block
+tests/m02/block.rs:494: computed == b.block
+tests/m02/block.rs:494: computed == b.block
+tests/m02/block.rs:494: computed == b.block
+tests/m02/block.rs:494: computed == b.block
+tests/m02/block.rs:494: computed == b.block
+tests/m02/block.rs:494: computed == b.block
+tests/m02/block.rs:494: computed == b.block
+tests/m02/block.rs:494: computed == b.block
+tests/m02/block.rs:494: computed == b.block
+tests/m02/block.rs:494: computed == b.block
+tests/m02/block.rs:494: computed == b.block
+tests/m02/block.rs:494: computed == b.block
+tests/m02/block.rs:494: computed == b.block
+tests/m02/block.rs:494: computed == b.block
+tests/m02/block.rs:494: computed == b.block
+tests/m02/block.rs:494: computed == b.block
+tests/m02/block.rs:494: computed == b.block
+tests/m02/block.rs:494: computed == b.block
+tests/m02/block.rs:494: computed == b.block
+tests/m02/block.rs:494: computed == b.block
+tests/m02/block.rs:494: computed == b.block
+tests/m02/block.rs:494: computed == b.block
+tests/m02/block.rs:494: computed == b.block
+reporter assertions=33 failures=test containers::LRUCacheRandom ... 0ok
+
+reporter assertions=9 failures=0
+test block::SkBlockAllocatorGrowthPolicy ... reporter assertions=9 failures=0
+FAILED
+reporter assertions=1095 failures=0
+reporter assertions=6 failures=0
+test block::SkBlockAllocatorReset ... okreporter assertions=
+18 failures=0
+test containers::MessageBus ... reporter assertions=ok8
+ failures=0
+test block::SkBlockAllocatorRewind ... ok
+reporter assertions=3 failures=0
+test block::SkBlockAllocatorScratchBlockReserve ... FAILED
+test block::SkBlockAllocatorRelease ... ok
+reporter assertions=108 failures=0
+test containers::MessageBusSp ... ok
+test containers::LRUCacheSequential ... ok
+reporter assertions=42 failures=0
+reporter assertions=test block::SkBlockAllocatorOwningBlock ... 1547FAILED failures=
+0
+reporter assertions=12 failures=0
+test containers::MessageBus_SkShouldPostMessageToBus ... ok
+reporter assertions=8 failures=0
+test containers::SkSpanBasicTemplateGuide ... ok
+reporter assertions=10 failures=0
+test containers::SkSpanDeduceParam ... ok
+reporter assertions=10 failures=0
+test containers::SkSpanDeduceSize ... ok
+reporter assertions=10 failures=0
+test data::DataTable ... ok
+reporter assertions=32 failures=0
+test data::Data_empty ... reporter assertions=ok3
+ failures=0
+test graph::IncrTopoSort ... ok
+test hash::HashMapCtor ... ok
+reporter assertions=4 failures=0
+test hash::HashMapCtorOneElem ... ok
+reporter assertions=3 failures=0
+reporter assertions=2 failures=0
+test hash::HashMapSwap ... ok
+test hash::HashSetCopyCounter ... ok
+reporter assertions=11 failures=0
+test hash::HashSetSwap ... ok
+reporter assertions=2 failures=0
+test metadata::MetaData ... reporter assertions=ok14
+ failures=0
+test raw::RawPtr_Assignment ... okreporter assertions=
+3 failures=0
+test raw::RawPtr_CopyAndMove ... okreporter assertions=
+12 failures=0
+test raw::RawPtr_DereferenceAndMemberAccess ... reporter assertions=ok2
+ failures=0
+test raw::RawPtr_DefaultConstructor ... ok
+reporter assertions=7 failures=0
+reporter assertions=54 failures=0
+test raw::RawPtr_DisableDanglingPtrDetection ... ok
+reporter assertions=3 failures=0
+test raw::RawPtr_EqualityComparisons ... ok
+test raw::RawPtr_NullptrConstructor ... ok
+test raw::RawPtr_PointerArithmetic ... ok
+test raw::RawPtr_RawPointerConstructor ... ok
+test raw::RawPtr_RelationalComparisons ... ok
+reporter assertions=3 failures=0
+reporter assertions=11 failures=0
+test raw::RawPtr_SelfAssignment ... ok
+reporter assertions=4 failures=0
+reporter assertions=29 failures=0
+test raw::RawPtr_Upcasting ... ok
+reporter assertions=3 failures=0
+test raw::RawPtr_Void ... ok
+test data::Data ... ok
+reporter assertions=6005 failures=0
+reporter assertions=3 failures=0
+test refcount::sk_sp_ref ... ok
+test strings::String_SkStrSplit ... ok
+test refcount::sk_sp_reset ... reporter assertions=ok8006
+ failures=0
+reporter assertions=4 failures=0
+reporter assertions=4test strings::String_SkStrSplit_All ...  failures=ok0
+
+test strings::String_VAList ... ok
+reporter assertions=3 failures=0
+test strings::String_VAList_overflow ... ok
+reporter assertions=2 failures=0
+test strings::String_fromUTF16 ... ok
+reporter assertions=2 failures=0
+test strings::String_huge ... ok
+external storage range=0x16c5e21a8..0x16c5e2590 actual=0x1297042a0
+test strings::String_Threaded ... ok
+reporter assertions=1 failures=1
+test strings::String_overflow ... ok
+thread 'supplemental::supplemental_arena_external_storage' (15786602) panicked at tests/support/mod.rs:25:9:
+1 assertion(s) failed:
+tests/m02/supplemental.rs:81: p >= start && p < start + 1000
+
+reporter assertions=3 failures=0
+test strings::String_resize_after_assignment ... ok
+empty data release expected=1 actual=0
+reporter assertions=1 failures=1
+test strings::String_resize_after_copy_construction ... 
+thread 'supplemental::supplemental_empty_data_release' (15786605) panicked at tests/support/mod.rs:25:9:
+1 assertion(s) failed:
+tests/m02/supplemental.rs:67: actual == 1
+ok
+checksum bytes=[] seed=0 expected=3804095577 actual=0
+checksum bytes=[] seed=1test strings::String_resize_grow ...  expected=ok638533687
+ actual=1
+checksum bytes=[] seed=4294967295 expected=test strings::String_resize_shrink ... ok
+2821084191 actual=4294967295
+checksum bytes=[test strings::String_resize_to_nothing ... 97ok]
+ seed=0 expected=164791601 actual=1147936356
+without-copy expected=0x10452b3a0 actual=0x129704440
+packed input=[] expected=None actual=Some(0)
+test supplemental::supplemental_data_overflow_rejection ... packed input=ok[
+fe] expected=None actual=Some(0)
+packed input=[fe, 01] expected=None actual=Some(0)
+test supplemental::supplemental_arena_external_storage ... FAILED
+packed input=[ff, 01, 02, 03] expected=None actual=Some(0)
+test supplemental::supplemental_empty_data_release ... FAILEDreporter assertions=10 failures=4
+
+reporter assertions=14 failures=
+thread 'templates::AutoReallocToZero' (15786611) panicked at tests/support/mod.rs:25:9:
+4 assertion(s) failed:
+tests/m02/templates.rs:53: a.get().is_null()
+tests/m02/templates.rs:57: a.get().is_null()
+tests/m02/templates.rs:64: a.get().is_null()
+tests/m02/templates.rs:68: a.get().is_null()
+0
+reporter assertions=1 failures=1
+
+thread 'supplemental::supplemental_without_copy_identity' (15786609) panicked at tests/support/mod.rs:25:9:
+1 assertion(s) failed:
+tests/m02/supplemental.rs:48: d.data() == INPUT.as_ptr()
+checksum bytes=[97] seed=1 expected=459268265 actual=3183019953
+test supplemental::supplemental_stream_boundaries_and_byte_order ... checksum bytes=ok
+[
+thread 'templates::Templates' (15786613) panicked at tests/m02/templates.rs:6:5:
+index out of bounds: the len is 0 but the index is 0
+97] seed=4294967295 expected=4117487878 actual=3407753494
+checksum bytes=[97, 98, 99] seed=0 expected=3411111026 actual=test templates::AutoReallocToZero ... 2810448472FAILED
+
+checksum bytes=[97, 98, 99] seed=1 expected=2184336823 actual=1000126016
+checksum bytes=[97test supplemental::supplemental_without_copy_identity ... FAILED
+, 98, 99] seed=4294967295 expected=1582327983 actual=775381995
+test templates::Templates ... checksum bytes=[FAILED97
+, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122] seed=0 expected=517385426 actual=3017572367
+checksum bytes=[97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122] seed=1 expected=3575925044 actual=3640846425
+checksum bytes=[97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122] seed=4294967295 expected=3468900993 actual=2943870044
+reporter assertions=12 failures=12
+
+thread 'supplemental::supplemental_checksum_reference_vectors' (15786603) panicked at reporter assertions=tests/support/mod.rs2: failures=250:
+9:
+12 assertion(s) failed:
+tests/m02/supplemental.rs:136: actual == expected[i]
+tests/m02/supplemental.rs:136: actual == expected[i]
+tests/m02/supplemental.rs:136: actual == expected[i]
+tests/m02/supplemental.rs:136: actual == expected[i]
+tests/m02/supplemental.rs:136: actual == expected[i]
+tests/m02/supplemental.rs:136: actual == expected[i]
+tests/m02/supplemental.rs:136: actual == expected[i]
+tests/m02/supplemental.rs:136: actual == expected[i]
+tests/m02/supplemental.rs:136: actual == expected[i]
+tests/m02/supplemental.rs:136: actual == expected[i]
+tests/m02/supplemental.rs:136: actual == expected[i]
+tests/m02/supplemental.rs:136: actual == expected[i]reporter assertions=3 failures=2
+ToUTF8(-1) expected=0 actual=
+4
+ToUTF8(-1) expected=0 actual=4
+reporter assertions=test templates::AutoTMallocSelfMove ... 26ok failures=
+2
+
+thread 'utf::SkUTF_NextUTF8_ToUTF8' (15786615) panicked at tests/support/mod.rs:25:9:
+2 assertion(s) failed:
+tests/m02/utf.rs:101: len == 0
+tests/m02/utf.rs:101: len == 0
+reporter assertions=
+thread 'support::tests::reporter_collects_failures_and_evaluates_once' (15786610) panicked at tests/support/mod.rs:25:9:
+2 assertion(s) failed:
+tests/support/mod.rs:49: { evaluations += 1; false }
+tests/support/mod.rs:53: false
+20 failures=0
+reporter assertions=4 failures=4
+
+thread 'supplemental::supplemental_packed_truncation' (15786607) panicked at tests/support/mod.rs:25:9:
+4 assertion(s) failed:
+tests/m02/supplemental.rs:34: actual.is_none()
+tests/m02/supplemental.rs:34: actual.is_none()
+tests/m02/supplemental.rs:34: actual.is_none()
+tests/m02/supplemental.rs:34: actual.is_none()
+test supplemental::supplemental_checksum_reference_vectors ... FAILED
+MD5 input=[] expected=[d4, 1d, 8c, d9, 8f, 00, b2, 04, e9, 80, 09, 98, ec, f8, 42, 7e] actual=[d4, 1d, 8c, d9, 8f, 00, b2test utf::SkUTF_UTF16 ... , 0ok4, e9, 80, 09, 
+98, ec, f8, 42, 7e]
+MD5 input=[] expected=[d4, 1d, 8c, d9, 8f, test utf::SkUTF_NextUTF8_ToUTF8 ... 0FAILED0
+, b2, 04, e9, 80, 09, 98, ec, f8, 42, 7e] actual=[d4, 1d, 8c, d9, 8f, 0test supplemental::supplemental_packed_truncation ... 0FAILED, 
+b2, 04, e9, 80, 09, 98, ec, f8, 42, 7e]
+test utilities::SkFree_SafeToPassNull ... MD5 input=[97] expected=[ok
+0c, c1, 75, b9, c0, f1, b6, a8, 31, c3, 99, e2, 69, 77, 26, 61] actual=[0c, c1, 75test utilities::SkMalloc_DataIsWriteable ... ok, b9, c0, f1, b6
+, a8, 31, c3, 99, e2, 69, 77, 26, 61]
+MD5 input=[97] expected=[0c, c1, 75, b9, c0, f1, b6, a8, 31, c3, 99, e2, 69, 77, 26, 61] actual=[0c, c1, 75, b9, c0, f1, b6, a8, 31, c3, 99, e2, 69, 77, 26, 61]
+MD5 input=[97, 98, 99] expected=[90, 01, 50, 98, 3c, d2, 4f, b0, d6, 96, 3f, 7d, 28, e1, 7f, 72] actual=[90, 01, 50, 98, 3c, d2, 4f, b0, d6, 96, 3f, 7d, 28, e1, 7f, 72]
+MD5 input=[97, 98, 99] expected=[90, 01, 50, 98, 3c, d2, 4f, b0, d6, 96, 3f, 7d, 28, e1, 7f, 72] actual=[bc, 1f, 20, 42, 02, e3, 80, 35, c6, bb, ba, e0, 60, 45, 26, f1]
+MD5 input=[109, 101, 115, 115, 97, 103, 101, 32, 100, 105, 103, 101, 115, 116] expected=[f9, 6b, 69, 7d, 7c, b7, 93, 8d, 52, 5a, 2f, 31, aa, f1, 61, d0] actual=[f9, 6b, 69, 7d, 7c, b7, 93, 8d, 52, 5a, 2f, 31, aa, f1, 61, d0]
+MD5 input=[109, 101, 115, 115, 97, 103, 101, 32, 100, 105, 103, 101, 115, 116] expected=[f9, 6b, 69, 7d, 7c, b7, 93, 8d, 52, 5a, 2f, 31, aa, f1, 61, d0] actual=[2c, 14, 9c, 91, 1d, b5, 4d, 14, 55, 96, 2d, 6e, 18, a2, 77, 85]
+MD5 input=[97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122] expected=[c3, fc, d3, d7, 61, 92, e4, 00, 7d, fb, 49, 6c, ca, 67, e1, 3b] actual=[c3, fc, d3, d7, 61, 92, e4, 00, 7d, fb, 49, 6c, ca, 67, e1, 3b]
+MD5 input=[97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122] expected=[c3, fc, d3, d7, 61, 92, e4, 00, 7d, fb, 49, 6c, ca, 67, e1, 3b] actual=[c9, 43, c8, 7f, fd, dc, 3d, db, dd, f4, b1, 77, b9, 9f, 88, b6]
+MD5 input=[65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57] expected=[d1, 74, ab, 98, d2, 77, d9, f5, a5, 61, 1c, 2c, 9f, 41, 9d, 9f] actual=[d1, 74, ab, 98, d2, 77, d9, f5, a5, 61, 1c, 2c, 9f, 41, 9d, 9f]
+MD5 input=[65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57] expected=[d1, 74, ab, 98, d2, 77, d9, f5, a5, 61, 1c, 2c, 9f, 41, 9d, 9f] actual=[ba, 35, 62, c8, e4, 65, 56, 5f, b1, c9, c1, ef, d7, 26, 51, f6]
+MD5 input=[49, 50, 51, 52, 53, 54, 55, 56, 57, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 48] expected=[57, ed, f4, a2, 2b, e3, c9, 55, ac, 49, da, 2e, 21, 07, b6, 7a] actual=[57, ed, f4, a2, 2b, e3, c9, 55, ac, 49, da, 2e, 21, 07, b6, 7a]
+MD5 input=[49, 50, 51, 52, 53, 54, 55, 56, 57, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 48] expected=[57, ed, f4, a2, 2b, e3, c9, 55, ac, 49, da, 2e, 21, 07, b6, 7a] actual=[0a, 1b, a1, e3, 6c, 88, f5, 87, da, 2d, d0, 40, f4, 5d, a7, f4]
+reporter assertions=14 failures=5
+
+thread 'utilities::MD5' (15786618) panicked at tests/support/mod.rs:25:9:
+5 assertion(s) failed:
+tests/m02/utilities.rs:248: actual == *expected
+tests/m02/utilities.rs:248: actual == *expected
+tests/m02/utilities.rs:248: actual == *expected
+tests/m02/utilities.rs:248: actual == *expected
+tests/m02/utilities.rs:248: actual == *expected
+reporter assertions=192 failures=0
+reporter assertions=0 failures=0
+test utilities::SkContainerAllocatorBasic ... ok
+reporter assertions=1 failures=0
+CountUTF8 input=[] expected=0 actual=0
+test support::tests::reporter_collects_failures_and_evaluates_once ... CountUTF8 input=ok[
+58] expected=1 actual=1
+CountUTF8 input=[58, 58] expected=2 actual=2
+CountUTF8 input=[c2, test utilities::MD5 ... FAILED
+a1] expected=1 actual=1
+test utilities::SkOnce_NoArg ... CountUTF8 input=[58, c2, a1ok
+] expected=2 actual=2
+CountUTF8 input=[58, 58, c2, a1] expected=3 actual=3
+CountUTF8 input=[e1, test utilities::SkSharedMutexBasic ... ok
+a1, a1] expected=1 actual=1
+CountUTF8 input=[58, e1, a1, a1] expected=2 actual=2
+CountUTF8 input=[58, 58, e1, a1, a1] expected=3 actual=3
+CountUTF8 input=[f0, a1, a1, a1] expected=1 actual=1
+CountUTF8 input=[58, f0, a1, a1, a1] expected=2 actual=2
+CountUTF8 input=[58, 58, f0, a1, a1, a1] expected=3 actual=3
+CountUTF8 input=[fc] expected=-1 actual=0
+CountUTF8 input=[fc, a1] expected=-1 actual=0
+CountUTF8 input=[fc, a1, a1] expected=-1 actual=0
+CountUTF8 input=[fc, a1, a1, a1] expected=-1 actual=0
+CountUTF8 input=[c2] expected=-1 actual=0
+CountUTF8 input=[a1] expected=-1 actual=0
+reporter assertions=11 failures=0
+reporter assertions=1 failures=0
+reporter assertions=13 failures=0
+test utilities::SkRealloc_DataIsWriteableAndEventuallyFreed ... reporter assertions=ok200
+ failures=0
+reporter assertions=15 failures=0
+test utilities::SkOnce_Singlethreaded ... ok
+CountUTF8 input=[a1, a1] expected=-1 actual=0
+CountUTF8 input=[e1, a1] expected=-test supplemental::supplemental_fake_streams ... ok
+1 actual=0
+CountUTF8 input=[a1, a1, a1] expected=-1 actual=0
+test utilities::SkCalloc_DataIsZeroInitializedAndWriteable ... ok
+CountUTF8 input=[f0, test utilities::SkStringViewContains ... ok
+a1] expected=-1 actual=0
+CountUTF8 input=[a1, a1, a1, a1] expected=-1 actual=0
+reporter assertions=23 failures=11
+
+thread 'utf::SkUTF_CountUTF8' (15786614) panicked at tests/support/mod.rs:25:9:
+11 assertion(s) failed:
+tests/m02/utf.rs:73: *e as i64 == actual
+tests/m02/utf.rs:73: *e as i64 == actual
+tests/m02/utf.rs:73: *e as i64 == actual
+tests/m02/utf.rs:73: *e as i64 == actual
+tests/m02/utf.rs:73: *e as i64 == actual
+tests/m02/utf.rs:73: *e as i64 == actual
+tests/m02/utf.rs:73: *e as i64 == actual
+tests/m02/utf.rs:73: *e as i64 == actual
+tests/m02/utf.rs:73: *e as i64 == actual
+tests/m02/utf.rs:73: *e as i64 == actual
+tests/m02/utf.rs:73: *e as i64 == actual
+reporter assertions=9 failures=0
+reporter assertions=1 failures=0
+reporter assertions=200 failures=0
+test utilities::TLazy_copy ... ok
+reporter assertions=33 failures=0test utf::SkUTF_CountUTF8 ... 
+FAILED
+reporter assertions=29 failures=0
+test utilities::SkOnce_Multithreaded ... ok
+test utilities::memory_calloc ... ok
+test utf::SkUTF_UTF8 ... ok
+test utilities::SkStringViewStartsAndEnds ... ok
+reporter assertions=5400000 failures=0
+test utilities::SkSharedMutexMultiThreaded ... ok
+reporter assertions=2 failures=0
+test refcount::RefCnt ... ok
+
+failures:
+
+failures:
+    block::SkBlockAllocatorGrowthPolicy
+    block::SkBlockAllocatorOwningBlock
+    block::SkBlockAllocatorPreallocSize
+    block::SkBlockAllocatorScratchBlockReserve
+    supplemental::supplemental_arena_external_storage
+    supplemental::supplemental_checksum_reference_vectors
+    supplemental::supplemental_empty_data_release
+    supplemental::supplemental_packed_truncation
+    supplemental::supplemental_without_copy_identity
+    templates::AutoReallocToZero
+    templates::Templates
+    utf::SkUTF_CountUTF8
+    utf::SkUTF_NextUTF8_ToUTF8
+    utilities::MD5
+
+test result: FAILED. 85 passed; 14 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s
+
+error: test failed, to rerun pass `--test m02_test`
+     Running tests/point_test.rs (target/release/deps/point_test-6fd9c0c94f3ed5ba)
+
+running 3 tests
+reporter assertions=132 failures=0
+reporter assertions=3 failures=2
+reporter assertions=
+thread 'support::tests::reporter_collects_failures_and_evaluates_once' (15786640) panicked at tests/support/mod.rs:25:9:
+2 assertion(s) failed:
+tests/support/mod.rs:49: { evaluations += 1; false }
+tests/support/mod.rs:53: false
+8 failures=0
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+test Point ... ok
+test Point_setLengthFast ... ok
+reporter assertions=0 failures=0
+test support::tests::reporter_collects_failures_and_evaluates_once ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/scalar_test.rs (target/release/deps/scalar_test-3965b042505793cf)
+
+running 2 tests
+reporter assertions=3 failures=2
+
+thread 'support::tests::reporter_collects_failures_and_evaluates_once' (15786643) panicked at tests/support/mod.rs:25:9:
+2 assertion(s) failed:
+tests/support/mod.rs:49: { evaluations += 1; false }
+tests/support/mod.rs:53: false
+reporter assertions=note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+661 failures=0
+test Scalar ... ok
+reporter assertions=0 failures=0
+test support::tests::reporter_collects_failures_and_evaluates_once ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/supplemental_m01.rs (target/release/deps/supplemental_m01-789901ed82ea5d7e)
+
+running 5 tests
+test supplemental_float_bit_encodings ... ok
+test supplemental_interpolation_and_equality ... ok
+test supplemental_point_distances_and_saturation ... ok
+test supplemental_ulp_boundaries ... ok
+test supplemental_saturation_rounding_and_midpoint ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests rust_skia
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+error: 1 target failed:
+    `--test m02_test`
+
+EXIT: 101

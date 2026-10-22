@@ -1,0 +1,13 @@
+/evidence/reference-debug
+/evidence/reference-release
+/evidence/M01-reference/reference-debug
+/evidence/M01-reference/reference-release
+/evidence/api-debug-cow
+/evidence/api-debug-polymorphic
+/evidence/api-debug-probes
+/evidence/api-debug-erasure_type_safety
+/evidence/api-release-cow
+/evidence/api-release-polymorphic
+/evidence/api-release-probes
+/evidence/api-release-erasure_type_safety
+*.dSYM/

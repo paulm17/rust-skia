@@ -1,0 +1,31 @@
+COMMAND: ['/Volumes/Data/Users/paul/development/src/github/rust-skia/target/release/deps/m02_test-f37e1713df482657', 'more_templates::TemplateContainerAPIs', '--exact', '--nocapture']
+
+running 1 test
+reporter assertions=96 failures=12
+
+thread 'more_templates::TemplateContainerAPIs' (15869426) panicked at tests/support/mod.rs:25:9:
+12 assertion(s) failed:
+tests/m02/more_templates.rs:48: C::sized(0).get_ptr().is_null()
+tests/m02/more_templates.rs:49: C::sized(0).data_ptr().is_null()
+tests/m02/more_templates.rs:65: c.get_ptr().is_null()
+tests/m02/more_templates.rs:66: c.data_ptr().is_null()
+tests/m02/more_templates.rs:68: m.get_ptr().is_null()
+tests/m02/more_templates.rs:69: m.data_ptr().is_null()
+tests/m02/more_templates.rs:48: C::sized(0).get_ptr().is_null()
+tests/m02/more_templates.rs:49: C::sized(0).data_ptr().is_null()
+tests/m02/more_templates.rs:65: c.get_ptr().is_null()
+tests/m02/more_templates.rs:66: c.data_ptr().is_null()
+tests/m02/more_templates.rs:68: m.get_ptr().is_null()
+tests/m02/more_templates.rs:69: m.data_ptr().is_null()
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+test more_templates::TemplateContainerAPIs ... FAILED
+
+failures:
+
+failures:
+    more_templates::TemplateContainerAPIs
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 117 filtered out; finished in 0.00s
+
+
+EXIT: 101

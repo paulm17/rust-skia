@@ -1,0 +1,773 @@
+warning: unnecessary parentheses around function argument
+  --> tests/m03/floating_point.rs:18:35
+   |
+18 |     check!(r, !double_nearly_zero((f32::EPSILON as f64)));
+   |                                   ^                   ^
+   |
+   = note: `#[warn(unused_parens)]` (part of `#[warn(unused)]`) on by default
+help: remove these parentheses
+   |
+18 -     check!(r, !double_nearly_zero((f32::EPSILON as f64)));
+18 +     check!(r, !double_nearly_zero(f32::EPSILON as f64));
+   |
+
+warning: unnecessary parentheses around function argument
+  --> tests/m03/floating_point.rs:53:42
+   |
+53 |     check!(r, !doubles_nearly_equal_ulps((f32::EPSILON as f64), 0.));
+   |                                          ^                   ^
+   |
+help: remove these parentheses
+   |
+53 -     check!(r, !doubles_nearly_equal_ulps((f32::EPSILON as f64), 0.));
+53 +     check!(r, !doubles_nearly_equal_ulps(f32::EPSILON as f64, 0.));
+   |
+
+warning: unnecessary parentheses around assigned value
+  --> tests/m03/safe_math.rs:17:23
+   |
+17 |     let bits: usize = (std::mem::size_of::<usize>() * 8);
+   |                       ^                                ^
+   |
+help: remove these parentheses
+   |
+17 -     let bits: usize = (std::mem::size_of::<usize>() * 8);
+17 +     let bits: usize = std::mem::size_of::<usize>() * 8;
+   |
+
+warning: unnecessary parentheses around assigned value
+  --> tests/m03/safe_math.rs:42:23
+   |
+42 |     let bits: usize = (std::mem::size_of::<usize>() * 8);
+   |                       ^                                ^
+   |
+help: remove these parentheses
+   |
+42 -     let bits: usize = (std::mem::size_of::<usize>() * 8);
+42 +     let bits: usize = std::mem::size_of::<usize>() * 8;
+   |
+
+warning: unnecessary braces around block return value
+   --> tests/m03/utils.rs:118:5
+    |
+118 |     { for (i,(av,bv,cv,dv,sv)) in sk_make_zip((&a,&B,c.as_slice(),&d,s.as_slice())).enumerate() { check!(r,*av==a[i]); check!(r,*bv==B[i]); check!(r,*cv==c[i]); check!(r,*dv==d[i]); check!(r,*sv==s[i]); } }
+    |     ^^                                                                                                                                                                                                      ^^
+    |
+    = note: `#[warn(unused_braces)]` (part of `#[warn(unused)]`) on by default
+help: remove these braces
+    |
+118 -     { for (i,(av,bv,cv,dv,sv)) in sk_make_zip((&a,&B,c.as_slice(),&d,s.as_slice())).enumerate() { check!(r,*av==a[i]); check!(r,*bv==B[i]); check!(r,*cv==c[i]); check!(r,*dv==d[i]); check!(r,*sv==s[i]); } }
+118 +     for (i,(av,bv,cv,dv,sv)) in sk_make_zip((&a,&B,c.as_slice(),&d,s.as_slice())).enumerate() { check!(r,*av==a[i]); check!(r,*bv==B[i]); check!(r,*cv==c[i]); check!(r,*dv==d[i]); check!(r,*sv==s[i]); }
+    |
+
+warning: function cannot return without recursing
+  --> tests/m03/tarray.rs:33:52
+   |
+33 |             fn size(&self)->usize { self.count() } fn empty(&self)->bool { self.empty() }
+   |                                                    ^^^^^^^^^^^^^^^^^^^^^   ------------ recursive call site
+   |                                                    |
+   |                                                    cannot return without recursing
+...
+47 | dynamic_array!([const N:usize,]; STArray<N,T>);
+   | ---------------------------------------------- in this macro invocation
+   |
+   = help: a `loop` may express intention better if this is on purpose
+   = note: `#[warn(unconditional_recursion)]` on by default
+   = note: this warning originates in the macro `dynamic_array` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: `rust-skia` (test "m03_test") generated 6 warnings (run `cargo fix --test "m03_test" -p rust-skia` to apply 5 suggestions)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.00s
+     Running tests/m03_test.rs (target/debug/deps/m03_test-a60876d4e62ee200)
+
+running 97 tests
+reporter assertions=6 failures=0
+reporter assertions=2 failures=0
+reporter assertions=65 failures=0
+reporter assertions=2 failures=0
+reporter assertions=9 failures=0
+reporter assertions=3 failures=0
+reporter assertions=51 failures=0
+test checksum::ChecksumCollisions ... ok
+test bit_set::BitSetComparisonSizeMatching ... ok
+test checksum::Checksum ... ok
+reporter assertions=30 failures=0
+test checksum::GoodHash ... ok
+reporter assertions=6 failures=0
+test checksum::ChecksumConsistent ... ok
+reporter assertions=7 failures=0
+test checksum::ChecksumStrings ... ok
+test fits_in::FitsIn ... ok
+test base64::SkBase64 ... ok
+test float16::FloatToHalf_Constants ... ok
+reporter assertions=31 failures=0
+test floating_point::BitCastDoubleRoundTrip ... okreporter assertions=
+21 failures=0
+reporter assertions=2 failures=0
+test floating_point::DoubleNearlyEqualUlps ... ok
+reporter assertions=4 failures=0
+test floating_point::DoubleNearlyZero ... ok
+reporter assertions=9 failures=0
+reporter assertions=11 failures=0
+test floating_point::FMA ... ok
+test floating_point::Midpoint ... ok
+reporter assertions=18 failures=1
+test math::FloatSaturate64 ... ok
+
+thread 'math::FloatSaturate32' (16159273) panicked at tests/support/mod.rs:25:9:
+1 assertion(s) failed:
+tests/m03/math.rs:220: p >= 0. && p <= 100.
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+reporter assertions=166 failures=0
+test math::DoubleSaturate32 ... ok
+test math::PopCount ... ok
+reporter assertions=130 failures=0
+reporter assertions=12 failures=0
+test math::FloatSaturate32 ... FAILED
+test math::SkNextSizePow2 ... ok
+test math::TestEndian ... ok
+reporter assertions=30 failures=0
+reporter assertions=20014 failures=0
+reporter assertions=20014 failures=0
+test bit_set::BitSet ... ok
+test math::divmod_s32 ... ok
+test math::divmod_s16 ... ok
+reporter assertions=20014 failures=0
+reporter assertions=20014 failures=0
+reporter assertions=20014 failures=0
+test math::divmod_s64 ... ok
+test math::divmod_s8 ... ok
+test math::divmod_u16 ... ok
+reporter assertions=65026 failures=0
+reporter assertions=20014 failures=0
+reporter assertions=1000 failures=0
+reporter assertions=20014 failures=0
+test math::NeonU16Div255 ... ok
+test math::divmod_u32 ... ok
+test over_aligned::OverAligned ... ok
+test math::divmod_u64 ... ok
+reporter assertions=20014 failures=0
+reporter assertions=14 failures=0
+reporter assertions=10 failures=0
+reporter assertions=4 failures=0
+test math::divmod_u8 ... ok
+reporter assertions=6 failures=0
+test safe_math::SafeMath_Int_Failure ... ok
+test safe_math::SafeMath_Int_Success ... ok
+test safe_math::SafeMath_SizeT_Failure ... ok
+test safe_math::SafeMath_SizeT_Success ... ok
+reporter assertions=133 failures=49
+
+thread 'stream::FILEStreamWithOffset' (16159298) panicked at tests/support/mod.rs:25:9:
+49 assertion(s) failed:
+tests/m03/stream.rs:151: s.length()==remaining
+tests/m03/stream.rs:153: expected==actual
+tests/m03/stream.rs:153: s.position()==s.length()
+tests/m03/stream.rs:153: s.is_at_end()
+tests/m03/stream.rs:155: expected==actual
+tests/m03/stream.rs:158: expected==actual
+tests/m03/stream.rs:158: s.is_at_end()
+tests/m03/stream.rs:159: s.is_at_end()
+tests/m03/stream.rs:159: s.position()==remaining
+tests/m03/stream.rs:161: &expected[arbitrary..]==actual
+tests/m03/stream.rs:163: expected==actual
+tests/m03/stream.rs:165: s.is_at_end()
+tests/m03/stream.rs:165: s.is_at_end()
+tests/m03/stream.rs:165: s.position()==remaining
+tests/m03/stream.rs:167: s.position()==remaining
+tests/m03/stream.rs:168: s.position()==remaining
+tests/m03/stream.rs:151: s.length()==remaining
+tests/m03/stream.rs:153: expected==actual
+tests/m03/stream.rs:153: s.position()==s.length()
+tests/m03/stream.rs:153: s.is_at_end()
+tests/m03/stream.rs:155: expected==actual
+tests/m03/stream.rs:158: expected==actual
+tests/m03/stream.rs:158: s.is_at_end()
+tests/m03/stream.rs:159: s.is_at_end()
+tests/m03/stream.rs:159: s.position()==remaining
+tests/m03/stream.rs:161: &expected[arbitrary..]==actual
+tests/m03/stream.rs:163: expected==actual
+tests/m03/stream.rs:165: s.is_at_end()
+tests/m03/stream.rs:165: s.is_at_end()
+tests/m03/stream.rs:165: s.position()==remaining
+tests/m03/stream.rs:167: s.position()==remaining
+tests/m03/stream.rs:168: s.position()==remaining
+tests/m03/stream.rs:171: fork.length()==remaining
+tests/m03/stream.rs:151: s.length()==remaining
+tests/m03/stream.rs:153: expected==actual
+tests/m03/stream.rs:153: s.position()==s.length()
+tests/m03/stream.rs:153: s.is_at_end()
+tests/m03/stream.rs:155: expected==actual
+tests/m03/stream.rs:158: expected==actual
+tests/m03/stream.rs:158: s.is_at_end()
+tests/m03/stream.rs:159: s.is_at_end()
+tests/m03/stream.rs:159: s.position()==remaining
+tests/m03/stream.rs:161: &expected[arbitrary..]==actual
+tests/m03/stream.rs:163: expected==actual
+tests/m03/stream.rs:165: s.is_at_end()
+tests/m03/stream.rs:165: s.is_at_end()
+tests/m03/stream.rs:165: s.position()==remaining
+tests/m03/stream.rs:167: s.position()==remaining
+tests/m03/stream.rs:168: s.position()==remaining
+reporter assertions=126716 failures=0
+test stream::FILEStreamWithOffset ... FAILED
+test math::SkNextPow2 ... ok
+reporter assertions=5 failures=0
+reporter assertions=12 failures=0
+test stream::RBuffer ... ok
+test stream::RemainingLengthIsBelow_MemoryStream ... ok
+reporter assertions=508977 failures=0
+reporter assertions=0 failures=0
+test math::Math ... ok
+test stream::StreamCopy ... ok
+reporter assertions=1 failures=0
+test stream::StreamEmptyStreamMemoryBase ... ok
+reporter assertions=2 failures=0
+test stream::DynamicMemoryWStream_detachAsData ... ok
+
+thread 'supplemental::supplemental_bitmask_and_fixed_capacity' (16159306) panicked at src/fixed_array.rs:82:9:
+assertion failed: self.size < N
+reporter assertions=2 failures=0
+
+thread 'supplemental::supplemental_bitmask_and_fixed_capacity' (16159306) panicked at src/fixed_array.rs:64:9:
+assertion failed: new_size <= N
+
+thread 'supplemental::supplemental_bitmask_and_fixed_capacity' (16159306) panicked at src/fixed_array.rs:90:17:
+attempt to add with overflow
+reporter assertions=17 failures=0
+test stream::DynamicMemoryWStream_detachAsVector ... ok
+test supplemental::supplemental_bitmask_and_fixed_capacity ... ok
+reporter assertions=20 failures=0
+
+thread 'supplemental::supplemental_conversion_boundaries' (16159308) panicked at src/sk_to.rs:46:1:
+SkTo conversion does not fit
+
+thread 'supplemental::supplemental_conversion_boundaries' (16159308) panicked at src/sk_to.rs:46:1:
+SkTo conversion does not fit
+
+thread 'supplemental::supplemental_conversion_boundaries' (16159308) panicked at src/sk_to.rs:48:1:
+SkTo conversion does not fit
+
+thread 'supplemental::supplemental_conversion_boundaries' (16159308) panicked at src/sk_to.rs:48:1:
+SkTo conversion does not fit
+
+thread 'supplemental::supplemental_conversion_boundaries' (16159308) panicked at src/sk_to.rs:50:1:
+SkTo conversion does not fit
+
+thread 'supplemental::supplemental_conversion_boundaries' (16159308) panicked at src/sk_to.rs:50:1:
+SkTo conversion does not fit
+
+thread 'supplemental::supplemental_conversion_boundaries' (16159308) panicked at src/sk_to.rs:52:1:
+SkTo conversion does not fit
+
+thread 'supplemental::supplemental_conversion_boundaries' (16159308) panicked at src/sk_to.rs:52:1:
+SkTo conversion does not fit
+
+thread 'supplemental::supplemental_conversion_boundaries' (16159308) panicked at src/sk_to.rs:47:1:
+SkTo conversion does not fit
+
+thread 'supplemental::supplemental_conversion_boundaries' (16159308) panicked at src/sk_to.rs:47:1:
+SkTo conversion does not fit
+
+thread 'supplemental::supplemental_conversion_boundaries' (16159308) panicked at src/sk_to.rs:49:1:
+SkTo conversion does not fit
+
+thread 'supplemental::supplemental_conversion_boundaries' (16159308) panicked at src/sk_to.rs:49:1:
+SkTo conversion does not fit
+
+thread 'supplemental::supplemental_conversion_boundaries' (16159308) panicked at src/sk_to.rs:51:1:
+SkTo conversion does not fit
+
+thread 'supplemental::supplemental_conversion_boundaries' (16159308) panicked at src/sk_to.rs:51:1:
+SkTo conversion does not fit
+
+thread 'supplemental::supplemental_conversion_boundaries' (16159308) panicked at src/sk_to.rs:53:1:
+SkTo conversion does not fit
+
+thread 'supplemental::supplemental_conversion_boundaries' (16159308) panicked at src/sk_to.rs:53:1:
+SkTo conversion does not fit
+
+thread 'supplemental::supplemental_conversion_boundaries' (16159308) panicked at src/sk_to.rs:54:1:
+SkTo conversion does not fit
+
+thread 'supplemental::supplemental_conversion_boundaries' (16159308) panicked at src/sk_to.rs:54:1:
+SkTo conversion does not fit
+reporter assertions=163 failures=0
+test supplemental::supplemental_container_ownership_and_data_lifetime ... ok
+test supplemental::supplemental_conversion_boundaries ... ok
+reporter assertions=102 failures=0
+
+thread 'supplemental::supplemental_fixed_and_fdot6_boundaries' (16159310) panicked at src/fixed.rs:54:5:
+assertion failed: n >= -32768 && n <= 32767
+
+thread 'supplemental::supplemental_fixed_and_fdot6_boundaries' (16159310) panicked at src/fixed.rs:38:9:
+assertion `left == right` failed
+  left: 2147483648
+ right: -2147483648
+
+thread 'supplemental::supplemental_fixed_and_fdot6_boundaries' (16159310) panicked at src/fixed.rs:148:5:
+assertion failed: (x << 10 >> 10) == x
+reporter assertions=539 failures=1
+
+thread 'supplemental::supplemental_fixed_and_fdot6_boundaries' (16159310) panicked at tests/support/mod.rs:25:9:
+1 assertion(s) failed:
+tests/m03/supplemental.rs:32: sk_fdot6_div(a,b)==expected
+test supplemental::supplemental_decimal_and_yuv_contracts ... ok
+test supplemental::supplemental_fixed_and_fdot6_boundaries ... FAILED
+reporter assertions=2160 failures=400
+
+thread 'stream::Stream' (16159301) panicked at tests/support/mod.rs:25:9:
+400 assertion(s) failed:
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+tests/m03/stream.rs:19: bytes == src.len()
+tests/m03/stream.rs:19: tmp == src
+reporter assertions=7827 failures=0
+
+thread 'supplemental::supplemental_integer_widths_overflow_and_bits' (16159311) panicked at src/safe32.rs:36:5:
+assertion failed: value != crate::math::SK_NAN32
+reporter assertions=65607 failures=0
+test stream::Stream ... FAILED
+test supplemental::supplemental_random_seed_advancement ... ok
+test supplemental::supplemental_integer_widths_overflow_and_bits ... ok
+reporter assertions=33 failures=0
+reporter assertions=269 failures=0
+test supplemental::supplemental_signed_zero_nan_half_and_ulps ... ok
+test supplemental::supplemental_safe_math_boundaries ... ok
+
+thread 'supplemental::supplemental_stream_byte_order_boundaries_and_lifetimes' (16159315) panicked at src/stream.rs:457:12:
+attempt to add with overflow
+reporter assertions=2000 failures=0
+reporter assertions=3 failures=2
+
+thread 'support::tests::reporter_collects_failures_and_evaluates_once' (16159316) panicked at tests/support/mod.rs:25:9:
+2 assertion(s) failed:
+tests/support/mod.rs:49: { evaluations += 1; false }
+tests/support/mod.rs:53: false
+reporter assertions=0 failures=0
+test bit_set::BitSetComparisonBitMatching ... ok
+reporter assertions=75 failures=0
+test supplemental::supplemental_stream_byte_order_boundaries_and_lifetimes ... FAILED
+test support::tests::reporter_collects_failures_and_evaluates_once ... ok
+test tarray::FixedArray_Basic ... ok
+reporter assertions=306 failures=0
+reporter assertions=12 failures=0
+test tarray::FixedArray_Comparison ... ok
+reporter assertions=81 failures=0
+reporter assertions=6 failures=0
+test tarray::FixedArray_SelfAssignment ... ok
+test tarray::FixedArray_Construction ... ok
+test tarray::FixedArray_InnerPush ... okreporter assertions=
+75 failures=0
+test tarray::TArray_Basic ... ok
+reporter assertions=714 failures=0
+reporter assertions=test tarray::TArray_BoundsCheck ... ok
+8 failures=0
+test tarray::TArray_Comparison ... ok
+test tarray::TArray_InnerEmplace ... ok
+reporter assertions=8 failures=0
+reporter assertions=11 failures=0
+
+thread 'tarray::TArray_Construction' (16159325) has overflowed its stack
+fatal runtime error: stack overflow, aborting
+error: test failed, to rerun pass `--test m03_test`
+
+Caused by:
+  process didn't exit successfully: `/Volumes/Data/Users/paul/development/src/github/rust-skia/target/debug/deps/m03_test-a60876d4e62ee200 --nocapture` (signal: 6, SIGABRT: process abort signal)
+error: 1 target failed:
+    `--test m03_test`

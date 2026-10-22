@@ -1,0 +1,4 @@
+PASS: all 41 revised handoff source/build hashes match; no Codex production edits.
+PASS: exact Rust discovery 118 per profile, 107 originals; 4 runtime failures per profile retained.
+FAIL (expected gate decision): erasure type/auto-trait negative contract accepts unrelated non-Send concrete value.
+M01 ACCEPTED; M02 NEEDS_FIX; M03 NOT_STARTED.
